@@ -3,5 +3,6 @@
 Welcome to the Heads firmware wiki! We are in the process of migrating pages into this tree.  Until then:
 
 * [Heads overview](https://trmm.net/Heads)
-* [Installing heads](https://trmm.net/Installing_Heads)
 * [Presentation at 33c3](https://trmm.net/Heads_33c3)
+* [[Installing Heads]]
+* [[Emulating Heads]] (with qemu, but not very well)
