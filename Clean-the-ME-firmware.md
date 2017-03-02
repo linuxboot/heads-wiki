@@ -6,8 +6,9 @@ More info: [Intel Active Management Technology](https://en.wikipedia.org/wiki/In
 
 How to disable it
 ===
-The ME firmware sits on the second SPI flash chip of the x230 (the 8MB one). We cannot remove it completely, otherwise the machine will shut itself off after 30 minutes. We can, however, reduce it to bare minimum necessary to keep ip running, but without any malicious code in it (or so we hope...).  
-First take a flash dump of the chip, take it again and compare the two. If they match, clone this repo:  
+The ME firmware sits on the second SPI flash chip of the x230 (the 8MB one). We cannot remove it completely, otherwise the machine will shut itself off after 30 minutes. We can, however, reduce it to the bare minimum necessary to keep ip running, but without any malicious code in it (or so we hope...).  
+First take a flash dump of the chip, take it again and compare the two.  
+If they match, clone this repo:  
 `https://github.com/corna/me_cleaner.git`  
 and then run:  
 `python me_cleaner.py -c flash.bin`  
