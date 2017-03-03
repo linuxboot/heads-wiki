@@ -113,7 +113,7 @@ umount /tmp/alt-media
 
 TODO: write start-xen script, figure out where the root UUID comes from.
 
-Run `/boot/start-xen` and `kexec -e` and wait for the Qubes configuration to finish. The defaults are fine.
+Run `/bin/start-xen` and `kexec -e` and wait for the Qubes configuration to finish. The defaults are fine.
 
 
 Installing extra software
