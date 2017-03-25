@@ -2,7 +2,7 @@
 
 Installing Heads
 ===
-These instructions are only for the Lenovo Thinkpad x230 and require physical access to the hardware. There are risks in installation that might brick your system and cause loss of data. You will need another computer to perform the flashing and building steps. If you want to experiment, consider [[Emulating Heads]] with qemu before installing it on your machine.
+These instructions are only for the Lenovo Thinkpad x230 and require physical access to the hardware. There are risks in installation that might brick your system and cause loss of data. You will need another computer to perform the flashing and building steps. If you want to experiment, consider [Emulating Heads](/Emulating Heads) with qemu before installing it on your machine.
 
 ![Underside of the x230](https://farm9.static.flickr.com/8778/28686026815_6931443f6c.jpg)
 
@@ -25,7 +25,7 @@ Using a chip clip and a [SPI programmer](https://trmm.net/SPI_Flash), dump the e
 
 Ok, now comes the time to write the 4MB `x230.coreboot.bin` file to SPI2 chip. With my programmer and minicom, I hit i to verify that the flash chip signature is correctly read a few times, and then send `u0 400000`↵ to initiate the upload. I then drop to a shell with Control-A J and finally send the file with `pv x230.rom > /dev/ttyACM0`↵. A minute later, I resume minicom and hit i again to check that the chip is still responding.
 
-Move the clip to the SPI1 chip and flash the 8 MB `x230.me.bin` (TODO: document how to produce this with me cleaner -> [[Clean the ME firmware|Clean-the-ME-firmware]]). This time you'll send the command `u0 800000`↵. This will wipe out the official Intel firmware, leaving only a stub of it to bring up the Sandybridge CPU before shutting down the ME. As far as I can tell there are no ill effects other than an inability to power off the machine without using the power switch.
+Move the clip to the SPI1 chip and flash the 8 MB `x230.me.bin` (TODO: document how to produce this with me cleaner -> [Clean the ME firmware](Clean-the-ME-firmware)). This time you'll send the command `u0 800000`↵. This will wipe out the official Intel firmware, leaving only a stub of it to bring up the Sandybridge CPU before shutting down the ME. As far as I can tell there are no ill effects other than an inability to power off the machine without using the power switch.
 
 Finally, remove the programmer, connect the power supply and try to reboot.
 
