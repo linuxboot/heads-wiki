@@ -46,12 +46,13 @@ Taking ownership
 If you've acquired the machine from elsewhere, you'll need to establish physical presence, perform a force clear and take ownership with your own password. Should the storage root key (SRK) be set to something other than the well-known password?
 
 ```
-physicalpresence -s↵
-physicalenable↵
-physicalsetdeactivated -c↵
-forceclear↵
-physicalenable↵
-takeown -pwdo OWNER_PASSWORD↵
+tpm physicalpresence -s↵
+tpm physicalenable↵
+tpm physicalsetdeactivated -c↵
+tpm forceclear↵
+tpm physicalenable↵
+tpm getpubek↵
+tpm takeown -pwdo OWNER_PASSWORD↵
 ```
 
 There is something weird with enabling, presence and disabling. Sometimes reboot fixes the state.
