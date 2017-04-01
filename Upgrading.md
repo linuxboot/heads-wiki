@@ -77,6 +77,8 @@ the TPM values are at their persistent state
 
 Regenerating the TOTP token
 ---
+![TPM TOTP QR](https://farm3.staticflickr.com/2857/33635693261_88ddb3f024_z_d.jpg)
+
 After the second post-flash reboot, generate a new token and store the
 QR code in your phone by running:
 
