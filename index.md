@@ -4,9 +4,22 @@ Welcome to the Heads firmware wiki! We are in the process of migrating pages int
 
 * [Heads overview](https://trmm.net/Heads)
 * [Presentation at 33c3](https://trmm.net/Heads_33c3)
-* [Installing Heads](/Installing-Heads)
-* [Emulating Heads](/Emulating-Heads) (with qemu, but not very well)
+
+Using Heads
+===
+* [Installing Heads](/Installing-Heads) on an x230 Thinkpad
+* [Upgrading Heads](/Upgrading), including how to generate your TOTP token
+* Qubes specific configurations
+* Server specific configurations
+
+Developing Heads
+===
+
+* [Open issues](https://github.com/osresearch/heads/issues)
+* [Emulating Heads](/Emulating-Heads) (with qemu)
 * [Porting to a new mainboard](/Porting) (rough draft)
+* The Heads build process
+* Adding a new sub-module
 
 Releases
 ===
