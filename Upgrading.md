@@ -18,6 +18,7 @@ the disk key is not accessible to the recovery shell.
 Recovery shell
 ---
 ![Recovery shell](https://farm4.staticflickr.com/3703/32951200183_70b00f0a4a_z_d.jpg)
+
 If the flash protection bits are set correctly it is not possible to
 rewrite the firmware from the normal OS.  You'll need to reboot
 to the Heads recovery shell (hit `r` after the TPM TOTP prompt).
@@ -25,6 +26,7 @@ to the Heads recovery shell (hit `r` after the TPM TOTP prompt).
 Mounting the USB media
 ---
 ![insmod](https://farm4.staticflickr.com/3857/33607597312_3d31a74b6c_z_d.jpg)
+
 The Heads boot process does not have USB or network drivers by default
 and neither does the recovery shell (although this might change).
 You need to load the Linux kernel modules, which will change the
@@ -35,7 +37,6 @@ insmod /lib/modules/ehci-hcd.ko
 insmod /lib/modules/ehci-pci.ko
 ```
 
-![Mount and flash](https://farm3.staticflickr.com/2903/33723157616_9d0bee1317_z_d.jpg)
 When you insert the drive you'll see a console message about the partitions
 on the new device.  Typically it will be the first partition, `/dev/sdb1`,
 or sometimes just `/dev/sdb` if there is no partition table.  Make a
@@ -48,7 +49,8 @@ mount -o ro /dev/sdb1 /media
 
 Flashing the ROM
 ---
-![Flashrom](https://farm3.staticflickr.com/2901/33607597262_07b2ea7004_z_d.jpg)
+![Mount and flash](https://farm3.staticflickr.com/2903/33723157616_9d0bee1317_z_d.jpg)
+
 There is a helper script `/bin/flashrom-x230.sh` that uses the x230
 flash ROM layout and the Heads modified version of `flashrom` to
 write to the chip.  One of the modifications is to avoid touching or
@@ -58,6 +60,8 @@ reading the ME section, so it is not necessary to have used the
 ```
 flashrom-x230.sh /media/x230.full.rom
 ```
+
+![Flashrom](https://farm3.staticflickr.com/2901/33607597262_07b2ea7004_z_d.jpg)
 
 If all goes well it will write for about a minute and then report
 success.  Due to hacks in `flashrom`, it does not read back what it
