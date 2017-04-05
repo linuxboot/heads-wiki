@@ -19,7 +19,9 @@ Management Engine and Bootguard ACM fuses
 ---
 The very first key used in the system is Intel's public key that signs the Management Engine firmware partition table in the SPI flash.  This key is stored in the on-die ROM of the ME and the ME will not start up if this signature does not match.  An attacker who controls this key (which is highly unlikely) can subvert the Bootguard checks as well as the measured boot process.
 
-The [Bootguard fuses](https://trmm.net/Bootguard) fuses provide protection against most "evil maid" attacks against the firmware.  The hash of the ACM signing key is set in write-once fuses in the CPU chipset and during the CPU bringup phase the ME and the CPU microcode cooperate in some undocumented way to validate the "Startup ACM" in the SPI flash.  Since this key is fused into hardware, an evil maid attack would need to replace the CPU to install malicious firmware into the SPI flash.  An attacker who controls this key can flash new firmware via hardware means (and possibly remotely via software, unless other steps are taken).
+The [Bootguard fuses](https://trmm.net/Bootguard) fuses provide protection against most "evil maid" attacks against the firmware.  The hash of the ACM signing key is set in write-once fuses in the CPU chipset and during the CPU bringup phase the ME and the CPU microcode cooperate in some undocumented way to validate the "Startup ACM" in the SPI flash.  Since this key is fused into hardware, an evil maid attack would need to replace the CPU to install malicious firmware into the SPI flash.  The x230 Thinkpads do not support bootguard and only the Librem laptops ship with unfused keys.
+
+An attacker who controls this key can flash new firmware via hardware means (and possibly remotely via software, unless other steps are taken).
 
 TPM Owner password
 ---
@@ -35,16 +37,41 @@ If an attacker can control this shared secret (such as by directly sending PCR v
 
 TPM disk encryption key
 ---
-The TPM NVRAM also stores one of the disk encryption keys, which is encrypted with the user's disk unlock password and sealed with the TPM PCR values for the firmware and the LUKS headers on the disk.  On every boot the user types in their password and the TPM will unseal and decrypt the disk encryption key if and only if the firmware is unmodified and the password matches.  Since the TPMTOTP one-time code matched, the user can have confidence that the firmware is unmodified before they enter their password.
+The TPM NVRAM also stores one of the disk encryption keys, which is encrypted with the user's disk unlock password and sealed with the TPM PCR values for the firmware and the LUKS headers on the disk.  On every boot the user types in their password and the TPM will unseal and decrypt the disk encryption key if and only if the firmware is unmodified and the password matches.  Since the TPMTOTP one-time code matched, the user can have confidence that the firmware is unmodified before they enter their password.  If the system is booted in recovery mode, the PCRs will not match and this key is not accessible to the user.
+
+The Heads firmware inserts this key into the Qubes `initramfs.cpio` as `/secret.key`, which is listed in the `/etc/crypttab` file as the decryption key for the various partitions.  The dracut/systemd startup scripts will read the `/etc/crypttab` file and use it to decrypt the drives without further user intervention.
 
 The sealed blob is not secret since it is both encrypted and sealed, but if an attacker can extract this unsealed and decrypted key they can decrypt the data on the disk.  If they extract the TPM they can set the PCRs to the correct values and attempt to brute force the unlock code, although the TPM should provide some rate limiting. TODO: Can the TPM also flush the keys if too many attempts are made?
 
 Disk recovery key
 ---
-During initial system setup the disk is encrypted with a user chosen passphrase.  This key is only entered if the TPM PCRs have been changed, such as following a firmware update, or if the disk has been moved to a new machine and the user needs to back up the code.
+During initial system setup the disk is encrypted with a user chosen passphrase.  This key is only entered if the TPM PCRs have been changed, such as following a firmware update, or if the disk has been moved to a new machine and the user needs to back up the code.  If the system is booted into recovery mode, the TPM PCRs will not match the TPM sealed encryption key, so the user will need to enter the recovery key to decrypt the drives.
 
-If an attacker gains control of this recovery key they can decrypt the disk.
+If an attacker gains control of this recovery key they can decrypt the disk to get access to the data, but not necessarily the system configuration if dm-verity is configured.  They can also add additional disk decryption keys, although this will be detected by the TPM measurement of the LUKS headers.
 
+LUKS disk encryption key
+---
+The TPM disk encryption and user's disk recovery keys are not the actual encryption keys for the disk; they are passed through [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) and the result is used to encrypt the actual disk encryption key, which is stored in the LUKS header on the disk.  Under normal circumstances this key is not visible to the user and is only an implementation detail.
+
+Access to this key has the same risks as the disk recovery key.
+
+Owner's GPG key
+---
+The owner of the machine generates a GPG key pair as part of installing Heads.  The public key is inserted into the ROM image that is flashed and the owner signs the `/boot/boot.sh` script as well as the Xen hypervisor, the dom0 Linux kernel and initramfs, the TPM version counter of the system, and the dm-verity root hash if configured.  Ideally the private key does not live on the machine, but instead is in a Yubikey or other hardware token.
+
+TODO: Can this be used in the disk decryption process?
+
+An attacker who controls this private key can replace executables in `/boot` and if they also control the disk encryption key they can tamper with files in a dm-verity protected root filesystem.
+
+User login password
+---
+The user's login password is used to control access to the system once it has booted.
+
+An attacker who controls this key can access the system and the decrypted disks if they gain physical access to the system while it is running or asleep.  This provides access to the data on the drive, but not necessarily the ability to modify a dm-verity protected root filesystem.
+
+Root password
+---
+The root password is not enabled by default on Qubes, so it is functionally equivalent to the login password.  Other operating systems might differ.
 
 PCRs
 ====
