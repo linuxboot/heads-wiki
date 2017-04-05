@@ -24,9 +24,15 @@ The actual assignment needs to be updated in the code; there are outstanding iss
 ) that need to be resolved as well.  Until then this is a rough draft.
 
 0: Boot block
+
 1: ROM stage
+
 2: RAM stage (and MRC? this should be separate)
+
 3: Heads Linux kernel and initrd
+
 4: Boot mode (0 during `/init`, then `recovery` or `normal-boot`)
+
 5: Heads Linux kernel modules
+
 6: Drive LUKS headers
