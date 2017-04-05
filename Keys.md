@@ -82,6 +82,8 @@ The root password is not enabled by default on Qubes, so it is functionally equi
 
 TPM PCRs
 ====
+![TPM](https://upload.wikimedia.org/wikipedia/commons/6/64/TPM_Asus.jpg)
+
 The actual assignment needs to be updated in the code; there are outstanding issues (
 [MRC cache](https://github.com/osresearch/heads/issues/150),
 [SMM reloc](https://github.com/osresearch/heads/issues/13),
