@@ -18,6 +18,7 @@ Developing Heads
 * [Open issues](https://github.com/osresearch/heads/issues)
 * [Emulating Heads](/Emulating-Heads) (with qemu)
 * [Porting to a new mainboard](/Porting) (rough draft)
+* [Keys, Passwords and PCRs in Heads](/Keys) (rough draft)
 * The Heads build process
 * Adding a new sub-module
 
