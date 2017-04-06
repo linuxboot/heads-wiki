@@ -7,7 +7,7 @@ With a vanilla Ubuntu 16.04 install, such as a digitalocean droplet, you need to
 ```
 apt update
 apt install build-essential
-apt install flex bison
+apt install bc m4 bison flex zlib1g-devel
 ```
 
 Clone the tree:
@@ -19,4 +19,4 @@ cd heads
 
 Run `make` and it will start the downloads and building process.  This takes a long while, so go out for a cup of coffee..
 
-On a small 1GB machine it is not possible to use the `-j8` option to musl-cross (specified in `build/musl-cross-git/config.sh` as `MAKEFLAGS`).  `-j1` is necessary to avoid running out of virtual memory (todo: allow this to be passed via `MAKEJOBS` on the command line or derive it from `nproc`?)
+On a small 1GB machine it is not possible to use the `-j8` option to musl-cross (specified in `build/musl-cross-git/config.sh` as `MAKEFLAGS`).  `-j1` is necessary to avoid running out of virtual memory (todo: allow this to be passed via `MAKEJOBS` on the command line or derive it from `nproc`?).  This makes it take even longer -- well over an hour for a clean build.
