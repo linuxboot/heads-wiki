@@ -7,7 +7,7 @@ With a vanilla Ubuntu 16.04 install, such as a digitalocean droplet, you need to
 ```
 apt update
 apt install build-essential
-apt install bc m4 bison flex zlib1g-dev
+apt install bc m4 bison flex zlib1g-dev python
 ```
 
 Clone the tree:
