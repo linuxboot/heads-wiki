@@ -19,7 +19,7 @@ Developing Heads
 * [Emulating Heads](/Emulating-Heads) (with qemu)
 * [Porting to a new mainboard](/Porting) (rough draft)
 * [Keys, Passwords and PCRs in Heads](/Keys) (rough draft)
-* The Heads build process
+* [The Heads build process](/Building)
 * Adding a new sub-module
 
 Releases
