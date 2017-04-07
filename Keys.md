@@ -6,6 +6,7 @@ There are "too many secrets" involved in booting a Heads system.  Luckily most o
 * Bootguard ACM fuses (hash of OEM public key)
 * TPM Owner password (used to initialize counters, NVRAM spaces, etc)
 * TPM Endorsement Key
+* TPM counter key
 * TPMTOTP secret (shared with phone authenticator)
 * TPM disk encryption key (stored in the TPM, sealed with PCRs and encrypted with disk unlock key)
 * Disk unlock key (entered by the user on every boot to unseal the TPM disk encryption key)
@@ -39,6 +40,10 @@ TPMTOTP shared secret
 Since humans have trouble doing RSA public key cryptography in their brains, Heads uses [TPM TOTP](https://trmm.net/Tpmtotp) to let the system attest to the user that the firmware is unmodified.  During system setup a random 20-byte value is generated and shared (via QR code) to the user's phone as well as sealed with the correct TPM PCR values into the TPM NVRAM.  On subsequent boots the TPM will unseal the secret if and only if the PCRs match, and the computer then generates a one-time password based on the current clock time, which the user can compare to the value displayed on their phone.  A new secret must be generated each time the firmware is updated since this will change the PCRs.
 
 If an attacker can control this shared secret (such as by directly sending PCR values into the TPM) they can install malicious firmware in the SPI flash and generate valid TOTP codes.
+
+TPM counter key
+---
+The TPM's increment-only counters can be used to prevent roll-back attacks on the signed kernel and initramfs configurations.  An attacker who controls this key can increment the counter, causing a denial of service attack against the system, but it does not provide any access to encrypted data nor any way to roll back to an old version.
 
 TPM disk encryption key
 ---
