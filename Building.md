@@ -11,7 +11,7 @@ apt install -y build-essential bc m4 bison flex zlib1g-dev python
 
 On a Fedora machine:
 ```
-dnf install -y @development-tools gcc-c++ bc wget perl-Digest-MD5 m4 bison flex zlib-devel python
+dnf install -y @development-tools gcc-c++ git bc wget perl-Digest-MD5 m4 bison flex zlib-devel python
 ```
 
 Clone the tree:
