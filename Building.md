@@ -6,14 +6,12 @@ With a vanilla Ubuntu 16.04 install, such as a digitalocean droplet, you need to
 
 ```
 apt update
-apt install build-essential
-apt install bc m4 bison flex zlib1g-dev python
+apt install -y build-essential bc m4 bison flex zlib1g-dev python
 ```
 
 On a Fedora machine:
 ```
-dnf install @development-tools
-dnf install bc wget perl-Digest-MD5 m4 bison flex zlib-devel python
+dnf install @development-tools bc wget perl-Digest-MD5 m4 bison flex zlib-devel python
 ```
 
 Clone the tree:
@@ -24,8 +22,7 @@ cd heads
 ```
 
 Run `make` and it will start the downloads and building process.  This takes a long while, so go out for a cup of coffee..
-
-On a small 1GB machine it is not possible to use the `-j8` option to musl-cross (specified in `build/musl-cross-git/config.sh` as `MAKEFLAGS`).  `-j1` is necessary to avoid running out of virtual memory (todo: allow this to be passed via `MAKEJOBS` on the command line or derive it from `nproc`?).  This makes it take even longer -- well over an hour for a clean build.
+The initial build on a small 1-core 1GB droplet it will take over 90 minutes, an 8-core system takes about 40 minutes.
 
 Useful targets
 ---
