@@ -138,15 +138,15 @@ The main components that every submodule must define are:
 * Provide the sha256 hash of the file to verify its correctness `cryptsetup_hash`
 * Define the command that will be run in the unpacked diretory to configure it after unpacking and patching (see below) `cryptsetup_configure`
 ** Note that we provide the compiler `CC="$(heads_cc)"` in quotes, since there might be spaces in the variable
-** `--host i386-elf-linux` is used to indicate that this is a cross compile
-** `--prefix` avoids writing path names into the executable
-** plus some additional submodule specific stuff
+  * `--host i386-elf-linux` is used to indicate that this is a cross compile
+  * `--prefix` avoids writing path names into the executable
+  * plus some additional submodule specific stuff
 * The target to be called by make in this directory to generate the output
-** The `$(MAKE_JOBS)` will have the number of parallel instances to execute
-** Sometimes mutliple steps are required; separate them by `&&` to ensure that they short-circuit correctly
-** The first one has an implicit `$(MAKE) -C $(build)/$(cryptsetup_dir)`, but the second step has to list it explicitly
+  * The `$(MAKE_JOBS)` will have the number of parallel instances to execute
+  * Sometimes mutliple steps are required; separate them by `&&` to ensure that they short-circuit correctly
+  * The first one has an implicit `$(MAKE) -C $(build)/$(cryptsetup_dir)`, but the second step has to list it explicitly
 * Lastly a list of any executables `cryptsetup_output` or libraries `cryptsetup_libraries` that will be produced by the build, relative to the build directory.
-** These will be installed into `initrd/bin` and `initrd/lib`
-** They will be stripped
+  * These will be installed into `initrd/bin` and `initrd/lib`
+  * They will be stripped
 
 If there are any patches that need to be applied, put the file in `patches/$(submodule_name)-$(submodule_version).patch` and it will be applied when the tar file is unpacked.
