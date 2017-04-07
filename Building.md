@@ -10,6 +10,12 @@ apt install build-essential
 apt install bc m4 bison flex zlib1g-dev python
 ```
 
+On a Fedora machine:
+```
+dnf install @development-tools
+dnf install bc wget perl-Digest-MD5 m4 bison flex zlib-devel python
+```
+
 Clone the tree:
 
 ```
