@@ -6,7 +6,7 @@ With a vanilla Ubuntu 16.04 install, such as a digitalocean droplet, you need to
 
 ```
 apt update
-apt install -y build-essential bc m4 bison flex zlib1g-dev python
+apt install -y build-essential bc m4 bison flex zlib1g-dev python git
 ```
 
 On a Fedora machine:
