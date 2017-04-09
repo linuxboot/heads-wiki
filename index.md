@@ -6,7 +6,7 @@ protection for data on the system. Unlike Tails, which aims to be a
 stateless OS that leaves no trace on the computer of its presence, Heads
 is intended for the case where you need to store data and state on the
 computer.  It is influenced by several years of firmware vulnerability
-research ([Thunderstrike](https://trmm.net/Thunderstrike)) and [Thunderstrike 2](https://trmm.net/Thunderstrike_2)) as well as many
+research ([Thunderstrike](https://trmm.net/Thunderstrike) and [Thunderstrike 2](https://trmm.net/Thunderstrike_2)) as well as many
 other researchers' work ("[Hardening hardware and choosing a #goodBIOS](https://www.youtube.com/watch?v=2VvR-vsdMlQ)" by Peter Stuge,
 "[Beyond anti evil maid](https://media.ccc.de/v/32c3-7343-beyond_anti_evil_maid)" by Matthew Garret,
 "[Towards (reasonably) trustworthy x86 laptops](http://www.theregister.co.uk/2015/12/31/rutkowska_talks_on_intel_x86_security_issues/)"
@@ -35,7 +35,7 @@ components are included in the measurements and are at least guaranteed
 to be unchanging.  Once the system is in a known good state, the TPM is
 used as a hardware key storage to decrypt the drive.
 
-!(TPM TOTP in action)[https://farm8.static.flickr.com/7564/28580109172_5bd759f336.jpg]
+![TPM TOTP in action](https://farm8.static.flickr.com/7564/28580109172_5bd759f336.jpg)
 
 Additionally, the hypervisor, kernel and initrd images are signed by
 keys controlled by the user, and the OS uses a signed, immutable root
