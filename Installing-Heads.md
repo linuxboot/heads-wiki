@@ -4,6 +4,12 @@ Installing Heads
 ===
 These instructions are only for the Lenovo Thinkpad x230 and require physical access to the hardware. There are risks in installation that might brick your system and cause loss of data. You will need another computer to perform the flashing and building steps. If you want to experiment, consider [Emulating Heads](/Emulating-Heads) with qemu before installing it on your machine.
 
+There are four major steps:
+* Flashing the boot ROM, setting permissions
+* Taking ownership of the TPM
+* Installing Qubes
+* 
+
 ![Underside of the x230](https://farm9.static.flickr.com/8778/28686026815_6931443f6c.jpg)
 
 Unplug the system and remove the battery while you're disassebling the machine! You'll need to remove the palm rest to get access to the SPI flash chips, which will require removing the keyboard. There are seven screws marked with keyboard and palm rest symbols.
@@ -46,15 +52,9 @@ Taking ownership
 If you've acquired the machine from elsewhere, you'll need to establish physical presence, perform a force clear and take ownership with your own password. Should the storage root key (SRK) be set to something other than the well-known password?
 
 ```
-tpm physicalpresence -s↵
-tpm physicalenable↵
-tpm physicalsetdeactivated -c↵
-tpm forceclear↵
-tpm physicalenable↵
-tpm getpubek↵
-tpm takeown -pwdo OWNER_PASSWORD↵
+tpm-reset
 ```
-
+```
 There is something weird with enabling, presence and disabling. Sometimes reboot fixes the state.
 
 tpmtotp
@@ -62,47 +62,79 @@ tpmtotp
 
 ![TPMTOTP QR code](https://pbs.twimg.com/media/Cr8x7f6WEAEbBdq.jpg)
 
-Once you own the TPM, run `sealtotp.sh` to generate a random secret, seal it with the current TPM PCR values and store the sealed value in the TPM's NVRAM. This will generate a QR code that you can scan with your google authenticator application and use to validate that the boot block, rom stage and Linux payload are un-altered.
+Once you own the TPM and have the final version of the `x230.rom` flashed, run `seal-totp` to generate a random secret, seal it with the current TPM PCR values and store the sealed value in the TPM's NVRAM. This will generate a QR code that you can scan with your google authenticator application and use to validate that the boot block, rom stage and Linux payload are un-altered.
 
 ![TPMTOTP output](https://farm8.static.flickr.com/7564/28580109172_5bd759f336.jpg)
 
-On the next boot, or if you run `unsealtotp.sh`, the script will extract the sealed blob from the NVRAM and the TPM will validate that the PCR values are as expected before it unseals it. If this works, the current TOTP will be computed and you can compare this one-time-password against the value that your phone generates.
+On the next boot, or if you run `unseal-totp`, the script will extract the sealed blob from the NVRAM and the TPM will validate that the PCR values are as expected before it unseals it. If this works, the current TOTP will be computed and you can compare this one-time-password against the value that your phone generates.
 
 This does not eliminate all firmware attacks (such as evil maid ones that replace the SPI flash chip), but when combined with the WP# pin and BP bits should eliminate a software only attack.
 
 Installing Qubes
 ===
-The initial installation is a little tricky since you must have a copy of the Heads modified `xen-4.6.3` file available. You can copy it to a separate USB key and mount it by hand or add a new partition to the USB install media and copy the Xen kernel to it. At the Heads recovery shell prompt:
+Boot into the recovery shell (hit 'r' at the prompt before the normal startup script tries to run) and plug the USB stick with the R3.2 install media into one of the USB3 ports (on the left side of the x230) and run the helper script to start the Qubes installer:
 
 ```
-mkdir /tmp/alt-media
-mount -o ro /dev/sdb3 /tmp/alt-media
-cp /tmp/alt-media/xen-4.6.3.gz /
-gunzip /xen-4.6.3.gz
-umount /tmp/alt-media
+qubes-install
 ```
 
-And then invoke the Qubes installer via this rather long command line:
+If that completes with no errors with will launch the Xen hypervisor from the x230's ROM image and start the Qube's installer.  The first few seconds are run with an archaic video mode, so things appear a little wrid, but once the dom0 kernel initializes the graphics it should look right.
+
+My recommended partitioning scheme is to use LVM and to allocate 1G for `/boot` since it will hold the dm-verity hashes, 48G for `/`, 8G for swap and the rest for `/home`.  Don't adjust the filesystem labels or the volume group; this will be used by the startup script.
+
+The disk encrypt password that you enter here will be used as the
+"recovery password" later.  It should be a long value since you won't
+have to enter it very often; only when upgrading the Heads firmware
+or if there is a need to recover the disk on an external machine.
+You will need it again shortly, so don't lose it yet.
+
+Once Qubes has finished installing, you'll need to reboot into the Heads recovery shell.  The first reboot will fail with errors about "`/boot/boot.hashes does not exist`", since it doesn't..  The first step is to copy the Heads Xen to the `/boot` drive, sign them and let Qubes finish its initialization.
 
 ```
-mount -o ro /dev/sdb2 /boot
-cd /boot/efi/boot
-kexec -l \
-  --module "./vmlinuz inst.stage2=hd:LABEL=Qubes-R3.2-x86_64 \
-  --module "./initrd.img" \
-  --command-line "no-real-mode reboot=no" \
-  /xen-4.6.3
+mount -o rw,remount /boot
+cp /bin/xen.gz /boot/xen-4.6.4-heads.gz
+mount -o ro,remount /boot
+qubes-boot /boot/xen-4.6.4-heads.gz /boot/vm... /boot/initramfs...
 ```
 
-If that completes with no errors, finally launch the Xen kernel and watch the fireworks:
+You will need to input the disk recovery key here (almost for the last time),
+and this should start the final stage of the Qubes installer.  Under
+'Configure Qubes` you should select `Create USB qube holding all USB controllers` so that they are protected from outside devices.  This step takes a little
+while as the templates are configured...
+
+Eventually this will be done and you can click "Finish", then Qubes will
+give you a login screen with your login password.
+
+Now we need to make a small change to have Qubes' initramfs correctly find the TPM encrypted keys.  Open a dom0 terminal (click on the Q in the upper left and select `Terminal Emulator`).  In this shell run this perl command and rebuild the initrd with dracut (takes several seconds):
+
+TODO: how to force all of crypttab to be emitted?
 
 ```
-kexec -e
+sudo perl -pi -e 's: none: /secret.key' /etc/crypttab
+sudo dracut --force
 ```
 
-My recommended partitioning scheme is 1G for `/boot` since it will hold the dm-verity hashes, 32G for `/`, 32G for swap and the rest for `/home`.  TODO: Filesystem labels?
 
-Once Qubes has finished installing, you'll need to reboot into the Heads recovery shell and copy the `xen-4.6.3` binary to the newly created `/boot` partition and write a short script to setup the kexec parameters. This is another TODO to make it easier.
+Reboot by selecting "Logout" and "Reboot" and you should be back to the
+Heads recovery shell with the `boot.hashes` error.  Insert your Yubikey and run
+(hit tab to autocomplete the file names):
+
+
+```
+qubes-update /boot/xen-4.6.4-heads.gz /boot/vmlinux... /boot/initramfs...
+```
+
+This should prompt you for the TPM owner password to create the new
+counter (only the first time), then for your GPG card's password.
+It will output `/boot/boot.hashes` and `/boot/boot.hashes.asc`
+with the signed hashes of the executables.
+
+Lastly you'll need to seal the disk encryption keys with a disk unlock key
+that you will enter everytime.  Run `seal-key` and it will prompt you for
+the disk recovery key (the long one you entered above), a disk unlock
+key that you will enter on every boot, and on your first run also the
+TPM owner password to create the NVRAM space.
+
 
 ```
 mkdir /tmp/alt-media
