@@ -41,7 +41,36 @@ Congratulations! You now have a Coreboot + Heads Linux machine. Adding your own 
 
 Adding your PGP key
 ===
-To be written; can it be added as a secondary payload?
+Heads uses your own GPG key to sign updates and as a result it needs the
+key stored in the `initrd.cpio` file that is built as part of the ROM image.
+In the future ([issue #182](https://github.com/osresearch/heads/issues/182))
+it might be possible to install your own key from inside the recovery
+shell; this would be preferable for many reasons.
+
+Insert your Yubikey into the build machine and in the `heads` build directory,
+clean out the old files, then invoke GPG's the "Card Edit" function with
+it targetting the local directory:
+
+```
+rm ./initrd/.gnupg/*
+gpg --card-edit --homedir ./initrd/.gnupg
+```
+
+Go into "Admin" mode and generate a new key inside the Yubikey:
+
+```
+admin
+generate
+```
+
+Since this key can be replaced by replacing the ROM, it is not necessary
+to make a backup unless you want to.
+This will prompt you for the admin pin (`12345678` by default) and then
+the existing pin (`123456`).  Follow the other prompts and eventually
+you should have a key in `initrd/.gnupg/
+
+
+
 
 Configuring the TPM
 ===
