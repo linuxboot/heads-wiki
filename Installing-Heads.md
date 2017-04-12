@@ -175,19 +175,6 @@ key that you will enter on every boot, and on your first run also the
 TPM owner password to create the NVRAM space.
 
 
-```
-mkdir /tmp/alt-media
-mount -o ro /dev/sdb3 /tmp/alt-media
-mount -o rw /dev/sda1 /boot
-cp /tmp/alt-media/xen-4.6.3.gz /boot/
-umount /tmp/alt-media
-```
-
-TODO: write start-xen script, figure out where the root UUID comes from.
-
-Run `/bin/start-xen` and `kexec -e` and wait for the Qubes configuration to finish. The defaults are fine.
-
-
 Installing extra software
 ---
 dom0 probably has updates available. You'll want to install them before switching `/` to read-only and signing the hashes:
