@@ -67,7 +67,7 @@ Since this key can be replaced by replacing the ROM, it is not necessary
 to make a backup unless you want to.
 This will prompt you for the admin pin (`12345678` by default) and then
 the existing pin (`123456`).  Follow the other prompts and eventually
-you should have a key in `initrd/.gnupg/
+you should have a key in `initrd/.gnupg/`
 
 
 
@@ -83,7 +83,7 @@ If you've acquired the machine from elsewhere, you'll need to establish physical
 ```
 tpm-reset
 ```
-```
+
 There is something weird with enabling, presence and disabling. Sometimes reboot fixes the state.
 
 tpmtotp
