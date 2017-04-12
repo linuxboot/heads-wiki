@@ -29,6 +29,8 @@ There are two SPI flash chips hiding under the black plastic, labelled "SPI1" an
 
 Using a chip clip and a [SPI programmer](https://trmm.net/SPI_Flash), dump the existing ROMs to files. Dump them again and compare the different dumps to be sure that were no errors. Maybe dump them both a third time, just to be safe.
 
+![Flashing x230 SPI flash](https://farm3.staticflickr.com/2889/33186538873_c1290ca6ec_z_d.jpg)
+
 Ok, now comes the time to write the 4MB `x230.coreboot.bin` file to SPI2 chip. With my programmer and minicom, I hit i to verify that the flash chip signature is correctly read a few times, and then send `u0 400000`↵ to initiate the upload. I then drop to a shell with Control-A J and finally send the file with `pv x230.rom > /dev/ttyACM0`↵. A minute later, I resume minicom and hit i again to check that the chip is still responding.
 
 Move the clip to the SPI1 chip and flash the 8 MB `x230.me.bin` (TODO: document how to produce this with me cleaner -> [Clean the ME firmware](Clean-the-ME-firmware)). This time you'll send the command `u0 800000`↵. This will wipe out the official Intel firmware, leaving only a stub of it to bring up the Sandybridge CPU before shutting down the ME. As far as I can tell there are no ill effects other than an inability to power off the machine without using the power switch.
@@ -101,6 +103,8 @@ This does not eliminate all firmware attacks (such as evil maid ones that replac
 
 Installing Qubes
 ===
+![Heads splash screen](https://farm3.staticflickr.com/2890/33999478295_5738432e82_z_d.jpg)
+
 Boot into the recovery shell (hit 'r' at the prompt before the normal startup script tries to run) and plug the USB stick with the R3.2 install media into one of the USB3 ports (on the left side of the x230) and run the helper script to start the Qubes installer:
 
 ```
@@ -109,13 +113,19 @@ qubes-install
 
 If that completes with no errors with will launch the Xen hypervisor from the x230's ROM image and start the Qube's installer.  The first few seconds are run with an archaic video mode, so things appear a little wrid, but once the dom0 kernel initializes the graphics it should look right.
 
+![Qubes partitioning](https://farm3.staticflickr.com/2858/33156102504_7fa25661c4_z_d.jpg)
+
 My recommended partitioning scheme is to use LVM and to allocate 1G for `/boot` since it will hold the dm-verity hashes, 48G for `/`, 8G for swap and the rest for `/home`.  Don't adjust the filesystem labels or the volume group; this will be used by the startup script.
+
+![Disk encryption recovery key](https://farm3.staticflickr.com/2883/33869761321_6c853894da_z_d.jpg)
 
 The disk encrypt password that you enter here will be used as the
 "recovery password" later.  It should be a long value since you won't
 have to enter it very often; only when upgrading the Heads firmware
 or if there is a need to recover the disk on an external machine.
 You will need it again shortly, so don't lose it yet.
+
+![Signing Qubes binaries in /boot](https://farm3.staticflickr.com/2939/33999478305_f0f61a4408_z_d.jpg])
 
 Once Qubes has finished installing, you'll need to reboot into the Heads recovery shell.  The first reboot will fail with errors about "`/boot/boot.hashes does not exist`", since it doesn't..  The first step is to copy the Heads Xen to the `/boot` drive, sign them and let Qubes finish its initialization.
 
