@@ -4,11 +4,12 @@ Installing Heads
 ===
 These instructions are only for the Lenovo Thinkpad x230 and require physical access to the hardware. There are risks in installation that might brick your system and cause loss of data. You will need another computer to perform the flashing and building steps. If you want to experiment, consider [Emulating Heads](/Emulating-Heads) with qemu before installing it on your machine.
 
-There are four major steps:
-* Flashing the boot ROM, setting permissions
+There are five major steps:
+* Flashing the boot ROM
 * Taking ownership of the TPM
 * Installing Qubes
-* 
+* Sealing disk encryption keys
+* Signing Qubes installation
 
 ![Underside of the x230](https://farm9.static.flickr.com/8778/28686026815_6931443f6c.jpg)
 
