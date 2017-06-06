@@ -19,7 +19,7 @@ There are "too many secrets" involved in booting a Heads system.  Luckily most o
 
 Management Engine and Bootguard ACM fuses
 ---
-![Bootguard fuses](https://pbs.twimg.com/media/Curool7XgAE1KUR.jpg)
+![Bootguard fuses](images/Bootguard_fuses.jpg)
 
 The very first key used in the system is Intel's public key that signs the Management Engine firmware partition table in the SPI flash.  This key is stored in the on-die ROM of the ME and the ME will not start up if this signature does not match.  An attacker who controls this key (which is highly unlikely) can subvert the Bootguard checks as well as the measured boot process.
 
@@ -35,7 +35,7 @@ Are there any consequences of an attacker controlling this key?
 
 TPMTOTP shared secret
 ---
-![TPMTOTP in use](https://farm8.staticflickr.com/7564/28580109172_5bd759f336_z_d.jpg)
+![TPMTOTP in use](images/TPMTOTP_in_use.jpg)
 
 Since humans have trouble doing RSA public key cryptography in their brains, Heads uses [TPM TOTP](https://trmm.net/Tpmtotp) to let the system attest to the user that the firmware is unmodified.  During system setup a random 20-byte value is generated and shared (via QR code) to the user's phone as well as sealed with the correct TPM PCR values into the TPM NVRAM.  On subsequent boots the TPM will unseal the secret if and only if the PCRs match, and the computer then generates a one-time password based on the current clock time, which the user can compare to the value displayed on their phone.  A new secret must be generated each time the firmware is updated since this will change the PCRs.
 
@@ -67,7 +67,7 @@ Access to this key has the same risks as the disk recovery key.
 
 Owner's GPG key
 ---
-![Yubikey](https://farm8.static.flickr.com/7511/15176226904_c095ca5e1e.jpg)
+![Yubikey](images/Yubikey.jpg)
 
 The owner of the machine generates a GPG key pair as part of installing Heads.  The public key is inserted into the ROM image that is flashed and the owner signs the `/boot/boot.sh` script as well as the Xen hypervisor, the dom0 Linux kernel and initramfs, the TPM version counter of the system, and the dm-verity root hash if configured.  Ideally the private key does not live on the machine, but instead is in a Yubikey or other hardware token.
 
@@ -87,7 +87,7 @@ The root password is not enabled by default on Qubes, so it is functionally equi
 
 TPM PCRs
 ====
-![TPM](https://upload.wikimedia.org/wikipedia/commons/6/64/TPM_Asus.jpg)
+![TPM](images/TPM.jpg)
 
 The actual assignment needs to be updated in the code; there are outstanding issues (
 [MRC cache](https://github.com/osresearch/heads/issues/150),
