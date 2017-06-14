@@ -50,6 +50,8 @@ In the future ([issue #182](https://github.com/osresearch/heads/issues/182))
 it might be possible to install your own key from inside the recovery
 shell; this would be preferable for many reasons.
 
+Refer to this ([guide](http://osresearch.net/GPG))
+
 Insert your Yubikey into the build machine and in the `heads` build directory,
 clean out the old files, then invoke GPG's the "Card Edit" function with
 it targetting the local directory:
