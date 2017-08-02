@@ -28,7 +28,7 @@ The palm rest trackpad ribbon cable needs to be disconnected. Flip up the retain
 There are two SPI flash chips hiding under the black plastic, labelled "SPI1" and "SPI2". The top one is 4MB and contains the BIOS and reset vector. The bottom one is 8MB and has the [Intel Management Engine (ME)](https://www.flashrom.org/ME) firmware, plus the flash descriptor.
 
 
-Using a chip clip and a [SPI programmer](https://trmm.net/SPI_Flash), dump the existing ROMs to files. Dump them again and compare the different dumps to be sure that were no errors. Maybe dump them both a third time, just to be safe.
+Using a chip clip and a [SPI programmer](https://trmm.net/SPI_flash), dump the existing ROMs to files. Dump them again and compare the different dumps to be sure that were no errors. Maybe dump them both a third time, just to be safe.
 
 ![Flashing x230 SPI flash](https://farm3.staticflickr.com/2889/33186538873_c1290ca6ec_z_d.jpg)
 
