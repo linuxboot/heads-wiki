@@ -28,7 +28,7 @@ Useful targets
 ---
 Make for a specific configuration:
 ```
-make CONFIG=config/x230-qubes.config
+make CONFIG=config/x230-generic.config
 ```
 
 Verbose build (otherwise all log output goes into `build/logs/$(submodule).log`):
@@ -56,7 +56,7 @@ All of the organization of the Heads build is handled in the top level `Makefile
 
 Build configuration
 ---
-Platform configuration are stored in the `config/$ARCH-$USE.config` (this might change); these files specify the mainboard (x230, chell, librem13v1, and qemu) as well as the sub-modules necessary for the intended use (currently only Qubes laptop and MOC server).  The main difference between these use cases is the init scripts that are installed in the inird.  An example configuration is `config/x230-qubes.config`:
+Platform configuration are stored in the `config/$ARCH-$USE.config` (this might change); these files specify the mainboard (x230, chell, librem13v1, and qemu) as well as the sub-modules necessary for the intended use (currently only Qubes laptop and MOC server).  The main difference between these use cases is the init scripts that are installed in the inird.  An example configuration is `config/x230-generic.config`:
 
 ```
 # Configuration for a x230 running Qubes OS
