@@ -54,7 +54,7 @@ The Heads `Makefile`
 ===
 All of the organization of the Heads build is handled in the top level `Makefile` with the goal of producing a reproducible `initrd.cpio` containing the Heads runtime and kernel modules, the Head's Linux `bzImage` kernel, and the `coreboot.rom` tailored for the target platform initialization.
 
-Build onfiguration
+Build configuration
 ---
 Platform configuration are stored in the `config/$ARCH-$USE.config` (this might change); these files specify the mainboard (x230, chell, librem13v1, and qubes) as well as the sub-modules necessary for the intended use (currently only Qubes laptop and MOC server).  The main difference between these use cases is the init scripts that are installed in the inird.  An example configuration is `config/x230-qubes.config`:
 
