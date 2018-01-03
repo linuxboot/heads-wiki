@@ -13,7 +13,7 @@ There are five major steps:
 
 ![Underside of the x230](https://farm9.static.flickr.com/8778/28686026815_6931443f6c.jpg)
 
-Unplug the system and remove the battery while you're disassebling the machine! You'll need to remove the palm rest to get access to the SPI flash chips, which will require removing the keyboard. There are seven screws marked with keyboard and palm rest symbols.
+Unplug the system and remove the battery while you're disassembling the machine! You'll need to remove the palm rest to get access to the SPI flash chips, which will require removing the keyboard. There are seven screws marked with keyboard and palm rest symbols.
 
 ![Keyboard tilted up](https://farm9.static.flickr.com/8584/28653973936_9cffb2a34e.jpg)
 
@@ -112,7 +112,7 @@ Boot into the recovery shell (hit 'r' at the prompt before the normal startup sc
 qubes-install
 ```
 
-If that completes with no errors with will launch the Xen hypervisor from the x230's ROM image and start the Qube's installer.  The first few seconds are run with an archaic video mode, so things appear a little wrid, but once the dom0 kernel initializes the graphics it should look right.
+If that completes with no errors it will launch the Xen hypervisor from the x230's ROM image and start the Qube's installer.  The first few seconds are run with an archaic video mode, so things appear a little weird, but once the dom0 kernel initializes the graphics it should look right.
 
 ![Qubes partitioning](https://farm3.staticflickr.com/2858/33156102504_7fa25661c4_z_d.jpg)
 
@@ -139,7 +139,7 @@ qubes-boot /boot/xen-4.6.4-heads.gz /boot/vm... /boot/initramfs...
 
 You will need to input the disk recovery key here (almost for the last time),
 and this should start the final stage of the Qubes installer.  Under
-'Configure Qubes` you should select `Create USB qube holding all USB controllers` so that they are protected from outside devices.  This step takes a little
+`Configure Qubes` you should select `Create USB qube holding all USB controllers` so that they are protected from outside devices.  This step takes a little
 while as the templates are configured...
 
 Eventually this will be done and you can click "Finish", then Qubes will
