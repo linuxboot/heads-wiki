@@ -112,7 +112,7 @@ Boot into the recovery shell (hit 'r' at the prompt before the normal startup sc
 qubes-install
 ```
 
-If that completes with no errors it will launch the Xen hypervisor from the x230's ROM image and start the Qube's installer.  The first few seconds are run with an archaic video mode, so things appear a little weird, but once the dom0 kernel initializes the graphics it should look right.
+If that completes with no errors it will launch the Xen hypervisor from the x230's ROM image and start the Qubes installer.  The first few seconds are run with an archaic video mode, so things appear a little weird, but once the dom0 kernel initializes the graphics it should look right.
 
 ![Qubes partitioning](https://farm3.staticflickr.com/2858/33156102504_7fa25661c4_z_d.jpg)
 
