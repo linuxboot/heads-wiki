@@ -6,12 +6,17 @@ With a vanilla Ubuntu 16.04 install, such as a digitalocean droplet, you need to
 
 ```
 apt update
-apt install -y build-essential bc m4 bison flex zlib1g-dev python git
+apt install -y build-essential bc m4 bison flex zlib1g-dev python git gnupg
 ```
 
 On a Fedora machine:
 ```
-dnf install -y @development-tools gcc-c++ git patch bc wget perl-Digest-MD5 m4 bison flex zlib-devel python
+dnf install -y \
+	@development-tools \
+	gcc-c++ git patch bc \
+	m4 bison flex \
+	python zlib-devel gnupg wget \
+	perl-Digest-MD5 perl-Digest-SHA \
 ```
 
 Clone the tree:
@@ -28,7 +33,7 @@ Useful targets
 ---
 Make for a specific configuration:
 ```
-make CONFIG=config/x230-qubes.config
+make BOARD=x230
 ```
 
 Verbose build (otherwise all log output goes into `build/logs/$(submodule).log`):
@@ -54,9 +59,14 @@ The Heads `Makefile`
 ===
 All of the organization of the Heads build is handled in the top level `Makefile` with the goal of producing a reproducible `initrd.cpio` containing the Heads runtime and kernel modules, the Head's Linux `bzImage` kernel, and the `coreboot.rom` tailored for the target platform initialization.
 
-Build onfiguration
+Build configuration
 ---
-Platform configuration are stored in the `config/$ARCH-$USE.config` (this might change); these files specify the mainboard (x230, chell, librem13v1, and qubes) as well as the sub-modules necessary for the intended use (currently only Qubes laptop and MOC server).  The main difference between these use cases is the init scripts that are installed in the inird.  An example configuration is `config/x230-qubes.config`:
+Platform configuration are stored in the `board/$BOARD.config`
+(this might change); these files specify the mainboard (`x230`,
+`chell`, `librem13v1`, and servers like `s2600wf`, `winterfell` and `r630`)
+as well as the sub-modules necessary for the system.
+The main difference between these use cases is the init scripts that
+are installed in the inird, the Linux kernel configuration.  An example configuration is `config/x230-qubes.config`:
 
 ```
 # Configuration for a x230 running Qubes OS
