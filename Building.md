@@ -30,7 +30,7 @@ On a Fedora machine:
 dnf install -y \
 	@development-tools \
 	gcc-c++ zlib-devel perl-Digest-MD5 perl-Digest-SHA \
-	uuid-devel pcsc-tools qemu ncurses-devel \
+	uuid-devel pcsc-tools qemu ncurses-devel lbzip2 \
 	bc \
 	bzip2 \
 	bison \
