@@ -57,12 +57,60 @@ emulated Heads+coreboot ROM image.  This takes a long while, so go out
 for a cup of coffee..  The initial build on a small 1-core 1GB droplet
 it will take over 90 minutes, an 8-core system takes about 40 minutes.
 
-Useful targets
+Useful targets, stored under the `board` directory of the git tree. 
+
+Generated roms are generally found under build/$BOARD/$BOARD.rom
+
 ---
-Make for a specific configuration:
+Generic
+---
+Generally, everything that is needed to flash the SPI flash of a board is a single rom generated through `make BOARD=$BOARD` command, where $BOARD is the name of the board that can be found under `board` directory of the git downloaded tree.
+
+
+```
+make BOARD=kgpe-d16
+```
+will produce a build/kgpe-d16/kgpe-d6.rom
+
+---
+Make for a specific configuration. 
+---
+Some boards have a two SPI flash chip configuration and need special care.
+
+----
+x230 and x220
+----
+
+-----
+Initial SPI2 (4MB) flash chips
+-----
+x230 and x220 boards needs their 4MB SPI2 to be initially externally flashed, while the 12MB rom needs to be flashed internally from within Heads to make sure to not screw up with ME, contained in the SPI1 flash (8MB bottom flash chip under keyboad)
+
+The following make command generates a self-contained, externally flashable rom for the SPI2 (4MB BIOS, top SPI flash under keyboard). 
+
+
+```
+make BOARD=x230-flash
+```
+Resulting rom is found under build/x230-flash/x230-flash.rom
+
+-----
+Subsequent flashing (upgrades)
+-----
+
+The following make command will generate 3 rom images under build/x230 directory: a 12MB `coreboot.rom`, a `x230-4.rom` and a `x230-8.rom`.
+
 ```
 make BOARD=x230
 ```
+
+The `coreboot.rom` is the one needed to flash rom updates from within Heads in respect of ME. This is done with the help of the `flashrom-x230.sh` script from Heads recovery shell.
+
+More information under [`Installing Heads`](https://github.com/osresearch/heads-wiki/blob/master/Installing-Heads.md) and [`Cleaning the ME firmware`](https://github.com/osresearch/heads-wiki/blob/master/Clean-the-ME-firmware.md)
+
+---
+Helpful targets and options
+---
 
 Verbose build (otherwise all log output goes into `build/logs/$(submodule).log`):
 ```
@@ -81,8 +129,6 @@ make modules.clean
 ```
 
 
-
-
 The Heads `Makefile`
 ===
 All of the organization of the Heads build is handled in the top level `Makefile` with the goal of producing a reproducible `initrd.cpio` containing the Heads runtime and kernel modules, the Head's Linux `bzImage` kernel, and the `coreboot.rom` tailored for the target platform initialization.
@@ -90,8 +136,8 @@ All of the organization of the Heads build is handled in the top level `Makefile
 Build configuration
 ---
 Platform configuration are stored in the `board/$BOARD.config`
-(this might change); these files specify the mainboard (`x230`,
-`chell`, `librem13v1`, and servers like `s2600wf`, `winterfell` and `r630`)
+(this might change); these files specify the mainboard (`x230`, `x230-flash`
+`chell`, `librem13v1`, and servers like `s2600wf`, `winterfell`, `kgpe-d16` and `r630`)
 as well as the sub-modules necessary for the system.
 The main difference between these use cases is the init scripts that
 are installed in the inird, the Linux kernel configuration and the
