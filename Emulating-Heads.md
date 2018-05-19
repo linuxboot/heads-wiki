@@ -1,13 +1,13 @@
 Generate the `qemu.rom` image:
 
 ```
-make BOARD=qemu
+make BOARD=qemu-coreboot
 ```
 
 Boot it in qemu:
 
 ```
-qemu-system-x86_64 -machine q35 -bios qemu.rom
+build/make-4.2/make BOARD=qemu-coreboot run
 ```
 
 Issues with emulation:

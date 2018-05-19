@@ -32,31 +32,35 @@ Using a chip clip and a [SPI programmer](https://trmm.net/SPI_Flash), dump the e
 
 ![Flashing x230 SPI flash](https://farm3.staticflickr.com/2889/33186538873_c1290ca6ec_z_d.jpg)
 
-Ok, now comes the time to write the 4MB `x230.coreboot.bin` file to SPI2 chip. With my programmer and minicom, I hit i to verify that the flash chip signature is correctly read a few times, and then send `u0 400000`↵ to initiate the upload. I then drop to a shell with Control-A J and finally send the file with `pv x230.rom > /dev/ttyACM0`↵. A minute later, I resume minicom and hit i again to check that the chip is still responding.
+Ok, now comes the time to write the 4MB `x230-flash.bin` file to SPI2 chip (or `build/x230-flash/coreboot.rom` if you've built it locally). With my programmer and minicom, I hit i to verify that the flash chip signature is correctly read a few times, and then send `u0 400000`↵ to initiate the upload. I then drop to a shell with Control-A J and finally send the file with `pv x230.rom > /dev/ttyACM0`↵. A minute later, I resume minicom and hit i again to check that the chip is still responding.
 
 Move the clip to the SPI1 chip and flash the 8 MB `x230.me.bin` (TODO: document how to produce this with me cleaner -> [Clean the ME firmware](Clean-the-ME-firmware)). This time you'll send the command `u0 800000`↵. This will wipe out the official Intel firmware, leaving only a stub of it to bring up the Sandybridge CPU before shutting down the ME. As far as I can tell there are no ill effects other than an inability to power off the machine without using the power switch.
 
 Finally, remove the programmer, connect the power supply and try to reboot.
 
-If all goes well, you should see the keyboard LED flash, and within a second the Heads splash screen appear. It currently drops you immediately into the shell, since the boot script portion has not yet been implemented. If it doesn't work, well, sorry about that. Please let me know what the symptoms are or what happened during the flashing.
+If all goes well, you should see the keyboard LED flash, and within a second the Heads recovery splash screen will appear. It currently drops you immediately into the shell, to allow you to flash the full 12MB `x230.bin` Heads rom (or `build/x230/coreboot.rom` if you've built it locally). If it doesn't work, well, sorry about that. Please let me know what the symptoms are or what happened during the flashing.
 
-Congratulations! You now have a Coreboot + Heads Linux machine. Adding your own signing key, installing Qubes and configuring tpmtotp are the next steps and need to be written.
+Congratulations! You now have a Coreboot + Heads Linux machine. Adding your own signing key, installing Qubes and configuring tpmtotp are the next steps.
 
-Adding your PGP key
+On insert a USB drive containing the 12MB Heads rom and mount it using:
+
+```
+mount-usb
+```
+
+This will load the USB kernel modules and mount your drive at `/media`.
+
+Generating your PGP key
 ===
-Heads uses your own GPG key to sign updates and as a result it needs the
-key stored in the `initrd.cpio` file that is built as part of the ROM image.
-In the future ([issue #182](https://github.com/osresearch/heads/issues/182))
-it might be possible to install your own key from inside the recovery
-shell; this would be preferable for many reasons.
+If you're using a new Yubikey, you'll need to generate your key files. If you
+already have the public and private key stubs for your Yubikey, please proceed
+to the next section.
 
-Insert your Yubikey into the build machine and in the `heads` build directory,
-clean out the old files, then invoke GPG's the "Card Edit" function with
+Insert your Yubikey into the x230, then invoke GPG's the "Card Edit" function with
 it targetting the local directory:
 
 ```
-rm ./initrd/.gnupg/*
-gpg --card-edit --homedir ./initrd/.gnupg
+gpg --homedir=/media/gnupg/ --card-edit
 ```
 
 Go into "Admin" mode and generate a new key inside the Yubikey:
@@ -70,10 +74,44 @@ Since this key can be replaced by replacing the ROM, it is not necessary
 to make a backup unless you want to.
 This will prompt you for the admin pin (`12345678` by default) and then
 the existing pin (`123456`).  Follow the other prompts and eventually
-you should have a key in `initrd/.gnupg/`
+you should have a key in `/media/gnupg/`.
 
+Create a single file containing the public key and the private key stubs
+for this Yubikey (the secret key lives only in the Yubikey).
 
+```
+gpg --homedir=/media/gnupg/ --export -a > /media/gnupg/public.key
+gpg --homedir=/media/gnupg/ --export-secret-keys -a > /media/gnupg/private_stub.key
+```
 
+Adding your PGP key
+===
+Heads uses your own GPG key to sign updates and as a result it needs the
+key stored in the ROM image before flashing the full Heads ROM.
+
+Add your key to the Heads ROM using the following command:
+
+```
+cbfs -o /media/x230.rom -a "heads/initrd/.gnupg/keys/public.key" -f /media/gnupg/public.key
+cbfs -o /media/x230.rom -a "heads/initrd/.gnupg/keys/private_stub.key" -f /media/gnupg/private_stub.key
+```
+
+Any name can be used as long as the it is preceded by `heads/initrd/.gnupg/keys/`
+and you can used a combined the public and private stubs (by `cat`ing them together).
+
+After these files are added to the `/media/x230.rom`, you should flash the full ROM:
+
+```
+flashrom-x230.sh /media/x230.com
+```
+
+Once `flashrom` is complete, reboot (using the `reboot` command)
+and now you should now be back in the Heads runtime. It should
+display a message that is is unable to unseal TOTP.
+
+Because the reproducible flash has an empty MRC cache, you need to
+reboot one more time so that the PCR values as they would be going
+forward.
 
 Configuring the TPM
 ===
@@ -94,7 +132,7 @@ tpmtotp
 
 ![TPMTOTP QR code](https://pbs.twimg.com/media/Cr8x7f6WEAEbBdq.jpg)
 
-Once you own the TPM and have the final version of the `x230.rom` flashed, run `seal-totp` to generate a random secret, seal it with the current TPM PCR values and store the sealed value in the TPM's NVRAM. This will generate a QR code that you can scan with your google authenticator application and use to validate that the boot block, rom stage and Linux payload are un-altered.
+Once you own the TPM, run `seal-totp` to generate a random secret, seal it with the current TPM PCR values and store the sealed value in the TPM's NVRAM. This will generate a QR code that you can scan with your google authenticator application and use to validate that the boot block, rom stage and Linux payload are un-altered.
 
 ![TPMTOTP output](https://farm8.static.flickr.com/7564/28580109172_5bd759f336.jpg)
 
@@ -102,17 +140,60 @@ On the next boot, or if you run `unseal-totp`, the script will extract the seale
 
 This does not eliminate all firmware attacks (such as evil maid ones that replace the SPI flash chip), but when combined with the WP# pin and BP bits should eliminate a software only attack.
 
+Generic OS Installation
+===
+
+1. Insert OS installation media into one of the USB3 ports (on the left side)
+
+The Heads boot process supports standard OS bootable media (where the USB drive contains the installation media which as created using `dd` or `unetbootin` etc.) as well as booting directly from verified ISOs on a plain old partition.
+
+For example, if the USB drive has a single partition, you can put the ISO image along with a trusted signature in the root directory:
+
+```
+/Qubes-R4.0-x86_64.iso
+/Qubes-R4.0-x86_64.iso.asc
+/Fedora-Workstation-Live-x86_64-27-1.6.iso
+/Fedora-Workstation-Live-x86_64-27-1.6.iso.sig
+/tails-amd64-3.7.iso
+/tails-amd64-3.7.iso.sig
+```
+
+Each ISO is verified before booting so that you can be sure Live distros and installation media are not tammpered with, so this route is preferred when available.  You can also sign the ISO with your own key:
+
+```
+gpg --output <iso_name>.sig --detach-sig <iso_name>
+```
+
+Some distros require additional options to boot properly directly from ISO.  See [Boot config files](/Boot.md) for more information.
+
+2. Boot from USB by either running `usb-scan` or reboot into USB boot mode (hit 'u' before the normal boot)
+
+
+3. Select the install boot option for your distro of choice and work through the standard OS installation procedures (including setting up LUKS disk encryption if desired)
+
+
+4. Reboot and your new boot options should be available to be chosen by selecting 'm' at the boot screen
+
+If you want to set a default option so that you don't have to choose at every boot, you can do so from the menu by selecting 'd' on the confirmation screen.  You will also be able to seal your disk encryption key using the TPM allowing you to use ensure only a boot password and the proper PCR state can unlock this yet.
+
+(\*) Ubuntu/Debian Note: These systems don't read `/etc/crypttab` in their initrd, so you need to adjust the crypttab in the OS and `update-initramfs -u` to have it attempt to use the injected key.  Due to oddities in the cryptroot hooks, you also need keyscript to be in `/etc/crypttab` even as a no-op `/bin/cat`:
+
+`sda5_crypt UUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX /secret.key luks,keyscript=/bin/cat`
+
+(Credit to http://www.pavelkogan.com/2015/01/25/linux-mint-encryption/ for this trick).
+
+
 Installing Qubes
 ===
 ![Heads splash screen](https://farm3.staticflickr.com/2890/33999478295_5738432e82_z_d.jpg)
 
-Boot into the recovery shell (hit 'r' at the prompt before the normal startup script tries to run) and plug the USB stick with the R3.2 install media into one of the USB3 ports (on the left side of the x230) and run the helper script to start the Qubes installer:
+Plus in the USB stick with the R4.0 install media into one of the USB3 ports (on the left side of the x230) and boot into USB mode (hit 'u' at the prompt), then boot using this option:
 
 ```
-qubes-install
+2. Install Qubes R4.0 [kernel /isolinux/xen.gz console=none]
 ```
 
-If that completes with no errors with will launch the Xen hypervisor from the x230's ROM image and start the Qube's installer.  The first few seconds are run with an archaic video mode, so things appear a little wrid, but once the dom0 kernel initializes the graphics it should look right.
+Wait a bit and the Qubes installer should get into graphical mode once dom0 kernel initializes graphics.
 
 ![Qubes partitioning](https://farm3.staticflickr.com/2858/33156102504_7fa25661c4_z_d.jpg)
 
@@ -128,52 +209,28 @@ You will need it again shortly, so don't lose it yet.
 
 ![Signing Qubes binaries in /boot](https://farm3.staticflickr.com/2939/33999478305_f0f61a4408_z_d.jpg])
 
-Once Qubes has finished installing, you'll need to reboot into the Heads recovery shell.  The first reboot will fail with errors about "`/boot/boot.hashes does not exist`", since it doesn't..  The first step is to copy the Heads Xen to the `/boot` drive, sign them and let Qubes finish its initialization.
+Once Qubes has finished installing, you'll need to reboot and select the 'Boot menu' option by hitting 'm'.
+
+Select the first boot option:
 
 ```
-mount -o rw,remount /boot
-cp /bin/xen.gz /boot/xen-4.6.4-heads.gz
-mount -o ro,remount /boot
-qubes-boot /boot/xen-4.6.4-heads.gz /boot/vm... /boot/initramfs...
+1. Qubes, with Xen hypervisor [...]
 ```
 
-You will need to input the disk recovery key here (almost for the last time),
-and this should start the final stage of the Qubes installer.  Under
-'Configure Qubes` you should select `Create USB qube holding all USB controllers` so that they are protected from outside devices.  This step takes a little
+Then make this the default boot entry by hitting 'd'.  This will also allow you to seal the disk encryption key.
+
+If you choose to add the disk encryption key to the TPM, you'll need to specify which LUKS volume.  A default Qubes install will work if you leave the 'Encrypted LVM group?' response blank and enter `/dev/sda2` when asked about 'Encrypted devices?'.  For more details see the TPM Disk encryption keys section below. You'll then be asked to enter the disk recovery key as well as the new boot password you'll use to unseal that key.
+
+Once the key sealing process is complete, it will ask you to insert your GPG card then enter your PIN to sign the config.  After this, it will reboot back to the main boot menu.  Disconnect your GPG card otherwise Qubes might think you have a USB keyboard.
+
+To start Heads now (and in the future), just hit 'y' for default boot.
+
+This should start the final stage of the Qubes installer.  Under
+'Configure Qubes' you should select `Create USB qube holding all USB controllers` so that they are protected from outside devices.  This step takes a little
 while as the templates are configured...
 
 Eventually this will be done and you can click "Finish", then Qubes will
 give you a login screen with your login password.
-
-Now we need to make a small change to have Qubes' initramfs correctly find the TPM encrypted keys.  Open a dom0 terminal (click on the Q in the upper left and select `Terminal Emulator`).  In this shell run this perl command and rebuild the initrd with dracut (takes several seconds):
-
-TODO: how to force all of crypttab to be emitted?
-
-```
-sudo perl -pi -e 's: none: /secret.key' /etc/crypttab
-sudo dracut --force
-```
-
-
-Reboot by selecting "Logout" and "Reboot" and you should be back to the
-Heads recovery shell with the `boot.hashes` error.  Insert your Yubikey and run
-(hit tab to autocomplete the file names):
-
-
-```
-qubes-update /boot/xen-4.6.4-heads.gz /boot/vmlinux... /boot/initramfs...
-```
-
-This should prompt you for the TPM owner password to create the new
-counter (only the first time), then for your GPG card's password.
-It will output `/boot/boot.hashes` and `/boot/boot.hashes.asc`
-with the signed hashes of the executables.
-
-Lastly you'll need to seal the disk encryption keys with a disk unlock key
-that you will enter everytime.  Run `seal-key` and it will prompt you for
-the disk recovery key (the long one you entered above), a disk unlock
-key that you will enter on every boot, and on your first run also the
-TPM owner password to create the NVRAM space.
 
 
 Installing extra software
@@ -229,25 +286,23 @@ TPM Disk encryption keys
 ---
 The keys are currently derived only from the user passphrase, which is expanded via the LUKS expansion algorithm to increase the time to brute force it. For extra protection it is possible to store the keys in the TPM so that they will only be released if the PCRs match.
 
-*This section is an early draft*
+If you want to use the TPM to seal a secret used to unlock your LUKS volumes:
 
-There are two tools in the Heads ROM image for working with the TPM keys. `seal-key` will generate a new key, seal it with the current PCRs and add a TPM passphrase, then store it into the TPM NVRAM. `unseal-key` will extract it from the NVRAM and request the user passphrase to decrypt/unseal it. If the PCRs do not match, the TPM will reject the attempt (and hopefully dump keys after too many tries?).
+1. Enter recovery mode
+2. Ensure that your the boot devices is mounted: `mount -o ro /dev/sda1 /boot` or whatever is appropriate
+3. Insert your GPG card
+4. Run `kexec-save-key -p /boot/ ...` with the followed by options appropriate to your OS.  The key will be installed in all devices in the LVM volume group as well as any other devices specified after the `-l` option.
 
-To setup the drive encryption, generate and seal a new key. Then unseal it to create `/tmp/secret.key` in the initial ramdisk. Delete the old keys from the root, home and swap partitions (can this use disk labels?):
+Examples for the `kexec-save-key` parameters:
 
-```
-cryptsetup luksKillSlot /dev/sda2 1
-cryptsetup luksKillSlot /dev/sda3 1
-cryptsetup luksKillSlot /dev/sda5 1
-```
+| Installation Type | Command |
+| ---- | ---- |
+| Previous Heads installation | `kexec-save-key -p /boot/ -l qubes_dom0` |
+| Default Qubes / Default Fedora 25 | `kexec-save-key -p /boot/ /dev/sda2` |
+| Default Ubuntu 16.04 / Debian 9 (\*) | `kexec-save-key -p /boot/ /dev/sda5` |
 
-Then add the (now cleartext) key to each partition:
+5. Reboot and you will be prompted for your boot password when that device is used to boot in the future.
 
-```
-cryptsetup luksAddKey /dev/sda2 /tmp/secret.key
-cryptsetup luksAddKey /dev/sda3 /tmp/secret.key
-cryptsetup luksAddKey /dev/sda5 /tmp/secret.key
-```
 
 NOTE: should the new LUKS headers be measured and the key re-sealed with those parameters? This is what the Qubes AEM setup uses and is probably a good idea (although we've already attested to the state of the firmware).
 

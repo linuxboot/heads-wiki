@@ -91,8 +91,7 @@ TPM PCRs
 
 The actual assignment needs to be updated in the code; there are outstanding issues (
 [MRC cache](https://github.com/osresearch/heads/issues/150),
-[SMM reloc](https://github.com/osresearch/heads/issues/13),
-[double measurement](https://github.com/osresearch/heads/issues/15)
+[SMM reloc](https://github.com/osresearch/heads/issues/13)
 ) that need to be resolved as well.  Until then this is a rough draft of how Heads uses the TPM PCRs.
 
 0: Boot block
@@ -108,3 +107,5 @@ The actual assignment needs to be updated in the code; there are outstanding iss
 5: Heads Linux kernel modules
 
 6: Drive LUKS headers
+
+7: Heads user-specific config files
