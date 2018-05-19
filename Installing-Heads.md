@@ -232,6 +232,17 @@ while as the templates are configured...
 Eventually this will be done and you can click "Finish", then Qubes will
 give you a login screen with your login password.
 
+After the first reboot, the boot entry will be different post-installation, so after you hit 'y' to select default boot you will see a message:
+
+```
+!!! Boot entry has changed - please set a new default
+```
+
+This will also happen on OS updates that changed the boot process (updating the kernel or the initramfs, etc.).  If someone has tampered with your `/boot` partition, this can also happen, so if you're not sure of the situation, don't proceed.
+
+Choose the first option again ('1'), then make it the new default ('d'), confirm that you're modifying the boot partition ('y'), and that you don't need to reseal the disk key ('n').  You'll be asked to insert your GPG card and enter the PIN to sign the new configs and the system will reboot and allow you to proceed as normal.
+
+
 
 Installing extra software
 ---
