@@ -23,6 +23,7 @@ apt install -y \
 	patch \
 	python \
 	wget \
+	gnat
 ```
 
 On a Fedora machine:
