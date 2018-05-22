@@ -24,7 +24,8 @@ apt install -y \
 	python \
 	wget \
 	gnat \
-	cpio
+	cpio \
+	ccache
 ```
 
 On a Fedora machine:
