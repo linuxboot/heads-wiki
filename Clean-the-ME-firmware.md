@@ -1,12 +1,12 @@
 What is the Intel Management Engine
 ===
 The Intel ME is a coprocessor, running inside your Intel CPU, which is supposed to function as a out-of-band management system for your computer.  
-It's based on a ARC core, can be powered even when the main CPU is off, and has more privileges than the CPU itself.  
+It's based on a ARC/i386 core depending of the version, can be powered even when the main CPU is off and has more privileges than the CPU itself.  
 More info: [Intel Active Management Technology](https://en.wikipedia.org/wiki/Intel_Active_Management_Technology)
 
-How to disable it
+How to disable/deactive most of it
 ===
-The ME firmware sits on the second SPI flash chip of the x230 (the 8MB one). We cannot remove it completely, otherwise the machine will shut itself off after 30 minutes. We can, however, reduce it to the bare minimum necessary to keep ip running, but without any malicious code in it (or so we hope...).  
+The ME firmware sits on the second SPI flash chip of the x230 (the 8MB one). We cannot remove it completely, otherwise the machine will shut itself off after 30 minutes. We can, however, reduce it to the bare minimum necessary to keep it running, but without any malicious code in it (or so we hope, depending of what the ROMP and BUP modules really do...).  
 First take a flash dump of the chip, take it again and compare the two.  
 If they match, clone this repo:  
 `https://github.com/corna/me_cleaner.git`  
@@ -28,7 +28,7 @@ Checking FTPR RSA signature... VALID
 If it's not, dump it again :)  
 Next, let's strip all the nasty bits:  
 
-`python me_cleaner.py -r -d -O clean_flash.bin flash.bin`
+`python me_cleaner.py -r -t -d -S -O clean_flash.bin flash.bin --extract-me extracted_me.rom`
 
 Output:  
 
@@ -57,7 +57,7 @@ Reading FTPR modules list...
  FTCS             (Huffman, fragmented data    ): removed
  ClsPriv          (LZMA   , 0x1e7556 - 0x1e7937): removed
  SESSMGR          (LZMA   , 0x1e7937 - 0x1f6240): removed
-Relocating FTPR to 0x3d00 - 0xcdd00...
+Relocating FTPR from 0xd00 - 0xcad00 to 0xd00 - 0xcad00...
  Adjusting FPT entry...
  Adjusting LUT start offset...
  Adjusting Huffman start offset...
@@ -66,7 +66,11 @@ Relocating FTPR to 0x3d00 - 0xcdd00...
 The ME minimum size should be 98304 bytes (0x18000 bytes)
 The ME region can be reduced up to:
  00003000:0001afff me
-Checking FTPR RSA signature... VALID
+Setting the AltMeDisable bit in PCHSTRP10 to disable Intel ME...
+Removing ME/TXE R/W access to the other flash regions...
+Extracting and truncating the ME image to "extracted_me.rom"...
+Checking the FTPR RSA signature of the extracted ME image... VALID
+Checking the FTPR RSA signature... VALID
 Done! Good luck!
 ```
 
