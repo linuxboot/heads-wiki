@@ -5,6 +5,7 @@ Using Heads
 * [Installing Heads](/Installing-Heads) on an x230 Thinkpad
 * [Upgrading Heads](/Upgrading), including how to generate your TOTP token
 * [Keys, Passwords and PCRs in Heads](/Keys) (rough draft)
+* [Boot config files](/Boot)
 * Qubes specific configurations (to be written)
 * Server specific configurations (to be written)
 

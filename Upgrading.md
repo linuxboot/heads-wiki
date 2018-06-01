@@ -92,4 +92,6 @@ This needs the TPM owner password to be able to define the NVRAM space.
 
 Resealing the disk encryption keys
 ---
-TODO.  Yes, I know this is the difficult part.  Sorry I haven't written it yet.
+When you get to the standard boot menu and after you verify the TOTP, select 'm' to
+go to the full boot menu.  Select the option you want (usually the first),
+make it the default by hitting 'd' and also say 'y' when asked to reseal the disk keys.

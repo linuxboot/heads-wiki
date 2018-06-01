@@ -23,6 +23,9 @@ apt install -y \
 	patch \
 	python \
 	wget \
+	gnat \
+	cpio \
+	ccache
 ```
 
 On a Fedora machine:
