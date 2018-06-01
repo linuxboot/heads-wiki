@@ -31,6 +31,7 @@ dnf install -y \
 	@development-tools \
 	gcc-c++ zlib-devel perl-Digest-MD5 perl-Digest-SHA \
 	uuid-devel pcsc-tools qemu ncurses-devel lbzip2 \
+	libuuid-devel lzma \
 	bc \
 	bzip2 \
 	bison \
@@ -43,6 +44,10 @@ dnf install -y \
 	patch \
 	python \
 	wget \
+
+# For emulation and analysis with UEFITool
+dnf install -y \
+	qemu qt5-devel \
 ```
 
 Clone the tree:
