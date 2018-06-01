@@ -1,4 +1,4 @@
-![Flashing Heads on an x230 at HOPE](https://pbs.twimg.com/media/CoKJhJHUkAA-MtS.jpg)
+![Flashing Heads on an x230 at HOPE](images/Flashing_Heads_on_an_x230_at_HOPE.jpg)
 
 Installing Heads
 ===
@@ -11,26 +11,26 @@ There are five major steps:
 * Sealing disk encryption keys
 * Signing Qubes installation
 
-![Underside of the x230](https://farm9.static.flickr.com/8778/28686026815_6931443f6c.jpg)
+![Underside of the x230](images/Underside_of_the_x230.jpg)
 
 Unplug the system and remove the battery while you're disassebling the machine! You'll need to remove the palm rest to get access to the SPI flash chips, which will require removing the keyboard. There are seven screws marked with keyboard and palm rest symbols.
 
-![Keyboard tilted up](https://farm9.static.flickr.com/8584/28653973936_9cffb2a34e.jpg)
+![Keyboard tilted up](images/Keyboard_tilted_up.jpg)
 
 The keyboard tilts up on a ribbon cable. You can keep the cable installed, unless you want to swap the keyboard for the nice x220 model.
 
-![Ribbon cable](https://farm8.static.flickr.com/7667/28608155181_fa4a2bfe45.jpg)
+![Ribbon cable](images/Ribbon_cable.jpg)
 
 The palm rest trackpad ribbon cable needs to be disconnected. Flip up the retainer and pull the cable out. It shouldn't require much force. Once the palmrest is removed you can replace the keyboard screws and operate the machine without the palm rest. Since the thinkpad has the trackpoint, even mouse applications will still work fine.
 
-![Flash chips](https://farm9.static.flickr.com/8581/28401826120_bd8a84e508.jpg)
+![Flash chips](images/Flash_chips.jpg)
 
 There are two SPI flash chips hiding under the black plastic, labelled "SPI1" and "SPI2". The top one is 4MB and contains the BIOS and reset vector. The bottom one is 8MB and has the [Intel Management Engine (ME)](https://www.flashrom.org/ME) firmware, plus the flash descriptor.
 
 
 Using a chip clip and a [SPI programmer](https://trmm.net/SPI_Flash), dump the existing ROMs to files. Dump them again and compare the different dumps to be sure that were no errors. Maybe dump them both a third time, just to be safe.
 
-![Flashing x230 SPI flash](https://farm3.staticflickr.com/2889/33186538873_c1290ca6ec_z_d.jpg)
+![Flashing x230 SPI flash](images/Flashing_x230_SPI_flash.jpg)
 
 Ok, now comes the time to write the 4MB `x230.coreboot.bin` file to SPI2 chip. With my programmer and minicom, I hit i to verify that the flash chip signature is correctly read a few times, and then send `u0 400000`↵ to initiate the upload. I then drop to a shell with Control-A J and finally send the file with `pv x230.rom > /dev/ttyACM0`↵. A minute later, I resume minicom and hit i again to check that the chip is still responding.
 
@@ -92,11 +92,11 @@ There is something weird with enabling, presence and disabling. Sometimes reboot
 tpmtotp
 ---
 
-![TPMTOTP QR code](https://pbs.twimg.com/media/Cr8x7f6WEAEbBdq.jpg)
+![TPMTOTP QR code](images/TPMTOTP_QR_code.jpg)
 
 Once you own the TPM and have the final version of the `x230.rom` flashed, run `seal-totp` to generate a random secret, seal it with the current TPM PCR values and store the sealed value in the TPM's NVRAM. This will generate a QR code that you can scan with your google authenticator application and use to validate that the boot block, rom stage and Linux payload are un-altered.
 
-![TPMTOTP output](https://farm8.static.flickr.com/7564/28580109172_5bd759f336.jpg)
+![TPMTOTP output](images/TPMTOTP_output.jpg)
 
 On the next boot, or if you run `unseal-totp`, the script will extract the sealed blob from the NVRAM and the TPM will validate that the PCR values are as expected before it unseals it. If this works, the current TOTP will be computed and you can compare this one-time-password against the value that your phone generates.
 
@@ -104,7 +104,7 @@ This does not eliminate all firmware attacks (such as evil maid ones that replac
 
 Installing Qubes
 ===
-![Heads splash screen](https://farm3.staticflickr.com/2890/33999478295_5738432e82_z_d.jpg)
+![Heads splash screen](images/Heads_splash_screen.jpg)
 
 Boot into the recovery shell (hit 'r' at the prompt before the normal startup script tries to run) and plug the USB stick with the R3.2 install media into one of the USB3 ports (on the left side of the x230) and run the helper script to start the Qubes installer:
 
@@ -114,11 +114,11 @@ qubes-install
 
 If that completes with no errors with will launch the Xen hypervisor from the x230's ROM image and start the Qube's installer.  The first few seconds are run with an archaic video mode, so things appear a little wrid, but once the dom0 kernel initializes the graphics it should look right.
 
-![Qubes partitioning](https://farm3.staticflickr.com/2858/33156102504_7fa25661c4_z_d.jpg)
+![Qubes partitioning](images/Qubes_partitioning.jpg)
 
 My recommended partitioning scheme is to use LVM and to allocate 1G for `/boot` since it will hold the dm-verity hashes, 48G for `/`, 8G for swap and the rest for `/home`.  Don't adjust the filesystem labels or the volume group; this will be used by the startup script.
 
-![Disk encryption recovery key](https://farm3.staticflickr.com/2883/33869761321_6c853894da_z_d.jpg)
+![Disk encryption recovery key](images/Disk_encryption_recovery_key.jpg)
 
 The disk encrypt password that you enter here will be used as the
 "recovery password" later.  It should be a long value since you won't
@@ -126,7 +126,7 @@ have to enter it very often; only when upgrading the Heads firmware
 or if there is a need to recover the disk on an external machine.
 You will need it again shortly, so don't lose it yet.
 
-![Signing Qubes binaries in /boot](https://farm3.staticflickr.com/2939/33999478305_f0f61a4408_z_d.jpg])
+![Signing Qubes binaries in /boot](images/Signing_Qubes_binaries_in__boot.jpg)
 
 Once Qubes has finished installing, you'll need to reboot into the Heads recovery shell.  The first reboot will fail with errors about "`/boot/boot.hashes does not exist`", since it doesn't..  The first step is to copy the Heads Xen to the `/boot` drive, sign them and let Qubes finish its initialization.
 

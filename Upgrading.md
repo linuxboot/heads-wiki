@@ -1,4 +1,4 @@
-![Flashing Heads on an x230 at HOPE](https://pbs.twimg.com/media/CoKJhJHUkAA-MtS.jpg)
+![Flashing Heads on an x230 at HOPE](images/Flashing_Heads_on_an_x230_at_HOPE.jpg)
 
 Upgrading Heads
 ===
@@ -17,7 +17,7 @@ the disk key is not accessible to the recovery shell.
 
 Recovery shell
 ---
-![Recovery shell](https://farm4.staticflickr.com/3703/32951200183_70b00f0a4a_z_d.jpg)
+![Recovery shell](images/Recovery_shell.jpg)
 
 If the flash protection bits are set correctly it is not possible to
 rewrite the firmware from the normal OS.  You'll need to reboot
@@ -25,7 +25,7 @@ to the Heads recovery shell (hit `r` after the TPM TOTP prompt).
 
 Mounting the USB media
 ---
-![insmod](https://farm4.staticflickr.com/3857/33607597312_3d31a74b6c_z_d.jpg)
+![insmod](images/insmod.jpg)
 
 The Heads boot process does not have USB or network drivers by default
 and neither does the recovery shell (although this might change).
@@ -49,7 +49,7 @@ mount -o ro /dev/sdb1 /media
 
 Flashing the ROM
 ---
-![Mount and flash](https://farm3.staticflickr.com/2903/33723157616_9d0bee1317_z_d.jpg)
+![Mount and flash](images/Mount_and_flash.jpg)
 
 There is a helper script `/bin/flashrom-x230.sh` that uses the x230
 flash ROM layout and the Heads modified version of `flashrom` to
@@ -61,7 +61,7 @@ reading the ME section, so it is not necessary to have used the
 flashrom-x230.sh /media/x230.full.rom
 ```
 
-![Flashrom](https://farm3.staticflickr.com/2901/33607597262_07b2ea7004_z_d.jpg)
+![Flashrom](images/Flashrom.jpg)
 
 If all goes well it will write for about a minute and then report
 success.  Due to hacks in `flashrom`, it does not read back what it
@@ -77,7 +77,7 @@ the TPM values are at their persistent state
 
 Regenerating the TOTP token
 ---
-![TPM TOTP QR](https://farm3.staticflickr.com/2857/33635693261_88ddb3f024_z_d.jpg)
+![TPM TOTP QR](images/TPM_TOTP_QR.jpg)
 
 After the second post-flash reboot, generate a new token and store the
 QR code in your phone by running:
