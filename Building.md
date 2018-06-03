@@ -130,12 +130,16 @@ Produce just the build of a single sub-module with the `.intermediate` suffix:
 make gpg.intermediate
 ```
 
-Clean a single submodule or all (?) volatile submodules:
+Clean a single submodule:
 ```
 make gpg.clean
 make modules.clean
 ```
 
+Clean all volatile submodules except crosscompiler (clean build):
+```
+make real.clean
+```
 
 The Heads `Makefile`
 ===
