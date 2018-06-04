@@ -32,9 +32,18 @@ Using a chip clip and a [SPI programmer](https://trmm.net/SPI_flash), dump the e
 
 ![Flashing x230 SPI flash](images/Flashing_x230_SPI_flash.jpg)
 
-Ok, now comes the time to write the 4MB `x230-flash.bin` file to SPI2 chip (or `build/x230-flash/coreboot.rom` if you've built it locally). With my programmer and minicom, I hit i to verify that the flash chip signature is correctly read a few times, and then send `u0 400000`↵ to initiate the upload. I then drop to a shell with Control-A J and finally send the file with `pv x230.rom > /dev/ttyACM0`↵. A minute later, I resume minicom and hit i again to check that the chip is still responding.
+Ok, now comes the time to write the 4MB `build/x230-flash/x230-flash.rom` file to SPI2 chip. With my programmer and minicom, I hit i to verify that the flash chip signature is correctly read a few times, and then send `u0 400000`↵ to initiate the upload. I then drop to a shell with Control-A J and finally send the file with `pv x230.rom > /dev/ttyACM0`↵. A minute later, I resume minicom and hit i again to check that the chip is still responding.
 
-Move the clip to the SPI1 chip and flash the 8 MB `x230.me.bin` (TODO: document how to produce this with me cleaner -> [Clean the ME firmware](Clean-the-ME-firmware)). This time you'll send the command `u0 800000`↵. This will wipe out the official Intel firmware, leaving only a stub of it to bring up the Sandybridge CPU before shutting down the ME. As far as I can tell there are no ill effects.
+Move the clip to the SPI1 chip. Read out the chip using `flashrom -r`, keep
+a copy as backup and run `ifdtool -u` on it to enable writing to the flash
+from software later. Also, [clean the ME firmware](Clean-the-ME-firmware).
+This will wipe out the official Intel firmware, leaving only a stub of it to
+bring up the Sandybridge CPU before shutting down the ME. As far as I can
+tell there are no ill effects. Flash back your modified 8MB image. This
+time you’ll send the command u0 800000↵. (you can also use the
+[Skulls project](https://github.com/merge/skulls/tree/master/x230)'s
+`external_install_bottom.sh -m` script to do all this work on the SPI1 chip
+automatically).
 
 Finally, remove the programmer, connect the power supply and try to reboot.
 
