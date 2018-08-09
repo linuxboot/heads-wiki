@@ -11,6 +11,7 @@ apt update
 apt install -y \
 	build-essential \
 	zlib1g-dev uuid-dev libdigest-sha-perl \
+	libelf-dev \
 	bc \
 	bzip2 \
 	bison \
@@ -35,6 +36,7 @@ dnf install -y \
 	gcc-c++ zlib-devel perl-Digest-MD5 perl-Digest-SHA \
 	uuid-devel pcsc-tools qemu ncurses-devel lbzip2 \
 	libuuid-devel lzma \
+	libelf-devel \
 	bc \
 	bzip2 \
 	bison \
