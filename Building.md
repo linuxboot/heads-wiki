@@ -49,6 +49,8 @@ dnf install -y \
 	patch \
 	python \
 	wget \
+	libusb-devel \
+	cmake
 
 # For emulation and analysis with UEFITool
 dnf install -y \
