@@ -82,6 +82,7 @@ for this Yubikey (the secret key lives only in the Yubikey).
 ```
 gpg --homedir=/media/gnupg/ --export -a > /media/gnupg/public.key
 gpg --homedir=/media/gnupg/ --export-secret-keys -a > /media/gnupg/private_stub.key
+cat /media/gnupg/private_stub.key /media/gnupg/public.key > /media/gnupg/concatenated.key
 ```
 
 Adding your PGP key
