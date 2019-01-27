@@ -110,7 +110,7 @@ Resulting rom is found under build/x230-flash/x230-flash.rom
 Subsequent flashing (upgrades)
 -----
 
-The following make command will generate 3 rom images under build/x230 directory: a 12MB `coreboot.rom`, a `x230-4.rom` and a `x230-8.rom`.
+The following make command will generate a 12MB `coreboot.rom` under the build/x230 directory.
 
 ```
 make BOARD=x230
