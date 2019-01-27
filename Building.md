@@ -140,6 +140,10 @@ make gpg.clean
 make modules.clean
 ```
 
+Clean all volatile submodules except crosscompiler (clean build):
+```
+make real.clean
+```
 
 The Heads `Makefile`
 ===
