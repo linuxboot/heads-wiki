@@ -50,7 +50,9 @@ dnf install -y \
 	python \
 	wget \
 	libusb-devel \
-	cmake
+	cmake \
+	pv \
+	bsdiff
 
 # For emulation and analysis with UEFITool
 dnf install -y \
