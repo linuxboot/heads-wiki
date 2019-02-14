@@ -62,7 +62,7 @@ This will load the USB kernel modules and mount your drive at `/media`.
 Generating your PGP key
 ===
 If you're using a new Yubikey, you'll need to generate your key files. If you
-already have the public and private key stubs for your Yubikey, please proceed
+already have the public key stubs for your Yubikey, please proceed
 to the next section.  There is some more info in the [GPG guide](http://osresearch.net/GPG))
 
 Insert your Yubikey into the x230, then invoke GPG's the "Card Edit"
@@ -85,13 +85,10 @@ This will prompt you for the admin pin (`12345678` by default) and then
 the existing pin (`123456`).  Follow the other prompts and eventually
 you should have a key in `/media/gnupg/`.
 
-Create a single file containing the public key and the private key stubs
-for this Yubikey (the secret key lives only in the Yubikey).
+Create a single file containing the public key for this Yubikey (the secret key lives only in the Yubikey).
 
 ```
 gpg --homedir=/media/gnupg/ --export -a > /media/gnupg/public.key
-gpg --homedir=/media/gnupg/ --export-secret-keys -a > /media/gnupg/private_stub.key
-cat /media/gnupg/private_stub.key /media/gnupg/public.key > /media/gnupg/concatenated.key
 ```
 
 Adding your PGP key
@@ -103,11 +100,9 @@ Add your key to the Heads ROM using the following command:
 
 ```
 cbfs -o /media/x230.rom -a "heads/initrd/.gnupg/keys/public.key" -f /media/gnupg/public.key
-cbfs -o /media/x230.rom -a "heads/initrd/.gnupg/keys/private_stub.key" -f /media/gnupg/private_stub.key
 ```
 
-Any name can be used as long as the it is preceded by `heads/initrd/.gnupg/keys/`
-and you can used a combined the public and private stubs (by `cat`ing them together).
+Any name can be used as long as the it is preceded by `heads/initrd/.gnupg/keys/`.
 
 After these files are added to the `/media/x230.rom`, you should flash the full ROM:
 
