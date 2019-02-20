@@ -26,7 +26,8 @@ apt install -y \
 	wget \
 	gnat \
 	cpio \
-	ccache
+	ccache \
+	pkg-config
 ```
 
 On a Fedora machine:
