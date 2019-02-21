@@ -27,7 +27,9 @@ apt install -y \
 	gnat \
 	cpio \
 	ccache \
-	pkg-config
+	pkg-config \
+	cmake \
+	libusb-1.0-0-dev \
 ```
 
 On a Fedora machine:
