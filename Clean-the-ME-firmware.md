@@ -6,8 +6,13 @@ More info: [Intel Active Management Technology](https://en.wikipedia.org/wiki/In
 
 How to disable/deactive most of it
 ===
-The ME firmware sits on the second SPI flash chip of the x230 (the 8MB one). We cannot remove it completely, otherwise the machine will shut itself off after 30 minutes. We can, however, reduce it to the bare minimum necessary to keep it running, but without any malicious code in it (or so we hope, depending of what the ROMP and BUP modules really do...).  
-First take a flash dump of the chip, take it again and compare the two.  
+The ME firmware sits on the second SPI flash chip of the x230 (the 8MB one). We cannot remove it completely, otherwise the machine will shut itself off after 30 minutes. We can, however, reduce it to the bare minimum necessary to keep it running, but without any malicious code in it (or so we hope, depending of what the ROMP and BUP modules really do...).
+
+First take a flash dump of the chip, take it again and compare the two.
+
+With a ch341a programmer, the command would look like the following:
+`sudo ~/flashrom/flashrom -r ~/down.rom --programmer ch341a_spi && sudo ~/flashrom/flashrom -v ~/down.rom --programmer ch341a_spi`
+
 If they match, clone this repo:  
 `https://github.com/corna/me_cleaner.git`  
 and then run:  
@@ -26,9 +31,14 @@ Checking FTPR RSA signature... VALID
 ```
 
 If it's not, dump it again :)  
+
+Next, unlock the descriptor and ME regions with ifdtool. We consider here that you already build Heads through `make BOARD=x230`:
+`~/heads/build/coreboot-4.8.1/util/ifdtool/ifdtool -u down.rom`
+This produced a new unlocked rom under `down.rom.new`
+
 Next, let's strip all the nasty bits:  
 
-`python me_cleaner.py -r -t -d -S -O clean_flash.bin flash.bin --extract-me extracted_me.rom`
+`python me_cleaner.py -r -t -d -S -O clean_flash.bin down.rom.new --extract-me extracted_me.rom`
 
 Output:  
 
