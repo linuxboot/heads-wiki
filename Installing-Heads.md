@@ -202,7 +202,7 @@ If that completes with no errors it will launch the Xen hypervisor from the x230
 
 ![Qubes partitioning](images/Qubes_partitioning.jpg)
 
-My recommended partitioning scheme is to use LVM and to allocate 1G for `/boot` since it will hold the dm-verity hashes, 48G for `/`, 8G for swap and the rest for `/home`.  Don't adjust the filesystem labels or the volume group; this will be used by the startup script.
+Use default QubesOS partitioning scheme for QubesOS 4.x
 
 ![Disk encryption recovery key](images/Disk_encryption_recovery_key.jpg)
 
@@ -265,12 +265,6 @@ dom0 probably has updates available. You'll want to install them before switchin
 sudo qubes-dom0-update
 ```
 
-You'll need the dm-verity tools to enable hashing
-
-```
-sudo qubes-dom0-update veritysetup
-```
-
 powertop is useful for debugging power drain issues. In dom0 run:
 
 ```
@@ -296,16 +290,6 @@ You'll probably want to enable fan control, as described on [ThinkWiki](http://w
 
 Disabling the ethernet might make sense to save power
 
-Read-only root
----
-There are some changes to Qubes' files that have to be made first. [Patches were posted to the qubes-devel list](https://groups.google.com/forum/?fromgroups#!topic/qubes-devel/hG93VcwWtRY), although they need to be updated.
-
-TODO: write a script to apply all of these fixes
-
-Hashing the / partition and setting up dm-verity
----
-Signing /boot
----
 TPM Disk encryption keys
 ---
 The keys are currently derived only from the user passphrase, which is expanded via the LUKS expansion algorithm to increase the time to brute force it. For extra protection it is possible to store the keys in the TPM so that they will only be released if the PCRs match.
@@ -331,7 +315,3 @@ Examples for the `kexec-save-key` parameters:
 NOTE: should the new LUKS headers be measured and the key re-sealed with those parameters? This is what the Qubes AEM setup uses and is probably a good idea (although we've already attested to the state of the firmware).
 
 This is where things get messy right now. The key file can not persist on disk anywhere, since it would allow an adversary to decrypt the drive. Instead it is necessary to unseal/decrypt the key from the TPM and then bundle the key file into a RAM copy of Qubes' dom0 initrd on each boot. The initramfs format allows concatenated cpio files, so it is easy for the Heads firmware to inject files into the Qubes startup script.
-
-Hardware hardening
-===
-Soldering jumpers on WP# pins, setting BP bits, epoxy blobs.
