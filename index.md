@@ -35,7 +35,7 @@ stateless OS that leaves no trace on the computer of its presence, Heads
 is intended for the case where you need to store data and state on the
 computer.  It is influenced by several years of firmware vulnerability
 research ([Thunderstrike](https://trmm.net/Thunderstrike) and [Thunderstrike 2](https://trmm.net/Thunderstrike_2)) as well as many
-other researchers' work ("[Hardening hardware and choosing a #goodBIOS](https://www.youtube.com/watch?v=2VvR-vsdMlQ)" by Peter Stuge,
+other researchers' work ("[Hardening hardware and choosing a #goodBIOS](https://media.ccc.de/v/30C3_-_5529_-_en_-_saal_2_-_201312271830_-_hardening_hardware_and_choosing_a_goodbios_-_peter_stuge#t=2372)" by Peter Stuge,
 "[Beyond anti evil maid](https://media.ccc.de/v/32c3-7343-beyond_anti_evil_maid)" by Matthew Garret,
 "[Towards (reasonably) trustworthy x86 laptops](http://www.theregister.co.uk/2015/12/31/rutkowska_talks_on_intel_x86_security_issues/)"
 by Joanna Rutkowska,
