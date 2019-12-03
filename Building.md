@@ -30,6 +30,7 @@ apt install -y \
 	pkg-config \
 	cmake \
 	libusb-1.0-0-dev \
+	pkg-config \
 ```
 
 On a Fedora machine:
