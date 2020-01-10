@@ -56,7 +56,9 @@ dnf install -y \
 	libusb-devel \
 	cmake \
 	pv \
-	bsdiff
+	bsdiff \
+	diffutils \ 
+	texinfo
 
 # For emulation and analysis with UEFITool
 dnf install -y \
