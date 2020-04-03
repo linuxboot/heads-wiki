@@ -31,6 +31,7 @@ apt install -y \
 	cmake \
 	libusb-1.0-0-dev \
 	pkg-config \
+	texinfo \
 ```
 
 On a Fedora machine:
