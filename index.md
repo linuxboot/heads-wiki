@@ -2,20 +2,20 @@
 
 Using Heads
 ===
-* [Installing Heads](/Installing-Heads) on an x230 Thinkpad
-* [Upgrading Heads](/Upgrading), including how to generate your TOTP token
-* [Keys, Passwords and PCRs in Heads](/Keys) (rough draft)
-* [Boot config files](/Boot)
+* [Installing Heads](/Installing-Heads.md) on an x230 Thinkpad
+* [Upgrading Heads](/Upgrading.md), including how to generate your TOTP token
+* [Keys, Passwords and PCRs in Heads](/Keys.md) (rough draft)
+* [Boot config files](/Boot.md)
 * Qubes specific configurations (to be written)
 * Server specific configurations (to be written)
 
 Developing Heads
 ===
 
-* [The Heads build process](/Building) and adding a new sub-module
+* [The Heads build process](/Building.md) and adding a new sub-module
 * [Open issues](https://github.com/osresearch/heads/issues)
-* [Emulating Heads](/Emulating-Heads) (with qemu)
-* [Porting to a new mainboard](/Porting) (rough draft)
+* [Emulating Heads](/Emulating-Heads.md) (with qemu)
+* [Porting to a new mainboard](/Porting.md) (rough draft)
 
 Releases
 ===

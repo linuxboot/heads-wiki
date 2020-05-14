@@ -2,7 +2,7 @@
 
 Installing Heads
 ===
-These instructions are only for the Lenovo Thinkpad x230 and require physical access to the hardware. There are risks in installation that might brick your system and cause loss of data. You will need another computer to perform the flashing and building steps. If you want to experiment, consider [Emulating Heads](/Emulating-Heads) with qemu before installing it on your machine.
+These instructions are only for the Lenovo Thinkpad x230 and require physical access to the hardware. There are risks in installation that might brick your system and cause loss of data. You will need another computer to perform the flashing and building steps. If you want to experiment, consider [Emulating Heads](/Emulating-Heads.md) with qemu before installing it on your machine.
 
 There are five major steps:
 * Flashing the boot ROM
