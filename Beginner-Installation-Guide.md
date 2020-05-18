@@ -16,7 +16,7 @@ As you read, remember that while the Thinkpad x230 has two SPI flash chips, many
 
 ## What You Will Need:
 
-* Supported motherboard or laptop (List of supported boards in `./boards`) 
+* Supported motherboard or laptop (List of supported boards in `./boards`)
 * [Spi Programmer](https://trmm.net/SPI_flash): ch341a programmer or raspberry pi or bus pirate (ch341a is recommended for new users and can be found almost [anywhere](https://www.amazon.com/s?k=ch341a+programmer))
 * Wires and a clip to connect your programmer of choice to the board’s SPI flash chip(s)
 * If you plan to use a ch341a programmer you will need another computer to flash from (Try to use a recommended operating system: Qubes or Debian 9 or Fedora 30)
@@ -83,7 +83,7 @@ dnf install -y \
     cmake \
     pv \
     bsdiff \
-    diffutils \ 
+    diffutils \
     texinfo
 ```
 
@@ -125,16 +125,16 @@ Make Heads for another board (`XXX` should be the name of your board in ./boards
 make BOARD=XXX
 ```
 
-The resulting rom file can be found in `./build/XXX/XXX.rom` (`XXX` should be the name of your board in `./boards`).
+The resulting rom file will be either `./build/XXX/XXX.rom` or `./build/XXX/coreboot.rom` (`XXX` should be the name of your board in `./boards`).
 
 
 ## External Flashing:
 
 First remove the battery or cable powering your device. The Thinkpad x230 has two SPI flash chips that hold the BIOS, ME, etc. and are located under the palm rest. To access these chips, first remove the indicated screws on the back of the laptop.
 
-Removing these screws will allow you to remove the keyboard and palm rest. 
+Removing these screws will allow you to remove the keyboard and palm rest.
 
-The keyboard is connected to the motherboard by a ribbon cable which easily detaches from the motherboard. (The keyboard only needs to be removed so that the palm rest can be removed. After removing the palm rest, you can put the keyboard back.) 
+The keyboard is connected to the motherboard by a ribbon cable which easily detaches from the motherboard. (The keyboard only needs to be removed so that the palm rest can be removed. After removing the palm rest, you can put the keyboard back.)
 
 The palm rest is also connected to the motherboard, but there is a little latch holding its ribbon cable. After undoing that latch, the palm rest should be fairly easy to remove.
 
@@ -151,19 +151,12 @@ sudo flashrom -p ch341a_spi
 Find the chip and read from it twice (For me the SPI flash chip is `YYY`):
 
 ```
-sudo flashrom -p ch341a_spi -c “YYY” -r read11.bin
-sudo flashrom -p ch341a_spi -c “YYY” -r read12.bin
-```
-
-Make sure that your programmer is reading correctly by checking if the files are the same:
-
-```
-diff read1.bin read2.bin
+sudo flashrom -r ~/top.bin --programmer ch341a_spi -c YYY && sudo flashrom -v ~/top.bin --programmer ch341a_spi -c YYY
 ```
 
 If the files differ then try reconnecting your programmer to the SPI flash chip and make sure your flashrom software is up to date.
 
-If they are the same then write x230-flash.rom to the SPI flash chip:
+If they are the same then write `x230-flash.rom` to the SPI flash chip:
 
 ```
 sudo flashrom -p ch341a_spi -c “YYY” -w ~/heads/build/x230-flash/x230-flash.rom
@@ -178,14 +171,7 @@ sudo flashrom -p ch341a_spi
 Find the chip and read from the chip twice (For me the SPI flash chip is `ZZZ`):
 
 ```
-sudo flashrom -p ch341a_spi -c “ZZZ” -r read21.bin
-sudo flashrom -p ch341a_spi -c “ZZZ” -r read22.bin
-```
-
-Make sure that your programmer is reading correctly by checking if the files are the same:
-
-```
-diff read1.bin read2.bin
+sudo flashrom -r ~/bottom.bin --programmer ch341a_spi -c ZZZ && sudo flashrom -v ~/bottom.bin --programmer ch341a_spi -c ZZZ
 ```
 
 ### Cleaning the ME:
@@ -198,10 +184,10 @@ Clone the me_cleaner repo:
 git clone https://github.com/corna/me_cleaner.git
 ```
 
-Use me_cleaner to verify that the read from the SPI flash chip contains ME firmware: 
+Use me_cleaner to verify that the read from the SPI flash chip contains ME firmware:
 
 ```
-python me_cleaner.py -c flash21.bin
+python me_cleaner.py -c ~/bottom.bin
 ```
 
 The output should be something like:
@@ -219,15 +205,15 @@ Checking FTPR RSA signature... VALID
 If the output is good then unlock the descriptor and ME regions with ifdtool:
 
 ```
-~/heads/build/coreboot-4.8.1/util/ifdtool/ifdtool -u read21.bin
+~/heads/build/coreboot-4.8.1/util/ifdtool/ifdtool -u ~/bottom.bin
 ```
 
-The resulting file will be called `read21.bin.new` and should be located in the same directory as `read21.bin`.
+The resulting file will be called `bottom.bin.new` and should be located in the same directory as `bottom.bin`.
 
 Remove all of the ME firmware that is not necessary to boot from the unlocked rom file:
 
 ```
-python me_cleaner.py -r -t -d -S -O clean_flash.bin read21.bin.new --extract-me extracted_me.rom
+python me_cleaner.py -r -t -d -S -O clean_flash.bin bottom.bin.new --extract-me extracted_me.rom
 ```
 
 Flash `clean_flash.bin` to the SPI flash chip:
@@ -284,4 +270,3 @@ flash.sh -c /media/coreboot.rom
 ```
 
 Wait for the flashing to finish and you should be able to reboot into Heads!
-
