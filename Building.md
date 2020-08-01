@@ -12,6 +12,7 @@ apt install -y \
 	build-essential \
 	zlib1g-dev uuid-dev libdigest-sha-perl \
 	libelf-dev \
+	libncurses-dev \
 	bc \
 	bzip2 \
 	bison \
