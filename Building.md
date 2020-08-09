@@ -9,7 +9,7 @@ short while, so get a cup of coffee and [install host build requirements package
 On a Fedora machine, [install host build requirements packages as specified here](https://github.com/osresearch/heads/blob/master/.gitlab-ci.yml#L19).
 
 
-# For emulation and analysis with UEFITool, add those packagesto the list:
+For emulation and analysis with UEFITool, add those packages to the list:
 ```
 dnf install -y \
 	qemu qt5-devel \
