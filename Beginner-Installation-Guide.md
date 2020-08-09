@@ -27,65 +27,8 @@ As you read, remember that while the Thinkpad x230 has two SPI flash chips, many
 
 Install the necessary support tools for your distribution.
 
-On Debian or Ubuntu:
-
-```
-apt update
-apt install -y \
-    build-essential \
-    zlib1g-dev uuid-dev libdigest-sha-perl \
-    libelf-dev \
-    bc \
-    bzip2 \
-    bison \
-    flex \
-    git \
-    gnupg \
-    iasl \
-    m4 \
-    nasm \
-    patch \
-    python \
-    wget \
-    gnat \
-    cpio \
-    ccache \
-    pkg-config \
-    cmake \
-    libusb-1.0-0-dev \
-    pkg-config \
-    texinfo \
-```
-
-On Fedora:
-
-```
-dnf update
-dnf install -y \
-    @development-tools \
-    gcc-c++ gcc-gnat zlib-devel perl-Digest-MD5 perl-Digest-SHA \
-    uuid-devel pcsc-tools qemu ncurses-devel lbzip2 \
-    libuuid-devel lzma \
-    elfutils-libelf-devel \
-    bc \
-    bzip2 \
-    bison \
-    flex \
-    git \
-    gnupg \
-    iasl \
-    m4 \
-    nasm \
-    patch \
-    python \
-    wget \
-    libusb-devel \
-    cmake \
-    pv \
-    bsdiff \
-    diffutils \
-    texinfo
-```
+* [Debian or Ubuntu](https://github.com/osresearch/heads/blob/master/.circleci/config.yml#L11)
+* [Fedora](https://github.com/osresearch/heads/blob/master/.gitlab-ci.yml#L19)
 
 Install `qemu` and `qt5-devel` (for emulation and analysis with UEFITool respectively):
 
