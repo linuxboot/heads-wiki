@@ -2,6 +2,7 @@
 
 Using Heads
 ===
+* [A Beginner's Guide into Building and Installing Heads](/Beginner-Installation-Guide)
 * [Installing Heads](/Installing-Heads) on an x230 Thinkpad
 * [Upgrading Heads](/Upgrading), including how to generate your TOTP token
 * [Keys, Passwords and PCRs in Heads](/Keys) (rough draft)
@@ -11,7 +12,7 @@ Using Heads
 
 Developing Heads
 ===
-
+* [A Beginner's Guide into Building and Installing Heads](/Beginner-Installation-Guide)
 * [The Heads build process](/Building) and adding a new sub-module
 * [Open issues](https://github.com/osresearch/heads/issues)
 * [Emulating Heads](/Emulating-Heads) (with qemu)
