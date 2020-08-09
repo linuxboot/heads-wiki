@@ -4,65 +4,13 @@ Heads is supposed to be a [reproducible build](https://reproducible-builds.org/)
 
 With a vanilla Debian 9 or Ubuntu 16.04 install, such as a digitalocean
 droplet, you need to first install some support tools. This takes a
-short while, so get a cup of coffee:
+short while, so get a cup of coffee and [install host build requirements packages as specified here](https://github.com/osresearch/heads/blob/master/.circleci/config.yml#L10-L11)
 
-```
-apt update
-apt install -y \
-	build-essential \
-	zlib1g-dev uuid-dev libdigest-sha-perl \
-	libelf-dev \
-	libncurses-dev \
-	bc \
-	bzip2 \
-	bison \
-	flex \
-	git \
-	gnupg \
-	iasl \
-	m4 \
-	nasm \
-	patch \
-	python \
-	wget \
-	gnat \
-	cpio \
-	ccache \
-	pkg-config \
-	cmake \
-	libusb-1.0-0-dev \
-	pkg-config \
-	texinfo \
-```
+On a Fedora machine, [install host build requirements packages as specified here](https://github.com/osresearch/heads/blob/master/.gitlab-ci.yml#L19).
 
-On a Fedora machine:
-```
-dnf install -y \
-	@development-tools \
-	gcc-c++ gcc-gnat zlib-devel perl-Digest-MD5 perl-Digest-SHA \
-	uuid-devel pcsc-tools qemu ncurses-devel lbzip2 \
-	libuuid-devel lzma \
-	elfutils-libelf-devel \
-	bc \
-	bzip2 \
-	bison \
-	flex \
-	git \
-	gnupg \
-	iasl \
-	m4 \
-	nasm \
-	patch \
-	python \
-	wget \
-	libusb-devel \
-	cmake \
-	pv \
-	bsdiff \
-	diffutils \ 
-	texinfo
 
-# For emulation and analysis with UEFITool
+# For emulation and analysis with UEFITool, add those packagesto the list:
+```
 dnf install -y \
 	qemu qt5-devel \
 ```
