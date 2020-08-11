@@ -94,13 +94,13 @@ The actual assignment needs to be updated in the code; there are outstanding iss
 [SMM reloc](https://github.com/osresearch/heads/issues/13)
 ) that need to be resolved as well.  Until then this is a rough draft of how Heads uses the TPM PCRs.
 
-0: Boot block
+0: Nothing for the moment
 
-1: ROM stage
+1: Nothing for the moment
 
-2: RAM stage (and MRC? this should be separate)
+2: Boot block, ROM stage, RAM stage, Heads linux kernel and initrd (and MRC? this should be separate)
 
-3: Heads Linux kernel and initrd
+3: Nothing for the moment
 
 4: Boot mode (0 during `/init`, then `recovery` or `normal-boot`)
 
