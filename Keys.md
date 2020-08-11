@@ -98,7 +98,7 @@ The actual assignment needs to be updated in the code; there are outstanding iss
 
 1: Nothing for the moment
 
-2: Boot block, ROM stage, RAM stage, Heads linux kernel and initrd (and MRC? this should be separate)
+2: Boot block, ROM stage, RAM stage, Heads linux kernel and initrd
 
 3: Nothing for the moment
 
