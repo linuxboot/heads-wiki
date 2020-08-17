@@ -8,7 +8,12 @@ How to disable/deactive most of it
 ===
 The ME firmware sits on the second SPI flash chip of the x230 (the 8MB one). We cannot remove it completely, otherwise the machine will shut itself off after 30 minutes. We can, however, reduce it to the bare minimum necessary to keep it running, but without any malicious code in it (or so we hope, depending of what the ROMP and BUP modules really do...).
 
-First take a flash dump of the chip, take it again and compare the two.
+The initial step is to upgrade the proprietary BIOS to the last upgradeable version one for each platform. 
+As an example, for the x230, the latest upgradeable version would be [version 2.76](https://download.lenovo.com/pccbbs/mobiles/g2uj32us.iso) without [EC signature verification](https://support.lenovo.com/us/en/solutions/len-27764). Newer firmware version [won't permit to swap a x220 keyboard on the x230](https://github.com/hamishcoleman/thinkpad-ec/pull/130).  
+
+Prepare a USB bootable disk by following [el torito instructions](https://askubuntu.com/questions/651281/write-bootable-bios-update-iso-to-usb-stick), then boot that prepared USB disk and upgrade the prioprietary firmware to latest available version following on screen instructions. Be sure to have a fully charged battery, be connected to power source prior of attempting to upgrade, else you will have to wait for the battery to be changed.
+
+Once the proprietary firmware is updated to the latest available user ownable version, take a flash dump of the bottom SPI chip and verify that its backup is valid.
 
 With a ch341a programmer, the command would look like the following:
 `sudo ~/flashrom/flashrom -r ~/down.rom --programmer ch341a_spi && sudo ~/flashrom/flashrom -v ~/down.rom --programmer ch341a_spi`
@@ -30,7 +35,7 @@ ME/TXE firmware version 8.1.30.1350
 Checking FTPR RSA signature... VALID
 ```
 
-If it's not, dump it again :)  
+If it's not, replace the reprogrammer clip and try again :)  
 
 Next, unlock the descriptor and ME regions with ifdtool. We consider here that you already build Heads through `make BOARD=x230`:
 `~/heads/build/coreboot-4.8.1/util/ifdtool/ifdtool -u down.rom`
