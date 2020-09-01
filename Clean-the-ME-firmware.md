@@ -15,13 +15,15 @@ Prepare a USB bootable disk by following [el torito instructions](https://askubu
 
 Once the proprietary firmware is updated to the latest available user ownable version, take a flash dump of the bottom SPI chip and verify that its backup is valid.
 
+Flashrom can be downloaded on most linux distribution on the external laptop that will be used to flash the cleaned rom. (`sudo dnf install flashrom` or `sudo apt-get install flashrom`.
+
 With a ch341a programmer, the command would look like the following:
-`sudo ~/flashrom/flashrom -r ~/down.rom --programmer ch341a_spi && sudo ~/flashrom/flashrom -v ~/down.rom --programmer ch341a_spi`
+`sudo flashrom -r ~/down.rom --programmer ch341a_spi && sudo flashrom -v ~/down.rom --programmer ch341a_spi`
 
 If they match, clone this repo:  
 `https://github.com/corna/me_cleaner.git`  
 and then run:  
-`python me_cleaner.py -c flash.bin`  
+`python ~/me_cleaner/me_cleaner.py -c flash.bin`  
 to check if it's a valid ME firmware.  
 The output should be like:  
 
@@ -43,7 +45,7 @@ This produced a new unlocked rom under `down.rom.new`
 
 Next, let's strip all the nasty bits:  
 
-`python me_cleaner.py -r -t -d -S -O clean_flash.bin down.rom.new --extract-me extracted_me.rom`
+`python ~/me_cleaner/me_cleaner.py -r -t -d -S -O clean_flash.bin down.rom.new --extract-me extracted_me.rom`
 
 Output:  
 
@@ -92,6 +94,6 @@ Done! Good luck!
 After that, you got your new, cleaned up version of the ME firmware inside clean_flash.bin  
 Flash it back on the SPI:
 
-`sudo ~/flashrom/flashrom -w clean_flash.bin --programmer ch341a_spi`
+`sudo flashrom -w clean_flash.bin --programmer ch341a_spi`
 
 You're now good to go :)
