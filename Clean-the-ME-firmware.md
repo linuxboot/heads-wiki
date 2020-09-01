@@ -90,4 +90,8 @@ Done! Good luck!
 ```
 
 After that, you got your new, cleaned up version of the ME firmware inside clean_flash.bin  
-Flash it back on the SPI and you're good to go :)
+Flash it back on the SPI:
+
+`sudo ~/flashrom/flashrom -w clean_flash.bin --programmer ch341a_spi`
+
+You're now good to go :)
