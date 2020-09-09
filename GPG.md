@@ -1,3 +1,11 @@
+---
+layout: default
+title: GPG Generation
+permalink: /GPG/
+nav_order: 11
+nav_exclude: true
+---
+
 Generating a new card
 ===
 
@@ -39,7 +47,7 @@ You should change them using the command --change-pin
 gpg: 3 Admin PIN attempts remaining before card is permanently locked
 
 Please enter the Admin PIN
-                 
+
 Please enter the PIN
 Please specify how long the key should be valid.
          0 = key does not expire
@@ -57,7 +65,7 @@ from the Real Name, Comment and Email Address in this form:
 
 Real name: Heads Firmware
 Email address: heads@osresearch.net
-Comment: 
+Comment:
 You selected this USER-ID:
     "Heads Firmware <heads@osresearch.net>"
 
@@ -106,9 +114,9 @@ Your selection? 3
 gpg: 3 Admin PIN attempts remaining before card is permanently locked
 
 Please enter the Admin PIN
-                 
+
 New Admin PIN
-                     
+
 New Admin PIN
 PIN changed.     
 
@@ -121,9 +129,9 @@ Q - quit
 Your selection? 1
 
 Please enter the PIN
-           
+
 New PIN
-               
+
 New PIN
 PIN changed.     
 
@@ -159,4 +167,3 @@ scd apdu 00 20 00 83 08 40 40 40 40 40 40 40 40
 scd apdu 00 e6 00 00
 scd apdu 00 44 00 00
 ```
-

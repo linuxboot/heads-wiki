@@ -1,3 +1,10 @@
+---
+layout: default
+title: Keys and passwords in Heads
+permalink: /Keys/
+nav_order: 6
+---
+
 Keys and passwords in Heads
 ====
 There are "too many secrets" involved in booting a Heads system.  Luckily most of them are stored in hardware and only a few need to be memorized by the users.  This page attempts to document their usage and the risks if an attacker can compromise the different keys.

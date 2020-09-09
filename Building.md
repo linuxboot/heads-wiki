@@ -1,3 +1,10 @@
+---
+layout: default
+title: Building Heads
+permalink: /Building/
+nav_order: 8
+---
+
 Building Heads
 ===
 Heads is supposed to be a [reproducible build](https://reproducible-builds.org/) and as of [v0.1.0](https://github.com/osresearch/heads/releases/tag/v0.1.0) it achieved this goal.  The downside is that the initial build can take a very long time as it downloads and builds all of the its dependencies.  One issue right now is that it builds not just one, but *two* cross compilers and as a result takes about 45 minutes.  Luckily subsequent builds only take about 30 seconds to produce a full coreboot and Linux ROM image, but that first ones a doozy...
@@ -27,7 +34,7 @@ emulated Heads+coreboot ROM image.  This takes a long while, so go out
 for a cup of coffee..  The initial build on a small 1-core 1GB droplet
 it will take over 90 minutes, an 8-core system takes about 40 minutes.
 
-Useful targets, stored under the `board` directory of the git tree. 
+Useful targets, stored under the `board` directory of the git tree.
 
 Generated roms are generally found under build/$BOARD/$BOARD.rom
 
@@ -43,7 +50,7 @@ make BOARD=kgpe-d16
 will produce a build/kgpe-d16/kgpe-d6.rom
 
 ---
-Make for a specific configuration. 
+Make for a specific configuration.
 ---
 Some boards have a two SPI flash chip configuration and need special care.
 
@@ -56,7 +63,7 @@ Initial SPI2 (4MB) flash chips
 -----
 x230 and x220 boards needs their 4MB SPI2 to be initially externally flashed, while the 12MB rom needs to be flashed internally from within Heads to make sure to not screw up with ME, contained in the SPI1 flash (8MB bottom flash chip under keyboad)
 
-The following make command generates a self-contained, externally flashable rom for the SPI2 (4MB BIOS, top SPI flash under keyboard). 
+The following make command generates a self-contained, externally flashable rom for the SPI2 (4MB BIOS, top SPI flash under keyboard).
 
 
 ```

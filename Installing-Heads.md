@@ -1,3 +1,10 @@
+---
+layout: default
+title: Installing Heads
+permalink: /Installing-Heads/
+nav_order: 3
+---
+
 ![Flashing Heads on an x230 at HOPE](images/Flashing_Heads_on_an_x230_at_HOPE.jpg)
 
 Installing Heads

@@ -1,3 +1,9 @@
+---
+layout: default
+title: Boot config files
+permalink: /Boot/
+nav_order: 7
+---
 
 Boot config files
 ===

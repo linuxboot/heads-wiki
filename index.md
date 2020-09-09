@@ -1,3 +1,10 @@
+---
+layout: default
+title: About
+permalink: /
+nav_order: 1
+---
+
 ![Heads booting on an x230](images/Heads_booting_on_an_x230.jpg)
 
 Slack Open Source Firmware
