@@ -9,7 +9,7 @@ nav_order: 3
 
 Installing Heads
 ===
-These instructions are only for the Lenovo Thinkpad x230 and require physical access to the hardware. There are risks in installation that might brick your system and cause loss of data. You will need another computer to perform the flashing and building steps. If you want to experiment, consider [Emulating Heads](/Emulating-Heads) with qemu before installing it on your machine.
+These instructions are only for the Lenovo Thinkpad x230 and require physical access to the hardware. There are risks in installation that might brick your system and cause loss of data. You will need another computer to perform the flashing and building steps. If you want to experiment, consider [Emulating Heads](Emulating-Heads.md) with qemu before installing it on your machine.
 
 There are five major steps:
 * Flashing the boot ROM
@@ -176,7 +176,7 @@ Each ISO is verified before booting so that you can be sure Live distros and ins
 gpg --output <iso_name>.sig --detach-sig <iso_name>
 ```
 
-Some distros require additional options to boot properly directly from ISO.  See [Boot config files](/Boot.md) for more information.
+Some distros require additional options to boot properly directly from ISO.  See [Boot config files](Boot.md) for more information.
 
 2. Boot from USB by either running `usb-scan` or reboot into USB boot mode (hit 'u' before the normal boot)
 
