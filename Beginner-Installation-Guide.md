@@ -1,3 +1,10 @@
+---
+layout: default
+title: Beginner Installation Guide
+permalink: /Beginner-Installation-Guide/
+nav_order: 2
+---
+
 # Heads Installation Guide
 
 ![Heads booting on an x230](images/Heads_booting_on_an_x230.jpg)

@@ -1,3 +1,10 @@
+---
+layout: default
+title: Porting Heads
+permalink: /Porting/
+nav_order: 10
+---
+
 To add a new board to the Heads build hopefully you only need to modify
 the coreboot configuration and add a top-level image configuration.
 

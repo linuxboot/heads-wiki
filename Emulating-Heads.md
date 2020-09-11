@@ -1,3 +1,10 @@
+---
+layout: default
+title: Emulating Heads
+permalink: /Emulating-Heads/
+nav_order: 9
+---
+
 Generate the `qemu.rom` image:
 
 ```

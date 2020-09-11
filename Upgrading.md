@@ -1,3 +1,10 @@
+---
+layout: default
+title: Upgrading Heads
+permalink: /Updating/
+nav_order: 5
+---
+
 ![Flashing Heads on an x230 at HOPE](images/Flashing_Heads_on_an_x230_at_HOPE.jpg)
 
 Upgrading Heads
