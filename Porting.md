@@ -22,11 +22,11 @@ named `./initrd.cpio.xz`.  No command line options are necessary.
 it is a little tricky since we have an external config file.  From the
 top level of the Heads directory you can run:
 
-```
+```shell
 make \
-	-C build/coreboot-4.5 \
-	DOTCONFIG=../../config/coreboot-newarch.config \
-	menuconfig
+  -C build/coreboot-4.5 \
+  DOTCONFIG=../../config/coreboot-newarch.config \
+  menuconfig
 ```
 
 * Run `make CONFIG=config/newarch-qubes.config` to setup the coreboot tree,
@@ -34,4 +34,4 @@ using the new coreboot config file.  This will create the output directory
 `build/coreboot-4.5/newarch/`, and after a while, you should have `newarch.rom`
 in the top level directory.
 
-* If things don't work, please open an issue on https://github.com/osresearch/heads/issues
+* If things don't work, please open an issue on [https://github.com/osresearch/heads/issues](https://github.com/osresearch/heads/issues)

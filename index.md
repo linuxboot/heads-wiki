@@ -9,11 +9,13 @@ nav_order: 1
 
 Slack Open Source Firmware
 ===
+
 * [Register to Open Source Firmware](https://slack.osfw.dev/)
 * [Head's channel](https://osfw.slack.com/archives/C92MNSRC1)
 
 Using Heads
 ===
+
 * [A Beginner's Guide into Building and Installing Heads](Beginner-Installation-Guide.md)
 * [Installing Heads](Installing-Heads.md) on an x230 Thinkpad
 * [Upgrading Heads](Upgrading.md), including how to generate your TOTP token
@@ -24,6 +26,7 @@ Using Heads
 
 Developing Heads
 ===
+
 * [A Beginner's Guide into Building and Installing Heads](Beginner-Installation-Guide.md)
 * [The Heads build process](Building.md) and adding a new sub-module
 * [Open issues](https://github.com/osresearch/heads/issues)
@@ -32,24 +35,36 @@ Developing Heads
 
 Releases
 ===
-There are currently no binary downloads; you must build from source to ensure that you can add your own GPG keys to the image to sign your OS installation.
 
-The current release is [0.2.1](https://github.com/osresearch/heads/releases/tag/v0.2.1) and is one of the first that is close to usable for other users.  There are changes to how the Heads `/init` figures out what to `kexec` and how it interacts with the TPM.
+There are currently no binary downloads; you must build from source to ensure
+ that you can add your own GPG keys to the image to sign your OS installation.
 
-Heads buils should be fully reproducible on any Linux-ish system ([OSX build is not supported](https://github.com/osresearch/heads/issues/96)).  If you don't get the same hashes as reported on the release page, please file an issue against the [reproducible build milestone](https://github.com/osresearch/heads/milestone/1).
+The current release is [0.2.1](https://github.com/osresearch/heads/releases/tag/v0.2.1)
+ and is one of the first that is close to usable for other users.  There are
+ changes to how the Heads `/init` figures out what to `kexec` and how it
+ interacts with the TPM.
 
+Heads buils should be fully reproducible on any Linux-ish system
+ ([OSX build is not supported](https://github.com/osresearch/heads/issues/96)).
+ If you don't get the same hashes as reported on the release page, please file
+ an issue against the [reproducible build milestone](https://github.com/osresearch/heads/milestone/1).
 
 Overview
 ===
+
 Heads is an open source custom firmware and OS configuration for laptops
 and servers that aims to provide slightly better physical security and
 protection for data on the system. Unlike Tails, which aims to be a
 stateless OS that leaves no trace on the computer of its presence, Heads
 is intended for the case where you need to store data and state on the
 computer.  It is influenced by several years of firmware vulnerability
-research ([Thunderstrike](https://trmm.net/Thunderstrike) and [Thunderstrike 2](https://trmm.net/Thunderstrike_2)) as well as many
-other researchers' work ("[Hardening hardware and choosing a #goodBIOS](https://media.ccc.de/v/30C3_-_5529_-_en_-_saal_2_-_201312271830_-_hardening_hardware_and_choosing_a_goodbios_-_peter_stuge#t=2372)" by Peter Stuge,
-"[Beyond anti evil maid](https://media.ccc.de/v/32c3-7343-beyond_anti_evil_maid)" by Matthew Garret,
+research ([Thunderstrike](https://trmm.net/Thunderstrike) and
+[Thunderstrike 2](https://trmm.net/Thunderstrike_2)) as well as many
+other researchers' work
+("[Hardening hardware and choosing a #goodBIOS](https://media.ccc.de/v/30C3_-_5529_-_en_-_saal_2_-_201312271830_-_hardening_hardware_and_choosing_a_goodbios_-_peter_stuge#t=2372)
+" by Peter Stuge,
+"[Beyond anti evil maid](https://media.ccc.de/v/32c3-7343-beyond_anti_evil_maid)
+ " by Matthew Garret,
 "[Towards (reasonably) trustworthy x86 laptops](http://www.theregister.co.uk/2015/12/31/rutkowska_talks_on_intel_x86_security_issues/)"
 by Joanna Rutkowska,
 "[LightEater malware seek GPG keys in Tails](http://www.theregister.co.uk/2015/03/19/cansecwest_talk_bioses_hack/)"
@@ -86,8 +101,11 @@ the difficulty beyond what most attackers are willing to spend.
 
 Further reading
 ---
+
 ![33c3](images/33c3.jpg)
 
-* [Heads FAQ](https://trmm.net/Heads_FAQ) addresses some of the questions related to why does this project exist.
+* [Heads FAQ](https://trmm.net/Heads_FAQ) addresses some of the questions
+ related to why does this project exist.
 * [Presentation at 33c3](https://trmm.net/Heads_33c3)
-* [Heads threat model](https://trmm.net/Heads_threat_model) goes into more detail about what classes of threats Heads attempts to counter.
+* [Heads threat model](https://trmm.net/Heads_threat_model) goes into more
+ detail about what classes of threats Heads attempts to counter.

@@ -9,9 +9,10 @@ nav_exclude: true
 Generating a new card
 ===
 
-NOTE: gpg 2.1.21 is required to create 4096 bits keys, which is not provided with heads for the moment.
+NOTE: gpg 2.1.21 is required to create 4096 bits keys, which is not provided
+ with heads for the moment.
 
-```
+```shell
 diamond:~/clean/heads: gpg --card-edit --homedir ./initrd/.gnupg
 
 gpg: detected reader `Yubico Yubikey NEO OTP+CCID 00 00'
@@ -118,7 +119,7 @@ Please enter the Admin PIN
 New Admin PIN
 
 New Admin PIN
-PIN changed.     
+PIN changed.
 
 1 - change PIN
 2 - unblock PIN
@@ -133,7 +134,7 @@ Please enter the PIN
 New PIN
 
 New PIN
-PIN changed.     
+PIN changed.
 
 1 - change PIN
 2 - unblock PIN
@@ -146,14 +147,15 @@ Your selection? q
 
 Fully resetting a card
 ===
+
 If you mess up the admin pin it is necessary to do a full reset of
 the PGP applet.  These instructions worked for me:
-https://developers.yubico.com/ykneo-openpgp/ResetApplet.html
+[https://developers.yubico.com/ykneo-openpgp/ResetApplet.html](https://developers.yubico.com/ykneo-openpgp/ResetApplet.html)
 I had to install `scdaemon` and start `gpg-agent` to make them
 work, but eventually that `gpg-connect-agent -r yubikey.reset`
 script did the right thing:
 
-```
+```shell
 /hex
 scd serialno
 scd apdu 00 20 00 81 08 40 40 40 40 40 40 40 40
