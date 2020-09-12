@@ -7,12 +7,6 @@ nav_order: 1
 
 ![Heads booting on an x230](images/Heads_booting_on_an_x230.jpg)
 
-Slack Open Source Firmware
-===
-
-* [Register to Open Source Firmware](https://slack.osfw.dev/)
-* [Head's channel](https://osfw.slack.com/archives/C92MNSRC1)
-
 Using Heads
 ===
 
