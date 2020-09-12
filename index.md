@@ -5,7 +5,7 @@ permalink: /
 nav_order: 1
 ---
 
-![Heads booting on an x230](images/Heads_booting_on_an_x230.jpg)
+![Heads booting on an x230]({{ site.url }}/images/Heads_booting_on_an_x230.jpg)
 
 Using Heads
 ===
@@ -64,7 +64,7 @@ by Joanna Rutkowska,
 "[LightEater malware seek GPG keys in Tails](http://www.theregister.co.uk/2015/03/19/cansecwest_talk_bioses_hack/)"
 by Kallenberg and Kovah, etc.).
 
-![Flashing an x230 bootrom](images/Flashing_an_x230_bootrom.jpg)
+![Flashing an x230 bootrom]({{ site.url }}/images/Flashing_an_x230_bootrom.jpg)
 
 Heads is not just another Linux distribution -- it combines physical
 hardening of specific hardware platforms and flash security features with
@@ -82,7 +82,7 @@ components are included in the measurements and are at least guaranteed
 to be unchanging.  Once the system is in a known good state, the TPM is
 used as a hardware key storage to decrypt the drive.
 
-![TPM TOTP in action](images/TPM_TOTP_in_action.jpg)
+![TPM TOTP in action]({{ site.url }}/images/TPM_TOTP_in_action.jpg)
 
 Additionally, the hypervisor, kernel and initrd images are signed by
 keys controlled by the user, and the OS uses a signed, immutable root
@@ -96,7 +96,7 @@ the difficulty beyond what most attackers are willing to spend.
 Further reading
 ---
 
-![33c3](images/33c3.jpg)
+![33c3]({{ site.url }}/images/33c3.jpg)
 
 * [Heads FAQ](https://trmm.net/Heads_FAQ) addresses some of the questions
  related to why does this project exist.

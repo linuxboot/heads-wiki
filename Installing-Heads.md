@@ -5,7 +5,7 @@ permalink: /Installing-Heads/
 nav_order: 3
 ---
 
-![Flashing Heads on an x230 at HOPE](images/Flashing_Heads_on_an_x230_at_HOPE.jpg)
+![Flashing Heads on an x230 at HOPE]({{ site.url }}/images/Flashing_Heads_on_an_x230_at_HOPE.jpg)
 
 Installing Heads
 ===
@@ -25,19 +25,19 @@ There are five major steps:
 * Sealing disk encryption keys
 * Signing Qubes installation
 
-![Underside of the x230](images/Underside_of_the_x230.jpg)
+![Underside of the x230]({{ site.url }}/images/Underside_of_the_x230.jpg)
 
 Unplug the system and remove the battery while you're disassembling the machine!
  You'll need to remove the palm rest to get access to the SPI flash chips, which
  will require removing the keyboard. There are seven screws marked with keyboard
  and palm rest symbols.
 
-![Keyboard tilted up](images/Keyboard_tilted_up.jpg)
+![Keyboard tilted up]({{ site.url }}/images/Keyboard_tilted_up.jpg)
 
 The keyboard tilts up on a ribbon cable. You can keep the cable installed,
  unless you want to swap the keyboard for the nice x220 model.
 
-![Ribbon cable](images/Ribbon_cable.jpg)
+![Ribbon cable]({{ site.url }}/images/Ribbon_cable.jpg)
 
 The palm rest trackpad ribbon cable needs to be disconnected. Flip up the
  retainer and pull the cable out. It shouldn't require much force. Once the
@@ -45,7 +45,7 @@ The palm rest trackpad ribbon cable needs to be disconnected. Flip up the
  without the palm rest. Since the thinkpad has the trackpoint, even mouse
  applications will still work fine.
 
-![Flash chips](images/Flash_chips.jpg)
+![Flash chips]({{ site.url }}/images/Flash_chips.jpg)
 
 There are two SPI flash chips hiding under the black plastic, labelled "SPI1"
  and "SPI2". The top one is 4MB and contains the BIOS and reset vector. The
@@ -56,7 +56,7 @@ Using a chip clip and a [SPI programmer](https://trmm.net/SPI_flash), dump the
  existing ROMs to files. Dump them again and compare the different dumps to be
  sure that were no errors. Maybe dump them both a third time, just to be safe.
 
-![Flashing x230 SPI flash](images/Flashing_x230_SPI_flash.jpg)
+![Flashing x230 SPI flash]({{ site.url }}/images/Flashing_x230_SPI_flash.jpg)
 
 Ok, now comes the time to write the 4MB `build/x230-flash/x230-flash.rom` file
  to SPI2 chip. With my programmer and minicom, I hit i to verify that the flash
@@ -184,7 +184,7 @@ There is something weird with enabling, presence and disabling. Sometimes reboot
 tpmtotp
 ---
 
-![TPMTOTP QR code](images/TPMTOTP_QR_code.jpg)
+![TPMTOTP QR code]({{ site.url }}/images/TPMTOTP_QR_code.jpg)
 
 Once you own the TPM, run `seal-totp` to generate a random secret, seal it with
  the current TPM PCR values and store the sealed value in the TPM's NVRAM. This
@@ -192,7 +192,7 @@ Once you own the TPM, run `seal-totp` to generate a random secret, seal it with
  application and use to validate that the boot block, rom stage and Linux
  payload are un-altered.
 
-![TPMTOTP output](images/TPMTOTP_output.jpg)
+![TPMTOTP output]({{ site.url }}/images/TPMTOTP_output.jpg)
 
 On the next boot, or if you run `unseal-totp`, the script will extract the
  sealed blob from the NVRAM and the TPM will validate that the PCR values are as
@@ -261,7 +261,7 @@ If you want to set a default option so that you don't have to choose at every
 Installing Qubes
 ===
 
-![Heads splash screen](images/Heads_splash_screen.jpg)
+![Heads splash screen]({{ site.url }}/images/Heads_splash_screen.jpg)
 
 Plus in the USB stick with the R4.0 install media into one of the USB3 ports (on
  the left side of the x230) and boot into USB mode (hit 'u' at the prompt),
@@ -276,11 +276,11 @@ If that completes with no errors it will launch the Xen hypervisor from the
  with an archaic video mode, so things appear a little weird, but once the dom0
  kernel initializes the graphics it should look right.
 
-![Qubes partitioning](images/Qubes_partitioning.jpg)
+![Qubes partitioning]({{ site.url }}/images/Qubes_partitioning.jpg)
 
 Use default QubesOS partitioning scheme for QubesOS 4.x
 
-![Disk encryption recovery key](images/Disk_encryption_recovery_key.jpg)
+![Disk encryption recovery key]({{ site.url }}/images/Disk_encryption_recovery_key.jpg)
 
 The disk encrypt password that you enter here will be used as the
 "recovery password" later.  It should be a long value since you won't
@@ -288,7 +288,7 @@ have to enter it very often; only when upgrading the Heads firmware
 or if there is a need to recover the disk on an external machine.
 You will need it again shortly, so don't lose it yet.
 
-![Signing Qubes binaries in /boot](images/Signing_Qubes_binaries_in__boot.jpg)
+![Signing Qubes binaries in /boot]({{ site.url }}/images/Signing_Qubes_binaries_in__boot.jpg)
 
 Once Qubes has finished installing, you'll need to reboot and select the 'Boot
  menu' option by hitting 'm'.

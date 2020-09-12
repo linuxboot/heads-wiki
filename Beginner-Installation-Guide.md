@@ -7,7 +7,7 @@ nav_order: 2
 
 # Heads Installation Guide
 
-![Heads booting on an x230](images/Heads_booting_on_an_x230.jpg)
+![Heads booting on an x230]({{ site.url }}/images/Heads_booting_on_an_x230.jpg)
 
 ## Why Heads
 
