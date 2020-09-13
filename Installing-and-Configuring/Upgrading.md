@@ -2,7 +2,8 @@
 layout: default
 title: Upgrading Heads
 permalink: /Updating/
-nav_order: 5
+nav_order: 99
+parent: Installing and configuring
 ---
 
 ![Flashing Heads on an x230 at HOPE]({{ site.url }}/images/Flashing_Heads_on_an_x230_at_HOPE.jpg)

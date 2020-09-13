@@ -2,7 +2,8 @@
 layout: default
 title: Boot config files
 permalink: /Boot/
-nav_order: 7
+nav_order: 6
+parent: Installing and configuring
 ---
 
 Boot config files

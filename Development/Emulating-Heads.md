@@ -2,7 +2,8 @@
 layout: default
 title: Emulating Heads
 permalink: /Emulating-Heads/
-nav_order: 9
+nav_order: 1
+parent: Development
 ---
 
 Generate the `qemu.rom` image:

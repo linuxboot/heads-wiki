@@ -2,7 +2,8 @@
 layout: default
 title: Beginner Installation Guide
 permalink: /Beginner-Installation-Guide/
-nav_order: 2
+nav_order: 3
+parent: Installing and configuring
 ---
 
 # Heads Installation Guide

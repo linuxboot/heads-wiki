@@ -2,7 +2,8 @@
 layout: default
 title: Building Heads
 permalink: /Building/
-nav_order: 8
+nav_order: 2
+parent: Installing and configuring
 ---
 
 Building Heads

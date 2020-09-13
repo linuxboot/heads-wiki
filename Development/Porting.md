@@ -2,7 +2,8 @@
 layout: default
 title: Porting Heads
 permalink: /Porting/
-nav_order: 10
+nav_order: 2
+parent: Development
 ---
 
 To add a new board to the Heads build hopefully you only need to modify

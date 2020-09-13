@@ -2,7 +2,8 @@
 layout: default
 title: Installing Heads
 permalink: /Installing-Heads/
-nav_order: 3
+nav_order: 4
+parent: Installing and configuring
 ---
 
 ![Flashing Heads on an x230 at HOPE]({{ site.url }}/images/Flashing_Heads_on_an_x230_at_HOPE.jpg)
@@ -101,7 +102,7 @@ Generating your PGP key
 
 If you're using a new Yubikey, you'll need to generate your key files. If you
 already have the public key stubs for your Yubikey, please proceed
-to the next section.  There is some more info in the [GPG guide](http://osresearch.net/GPG))
+to the next section.  There is some more info in the [GPG guide](GPG.md))
 
 Insert your Yubikey into the x230, then invoke GPG's the "Card Edit"
 function with it targetting the local directory:
