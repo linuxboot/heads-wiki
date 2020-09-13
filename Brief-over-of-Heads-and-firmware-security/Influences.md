@@ -3,7 +3,7 @@ layout: default
 title: Influences and prior works
 permalink: /Influences/
 nav_order: 3
-parent: Brief over of Heads and firmware security
+parent: Brief overview of Heads and firmware security
 ---
 
 Heads is influenced by several years of firmware vulnerability

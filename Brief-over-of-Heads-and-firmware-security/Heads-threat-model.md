@@ -3,7 +3,7 @@ layout: default
 title: Heads Threat model
 permalink: /Heads-threat-model/
 nav_order: 2
-parent: Brief over of Heads and firmware security
+parent: Brief overview of Heads and firmware security
 ---
 
 The threat model that Heads proposes to address is very different from that of
@@ -228,8 +228,9 @@ This section needs to be expanded to describe different threat models for
  different users. As @corcra says, "your threat model is not my threat model but
  your threat model is ok". The EFF has written the Surveillance Self-Defense
  guide that has a good introduction to generating threat models. The Center for
- Investigative Journalism has a good four part article on threats/defences,
- basic physical modifications, advanced modifications and replacing the BIOS.
+ Investigative Journalism has a good four part article on [threats/defences](https://web.archive.org/web/20161227232517/http://www.tcij.org/resources/guides-0/goals-threats-and-defences)
+ , basic physical modifications, advanced modifications and [replacing the BIOS](https://web.archive.org/web/20160927161825/http://www.tcij.org:80/resources/guides-0/replacing-BIOS)
+ .
 
 Goals of the attacker
 ----

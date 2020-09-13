@@ -3,7 +3,7 @@ layout: default
 title: FAQ
 permalink: /FAQ/
 nav_order: 1
-parent: Brief over of Heads and firmware security
+parent: Brief overview of Heads and firmware security
 ---
 
 Frequently Asked Questions

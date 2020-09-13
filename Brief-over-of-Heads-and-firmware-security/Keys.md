@@ -3,7 +3,7 @@ layout: default
 title: Keys and passwords in Heads
 permalink: /Keys/
 nav_order: 4
-parent: Brief over of Heads and firmware security
+parent: Brief overview of Heads and firmware security
 ---
 
 Keys and passwords in Heads

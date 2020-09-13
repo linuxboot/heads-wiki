@@ -3,7 +3,7 @@ layout: default
 title: Bootgaurd
 permalink: /Bootgaurd/
 nav_order: 8
-parent: Brief over of Heads and firmware security
+parent: Brief overview of Heads and firmware security
 ---
 
 Bootgaurd
