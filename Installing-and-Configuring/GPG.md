@@ -9,9 +9,6 @@ nav_exclude: true
 Generating a new card
 ===
 
-NOTE: gpg 2.1.21 is required to create 4096 bits keys, which is not provided
- with heads for the moment.
-
 ```shell
 diamond:~/clean/heads: gpg --card-edit --homedir ./initrd/.gnupg
 
