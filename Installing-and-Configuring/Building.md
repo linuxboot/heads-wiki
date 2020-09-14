@@ -73,7 +73,7 @@ x230
 Initial SPI2 (4MB) flash chips
 -----
 
-x230 and x220 boards needs their 4MB SPI2 to be initially externally flashed,
+x230 boards needs their 4MB SPI2 to be initially externally flashed,
  while the 12MB rom needs to be flashed internally from within Heads to make
  sure to not screw up with ME, contained in the SPI1 flash (8MB bottom flash
  chip under keyboard)
