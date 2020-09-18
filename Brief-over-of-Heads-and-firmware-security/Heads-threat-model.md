@@ -7,13 +7,13 @@ parent: Brief overview of Heads and firmware security
 ---
 
 The threat model that Heads proposes to address is very different from that of
- Tails. Tails's goal is to allow users to to do computation on a machine in a
- way that doesn't leave in trace on that system. This requires that the hardware
- in the system is trusted, which unfortunately is not the case for many users.
- Additionally many users need a way to keep state in a permanent way and don't
- want to expose this state to random machines. Their machines might be subject
- to physical attacks that might install untrusted firmware or other devices into
- the system.
+ [Tails](https://tails.boum.org). Tails's goal is to allow users to to do
+ computation on a machine in a way that doesn't leave in trace on that system.
+ This requires that the hardware in the system is trusted, which unfortunately
+ is not the case for many users.  Additionally many users need a way to keep
+ state in a permanent way and don't want to expose this state to random
+ machines. Their machines might be subject to physical attacks that might
+ install untrusted firmware or other devices into the system. Examples include:
 
 * [LightEater malware seek GPG keys in Tails, Kallenberg and Kovah, 2015](https://www.theregister.com/2015/03/19/cansecwest_talk_bioses_hack/)
 * [Thunderstrike, Hudson 2014](https://trmm.net/Thunderstrike)
@@ -23,9 +23,9 @@ For these reasons, Tails is not sufficient for many users who want a laptop that
  won't be able to modify the hardware underneath them.
 
 Complicating this goal is that modern x86 hardware is full of modifiable state
- [State considered harmful, Rutkowska 2015](https://blog.invisiblethings.org/2015/12/23/state_harmful.html)
+ [State considered harmful, Rutkowska 2015]({{ site.url }}/PDFs/state_harmful.pdf)
  and it is full of dusty corners that can hide malware or unauthorized code.
- Additionally there is unverifable code running in the Intel Management Engine,
+ Additionally there is unverifiable code running in the Intel Management Engine,
  which has access to memory, to the network and various other peripherals. As a
  result we must trust certain entities more than others and this does affect our
  threat model.
@@ -36,6 +36,7 @@ This document discusses some of the threats that make building slightly more
  covers the practical issues of hardening a laptop against some of the threats
  described here.
 
+<!-- markdownlint-disable MD033 -->
 <details open markdown="block">
   <summary>
     Table of contents
@@ -44,6 +45,7 @@ This document discusses some of the threats that make building slightly more
 1. TOC
 {:toc}
 </details>
+<!-- markdownlint-enable MD033 -->
 
 Who do we trust
 ===
@@ -71,8 +73,9 @@ As we consider building secure hardware, it is very important to keep in mind
   [Lenovo Malware](https://thehackernews.com/2015/08/lenovo-rootkit-malware.html)
   * Did they install extra devices on the LPC bus?
   * Is there a key logger built into the keyboard?
-  * Funtennas for data leakage through motherboard traces
-  * [Funtenna uses software to make embedded devices broadcast data on radio frequencies, Ang Cui 2015)](http://www.slate.com/blogs/future_tense/2015/08/05/_funtenna_uses_software_to_make_embedded_devices_broadcast_data_on_radio.html)
+  <!-- markdownlint-disable MD013 -->
+  * Funtennas for data leakage through motherboard traces [Funtenna uses software to make embedded devices broadcast data on radio frequencies, Ang Cui 2015](http://www.slate.com/blogs/future_tense/2015/08/05/_funtenna_uses_software_to_make_embedded_devices_broadcast_data_on_radio.html)
+  <!-- markdownlint-enable MD013 -->
 * Peripheral manufacturer
   * Firmware in drives, NICs, etc
   * IOMMU is necessary to limit device access (but this does not always work
@@ -106,7 +109,7 @@ The firmware in the system's motherboard contains the code that the CPU executes
  since it is not clear why the system has not started; measured boot allows
  detection of the malfeasance more directly.
 
-![TPM TOTP in action]({{ site.url }}/images/TPM_TOTP_in_action.jpg)
+![CoreBoot + Linux + tpmtotp]({{ site.url }}/images/TPMTOTP_in_use.jpg)
 
 Before the user enters a disk decryption password it must prove to the user that
  the Measured Boot process has started the expected firmware. This presents a
@@ -114,9 +117,29 @@ Before the user enters a disk decryption password it must prove to the user that
  replayed by an attacker's firmware and the user doesn't want to enter the
  password without knowing that the system is in a safe state. TPMTOTP
  [Anti Evil maid 2 Turbo Edition, Matthew Garret 2015](https://mjg59.dreamwidth.org/35742.html)
+ and [Beyond anti evil maid](https://media.ccc.de/v/32c3-7343-beyond_anti_evil_maid)
  addresses this by using the Time-based One-time Password Algorithm (TOTP) to
  compute a function on a shared secret and the current time, which allows the
  user to verify the output on a second mobile device or TOTP display token.
+
+Trammell Hudson ported [mjg59's tpmtotp](https://mjg59.dreamwidth.org/35742.html)
+ to run from inside the boot ROM of a Thinkpad x230 using CoreBoot with a Linux
+ payload. This provides attestation that the firmware hasn't been tampered with,
+ since the TPM won't unseal the secret to used in the TOTP HMAC unless the PCR
+ values match those expected for the ROM image.
+
+Garrett presented tpmtotp at 32c3 but Trammell Hudson felt that it
+ ran "too late" -- the system has already fetched the kernel and initrd from the
+ disk and potentially had the chain of trust compromised. Since my version of
+ code is executed from the difficult-to-write SPI flash ROM and the read-only
+ boot block initializes the root of trust with measurements of itself as well as
+ the rest of the ROM, it is much harder to compromise.
+
+Additionally, since my ROM image is very size constrained, Heads didn't want to use
+ OpenSSL and liboath and all of the other dependencies. My branch replaces them
+ with mbedtls and my own TOTP code, which reduces the size of the executables
+ from 5MB to 180KB.  The source is available from [github.com/osresearch/tpmtotp](https://github.com/osresearch/tpmtotp)
+ and has since been merged into the Heads project.
 
 The UEFI firmware itself is also of great concern: is a very large code base and
  most system firmwares are built from closed-source forks of the edk2 tree. This
@@ -125,12 +148,14 @@ The UEFI firmware itself is also of great concern: is a very large code base and
  like Computrace
  [Good Software can go Bad, Kaspersky 2014](https://www.kaspersky.com/about/press-releases/2014_good-software-can-go-bad)
  and others bundle rootkits into the boot rom
- [Lenovo caught using rootkit to secretly install unremovable software,
-  Khandelwal 2015](https://thehackernews.com/2015/08/lenovo-rootkit-malware.html)
+ <!-- markdownlint-disable MD013 -->
+ [Lenovo caught using rootkit to secretly install unremovable software, Khandelwal 2015](https://thehackernews.com/2015/08/lenovo-rootkit-malware.html)
+ <!-- markdownlint-enable MD013 -->
  . Some vendors provide signed hashes for validating that the firmware
  hasn't been tampered with, but this is just as opaque to the end user
- [Baked-in Lenovo Trusted Platform Assurance Helps Establish a Secure Foundation
-  for Workloads (Jill Caugherty, 2015)](https://web.archive.org/web/20180415020314/http://blog.lenovo.com/en/blog/baked-in-lenovo-trusted-platform-assurance-establishes-a-secure-foundation/)
+ <!-- markdownlint-disable MD013 -->
+ [Baked-in Lenovo Trusted Platform Assurance Helps Establish a Secure Foundation for Workloads (Jill Caugherty, 2015)](https://web.archive.org/web/20180415020314/http://blog.lenovo.com/en/blog/baked-in-lenovo-trusted-platform-assurance-establishes-a-secure-foundation/)
+  <!-- markdownlint-enable MD013 -->
  .
 
 Additionally there are many other things that we would like to do before handing
@@ -182,14 +207,14 @@ Self Encrypting Disks (SED) are one layer of protection against certain threats,
  defenses should help prevent the adversary from being able to modify the entire
  disk. Tools like dm-verity can be used with read-only filesystems to ensure
  that only signed code is executed from the disk
- [dm-verity: device-mapper block integrity checking target (Milan Broz)](https://gitlab.com/cryptsetup/cryptsetup/-/wikis/DMVerity)
+ [dm-verity: device-mapper block integrity checking target - Milan Broz](https://gitlab.com/cryptsetup/cryptsetup/-/wikis/DMVerity)
  .
 
 Cleartext data should never be presented to the NIC, so it shouldn't be able to
  do much exfiltration. Custom firmware like Thundergate
  [Thundergate - an open source toolkit for PCI bus exploration](https://web.archive.org/web/20180329052249/http://www.thundergate.io/)
  or NICssh
- [Project Maux II (pdf), Triulzi 2008](http://www.alchemistowl.org/arrigo/Papers/Arrigo-Triulzi-PACSEC08-Project-Maux-II.pdf)
+ [Project Maux II (PDF) - Triulzi, 2008](http://www.alchemistowl.org/arrigo/Papers/Arrigo-Triulzi-PACSEC08-Project-Maux-II.pdf)
  allow potentially malicious code to run on the NIC, so again it is important to
  configure devices like the IOMMU to prevent random read/writes to system memory
  from occurring. Where possible the write protect pins on the devices should be
@@ -459,7 +484,7 @@ A note on Cover, Concealment and Compartmentalization
 ===
 
 Heads is not designed for "Cover" or "Concealment"
- [COMSEC beyond encryption (gruqg and rantyben, 2014)](http://grugq.github.io/presentations/COMSEC%20beyond%20encryption.pdf)
+ [COMSEC beyond encryption (PDF) - gruqg and rantyben, 2014](http://grugq.github.io/presentations/COMSEC%20beyond%20encryption.pdf)
  -- using tools like Heads, Qubes and having heavily modified laptop hardware
  might provide more security than a Macbook, but might also attract more
  attention than a stock machine. Qubes provides software based
