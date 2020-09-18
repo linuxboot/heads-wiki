@@ -371,6 +371,8 @@ sudo qubes-dom0-update powertop
 You might want to make the middle button into a scroll wheel. Add this to
  `/etc/X11/xorg.conf.d/20-thinkpad-scrollwheel.conf`
 
+ <!-- markdownlint-disable MD013 -->
+
 ```text
 Section "InputClass"
   Identifier  "Trackpoint Wheel Emulation"
@@ -383,6 +385,8 @@ Section "InputClass"
   Option    "YAxisMapping"    "4 5"
 EndSection
 ```
+
+<!-- markdownlint-enable MD013 -->
 
 You'll probably want to enable fan control, as described on [ThinkWiki](http://www.thinkwiki.org/wiki/Fan_control_scripts).
 

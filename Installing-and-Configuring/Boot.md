@@ -62,11 +62,15 @@ description 3|xen|kernel /xen... |module /vmlinuz... | module /initramfs...
 This is a sample `kexec_menu.txt` covering the expected options (derived from
  grub.cfg):
 
+<!-- markdownlint-disable MD013 -->
+
 ```text
 Ubuntu|elf|kernel /vmlinuz-4.8.0-58-generic|initrd /initrd.img-4.8.0-58-generic|append root=/dev/mapper/ubuntu--vg-root ro quiet splash crashkernel=384M-:128M crashkernel=384M-:128M
 Memory test (memtest86+, serial console 115200)|elf|kernel /memtest86+.bin|append console=ttyS0,115200n8
 Qubes, with Xen hypervisor|multiboot|kernel /xen-4.6.5.gz placeholder |module /vmlinuz-4.4.67-13.pvops.qubes.x86_64 placeholder root=/dev/mapper/luks-UUID ro rd.qubes.hide_all_usb|module /initramfs-4.4.67-13.pvops.qubes.x86_64.img
 ```
+
+<!-- markdownlint-enable MD013 -->
 
 If there is a persistent `kexec_hashes.txt`, a non-default boot will fail when
  the file hashes don't match the expected values.  By default, no such checks

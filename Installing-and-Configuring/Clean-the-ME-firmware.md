@@ -80,9 +80,13 @@ This produced a new unlocked rom under `down.rom.new`
 
 Next, let's strip all the nasty bits:  
 
+<!-- markdownlint-disable MD013 -->
+
 ```shell
 python ~/me_cleaner/me_cleaner.py -r -t -d -S -O clean_flash.bin down.rom.new --extract-me extracted_me.rom
 ```
+
+<!-- markdownlint-enable MD013 -->
 
 Output:  
 
