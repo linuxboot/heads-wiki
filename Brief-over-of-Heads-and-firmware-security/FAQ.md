@@ -6,13 +6,23 @@ nav_order: 1
 parent: Brief overview of Heads and firmware security
 ---
 
-Frequently Asked Questions
-====
-
 Heads is an open source firmware, OS configuration and hardware hardening guide
  for building slightly more secure systems. Installing Heads requires opening
  the machine and extensive warranty voiding, so this document tries to answer
  some of the questions about it.
+
+<!-- markdownlint-disable MD033 -->
+ <details open markdown="block">
+   <summary>
+     Table of contents
+   </summary>
+   {: .text-delta }
+ 1. TOC
+ {:toc}
+ </details>
+ <!-- markdownlint-enable MD033 -->
+
+<!-- markdownlint-disable MD002 -->
 
 Why replace UEFI with coreboot
 ----
@@ -70,12 +80,20 @@ Using coreboot and Linux as a boot loader allows us to restrict the signature
 What is the concern with the Intel Management Engine
 ----
 
-"Rootkit in your chipset", "x86 considered harmful", etc
+* ["Rootkit in your laption" (PDF)]({{ site.url }}/PDFs/Rootkit_in_your_laptop.pdf)
+by Igor Skochinsky of Hex-Rays, Breakpoint 2012 Melbourne
+* ["Intel ME Secrets" (PDF)]({{ site.url }}/PDFs/Recon_2014_Skochinsky.pdf) by
+Igor Skochinsky of Hex-Rays, RECON 2014 Montreal
+* ["x86 considered harmful" (PDF)]({{ site.url }}/PDFs/x86_harmful.pdf) by
+Joanna Rutkowska, October 2015
 
 How about the other embedded devices in the system
 ----
 
-goodbios, funtenna, etc.
+* ["Hardening hardware and choosing a #goodBIOS"](https://media.ccc.de/v/30C3_-_5529_-_en_-_saal_2_-_201312271830_-_hardening_hardware_and_choosing_a_goodbios_-_peter_stuge#t=2372)
+by Peter Stuge, 2013
+* [Funtenna uses software to make embedded devices broadcast data on radio frequencies](http://www.slate.com/blogs/future_tense/2015/08/05/_funtenna_uses_software_to_make_embedded_devices_broadcast_data_on_radio.html)
+by  Ang Cui 2015
 
 Should we be concerned about the binary blobs
 ----
@@ -87,7 +105,10 @@ Why use ancient Thinkpads instead of modern Macbooks
 
 The x230 Thinkpad has coreboot support, TPM, nice keyboards and are very cheap
  to experiment on. If you're willing to spend a bit more, the Chell Chromebooks
- (commericaly available as the HP Chromebook 13 G1) has Skylake.
+ (commericaly available as the HP Chromebook 13 G1) has Skylake.  Newer
+ [Thinkpads contain Bootguard](https://mjg59.dreamwidth.org/33981.html), a
+ closed source security function implemented by Intel to prevent unsigned custom
+ firmware, such as coreboot and heads, from being installed.
 
 How likely are physical presence attacks vs remote software attacks
 ----
@@ -107,7 +128,7 @@ Depends on your threat model.
 Should I validate the TPMTOTP on every boot
 ----
 
-Probably. I want to make it also do it at S3.
+Probably. I want to make it also do it at S3.  [See Heads issue #69](https://github.com/osresearch/heads/issues/69)
 
 suspend vs shutdown
 ----
@@ -137,3 +158,18 @@ Why is it called Heads
 Unlike [Tails](https://tails.boum.org/), which aims to be a stateless OS that
 leaves no trace on the computer of its  presence, Heads is intended for the
 case where you need to store data and state on the computer.
+
+HOTP vs TOTP
+----
+
+TO BE WRITTEN
+
+coreboot vs Linuxboot
+----
+
+TO BE WRITTEN
+
+What happens if I lose/break my security key
+----
+
+TO BE WRITTEN
