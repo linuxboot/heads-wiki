@@ -3,7 +3,7 @@ layout: default
 title: Keys and passwords in Heads
 permalink: /Keys/
 nav_order: 4
-parent: Brief overview of Heads and firmware security
+parent: About
 ---
 
 Keys and passwords in Heads
@@ -14,25 +14,16 @@ There are "too many secrets" involved in booting a Heads system.  Luckily most
  users.  This page attempts to document their usage and the risks if an attacker
  can compromise the different keys.
 
-* Management Engine signing key
-* Bootguard ACM fuses (hash of OEM public key)
-* TPM Owner password (used to initialize counters, NVRAM spaces, etc)
-* TPM Endorsement Key
-* TPM counter key
-* TPMTOTP secret (shared with phone authenticator)
-* TPM disk encryption key (stored in the TPM, sealed with PCRs and encrypted
-  with disk unlock key)
-* Disk unlock key (entered by the user on every boot to unseal the TPM disk
-  encryption key)
-* Disk recovery key (created when the system is first installed, used rarely,
-  if the TPM fails or if the PCRs change)
-* LUKS disk encryption key (two copies, one encrypted with TPM disk encryption
-  key, one encrypted with disk recovery key)
-* User GPG private key (stored in a hardware token, not available to normal
-  system)
-* User GPG public key (stored in the ROM, used to validate xen, Linux dom0, etc)
-* User login password
-* Root password
+ <!-- markdownlint-disable MD033 -->
+ <details open markdown="block">
+   <summary>
+     Table of contents
+   </summary>
+   {: .text-delta }
+ 1. TOC
+ {:toc}
+ </details>
+ <!-- markdownlint-enable MD033 -->
 
 Management Engine and Bootguard ACM fuses
 ---

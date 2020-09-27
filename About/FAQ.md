@@ -3,8 +3,11 @@ layout: default
 title: FAQ
 permalink: /FAQ/
 nav_order: 1
-parent: Brief overview of Heads and firmware security
+parent: About
 ---
+
+FAQ
+{: .fs-8 .m-0 }
 
 Heads is an open source firmware, OS configuration and hardware hardening guide
  for building slightly more secure systems. Installing Heads requires opening
@@ -162,7 +165,22 @@ case where you need to store data and state on the computer.
 HOTP vs TOTP
 ----
 
-TO BE WRITTEN
+HOTP (HMAC-based One-time Password algorithm) generates a password
+using hash-based message authentication codes (HMAC) that can be used only for
+the one authentication attempt.  Uniqueness is based on a counter which is
+incremented each authentication attempt.
+
+TOTP (Time-based One-time Password algorithm) is an extension of HOTP but
+replaces the counter with time.  Because of latency, both network and human,
+and unsynchronised clocks, the one-time password must validate over a range of
+times between the authenticator and the user. Here, time is
+downsampled into larger durations (e.g., 30 seconds) to allow for validity
+between the parties.
+
+Secuirty wise, HOTP is more susceptible to brute force attacks without
+throttling or limiting the number of failed attempted while TOTP is susceptible
+to phishing attacks and requires a user to enter the code within a given time
+period.
 
 coreboot vs Linuxboot
 ----

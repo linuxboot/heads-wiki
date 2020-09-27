@@ -3,8 +3,11 @@ layout: default
 title: Heads Threat model
 permalink: /Heads-threat-model/
 nav_order: 2
-parent: Brief overview of Heads and firmware security
+parent: About
 ---
+
+Heads Threat model
+{: .fs-8 .m-0 }
 
 The threat model that Heads proposes to address is very different from that of
  [Tails](https://tails.boum.org). Tails's goal is to allow users to to do
