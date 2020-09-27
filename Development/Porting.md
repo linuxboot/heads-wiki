@@ -30,6 +30,52 @@ make \
   menuconfig
 ```
 
+* [Source](https://github.com/osresearch/heads/issues/667#issuecomment-638971582)
+ For Lenovo yx30 (t430, x230 and others, x230 tested only here) have the
+ following space available for BIOS region in IFD per output of
+ `ifdtool -x bottom.rom` extracted from original bottom SPI chip, initially
+ upgraded to latest BIOS version (2.75 for x230):
+
+```text
+Found Region Section
+FLREG0:    0x00000000
+  Flash Region 0 (Flash Descriptor): 00000000 - 00000fff
+FLREG1:    0x0bff0500
+  Flash Region 1 (BIOS): 00500000 - 00bfffff
+FLREG2:    0x04ff0003
+  Flash Region 2 (Intel ME): 00003000 - 004fffff
+FLREG3:    0x00020001
+  Flash Region 3 (GbE): 00001000 - 00002fff
+FLREG4:    0x00001fff
+  Flash Region 4 (Platform Data): 00fff000 - 00000fff (unused)
+```
+
+Important notes:
+  * We cannot change the CBFS_REGION and make it larger alone (bigger BIOS)
+  without having IFD regions adapted so that ME region smaller and freed space
+  being given to the BIOS region. Providing IFD.bin alone could resolve that.
+  Ignoring this can result in a device booting with no screen output from
+  coreboot or not properly resuming from suspend.
+  * When calling flash.sh, we are actually asking flashrom to take the image.rom
+  and flash the BIOS region out of it.
+  * Consequently, it seems that flashrom doesn't validate that there is enough
+  space and just overwrites what is there in SPI flash, resulting in a
+  non-booting machine.
+Solution:
+ * We could have generic flash script (common to xx30) flash both Flash
+ Descriptor and BIOS regions from prepared xx30 images.
+ * Since those IFD regions are aligned, this means that flashed IFD
+ should probably become:
+
+ ```text
+        Flash Region 1 (BIOS): 00500000 - 0001b000
+        Flash Region 2 (Intel ME): 00003000 - 0001afff
+  ```
+
+  * But that means that ME will need to be neutered and flashed externally prior
+  of flashing the BIOS region and IFD over unlocked IFD.
+
+
 * Run `make CONFIG=config/newarch-qubes.config` to setup the coreboot tree,
 using the new coreboot config file.  This will create the output directory
 `build/coreboot-4.5/newarch/`, and after a while, you should have `newarch.rom`
