@@ -1,6 +1,8 @@
 ---
 layout: default
 title: About
+has_children: true
+has_toc: false
 permalink: /
 nav_order: 1
 ---
@@ -52,5 +54,9 @@ Further reading
 ![33c3]({{ site.url }}/images/33c3.jpg)
 
 * [Presentation at 33c3](https://trmm.net/Heads_33c3)
-* [Heads threat model](/Heads-threat-model) goes into more
+
+## Learn more about Heads:
+* [Heads threat model](/Heads-threat-model) - goes into more
  detail about what classes of threats Heads attempts to counter.
+* [Frequently Asked Questions](/FAQ)
+* [Requirements for Heads](/Install-and-Configure)
