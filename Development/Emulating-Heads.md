@@ -2,7 +2,7 @@
 layout: default
 title: Emulating Heads
 permalink: /Emulating-Heads/
-nav_order: 1
+nav_order: 2
 parent: Development
 ---
 

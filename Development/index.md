@@ -4,6 +4,7 @@ title: Development
 permalink: /Development
 nav_order: 9
 has_children: yes
+has_toc: false
 ---
 
 Contributing
