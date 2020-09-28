@@ -33,6 +33,61 @@ If the flash protection bits are set correctly it is not possible to
 rewrite the firmware from the normal OS.  You'll need to reboot
 to the Heads recovery shell (hit `r` after the TPM TOTP prompt).
 
+## Internal Flashing
+
+Reconnect power to the laptop and you should be able to boot into the Heads
+ recovery shell.
+
+Plug your USB flash drive into the laptop that you used to build Heads. If your
+ USB drive is already formatted as ext4 or you are confident you can format it
+ then just move the coreboot.rom file to the usb drive. Otherwise, find your usb
+ drive using fdisk:
+
+```shell
+sudo fdisk -l
+```
+
+Format your usb drive as ext4 (My usb drive is /dev/sdb):
+
+```shell
+sudo mkfs.ext4 /dev/sdb1
+```
+
+These are the commands I used to create a directory ~/usb/ and mount my usb
+ drive there, but you can mount it wherever you want:
+
+```shell
+mkdir ~/usb
+sudo mount /dev/sdb1 ~/usb/
+```
+
+Move the full Heads rom file to the usb drive:
+
+```shell
+sudo cp ~/heads/build/x230/coreboot.rom ~/usb/
+```
+
+Insert the usb drive into the Thinkpad x230 and mount it:
+
+```shell
+mount-usb
+```
+
+You should now see the file coreboot.rom in /media:
+
+```shell
+ls /media/
+```
+
+Internally flash coreboot.rom (This command will write to both SPI flash chips
+  as if they are one 12Mb chip):
+
+```shell
+flash.sh -c /media/coreboot.rom
+```
+
+Wait for the flashing to finish and you should be able to reboot into Heads!
+
 Mounting the USB media
 ---
 
