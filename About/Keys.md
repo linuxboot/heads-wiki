@@ -61,7 +61,7 @@ Are there any consequences of an attacker controlling this key?
 TPMTOTP shared secret
 ---
 
-![TPMTOTP in use]({{ site.baseurl }}/images/TPMTOTP_in_use.jpg)
+![TPMTOTP in use]({{'/images/TPMTOTP_in_use.jpg'| relative_url}})
 
 Since humans have trouble doing RSA public key cryptography in their brains,
  Heads uses [TPM TOTP](Influences/#tpmtotp) to let the system attest to the
