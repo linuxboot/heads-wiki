@@ -51,20 +51,23 @@ FLREG4:    0x00001fff
 ```
 
 Important notes:
-  * We cannot change the CBFS_REGION and make it larger alone (bigger BIOS)
+
+* We cannot change the CBFS_REGION and make it larger alone (bigger BIOS)
   without having IFD regions adapted so that ME region smaller and freed space
   being given to the BIOS region. Providing IFD.bin alone could resolve that.
   Ignoring this can result in a device booting with no screen output from
   coreboot or not properly resuming from suspend.
-  * When calling flash.sh, we are actually asking flashrom to take the image.rom
+* When calling flash.sh, we are actually asking flashrom to take the image.rom
   and flash the BIOS region out of it.
-  * Consequently, it seems that flashrom doesn't validate that there is enough
+* Consequently, it seems that flashrom doesn't validate that there is enough
   space and just overwrites what is there in SPI flash, resulting in a
   non-booting machine.
+
 Solution:
- * We could have generic flash script (common to xx30) flash both Flash
+
+* We could have generic flash script (common to xx30) flash both Flash
  Descriptor and BIOS regions from prepared xx30 images.
- * Since those IFD regions are aligned, this means that flashed IFD
+* Since those IFD regions are aligned, this means that flashed IFD
  should probably become:
 
  ```text
@@ -72,9 +75,8 @@ Solution:
         Flash Region 2 (Intel ME): 00003000 - 0001afff
   ```
 
-  * But that means that ME will need to be neutered and flashed externally prior
+* But that means that ME will need to be neutered and flashed externally prior
   of flashing the BIOS region and IFD over unlocked IFD.
-
 
 * Run `make CONFIG=config/newarch-qubes.config` to setup the coreboot tree,
 using the new coreboot config file.  This will create the output directory
