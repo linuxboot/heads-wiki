@@ -1,7 +1,7 @@
 ---
 layout: default
 title: GPG Generation
-permalink: /GPG/
+permalink: /GPG
 nav_order: 11
 nav_exclude: true
 ---

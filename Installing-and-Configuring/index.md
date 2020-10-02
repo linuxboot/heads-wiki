@@ -7,51 +7,55 @@ has_children: yes
 has_toc: false
 ---
 
-
-
 ## Required equipment:
 
 To install Heads on a physical device, you will need:
 
 * Supported motherboard or laptop ([see below](#supported-devices))
 * A OTP security key ([see below](#security keys))
-* [Spi Programmer](https://trmm.net/SPI_flash): ch341a programmer or raspberry pi or bus pirate (ch341a is recommended for new users and can be found almost [anywhere](https://www.amazon.com/s?k=ch341a+programmer). *NOTE* - Not needed if a Purism or OCP device
-* Wires and a clip to connect your programmer of choice to the board’s SPI flash chip(s)
-* If you plan to use a ch341a programmer you will need another computer to flash from (Try to use a recommended operating system: Qubes or Debian 9 or Fedora 30)
-* If a X230 or T430, USB flash drive.
+* A USB flash drive for storing your GPG key.
+
+If your device requires external flashing ([see below](#supported-devices)),
+ you will also need:
+
+* [Spi Programmer](https://trmm.net/SPI_flash): ch341a programmer or raspberry pi or bus pirate (ch341a is recommended for new users and can be found almost [anywhere](https://www.amazon.com/s?k=ch341a+programmer).
+* Wires and a clip SOIC8 to connect your programmer of choice to the board’s SPI flash chip(s).
+  * The [Pomona 5250](https://www.pomonaelectronics.com/products/test-clips/soic-clip-8-pin) is suggested as it is high quality and easier to make contact with the pins.
+* A second computer to flash from (Try to use a recommended operating system: Qubes or Debian 9 or Fedora 30)
+
 
 ## Supported devices
 
-|Device| Board name| Notes|
-|--|--|--|
-|Asus KGPE-D16|`kgpe-d16`||
-|Dell R630|`r630`||
-|Intel S2600wf|`s2600wf`||
-|Lenovo Thinkpad T420|`t420`||
-|Lenovo Thinkpad T430|`t430-flash`|flashed image|
-|Lenovo Thinkpad T430|`t430`||
-|Lenovo Thinkpad X220|`x220`||
-|Lenovo Thinkpad X230|`x230-flash`|flashed image|
-|Lenovo Thinkpad X230|`x230-hotp-verification`|with hotp verification|
-|Lenovo Thinkpad X230|`x230`| |
-|Open Compute Project	Leopard node|`leopard`||
-|Open Compute Project	TiogaPass node|`tioga`||
-|Open Compute Project	Winterfell node|`winterfell`||
-|Purism Librem 13 v2|`librem_13v2`||
-|Purism Librem 13 v4|`librem_13v4`||
-|Purism Librem 15 v3|`librem_15v3`||
-|Purism Librem 15 v4|`librem_15v4`||
-|Purism Librem Mini|`librem_mini`||
+|Device| Board name| Firmware base| Requires external flashing| ME should be cleaned | Notes|
+|--|--|--|:--:|:--:|--|
+|Asus KGPE-D16|`kgpe-d16`|coreboot|X|||
+|Dell R630|`r630`|linuxboot||X||
+|Intel S2600wf|`s2600wf`|linuxboot||X||
+|Lenovo Thinkpad T420|`t420`|coreboot|X|X||
+|Lenovo Thinkpad T430|`t430-flash`|coreboot|X|X|initial flashed image|
+|Lenovo Thinkpad T430|`t430`|coreboot|X|X||
+|Lenovo Thinkpad X220|`x220`|coreboot|X|X||
+|Lenovo Thinkpad X230|`x230-flash`|coreboot|X|X|initial flashed image|
+|Lenovo Thinkpad X230|`x230-hotp-verification`|coreboot|X|X|with hotp verification|
+|Lenovo Thinkpad X230|`x230`|coreboot|X|X||
+|Open Compute Project	Leopard node|`leopard`|linuxboot|||
+|Open Compute Project	TiogaPass node|`tioga`|linuxboot||||
+|Open Compute Project	Winterfell node|`winterfell`|linuxboot||||
+|Purism Librem 13 v2|`librem_13v2`|coreboot||||
+|Purism Librem 13 v4|`librem_13v4`|coreboot||||
+|Purism Librem 15 v3|`librem_15v3`|coreboot||||
+|Purism Librem 15 v4|`librem_15v4`|coreboot||||
+|Purism Librem Mini|`librem_mini`|coreboot||||
 
 ## Emulated devices
 
 For further information, see [Emulating Heads](/Emulating-Heads)
 
-|Device| Board name| Notes|
-|--|--|--|
-|QEMU development image|`qemu-coreboot-fbwhiptail`||
-|QEMU development image|`qemu-coreboot`||
-|QEMU development image|`qemu-linuxboot`||
+|Device| Board name|  Firmware base|
+|--|--|--|--|
+|QEMU development image|`qemu-coreboot-fbwhiptail`|coreboot|
+|QEMU development image|`qemu-coreboot`|coreboot|
+|QEMU development image|`qemu-linuxboot`|linuxboot|
 
 
 ## security Keys
@@ -60,8 +64,8 @@ For further information, see [Emulating Heads](/Emulating-Heads)
  purchasing to buy a compatible key.
 
 |Manufacture|Model line|TOTP|HOTP|
-|--|--|--|--|
-|Yubikey|[YubiKey 5 Series](https://www.yubico.com/products/yubikey-5-overview)|X||
+|--|--|:--:|:--:|
+|Yubico|[YubiKey 5 Series](https://www.yubico.com/products/yubikey-5-overview)|X||
 |Nitrokey|[Nitrokey Pro 2](https://www.nitrokey.com/#comparison)|X|X|
 |Nitrokey|[Nitrokey Storage 2](https://www.nitrokey.com/#comparison)|X|X|
 |Purism|[Librem Key](https://puri.sm/products/librem-key/)|X|X|

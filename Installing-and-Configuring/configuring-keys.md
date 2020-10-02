@@ -1,18 +1,28 @@
 ---
 layout: default
-title: Configuring-Keys
+title: Step 3 - Configuring-Keys
 permalink: /Configuring-Keys/
 nav_order: 7
 parent: Installing and configuring
 ---
 
+<!-- markdownlint-disable MD033 -->
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+<!-- markdownlint-enable MD033 -->
 
 Generating your PGP key
 ===
 
 If you're using a new Yubikey, you'll need to generate your key files. If you
 already have the public key stubs for your Yubikey, please proceed
-to the next section.  There is some more info in the [GPG guide](GPG.md))
+to the next section.  There is some more info in the [GPG guide](/GPG))
 
 Insert your Yubikey into the x230, then invoke GPG's the "Card Edit"
 function with it targetting the local directory:

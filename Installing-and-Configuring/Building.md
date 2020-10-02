@@ -1,15 +1,32 @@
 ---
 layout: default
-title: Building Heads
+title: Step 1 - Building Heads
 permalink: /Building/
-nav_order: 2
+nav_order: 1
 parent: Installing and configuring
 ---
+
+<!-- markdownlint-disable MD033 -->
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+<!-- markdownlint-enable MD033 -->
+
+Releases
+===
+
+There are currently no binary downloads; you must build from source to ensure
+ that you can add your own GPG keys to the image to sign your OS installation.
 
 Building Heads
 ===
 
-Heads is supposed to be a [reproducible build](https://reproducible-builds.org/)
+Heads is supposed to be a [reproducible build](https:cd //reproducible-builds.org/)
  and as of [v0.1.0](https://github.com/osresearch/heads/releases/tag/v0.1.0) it
  achieved this goal.  The downside is that the initial build can take a very
  long time as it downloads and builds all of the its dependencies.  One issue
@@ -17,6 +34,11 @@ Heads is supposed to be a [reproducible build](https://reproducible-builds.org/)
  result takes about 45 minutes.  Luckily subsequent builds only take about 30
  seconds to produce a full coreboot and Linux ROM image, but that first ones a
  doozy...
+
+Heads buils should be fully reproducible on any Linux-ish system
+ ([OSX build is not supported](https://github.com/osresearch/heads/issues/96)).
+ If you don't get the same hashes as reported on the release page, please file
+ an issue against the [reproducible build milestone](https://github.com/osresearch/heads/milestone/1).
 
 With a vanilla Debian 9 or Ubuntu 16.04 install, such as a digitalocean
 droplet, you need to first install some support tools. This takes a

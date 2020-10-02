@@ -2,8 +2,9 @@
 layout: default
 title: Cleaning Intel Management Engine
 permalink: /Clean-the-ME-firmware/
-nav_order: 5
-parent: Installing and configuring
+nav_order: 99
+parent: Step 2 - Flashing Guides
+grand_parent: Installing and configuring
 ---
 
 What is the Intel Management Engine
