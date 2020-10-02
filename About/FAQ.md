@@ -83,11 +83,11 @@ Using coreboot and Linux as a boot loader allows us to restrict the signature
 What is the concern with the Intel Management Engine
 ----
 
-* ["Rootkit in your laption" (PDF)]({{ site.url }}/PDFs/Rootkit_in_your_laptop.pdf)
+* ["Rootkit in your laption" (PDF)]({{ site.baseurl }}/PDFs/Rootkit_in_your_laptop.pdf)
 by Igor Skochinsky of Hex-Rays, Breakpoint 2012 Melbourne
-* ["Intel ME Secrets" (PDF)]({{ site.url }}/PDFs/Recon_2014_Skochinsky.pdf) by
+* ["Intel ME Secrets" (PDF)]({{ site.baseurl }}/PDFs/Recon_2014_Skochinsky.pdf) by
 Igor Skochinsky of Hex-Rays, RECON 2014 Montreal
-* ["x86 considered harmful" (PDF)]({{ site.url }}/PDFs/x86_harmful.pdf) by
+* ["x86 considered harmful" (PDF)]({{ site.baseurl }}/PDFs/x86_harmful.pdf) by
 Joanna Rutkowska, October 2015
 
 How about the other embedded devices in the system

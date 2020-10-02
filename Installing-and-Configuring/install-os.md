@@ -74,7 +74,7 @@ If you want to set a default option so that you don't have to choose at every
 Installing Qubes
 ===
 
-![Heads splash screen]({{ site.url }}/images/Heads_splash_screen.jpg)
+![Heads splash screen]({{ site.baseurl }}/images/Heads_splash_screen.jpg)
 
 Plus in the USB stick with the R4.0 install media into one of the USB3 ports (on
  the left side of the x230) and boot into USB mode (hit 'u' at the prompt),
@@ -89,11 +89,11 @@ If that completes with no errors it will launch the Xen hypervisor from the
  with an archaic video mode, so things appear a little weird, but once the dom0
  kernel initializes the graphics it should look right.
 
-![Qubes partitioning]({{ site.url }}/images/Qubes_partitioning.jpg)
+![Qubes partitioning]({{ site.baseurl }}/images/Qubes_partitioning.jpg)
 
 Use default QubesOS partitioning scheme for QubesOS 4.x
 
-![Disk encryption recovery key]({{ site.url }}/images/Disk_encryption_recovery_key.jpg)
+![Disk encryption recovery key]({{ site.baseurl }}/images/Disk_encryption_recovery_key.jpg)
 
 The disk encrypt password that you enter here will be used as the
 "recovery password" later.  It should be a long value since you won't
@@ -101,7 +101,7 @@ have to enter it very often; only when upgrading the Heads firmware
 or if there is a need to recover the disk on an external machine.
 You will need it again shortly, so don't lose it yet.
 
-![Signing Qubes binaries in /boot]({{ site.url }}/images/Signing_Qubes_binaries_in__boot.jpg)
+![Signing Qubes binaries in /boot]({{ site.baseurl }}/images/Signing_Qubes_binaries_in__boot.jpg)
 
 Once Qubes has finished installing, you'll need to reboot and select the 'Boot
  menu' option by hitting 'm'.

@@ -28,7 +28,7 @@ There are "too many secrets" involved in booting a Heads system.  Luckily most
 Management Engine and Bootguard ACM fuses
 ---
 
-![Bootguard fuses]({{ site.url }}/images/Bootguard_fuses.jpg)
+![Bootguard fuses]({{ site.baseurl }}/images/Bootguard_fuses.jpg)
 
 The very first key used in the system is Intel's public key that signs the
  Management Engine firmware partition table in the SPI flash.  This key is
@@ -61,7 +61,7 @@ Are there any consequences of an attacker controlling this key?
 TPMTOTP shared secret
 ---
 
-![TPMTOTP in use]({{ site.url }}/images/TPMTOTP_in_use.jpg)
+![TPMTOTP in use]({{ site.baseurl }}/images/TPMTOTP_in_use.jpg)
 
 Since humans have trouble doing RSA public key cryptography in their brains,
  Heads uses [TPM TOTP](Influences/#tpmtotp) to let the system attest to the
@@ -141,7 +141,7 @@ Access to this key has the same risks as the disk recovery key.
 Owner's GPG key
 ---
 
-![Yubikey]({{ site.url }}/images/Yubikey.jpg)
+![Yubikey]({{ site.baseurl }}/images/Yubikey.jpg)
 
 The owner of the machine generates a GPG key pair as part of installing Heads.  
   The public key is inserted into the ROM image that is flashed and the owner
@@ -175,7 +175,7 @@ equivalent to the login password.  Other operating systems might differ.
 TPM PCRs
 ====
 
-![TPM]({{ site.url }}/images/TPM.jpg)
+![TPM]({{ site.baseurl }}/images/TPM.jpg)
 
 The actual assignment needs to be updated in the code; there are outstanding
  issues ([MRC cache](https://github.com/osresearch/heads/issues/150),

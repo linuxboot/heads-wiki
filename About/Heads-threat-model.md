@@ -26,7 +26,7 @@ For these reasons, Tails is not sufficient for many users who want a laptop that
  won't be able to modify the hardware underneath them.
 
 Complicating this goal is that modern x86 hardware is full of modifiable state
- [State considered harmful, Rutkowska 2015]({{ site.url }}/PDFs/state_harmful.pdf)
+ [State considered harmful, Rutkowska 2015]({{ site.baseurl }}/PDFs/state_harmful.pdf)
  and it is full of dusty corners that can hide malware or unauthorized code.
  Additionally there is unverifiable code running in the Intel Management Engine,
  which has access to memory, to the network and various other peripherals. As a
@@ -53,7 +53,7 @@ This document discusses some of the threats that make building slightly more
 Who do we trust
 ===
 
-![Flashing Chips]({{ site.url }}/images/Flash_chips.jpg)
+![Flashing Chips]({{ site.baseurl }}/images/Flash_chips.jpg)
 
 As we consider building secure hardware, it is very important to keep in mind
  that there are some parties that we are forced to trust to some degree. There
@@ -99,7 +99,7 @@ As we consider building secure hardware, it is very important to keep in mind
 System Firmware
 ----
 
-![Flashing an x230 bootrom]({{ site.url }}/images/Flashing_an_x230_bootrom.jpg)
+![Flashing an x230 bootrom]({{ site.baseurl }}/images/Flashing_an_x230_bootrom.jpg)
 
 The firmware in the system's motherboard contains the code that the CPU executes
  on startup. This is usually the BIOS or UEFI firmware and the complexity of it
@@ -112,7 +112,7 @@ The firmware in the system's motherboard contains the code that the CPU executes
  since it is not clear why the system has not started; measured boot allows
  detection of the malfeasance more directly.
 
-![CoreBoot + Linux + tpmtotp]({{ site.url }}/images/TPMTOTP_in_use.jpg)
+![CoreBoot + Linux + tpmtotp]({{ site.baseurl }}/images/TPMTOTP_in_use.jpg)
 
 Before the user enters a disk decryption password it must prove to the user that
  the Measured Boot process has started the expected firmware. This presents a
@@ -190,7 +190,7 @@ kernels, etc.
 Peripheral Firmware
 ----
 
-![Hard disk drive]({{ site.url }}/images/Hard_disk_drive.jpg)
+![Hard disk drive]({{ site.baseurl }}/images/Hard_disk_drive.jpg)
 
 Self Encrypting Disks (SED) are one layer of protection against certain threats,
  but they can't be entirely trusted. The firmware on the disks is difficult to
@@ -227,7 +227,7 @@ Cleartext data should never be presented to the NIC, so it shouldn't be able to
 Management Hardware
 ----
 
-![Flashing Heads on an x230 at HOPE]({{ site.url }}/images/Flashing_Heads_on_an_x230_at_HOPE.jpg)
+![Flashing Heads on an x230 at HOPE]({{ site.baseurl }}/images/Flashing_Heads_on_an_x230_at_HOPE.jpg)
 
 The Intel Management Engine (ME) is unfortunately a trusted component in the
  boot process as well as during special execution modes like TXT. The firmware
@@ -250,7 +250,7 @@ In server machines there is a "Board Management Controller" (BMC) that handles
 Threat Model
 ===
 
-![]({{ site.url }}/images/Threat_model.jpg)
+![]({{ site.baseurl }}/images/Threat_model.jpg)
 
 This section needs to be expanded to describe different threat models for
  different users. As @corcra says, "your threat model is not my threat model but
@@ -343,7 +343,7 @@ External Threats
 Internal Threats
 ----
 
-![wocintech (microsoft) - 201]({{ site.url }}/images/wocintechchat_25721068170.jpg)
+![wocintech (microsoft) - 201]({{ site.baseurl }}/images/wocintechchat_25721068170.jpg)
 
 The insider threat is not included in many threat models, but must be considered
  for certain applications. This is a difficult threat to counter since the

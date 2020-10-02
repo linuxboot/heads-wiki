@@ -20,7 +20,7 @@ parent: Installing and configuring
 `/boot` missing
 ===
 
-![Boot missing]({{ site.url }}/images/boot_missing.jpg)
+![Boot missing]({{ site.baseurl }}/images/boot_missing.jpg)
 
 If starting with a blank hard drive, the Heads setup will display an error
  saying `/boot` cannot be found.  Unless there is an nonencrypted boot partition
@@ -31,14 +31,14 @@ If starting with a blank hard drive, the Heads setup will display an error
 Generating your PGP key
 ===
 
-![GPG missing]({{ site.url }}/images/gpg_missing.jpg)
+![GPG missing]({{ site.baseurl }}/images/gpg_missing.jpg)
 
 Select "Add a GPG key to the running BIOS" to enter the GPG Management menu.  If
  you're using a new security key, you'll need to generate your key files. If you
  already have the public key stubs for your security key, please proceed to
  [Adding your PGP key](#adding-your-pgp-key).
 
-![GPG Management menu]({{ site.url }}/images/gpg_management.jpg)
+![GPG Management menu]({{ site.baseurl }}/images/gpg_management.jpg)
 
 Insert your security key and USB drive into the device, then chose "Generate GPG
  keys manually on a USB security token".
@@ -80,7 +80,7 @@ forward.
 Configuring the TPM
 ===
 
-![TOTP/HOTP missing]({{ site.url }}/images/otp_error.jpg)
+![TOTP/HOTP missing]({{ site.baseurl }}/images/otp_error.jpg)
 
 There aren't very many good details on how to setup TPMs, so this section could
  use some work.
@@ -103,7 +103,7 @@ There is something weird with enabling, presence and disabling. Sometimes reboot
 tpmtotp
 ---
 
-![TPMTOTP QR code]({{ site.url }}/images/TPMTOTP_QR_code.jpg)
+![TPMTOTP QR code]({{ site.baseurl }}/images/TPMTOTP_QR_code.jpg)
 
 Once you own the TPM, run `seal-totp` to generate a random secret, seal it with
  the current TPM PCR values and store the sealed value in the TPM's NVRAM. This
@@ -112,7 +112,7 @@ Once you own the TPM, run `seal-totp` to generate a random secret, seal it with
  application and use to validate that the boot block, rom stage and Linux
  payload are un-altered.
 
-![TPMTOTP output]({{ site.url }}/images/TPMTOTP_output.jpg)
+![TPMTOTP output]({{ site.baseurl }}/images/TPMTOTP_output.jpg)
 
 On the next boot, or if you run `unseal-totp`, the script will extract the
  sealed blob from the NVRAM and the TPM will validate that the PCR values are as

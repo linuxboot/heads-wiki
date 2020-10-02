@@ -7,7 +7,7 @@ permalink: /
 nav_order: 1
 ---
 
-![Heads booting on an x230]({{ site.url }}/images/Heads_booting_on_an_x230.jpg)
+![Heads booting on an x230]({{ site.baseurl }}/images/Heads_booting_on_an_x230.jpg)
 
 Overview
 ===
@@ -19,7 +19,7 @@ stateless OS that leaves no trace on the computer of its presence, Heads
 is intended for the case where you need to store data and state on the
 computer.
 
-![Flashing an x230 bootrom]({{ site.url }}/images/Flashing_an_x230_bootrom.jpg)
+![Flashing an x230 bootrom]({{ site.baseurl }}/images/Flashing_an_x230_bootrom.jpg)
 
 Heads is not just another Linux distribution -- it combines physical
 hardening of specific hardware platforms and flash security features with
@@ -37,7 +37,7 @@ components are included in the measurements and are at least guaranteed
 to be unchanging.  Once the system is in a known good state, the TPM is
 used as a hardware key storage to decrypt the drive.
 
-![TPM TOTP in action]({{ site.url }}/images/TPM_TOTP_in_action.jpg)
+![TPM TOTP in action]({{ site.baseurl }}/images/TPM_TOTP_in_action.jpg)
 
 Additionally, the hypervisor, kernel and initrd images are signed by
 keys controlled by the user, and the OS uses a signed, immutable root
@@ -51,7 +51,7 @@ the difficulty beyond what most attackers are willing to spend.
 Further reading
 ---
 
-![33c3]({{ site.url }}/images/33c3.jpg)
+![33c3]({{ site.baseurl }}/images/33c3.jpg)
 
 * [Presentation at 33c3](https://trmm.net/Heads_33c3)
 
