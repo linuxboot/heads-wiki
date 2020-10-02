@@ -70,7 +70,6 @@ However, this also means that the first time you build Heads it must first build
  hour to complete. After the first build, building Heads will take less than a
  minute.
 
-
 Useful targets, stored under the `board` directory of the git tree.
 
 Generated roms are generally found under build/$BOARD/$BOARD.rom
@@ -100,7 +99,6 @@ Some boards have a two SPI flash chip configuration and need special care.
 
 x230
 ----
-
 
 For the Thinkpad x230 there are two boards in `./boards`, x230-flash and x230.
  x230-flash is externally flashable and contains a smaller package that will
@@ -140,6 +138,5 @@ respect of ME. This is done with the help of the `flashrom-x230.sh` script from
 Heads recovery shell.
 
 Please continue to the corresponding flashing guide for your device.
-
 
 More options and detail about Heads modules under [Makefile](/Makefile.md)

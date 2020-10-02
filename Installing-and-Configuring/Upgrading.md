@@ -33,7 +33,8 @@ If the flash protection bits are set correctly it is not possible to
 rewrite the firmware from the normal OS.  You'll need to reboot
 to the Heads recovery shell (hit `r` after the TPM TOTP prompt).
 
-## Internal Flashing
+Internal Flashing
+---
 
 Reconnect power to the laptop and you should be able to boot into the Heads
  recovery shell.

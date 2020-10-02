@@ -7,7 +7,11 @@ has_children: yes
 has_toc: false
 ---
 
-## Required equipment:
+Installing and configuring Heads
+===
+
+Required equipment
+---
 
 To install Heads on a physical device, you will need:
 
@@ -18,15 +22,20 @@ To install Heads on a physical device, you will need:
 If your device requires external flashing ([see below](#supported-devices)),
  you will also need:
 
-* [Spi Programmer](https://trmm.net/SPI_flash): ch341a programmer or raspberry pi or bus pirate (ch341a is recommended for new users and can be found almost [anywhere](https://www.amazon.com/s?k=ch341a+programmer).
-* Wires and a clip SOIC8 to connect your programmer of choice to the board’s SPI flash chip(s).
-  * The [Pomona 5250](https://www.pomonaelectronics.com/products/test-clips/soic-clip-8-pin) is suggested as it is high quality and easier to make contact with the pins.
-* A second computer to flash from (Try to use a recommended operating system: Qubes or Debian 9 or Fedora 30)
+* [Spi Programmer](https://trmm.net/SPI_flash): ch341a programmer or raspberry
+ pi or bus pirate (ch341a is recommended for new users and can be found almost
+ [anywhere](https://www.amazon.com/s?k=ch341a+programmer).
+* Wires and a clip SOIC8 to connect your programmer of choice to the board’s
+ SPI flash chip(s).
+  * The [Pomona 5250](https://www.pomonaelectronics.com/products/test-clips/soic-clip-8-pin)
+   is suggested as it is high quality and easier to make contact with the pins.
+* A second computer to flash from (Try to use a recommended operating system:
+  Qubes or Debian 9 or Fedora 30)
 
+Supported devices
+---
 
-## Supported devices
-
-|Device| Board name| Firmware base| Requires external flashing| ME should be cleaned | Notes|
+|Device| Board name|Firmware base|Requires external flashing| ME should be cleaned|Notes|
 |--|--|--|:--:|:--:|--|
 |Asus KGPE-D16|`kgpe-d16`|coreboot|X|||
 |Dell R630|`r630`|linuxboot||X||
@@ -38,16 +47,17 @@ If your device requires external flashing ([see below](#supported-devices)),
 |Lenovo Thinkpad X230|`x230-flash`|coreboot|X|X|initial flashed image|
 |Lenovo Thinkpad X230|`x230-hotp-verification`|coreboot|X|X|with hotp verification|
 |Lenovo Thinkpad X230|`x230`|coreboot|X|X||
-|Open Compute Project	Leopard node|`leopard`|linuxboot|||
-|Open Compute Project	TiogaPass node|`tioga`|linuxboot||||
-|Open Compute Project	Winterfell node|`winterfell`|linuxboot||||
+|Open Compute Project Leopard node|`leopard`|linuxboot|||
+|Open Compute Project TiogaPass node|`tioga`|linuxboot||||
+|Open Compute Project Winterfell node|`winterfell`|linuxboot||||
 |Purism Librem 13 v2|`librem_13v2`|coreboot||||
 |Purism Librem 13 v4|`librem_13v4`|coreboot||||
 |Purism Librem 15 v3|`librem_15v3`|coreboot||||
 |Purism Librem 15 v4|`librem_15v4`|coreboot||||
 |Purism Librem Mini|`librem_mini`|coreboot||||
 
-## Emulated devices
+Emulated devices
+---
 
 For further information, see [Emulating Heads](/Emulating-Heads)
 
@@ -57,8 +67,8 @@ For further information, see [Emulating Heads](/Emulating-Heads)
 |QEMU development image|`qemu-coreboot`|coreboot|
 |QEMU development image|`qemu-linuxboot`|linuxboot|
 
-
-## security Keys
+Security Keys
+---
 
 *NOTE* - Heads does **NOT** support FIDO2 or U2F authentication.  Be careful when
  purchasing to buy a compatible key.

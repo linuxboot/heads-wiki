@@ -204,7 +204,6 @@ You'll probably want to enable fan control, as described on [ThinkWiki](http://w
 
 Disabling the ethernet might make sense to save power
 
-
 Boot config files
 ===
 

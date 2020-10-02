@@ -17,39 +17,47 @@ parent: Installing and configuring
 </details>
 <!-- markdownlint-enable MD033 -->
 
+`/boot` missing
+===
+
+![Boot missing]({{ site.url }}/images/boot_missing.jpg)
+
+If starting with a blank hard drive, the Heads setup will display an error
+ saying `/boot` cannot be found.  Unless there is an nonencrypted boot partition
+ already configured on the drive, select "No".  You can either use `fdisk` in
+ the recovery shell or using the partition management option during the OS
+ installation.
+
 Generating your PGP key
 ===
 
-If you're using a new Yubikey, you'll need to generate your key files. If you
-already have the public key stubs for your Yubikey, please proceed
-to the next section.  There is some more info in the [GPG guide](/GPG))
+![GPG missing]({{ site.url }}/images/gpg_missing.jpg)
 
-Insert your Yubikey into the x230, then invoke GPG's the "Card Edit"
-function with it targetting the local directory:
+Select "Add a GPG key to the running BIOS" to enter the GPG Management menu.  If
+ you're using a new security key, you'll need to generate your key files. If you
+ already have the public key stubs for your security key, please proceed to
+ [Adding your PGP key](#adding-your-pgp-key).
 
-```shell
-gpg --homedir=/media/gnupg/ --card-edit
-```
+![GPG Management menu]({{ site.url }}/images/gpg_management.jpg)
 
-Go into "Admin" mode and generate a new key inside the Yubikey:
+Insert your security key and USB drive into the device, then chose "Generate GPG
+ keys manually on a USB security token".
+
+When at the GPG prompt, go into "Admin" mode and generate a new key inside the
+ security key:
 
 ```shell
 admin
 generate
 ```
 
-Since this key can be replaced by replacing the ROM, it is not necessary
-to make a backup unless you want to.
-This will prompt you for the admin pin (`12345678` by default) and then
-the existing pin (`123456`).  Follow the other prompts and eventually
-you should have a key in `/media/gnupg/`.
+This will prompt you for the admin pin (`12345678` by default for Yubikey) and
+ then the existing pin (`123456` default for Yubikey).  Follow the other prompts
+ and eventually you should have a key saved onto the USB drive.
 
-Create a single file containing the public key for this Yubikey (the secret key
- lives only in the Yubikey).
+When complete, you will be returned to menu.
 
-```shell
-gpg --homedir=/media/gnupg/ --export -a > /media/gnupg/public.key
-```
+There is some more info in the [GPG guide](/GPG).
 
 Adding your PGP key
 ===
@@ -57,35 +65,22 @@ Adding your PGP key
 Heads uses your own GPG key to sign updates and as a result it needs the
 key stored in the ROM image before flashing the full Heads ROM.
 
-Add your key to the Heads ROM using the following command:
+Ensure your security key and the USB drive with your key are still inserted.
+ Select  "Add a GPG key to the running BIOS" to enter the GPG Management menu,
+ then "Add a GPG key to the running BIOS + reflash".  Follow the steps and your
+ GPG key will be added to the Heads rom.
 
-```shell
-cbfs -o /media/x230.rom -a "heads/initrd/.gnupg/keys/public.key" -f /media/gnupg/public.key
-```
-
-Any name can be used as long as the it is preceded by
- `heads/initrd/.gnupg/keys/`.
-
-After these files are added to the `/media/x230.rom`, you should flash the full
- ROM:
-
-```shell
-flashrom-x230.sh /media/x230.com
-```
-
-Once `flashrom` is complete, reboot (using the `reboot` command)
-and now you should now be back in the Heads runtime. It should
-display a message that is is unable to unseal TOTP.
+Once `flashrom` is complete, reboot and now you should now be back in the Heads
+ runtime. It should display a message that is is unable to unseal TOTP.
 
 Because the reproducible flash has an empty MRC cache, you need to
 reboot one more time so that the PCR values as they would be going
 forward.
 
-
-
-
 Configuring the TPM
 ===
+
+![TOTP/HOTP missing]({{ site.url }}/images/otp_error.jpg)
 
 There aren't very many good details on how to setup TPMs, so this section could
  use some work.
@@ -112,7 +107,8 @@ tpmtotp
 
 Once you own the TPM, run `seal-totp` to generate a random secret, seal it with
  the current TPM PCR values and store the sealed value in the TPM's NVRAM. This
- will generate a QR code that you can scan with your google authenticator
+ will generate a QR code that you can scan with your google authenticator or
+ [FreeOTP+](https://f-droid.org/en/packages/org.liberty.android.freeotpplus/)
  application and use to validate that the boot block, rom stage and Linux
  payload are un-altered.
 
@@ -127,8 +123,6 @@ On the next boot, or if you run `unseal-totp`, the script will extract the
 This does not eliminate all firmware attacks (such as evil maid ones that
  replace the SPI flash chip), but when combined with the WP# pin and BP bits
  should eliminate a software only attack.
-
-
 
 TPM Disk encryption keys
 ---
