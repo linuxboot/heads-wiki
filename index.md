@@ -55,7 +55,9 @@ Further reading
 
 * [Presentation at 33c3](https://trmm.net/Heads_33c3)
 
-## Learn more about Heads:
+Learn more about Heads
+---
+
 * [Heads threat model](/Heads-threat-model) - goes into more
  detail about what classes of threats Heads attempts to counter.
 * [Frequently Asked Questions](/FAQ)
