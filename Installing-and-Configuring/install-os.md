@@ -131,11 +131,6 @@ If you choose to add the disk encryption key to the TPM, you'll need to specify
  section below. You'll then be asked to enter the disk recovery key as well as
  the new boot password you'll use to unseal that key.
 
-Once the key sealing process is complete, it will ask you to insert your GPG
- card then enter your PIN to sign the config.  After this, it will reboot back
- to the main boot menu.  Disconnect your GPG card otherwise Qubes might think
- you have a USB keyboard.
-
 To start Heads now (and in the future), just hit 'y' for default boot.
 
 This should start the final stage of the Qubes installer.  Under
@@ -160,15 +155,12 @@ This will also happen on OS updates that changed the boot process (updating the
 
 Choose the first option again ('1'), then make it the new default ('d'), confirm
  that you're modifying the boot partition ('y'), and that you don't need to
- reseal the disk key ('n').  You'll be asked to insert your GPG card and enter
- the PIN to sign the new configs and the system will reboot and allow you to
- proceed as normal.
+ reseal the disk key ('n').  You'll be asked to insert your USB security dongle
+ and enter the PIN to sign the new configs and the system will reboot and allow
+ you to proceed as normal.
 
 Installing extra software
 ---
-
-dom0 probably has updates available. You'll want to install them before
- switching `/` to read-only and signing the hashes:
 
 ```shell
 sudo qubes-dom0-update

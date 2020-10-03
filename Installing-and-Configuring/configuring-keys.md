@@ -34,17 +34,17 @@ Generating your PGP key
 ![GPG missing]({{ site.baseurl }}/images/gpg_missing.jpg)
 
 Select "Add a GPG key to the running BIOS" to enter the GPG Management menu.  If
- you're using a new security key, you'll need to generate your key files. If you
- already have the public key stubs for your security key, please proceed to
- [Adding your PGP key](#adding-your-pgp-key).
+ you're using a new USB security dongle, you'll need to generate your key files.
+ If you already have the public key stubs for your USB security dongle, please
+ proceed to [Adding your PGP key](#adding-your-pgp-key).
 
 ![GPG Management menu]({{ site.baseurl }}/images/gpg_management.jpg)
 
-Insert your security key and USB drive into the device, then chose "Generate GPG
- keys manually on a USB security token".
+Insert your USB security dongle and USB drive into the device, then chose
+ "Generate GPG keys manually on a USB security token".
 
 When at the GPG prompt, go into "Admin" mode and generate a new key inside the
- security key:
+ USB security dongle:
 
 ```shell
 admin
@@ -65,10 +65,10 @@ Adding your PGP key
 Heads uses your own GPG key to sign updates and as a result it needs the
 key stored in the ROM image before flashing the full Heads ROM.
 
-Ensure your security key and the USB drive with your key are still inserted.
- Select  "Add a GPG key to the running BIOS" to enter the GPG Management menu,
- then "Add a GPG key to the running BIOS + reflash".  Follow the steps and your
- GPG key will be added to the Heads rom.
+Ensure your USB security dongle and the USB drive with your key are still
+ inserted. Select "Add a GPG key to the running BIOS" to enter the GPG
+ Management menu, then "Add a GPG key to the running BIOS + reflash".  Follow
+ the steps and your GPG key will be added to the Heads rom.
 
 Once `flashrom` is complete, reboot and now you should now be back in the Heads
  runtime. It should display a message that is is unable to unseal TOTP.
@@ -137,7 +137,7 @@ If you want to use the TPM to seal a secret used to unlock your LUKS volumes:
 1. Enter recovery mode
 2. Ensure that your the boot devices is mounted: `mount -o ro /dev/sda1 /boot`
  or whatever is appropriate
-3. Insert your GPG card
+3. Insert your USB security dongle
 4. Run `kexec-save-key -p /boot/ ...` with the followed by options appropriate
  to your OS.  The key will be installed in all devices in the LVM volume group
  as well as any other devices specified after the `-l` option.
