@@ -90,8 +90,6 @@ Taking ownership
 
 If you've acquired the machine from elsewhere, you'll need to establish physical
  presence, perform a force clear and take ownership with your own password.
- Should the storage root key (SRK) be set to something other than the well-known
- password?
 
 ```shell
 tpm-reset

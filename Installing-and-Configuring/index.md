@@ -16,13 +16,13 @@ Required equipment
 To install Heads on a physical device, you will need:
 
 * Supported motherboard or laptop ([see below](#supported-devices))
-* A OTP security key ([see below](#security keys))
+* A USB security dongle ([see below](#USB Security Dongles))
 * A USB flash drive for storing your GPG key.
 
 If your device requires external flashing ([see below](#supported-devices)),
  you will also need:
 
-* [Spi Programmer](https://trmm.net/SPI_flash): ch341a programmer or raspberry
+* [SPI Programmer](https://trmm.net/SPI_flash): ch341a programmer or raspberry
  pi or bus pirate (ch341a is recommended for new users and can be found almost
  [anywhere](https://www.amazon.com/s?k=ch341a+programmer).
 * Wires and a clip SOIC8 to connect your programmer of choice to the board’s
@@ -67,7 +67,7 @@ For further information, see [Emulating Heads](/Emulating-Heads)
 |QEMU development image|`qemu-coreboot`|coreboot|
 |QEMU development image|`qemu-linuxboot`|linuxboot|
 
-Security Keys
+USB Security Dongles
 ---
 
 *NOTE* - Heads does **NOT** support FIDO2 or U2F authentication.  Be careful when
