@@ -73,6 +73,9 @@ USB Security Dongles
 *NOTE* - Heads does **NOT** support FIDO2 or U2F authentication.  Be careful when
  purchasing to buy a compatible key.
 
+ *NOTE* - HOTP is currently only supported with Librem devices and the ThinkPad
+  x230 rom with HOTP support
+
 |Manufacture|Model line|TOTP|HOTP|
 |--|--|:--:|:--:|
 |Yubico|[YubiKey 5 Series](https://www.yubico.com/products/yubikey-5-overview)|X||
