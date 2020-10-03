@@ -49,8 +49,7 @@ Build configuration
 ---
 
 Platform configuration are stored in the `board/$BOARD.config`
-(this might change); these files specify the mainboard (`x230`, `x230-flash`
-`chell`, `librem13v1`, and servers like `s2600wf`, `winterfell`, `kgpe-d16` and `r630`)
+ ([list of boards can be found here](/Install-and-Configure#supported-devices))
 as well as the sub-modules necessary for the system.
 The main difference between these use cases is the init scripts that
 are installed in the inird, the Linux kernel configuration and the

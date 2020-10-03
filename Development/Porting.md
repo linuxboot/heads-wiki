@@ -78,9 +78,9 @@ Solution:
 * But that means that ME will need to be neutered and flashed externally prior
   of flashing the BIOS region and IFD over unlocked IFD.
 
-* Run `make CONFIG=config/newarch-qubes.config` to setup the coreboot tree,
+* Run `make BOARD=$BOARD_DIR` to setup the coreboot tree,
 using the new coreboot config file.  This will create the output directory
-`build/coreboot-4.5/newarch/`, and after a while, you should have `newarch.rom`
+`build/coreboot-4.8/newarch/`, and after a while, you should have `newarch.rom`
 in the top level directory.
 
 * If things don't work, please open an issue on [https://github.com/osresearch/heads/issues](https://github.com/osresearch/heads/issues)
