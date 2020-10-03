@@ -40,13 +40,11 @@ used as a hardware key storage to decrypt the drive.
 ![TPM TOTP in action]({{ site.baseurl }}/images/TPM_TOTP_in_action.jpg)
 
 Additionally, the hypervisor, kernel and initrd images are signed by
-keys controlled by the user, and the OS uses a signed, immutable root
-filesystem so that any software exploits that attempt to gain persistence
-will be detected.  While all of these firmware and software changes don't
-secure the system against every possible attack vector, they address
-several classes of attacks against the boot process and physical hardware
-that have been neglected in traditional installations, hopefully raising
-the difficulty beyond what most attackers are willing to spend.
+ keys controlled by the user.  While all of these firmware and software changes
+ don't secure the system against every possible attack vector, they address
+ several classes of attacks against the boot process and physical hardware
+ that have been neglected in traditional installations, hopefully raising
+ the difficulty beyond what most attackers are willing to spend.
 
 Further reading
 ---
