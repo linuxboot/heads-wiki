@@ -104,7 +104,7 @@ System Firmware
 The firmware in the system's motherboard contains the code that the CPU executes
  on startup. This is usually the BIOS or UEFI firmware and the complexity of it
  means that there are many possible attacks.  [Thunderstrike](https://trmm.net/Thunderstrike)
- Too many UEFI vulnerablities to list...</ref> Intel has provided features like
+ Too many UEFI vulnerablities to list... Intel has provided features like
  Boot Guard to try to verify signatures on the firmware; this can hash the
  firmware into the TPM PCR0 (Measured Boot) before the CPU starts or take more
  drastic measures like halting to boot process upon signature failure (Verified
