@@ -17,12 +17,6 @@ parent: Installing and configuring
 </details>
 <!-- markdownlint-enable MD033 -->
 
-Releases
-===
-
-There are currently no binary downloads; you must build from source to ensure
- that you can add your own GPG keys to the image to sign your OS installation.
-
 Building Heads
 ===
 
