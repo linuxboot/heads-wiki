@@ -98,9 +98,7 @@ Once you own the TPM, a QR code will generated that you can scan with your
 
 ![TPMTOTP output]({{ site.baseurl }}/images/TPMTOTP_output.jpg)
 
-On the next boot, or if you run `unseal-totp`, the script will extract the
- sealed blob from the NVRAM and the TPM will validate that the PCR values are as
- expected before it unseals it. If this works, the current TOTP will be computed
+On the next boot, the current TOTP will be computed
  and you can compare this one-time-password against the value that your phone
  generates.
 
