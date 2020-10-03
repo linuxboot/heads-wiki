@@ -37,7 +37,7 @@ For example, if the USB drive has a single partition, you can put the ISO image
 ```
 
 Each ISO is verified before booting so that you can be sure Live distros and
- installation media are not tammpered with, so this route is preferred when
+ installation media are not tampered with, so this route is preferred when
  available.  You can also sign the ISO with your own key:
 
 ```shell
@@ -56,8 +56,8 @@ Some distros require additional options to boot properly directly from ISO.  See
 
 If you want to set a default option so that you don't have to choose at every
  boot, you can do so from the menu by selecting 'd' on the confirmation screen.
- You will also be able to seal your disk encryption key using the TPM allowing
- you to use ensure only a boot password and the proper PCR state can unlock this
+ You will also be able to seal your Disk Unlock Key using the TPM allowing
+ you to use ensure only a boot passphrase and the proper PCR state can unlock this
  yet.
 
 (\*) Ubuntu/Debian Note: These systems don't read `/etc/crypttab` in their
@@ -94,7 +94,7 @@ Use default QubesOS partitioning scheme for QubesOS 4.x
 
 ![Disk encryption recovery key]({{ site.baseurl }}/images/Disk_encryption_recovery_key.jpg)
 
-The disk encrypt password that you enter here will be used as the
+The disk encrypt passphrase that you enter here will be used as the
 "recovery password" later.  It should be a long value since you won't
 have to enter it very often; only when upgrading the Heads firmware
 or if there is a need to recover the disk on an external machine.
@@ -112,9 +112,9 @@ Select the first boot option:
 ```
 
 Then make this the default boot entry by hitting 'd'.  This will also allow you
- to seal the disk encryption key if the device supports it.
+ to seal the Disk Unlock Key if the device supports it.
 
-You will need to input the disk recovery key here (almost for the last time),
+You will need to input the Disk Recovery Key here (almost for the last time),
  and this should start the final stage of the Qubes installer.  Under
  `Configure Qubes` you should select `Create USB qube holding all USB controllers`
  so that they are protected from outside devices.  This step takes a little
@@ -123,12 +123,12 @@ You will need to input the disk recovery key here (almost for the last time),
 Eventually this will be done and you can click "Finish", then Qubes will
 give you a login screen with your login password.
 
-If you choose to add the disk encryption key to the TPM, you'll need to specify
+If you choose to add the Disk Unlock Key to the TPM, you'll need to specify
  which LUKS volume.  A default Qubes install will work if you leave the
  'Encrypted LVM group?' response blank and enter `/dev/sda2` when asked about
- 'Encrypted devices?'.  For more details see the TPM Disk encryption keys
- section below. You'll then be asked to enter the disk recovery key as well as
- the new boot password you'll use to unseal that key.
+ 'Encrypted devices?'.  For more details see the TPM Disk Unlock Keys
+ section below. You'll then be asked to enter the Disk Recovery Key as well as
+ the new boot passphrase you'll use to unseal that key.
 
 To start Heads now (and in the future), just hit 'y' for default boot.
 
