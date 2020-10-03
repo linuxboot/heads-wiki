@@ -85,27 +85,13 @@ Configuring the TPM
 There aren't very many good details on how to setup TPMs, so this section could
  use some work.
 
-Taking ownership
----
-
-If you've acquired the machine from elsewhere, you'll need to establish physical
- presence, perform a force clear and take ownership with your own password.
-
-```shell
-tpm-reset
-```
-
-There is something weird with enabling, presence and disabling. Sometimes reboot
- fixes the state.
-
 tpmtotp
 ---
 
 ![TPMTOTP QR code]({{ site.baseurl }}/images/TPMTOTP_QR_code.jpg)
 
-Once you own the TPM, run `seal-totp` to generate a random secret, seal it with
- the current TPM PCR values and store the sealed value in the TPM's NVRAM. This
- will generate a QR code that you can scan with your google authenticator or
+Once you own the TPM, a QR code will generated that you can scan with your
+ google authenticator or
  [FreeOTP+](https://f-droid.org/en/packages/org.liberty.android.freeotpplus/)
  application and use to validate that the boot block, rom stage and Linux
  payload are un-altered.
