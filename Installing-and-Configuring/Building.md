@@ -60,9 +60,10 @@ git clone https://github.com/osresearch/heads
 cd heads
 ```
 
-Builds of Heads are reproducible, which means that Heads will build in the exact
- same way on different computers. Because of this, as a user, you can guarantee
- that Heads has built correctly and has not been tampered with.
+Builds of Heads [should be](https://github.com/osresearch/heads/issues/734)
+ reproducible, which means that Heads will build in the exact same way on
+ different computers. Because of this, as a user, you can guarantee that Heads
+ has built correctly and has not been tampered with.
 
 However, this also means that the first time you build Heads it must first build
  the compilers that it will use to build itself. If that seems complicated,

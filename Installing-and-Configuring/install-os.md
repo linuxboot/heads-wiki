@@ -20,7 +20,7 @@ parent: Installing and configuring
 Generic OS Installation
 ===
 
-1. Insert OS installation media into one of the USB3 ports (on the left side)
+1. Insert OS installation media into one of the USB3 ports (blue on Thinkpads)
 The Heads boot process supports standard OS bootable media (where the USB drive
  contains the installation media which as created using `dd` or `unetbootin`
  etc.) as well as booting directly from verified ISOs on a plain old partition.
@@ -76,16 +76,15 @@ Installing Qubes
 
 ![Heads splash screen]({{ site.baseurl }}/images/Heads_splash_screen.jpg)
 
-Plus in the USB stick with the R4.0 install media into one of the USB3 ports (on
- the left side of the x230) and boot into USB mode (hit 'u' at the prompt),
- then boot using this option:
+Plus in the USB stick with the R4.0 install media into one of the USB port and
+ boot into USB mode (hit 'u' at the prompt), then boot using this option:
 
 ```text
 2. Install Qubes R4.0 [kernel /isolinux/xen.gz console=none]
 ```
 
 If that completes with no errors it will launch the Xen hypervisor from the
- x230's ROM image and start the Qubes installer.  The first few seconds are run
+ ROM image and start the Qubes installer.  The first few seconds are run
  with an archaic video mode, so things appear a little weird, but once the dom0
  kernel initializes the graphics it should look right.
 
@@ -113,7 +112,7 @@ Select the first boot option:
 ```
 
 Then make this the default boot entry by hitting 'd'.  This will also allow you
- to seal the disk encryption key.
+ to seal the disk encryption key if the device supports it.
 
 You will need to input the disk recovery key here (almost for the last time),
  and this should start the final stage of the Qubes installer.  Under
