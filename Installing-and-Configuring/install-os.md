@@ -20,12 +20,13 @@ parent: Installing and configuring
 Generic OS Installation
 ===
 
-1. Insert OS installation media into one of the USB3 ports (blue on Thinkpads)
-The Heads boot process supports standard OS bootable media (where the USB drive
- contains the installation media which as created using `dd` or `unetbootin`
- etc.) as well as booting directly from verified ISOs on a plain old partition.
-For example, if the USB drive has a single partition, you can put the ISO image
- along with a trusted signature in the root directory:
+1. Insert OS installation media into one of the USB3 ports (blue on Thinkpads).
+[For certian OSes](https://github.com/osresearch/heads/tree/master/initrd/etc/distro/keys)
+ , the Heads boot process supports standard OS bootable media (where the USB
+ drive contains the installation media which as created using `dd` or
+ `unetbootin` etc.) as well as booting directly from verified ISOs on a plain
+ old partition.  For example, if the USB drive has a single partition, you can
+ put the ISO image along with a trusted signature in the root directory:
 
 ```shell
 /Qubes-R4.0-x86_64.iso
