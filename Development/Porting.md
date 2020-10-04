@@ -80,9 +80,10 @@ Solution:
   external flashing use case, freeing and modifying ifd to reduce ME size and
   expend BIOS region in consequence of liberated space can be [found here](https://github.com/corna/me_cleaner/wiki/External-flashing#neutralize-and-shrink-intel-me-useful-only-for-coreboot)
 
-* Run `make BOARD=$BOARD_DIR` to setup the coreboot tree,
-using the new coreboot config file.  This will create the output directory
-`build/coreboot-4.8/newarch/`, and after a while, you should have `newarch.rom`
-in the top level directory.
+* Run `make BOARD=$BOARD_DIR` (where `$BOARD_DIR` is the board directory
+  (`x230`, `x230-flas`h and others found under `./boards` directory) to setup
+  the coreboot tree, using the new coreboot config file.  This will create the
+  output directory `build/$BOARD_DIR/*.rom`, the rom name should be named
+  `coreboot.rom`.
 
 * If things don't work, please open an issue on [https://github.com/osresearch/heads/issues](https://github.com/osresearch/heads/issues)
