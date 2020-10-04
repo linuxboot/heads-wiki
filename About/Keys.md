@@ -145,7 +145,7 @@ Owner's GPG key
 
 The owner of the machine generates a GPG key pair as part of installing Heads.  
   Ideally the private key does not live on the machine, but instead is in a
-  Yubikey or other hardware token.
+  Yubikey or other USB Security dongle.
 
 TODO: Can this be used in the disk decryption process?
 
