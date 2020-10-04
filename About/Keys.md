@@ -144,11 +144,8 @@ Owner's GPG key
 ![Yubikey]({{ site.baseurl }}/images/Yubikey.jpg)
 
 The owner of the machine generates a GPG key pair as part of installing Heads.  
-  The public key is inserted into the ROM image that is flashed and the owner
-  signs the `/boot/boot.sh` script as well as the Xen hypervisor, the dom0 Linux
-  kernel and initramfs, the TPM version counter of the system, and the dm-verity
-  root hash if configured.  Ideally the private key does not live on the
-  machine, but instead is in a Yubikey or other hardware token.
+  Ideally the private key does not live on the machine, but instead is in a
+  Yubikey or other hardware token.
 
 TODO: Can this be used in the disk decryption process?
 
