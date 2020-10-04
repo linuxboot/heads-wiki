@@ -93,9 +93,9 @@ If that completes with no errors it will launch the Xen hypervisor from the
 
 Use default QubesOS partitioning scheme for QubesOS 4.x
 
-![Disk encryption recovery key]({{ site.baseurl }}/images/Disk_encryption_recovery_key.jpg)
+![Disk Recovery Key]({{ site.baseurl }}/images/Disk_encryption_recovery_key.jpg)
 
-The disk encrypt passphrase that you enter here will be used as the
+The Disk Recovery Key that you enter here will be used as the
 "recovery password" later.  It should be a long value since you won't
 have to enter it very often; only when upgrading the Heads firmware
 or if there is a need to recover the disk on an external machine.
@@ -155,7 +155,7 @@ This will also happen on OS updates that changed the boot process (updating the
 
 Choose the first option again ('1'), then make it the new default ('d'), confirm
  that you're modifying the boot partition ('y'), and that you don't need to
- reseal the disk key ('n').  You'll be asked to insert your USB security dongle
+ reseal the disk key ('n').  You'll be asked to insert your USB Security dongle
  and enter the PIN to sign the new configs and the system will reboot and allow
  you to proceed as normal.
 
