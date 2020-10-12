@@ -81,7 +81,7 @@ Solution:
   expend BIOS region in consequence of liberated space can be [found here](https://github.com/corna/me_cleaner/wiki/External-flashing#neutralize-and-shrink-intel-me-useful-only-for-coreboot)
 
 * Run `make BOARD=$BOARD_DIR` (where `$BOARD_DIR` is the board directory
-  (`x230`, `x230-flas`h and others found under `./boards` directory) to setup
+  (`x230`, `x230-flash` and others found under `./boards` directory) to setup
   the coreboot tree, using the new coreboot config file.  This will create the
   output directory `build/$BOARD_DIR/*.rom`, the rom name should be named
   `coreboot.rom`.
