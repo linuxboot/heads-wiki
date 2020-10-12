@@ -54,7 +54,7 @@ git clone https://github.com/osresearch/heads
 cd heads
 ```
 
-Builds of Heads should be unless reproducible issues are currently known,
+Builds of Heads should be reproducible unless issues are currently known,
  [see Heads milestone #1](https://github.com/osresearch/heads/milestone/1) for
  more detail, which means that Heads will build in the exact same way on
  different computers. Because of this, as a user, you can guarantee that Heads
