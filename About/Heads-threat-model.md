@@ -471,15 +471,41 @@ One of the benefits of installing CoreBoot in place of the system's existing EFI
  . Since the firmware is largely closed source, end users aren't able to fix the
  bugs on their own, so their older systems remain vulnerable.
 
-However, many of the countermeasures applied to harden the system against
- physical attacks also make it hard to upgade the firmware. If the boot ROM's
- write protect pins have been hard wired, there is nothing software can do to
- update the ROM image that is marked as read-only with the BP bits. The Coreboot
- ramstage and the Heads Linux kernel/initrd can be updated if they are not
- covered by BP, so hopefully the romstage is small enough that it is "bug free".
- Additionally, many of the secrets protected by the TPM are locked to the PCR
- values that result from hashing the firmware, so procedures for extracting and
- replacing the keys are necessary.
+Write-protecting the BIOS chip (Advanced)
+===
+
+**!!!! WARNING !!!!** This is for advanced users only.  Many of these commands
+ have not been tested and it is uncertain what will happen if there is an error.
+
+ However, many of the countermeasures applied to harden the system against
+  physical attacks also make it hard to upgade the firmware. If the boot ROM's
+  write protect pins have been hard wired, there is nothing software can do to
+  update the ROM image that is marked as read-only with the BP bits. The Coreboot
+  ramstage and the Heads Linux kernel/initrd can be updated if they are not
+  covered by BP, so hopefully the romstage is small enough that it is "bug free".
+  Additionally, many of the secrets protected by the TPM are locked to the PCR
+  values that result from hashing the firmware, so procedures for extracting and
+  replacing the keys are necessary.
+
+From [Replacing the BIOS](https://web.archive.org/web/20160927161825/http://www.tcij.org:80/resources/guides-0/replacing-BIOS)
+ :
+
+ For Macronix chips:
+
+ ```bash
+ flashrom/flashrom -V -p <SOIC_PROGRAMMER> -c MX25L1605 --wp-range 0x0 0x200000
+ flashrom/flashrom -V -p <SOIC_PROGRAMMER> -c MX25L1605 --wp-enable
+ ```
+
+ For Winbond chips:
+
+ ```bash
+ flashrom/flashrom -V -p <SOIC_PROGRAMMER> -c W25Q64 --wp-range 0x0 0x800000
+ flashrom/flashrom -V -p <SOIC_PROGRAMMER>  -c W25Q64 --wp-enable
+ ```
+
+* Detach the test clip from the BIOS chip
+* Solder together pins 3 and 4 of the BIOS chip
 
 More work is necessary in this area.
 
