@@ -89,7 +89,7 @@ As we consider building secure hardware, it is very important to keep in mind
   * Devices might be tampered with in shipment [NSA "upgrade" factory, Snowden 2014](https://arstechnica.com/tech-policy/2014/05/photos-of-an-nsa-upgrade-factory-show-cisco-router-getting-implant/)
   * OptionROMs, firmware updates, etc
   * ANT catalog implants
-  [Shopping for Spy Gear: Catalog Advertises NSA Toolbox, Spiegel 2013](http://www.spiegel.de/international/world/catalog-reveals-nsa-has-back-doors-for-numerous-devices-a-940994.html)
+  [Shopping for Spy Gear: Catalog Advertises NSA Toolbox, Spiegel 2013](https://www.spiegel.de/international/world/catalog-reveals-nsa-has-back-doors-for-numerous-devices-a-940994.html)
   * Deliberate misconfiguration
 * System Administrators
   * Protection of Key escrow for storage keys

@@ -20,7 +20,7 @@ parent: Installing and configuring
 Building Heads
 ===
 
-Heads is supposed to be a [reproducible build](https:cd //reproducible-builds.org/)
+Heads is supposed to be a [reproducible build](https://reproducible-builds.org/)
  and as of [v0.1.0](https://github.com/osresearch/heads/releases/tag/v0.1.0) it
  achieved this goal.  The downside is that the initial build can take a very
  long time as it downloads and builds all of the its dependencies.  One issue

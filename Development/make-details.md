@@ -54,7 +54,7 @@ as well as the sub-modules necessary for the system.
 The main difference between these use cases is the init scripts that
 are installed in the inird, the Linux kernel configuration and the
 coreboot or edk2 configuration.
-An example configuration is [`board/x230.config`](https://github.com/osresearch/heads/blob/master/boards/x230.config)
+An example configuration is [`board/x230.config`](https://github.com/osresearch/heads/blob/master/boards/x230/x230.config)
 
 Sub-modules
 ---

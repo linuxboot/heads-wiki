@@ -12,7 +12,7 @@ Upgrading Heads
 ===
 
 The first time you install Heads, you'll need a
-[hardware flash programmer](https://trmm.net/SPI_Flash) to be able to
+[hardware flash programmer](https://trmm.net/SPI_flash) to be able to
 replace the existing vendor firmware.  Subsequent upgrades can be
 performed via software, although you'll probably want a hardware programmer
 since we don't have a fail-safe recovery mechanism in the event of

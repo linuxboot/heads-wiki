@@ -69,7 +69,7 @@ If you want to set a default option so that you don't have to choose at every
 
 `sda5_crypt UUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX /secret.key luks,keyscript=/bin/cat`
 
-(Credit to [http://www.pavelkogan.com/2015/01/25/linux-mint-encryption/](http://www.pavelkogan.com/2015/01/25/linux-mint-encryption/)
+(Credit to [https://www.pavelkogan.com/2015/01/25/linux-mint-encryption/](https://www.pavelkogan.com/2015/01/25/linux-mint-encryption/)
  for this trick).
 
 Installing Qubes
@@ -276,7 +276,7 @@ When booting from an ISO file on a USB drive, it must be signed by a valid key
 findiso=${ISO_PATH}
 ```
 
-Take a look at [http://mbusb.aguslr.com/howto.html](http://mbusb.aguslr.com/howto.html)
+Take a look at [https://mbusb.aguslr.com/howto.html](https://mbusb.aguslr.com/howto.html)
  for more variations on the distro-specific ISO mounting command lines
  requirements.  By default Heads uses two variants of this when booting from
  ISO where a `kexec_iso_add.txt` is not specified:
