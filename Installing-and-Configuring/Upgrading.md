@@ -123,7 +123,7 @@ There is a helper script `/bin/flashrom-x230.sh` that uses the x230
 flash ROM layout and the Heads modified version of `flashrom` to
 write to the chip.  One of the modifications is to avoid touching or
 reading the ME section, so it is not necessary to have used the
-[ME cleaner](Clean-the-ME-firmware.md) or unlocked the flash descriptor.
+[ME cleaner](/Clean-the-ME-firmware/) or unlocked the flash descriptor.
 
 ```shell
 flashrom-x230.sh /media/x230.full.rom

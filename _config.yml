@@ -3,7 +3,7 @@ color_scheme: dark
 heading_anchors: true
 aux_links:
   "Heads on GitHub":
-    - "//github.com/osresearch/heads"
+    - "https://github.com/osresearch/heads"
 aux_links_new_tab: true
 
 title: Heads - Wiki
@@ -14,6 +14,6 @@ last_edit_time_format: "%b %e %Y at %I:%M %p" # uses ruby's time format: https:/
 # Footer "Edit this page on GitHub" link text
 gh_edit_link: true
 gh_edit_link_text: "Edit this page on GitHub."
-gh_edit_repository: "//github.com/osresearch/heads-wiki"
+gh_edit_repository: "https://github.com/osresearch/heads-wiki"
 gh_edit_branch: "master"
 gh_edit_view_mode: "edit"

@@ -37,7 +37,7 @@ The very first key used in the system is Intel's public key that signs the
  unlikely) can subvert the Bootguard checks as well as the measured boot
  process.
 
-The [Bootguard fuses](/Bootguard) fuses provide protection
+The [Bootguard fuses](https://trmm.net/Bootguard) fuses provide protection
  against most "evil maid" attacks against the firmware.  The hash of the ACM
  signing key is set in write-once fuses in the CPU chipset and during the CPU
  bringup phase the ME and the CPU microcode cooperate in some undocumented way
@@ -64,7 +64,7 @@ TPMTOTP shared secret
 ![TPMTOTP in use]({{ site.baseurl }}/images/TPMTOTP_in_use.jpg)
 
 Since humans have trouble doing RSA public key cryptography in their brains,
- Heads uses [TPM TOTP](Influences/#tpmtotp) to let the system attest to the
+ Heads uses [TPM TOTP](https://trmm.net/Tpmtotp) to let the system attest to the
  user that the firmware is unmodified.  During system setup a random 20-byte
  value is generated and shared (via QR code) to the user's phone as well as
  sealed with the correct TPM PCR values into the TPM NVRAM.  On subsequent boots
