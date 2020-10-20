@@ -135,4 +135,4 @@ Heads recovery shell.
 
 Please continue to the corresponding flashing guide for your device.
 
-More options and detail about Heads modules under [Makefile](/Makefile.md)
+More options and detail about Heads modules under [Makefile](/Makefile/)

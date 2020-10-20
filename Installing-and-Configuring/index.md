@@ -59,7 +59,7 @@ Supported devices
 Emulated devices
 ---
 
-For further information, see [Emulating Heads](/Emulating-Heads)
+For further information, see [Emulating Heads](/Emulating-Heads/)
 
 |Device| Board name|  Firmware base|
 |--|--|--|--|
