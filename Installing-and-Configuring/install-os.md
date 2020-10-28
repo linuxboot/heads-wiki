@@ -46,7 +46,7 @@ gpg --output <iso_name>.sig --detach-sig <iso_name>
 ```
 
 Some distros require additional options to boot properly directly from ISO.  See
- [Boot config files](#Boot config files) for more information.
+ [Boot config files](#boot-config-files) for more information.
 2. Boot from USB by either running `usb-scan` or reboot into USB boot mode (hit
  'u' before the normal boot)
 3. Select the install boot option for your distro of choice and work through the
