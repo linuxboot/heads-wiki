@@ -55,8 +55,8 @@ Important notes:
 * We cannot change the CBFS_REGION and make it larger alone (bigger BIOS)
   without having IFD regions adapted so that ME region smaller and freed space
   being given to the BIOS region. Providing IFD.bin alone could resolve that.
-  Ignoring this can result in a device booting with no screen output from
-  coreboot or not properly resuming from suspend.
+  Ignoring this can result in a device booting [with no screen output from
+  coreboot](https://github.com/osresearch/heads/issues/667) or [not properly resuming from suspend](https://github.com/osresearch/heads/issues/608).
 * When calling flash.sh, we are actually asking flashrom to take the image.rom
   and flash the BIOS region out of it.
 * Consequently, it seems that flashrom doesn't validate that there is enough
