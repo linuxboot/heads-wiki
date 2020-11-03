@@ -195,3 +195,7 @@ The actual assignment needs to be updated in the code; there are outstanding
 6: Drive LUKS headers
 
 7: Heads user-specific config files
+
+===== Disk Unlock Key passphrase prompt output
+![Disk Unlock Key passphrase showed PCRs when passphrase fails](https://user-images.githubusercontent.com/827570/82279087-b2da2000-9959-11ea-8020-6ff36e947576.jpeg)
+
