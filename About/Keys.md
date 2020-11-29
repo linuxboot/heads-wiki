@@ -199,3 +199,9 @@ The actual assignment needs to be updated in the code; there are outstanding
 ===== Disk Unlock Key passphrase prompt output
 ![Disk Unlock Key passphrase showed PCRs when passphrase fails](https://user-images.githubusercontent.com/827570/82279087-b2da2000-9959-11ea-8020-6ff36e947576.jpeg)
 
+Here you can see that "Boot block, ROM stage, RAM stage, Heads linux kernel and initrd", "Drive LUKS headers" and "Heads user-specific config files" have filled the registers PCR-02, PCR-06 and PCR-07 respectively. You can also see the TPM returning the error "Error Authentication failed (Incorrect Password)" which is an invitation to try again, this time typing more slowly. 
+
+After 3 unsuccessful attempts releasing TPM Disk Unlock Key, Heads will propose you to decrypt with your Disk Recovery Key passphrase, directly from the OS, bypassing Heads protection. 
+
+If Disk Unlock Key passphrase throws a different error, it would be a good idea to meditate on your threat model and what happened to your computer since your last normal default boot.
+
