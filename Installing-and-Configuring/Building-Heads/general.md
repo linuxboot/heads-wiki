@@ -1,9 +1,10 @@
 ---
 layout: default
-title: Step 1 - Building Heads
-permalink: /Building/
+title: General Building
 nav_order: 1
-parent: Installing and configuring
+permalink: /general-building/
+parent: Step 1 - Building Heads
+grand_parent: Installing and configuring
 ---
 
 <!-- markdownlint-disable MD033 -->
@@ -87,51 +88,6 @@ Generally, everything that is needed to flash the SPI flash of a board is a
  The resulting rom file will be either `./build/XXX/XXX.rom` or
   `./build/XXX/coreboot.rom` (`XXX` should be the name of your board in
   `./boards`).
-
-Make for a specific configuration
----
-
-Some boards have a two SPI flash chip configuration and need special care.
-
-x230
-----
-
-For the Thinkpad x230 there are two boards in `./boards`, x230-flash and x230.
- x230-flash is externally flashable and contains a smaller package that will
- let us boot to the Heads recovery shell. x230 is only internally flashable and
- contains all of Heads. Since we will end up using both x230-flash and x230, it
- makes the most sense to build both now.
-
-Initial SPI2 (4MB) flash chip
------
-
-x230 boards needs their 4MB SPI2 to be initially externally flashed,
- while the 12MB rom needs to be flashed internally from within Heads to make
- sure to not screw up with ME, contained in the SPI1 flash (8MB bottom flash
- chip under keyboard)
-
-The following make command generates a self-contained, externally flashable rom
- for the SPI2 (4MB BIOS, top SPI flash under keyboard).
-
-```Makefile
-make BOARD=x230-flash
-```
-
-Resulting rom is found under build/x230-flash/x230-flash.rom
-
-Subsequent flashing (upgrades)
------
-
-The following make command will generate a 12MB `coreboot.rom` under the
-build/x230 directory.
-
-```Makefile
-make BOARD=x230
-```
-
-The `coreboot.rom` is the one needed to flash rom updates from within Heads in
-respect of ME. This is done with the help of the `flashrom-x230.sh` script from
-Heads recovery shell.
 
 Please continue to the corresponding flashing guide for your device.
 
