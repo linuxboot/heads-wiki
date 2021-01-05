@@ -40,9 +40,9 @@ droplet, you need to first install some support tools. This takes a
 short while, so get a cup of coffee and
 [install host build requirements packages as specified here](https://github.com/osresearch/heads/blob/master/.circleci/config.yml#L10-L11)
 
-On a Fedora machine, [install host build requirements packages as specified here](https://github.com/osresearch/heads/blob/master/.gitlab-ci.yml#L19).
+On a Fedora machine, [install host build requirements packages as specified here](https://github.com/osresearch/heads/blob/master/.gitlab-ci.yml.deprecated#L19).
 
-For emulation and analysis with UEFITool, install `qemu` and `qt5-devel`:
+For emulation and analysis with UEFITool under Fedora, install `qemu` and `qt5-devel`:
 
 ```shell
 dnf install -y qemu qt5-devel
@@ -79,15 +79,15 @@ Generally, everything that is needed to flash the SPI flash of a board is a
  name of the board that can be found under `board` directory of the git
  downloaded tree.
 
- Make Heads for another board (`XXX` should be the name of your board in ./boards):
+ Make Heads for another board (`XXX` should be the name of your board in ./boards and YY the number of CPUs you want to build with):
 
  ```Makefile
- make BOARD=XXX
+ make BOARD=XXX CPUS=YY
  ```
 
  The resulting rom file will be either `./build/XXX/XXX.rom` or
-  `./build/XXX/coreboot.rom` (`XXX` should be the name of your board in
-  `./boards`).
+  `./build/XXX/heads-XXX-vYYYY-gZZZZZZZ.rom` (`XXX` should be the name of your board in
+  `./boards, vYYYY the pinned Heads version and ZZZZZZ the commit id from which your build comes from`).
 
 Please continue to the corresponding flashing guide for your device.
 
