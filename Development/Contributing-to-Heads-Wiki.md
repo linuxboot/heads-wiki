@@ -28,7 +28,7 @@ The Heads wiki is open source and encourages contributions both big and small.
  <!-- markdownlint-enable MD033 -->
 
 
-On GitHub
+Small Changes (On GitHub)
 ---
 The simplest way to make a small change to existing pages is directly on GitHub
  as it requires no software to be installed.
@@ -47,22 +47,27 @@ made in your fork.
  button at the top of the page.
 
 
-Locally
+Large Changes (Local Files)
 ---
+
+### Prerequisites
 
 For larger changes, multiple changes and that may require adding new pages, it
  is strongly suggested to set up a local Jekyll instance.  Please refer to
  [Jekyll's installation documentation](https://jekyllrb.com/docs/) to setup it
- up on your system.
+ up on your system.  You will need to install ruby and gems.
 
 Additionally, the theme will also need to be installed as the remote theme does
  not seem to work with locally severed Jekyll instances.  Instructions for
  installing the *Just the Docs* theme can be
  [found here](https://pmarsceill.github.io/just-the-docs/).
 
+  ex.  gem install just-the-docs
 
-After installing Jekyll and the Just the Docs theme,
-* Start by login into GitHub and forking
+### Running Locally
+
+After installing Jekyll and the Just the Docs theme you may run the wiki on your local system for faster testing and development.
+* log in to GitHub and fork
 [osresearch/heads-wiki](https://github.com/osresearch/heads-wiki).  Then clone
 your fork locally.
 * Navigate to the base of the locally cloned repo and alter `_config.yml` to use
@@ -80,17 +85,25 @@ $> jekyll serve
 This will start the Jekyll development web server and should be viewable in a
 web browser at `http://localhost:4000/`
 
+* create a branch in git for your changes
 * Make the desired changes, commit them.  **BE SURE NOT TO ADD `_config.yml`**
 to your changes.
-* Push the changes your forked repo.
-* To allow you and others to view the changes on GitHub, the GitHub pages
-branch may need to be changed.  To do this, go to your fork of the heads-wiki on
+* Push the changes to your forked repo on github
+
+### Testing Changes on Github
+
+You may use github to render the changes for review by others.  To do this, go to your fork of the heads-wiki on
  GitHub.com and click *Settings*.  This should default you to the *Options* tab,
 scroll down to the section "GitHub Pages" and change the source branch to the
-name of the branch your changes are on.  After a minute of so it should be built
-and can be seen under `https://YOUR_USERNAME_HERE.github.io/heads-wiki/`
+name of the branch your changes are on.  After a minute or so it should be
+available at `https://YOUR_USERNAME_HERE.github.io/heads-wiki/`
 replacing `YOUR_USERNAME_HERE` with your GitHub username.
-* Create a pull request.
 
 ** NOTE:** the email account associated with your GitHub account may receive an
- error regarding the `CNAME`, this can be ignored.
+ error regarding the `CNAME`.  Please ignore this.
+
+Please note that the URL is similar but NOT the same as the wiki pages feature in your fork in github.
+
+### Pushing Changes Upstream
+
+Create a pull request in the osresearch/heads-wiki project that points to your changes to request review and contribute back to the parent project.
