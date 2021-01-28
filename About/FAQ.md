@@ -133,6 +133,12 @@ Should I validate the TPMTOTP on every boot
 
 Probably. I want to make it also do it at S3.  [See Heads issue #69](https://github.com/osresearch/heads/issues/69)
 
+How is the TPM used in heads?
+----
+
+Stores secret something?  Could also have a disk unlock key.
+
+
 suspend vs shutdown
 ----
 
@@ -182,6 +188,16 @@ throttling or limiting the number of failed attempted while TOTP is susceptible
 to phishing attacks and requires a user to enter the code within a given time
 period.
 
+How is HOTP used in heads? TBD
+----
+
+? Wish I knew.
+
+How is TOTP used in heads?  TBD
+----
+
+? Wish I knew.
+
 coreboot vs Linuxboot
 ----
 
@@ -190,4 +206,118 @@ TO BE WRITTEN
 What happens if I lose/break my security key
 ----
 
-TO BE WRITTEN
+This depends on whether or not you have backups for the key.  If you have no backup you will have lost access to all data that was encrypted using this key.  If you have backups you may create a new key from them.  The counter on the key will be different but you can reset that in heads.  Since you know that something changed you can ignore the tampering warning.
+
+What is the recovery shell?
+----
+
+The recovery shell is a minimal unix shell running on top of the heads kernel.  It can be used to investigate and configure the heads environment.
+
+What are the limitations of the recovery shell? TBD
+----
+
+This thread (https://github.com/osresearch/heads/issues/639#issuecomment-570014587) says that the secrets from nvram are wiped before the recovery shell is launched.  Does this limit what the recovery shell can do?  Can the secrets be recovered using my other security infrastructure for validating that each step of the configuration and boot is working?
+
+
+When do I need to reflash the BIOS?  TBD
+----
+
+To change the default boot
+Anything else?
+
+What secrets are stored in BIOS?  TBD
+----
+
+LUKS passphrase for disk (optional)
+
+
+If secrets are wiped out at a drop to the recovery shell, can I safely reflash from there?  Do secrets get erased if flashing from the recovery shell?
+----
+
+ TBD
+
+Can the HOTP/TOTP functions work in the recovery shell if secrets are wiped?
+----
+
+ TBD
+
+When flashing the BIOS I can choose to keep or erase settings?  What settings?  Can they be regenerated?  Will I lose anything important? TBD
+----
+
+The erase choice will remove signatures and settings from boot.  /boot/kexec*
+? the sigs and hashes can be regenerated.   Key is a string such as ‘Librem Key’.  What about counter?
+
+
+What is /tmp/kexec? TBD
+----
+
+
+Assuming heads is running on the system, what are the steps for configuring it using the recovery shell? 
+----
+
+This likely needs to be a howto ARTICLE but each step is decribed here.
+
+### Set default boot
+
+Heads needs to know which partition to use for bootup.  The setting is based on an environment variable which is set in /etc/config.user.
+
+```echo “export CONFIG_BOOT_DEV=’/dev/sdX’” > /etc/config.user```
+
+### Flash current settings into BIOS  TBD
+
+This is technical and risky.  Perhaps a separate document is best?
+
+### Set tpm owner password TBD
+
+```tpm-reset```
+
+### Sign files in boot
+
+This command will use your security token to sign all files in /boot (except kexec*) and record the sigs in the file kexec_hashes.txt
+
+```kexec-sign-config -p /boot/```
+
+### set hotp/totp TBD
+
+hotp, hotp_verification, hotp_initialize
+, totp
+
+
+What security related files are added to /boot on my system? And what are they for?
+----
+
+### kexec.sig TBD
+
+### kexec_hashes.txt
+
+This file holds the signatures of all of the files in /boot.  On boot a new signature for the files is generated using your security token.  The sigature would not match the file if either the hashes file or the /boot files have changed.  Since an attacker will not have your security token they would not be able to modify the files in a way that would pass verification.
+
+### kexec_hotp_counter TBD
+
+
+### kexec_hotp_key TBD
+
+
+### kexec_rollback.txt TBD
+
+
+
+
+How do I boot my OS in the recovery shell?
+----
+
+Use Kexec-boot to ignore all verification and boot an OS.
+
+```kexec-boot -b /boot -e ‘foo|elf|kernel /vmlinuz|initrd /initrd.img|append root=/dev/whatever’```
+
+
+Can I use multiple security tokens?
+----
+
+Yes with some caveats.  If the tokens have the same private key loaded they will perform the same cryptographic functions but the internal counter will always be different on each.  This will show as tampering when switching between them.  The best use case is to have one as a backup for the other.  If the primary is lost the secondary may be used and the counter may be reset on first use.
+
+What if we sign files in heads on two different systems with the same security token?  Will the counter always be off?
+----
+
+YES?
+TBD
