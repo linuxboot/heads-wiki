@@ -188,15 +188,15 @@ throttling or limiting the number of failed attempted while TOTP is susceptible
 to phishing attacks and requires a user to enter the code within a given time
 period.
 
-How is HOTP used in heads? TBD
+How is HOTP used in heads?
 ----
 
-? Wish I knew.
+TBD
 
-How is TOTP used in heads?  TBD
+How is TOTP used in heads?
 ----
 
-? Wish I knew.
+TBD
 
 coreboot vs Linuxboot
 ----
