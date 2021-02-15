@@ -25,7 +25,7 @@ The shell can be used to troubleshoot heads.  The security token paired with hea
 Access
 ----
 
-The recovery shell may be accessed on boot by holding down 'r' during boot or by choosing the appropriate menu in the heads GUI.  These two different methods of access will result in some different settings.
+The recovery shell may be accessed on boot by repeatedly pressing 'r' during boot or by choosing the appropriate menu in the heads GUI.  These two different methods of access will result in some different settings.
 
 
 Limitations

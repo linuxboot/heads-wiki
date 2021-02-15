@@ -48,7 +48,7 @@ If you have taken the trouble to install and use heads it is likely that you als
 
 ### encrypted boot
 
-if heads can get to your decryption key (from the TPM or stored internally) you may encrypt the boot partition.  This is non trivial and may be more trouble than the alternatives.  See 'encrypted root'.
+Not supported.  heads signs files in a clear boot partition and verifies them on boot.
 
 ### encrypted root
 
@@ -78,13 +78,3 @@ hypervisor
 ----
 
 You may opt for installation of a heads compatible distro such as PureOS, Debian, Fedora, et. al.  and use a hypervisor such as xen.  The Qubes distribution focuses on using the xen hypervisor at the lowest level to maximize compartmentalization.  
-
-
-Guides
-----
-
-As guides are created for each they will be included in these docs.
-
-* [Generic OS]({% link Installing-and-Configuring/OS/Generic.md %})
-* [PureOS]({% link Installing-and-Configuring/OS/PureOS.md %})
-* [Qubes]({% link Installing-and-Configuring/OS/Qubes.md %})

@@ -66,7 +66,7 @@ The rest of the installer is small items such as the default user account on the
 Configure heads to verify PureOS
 ----
 
-When heads first boots after install it will be unable to verify any of your newly installed OS.  Red and yellow backgrounds will be seen with messages that prompt you to take actions to configure secure booting.
+When heads first boots after install it will be unable to verify any of your newly installed OS.  Red and yellow backgrounds will be seen with messages that prompt you to take actions to configure secure booting.  Purism has some [documentation](https://docs.puri.sm/PureBoot/GettingStarted.html#first-reboot) on this.
 
 
 Troubleshooting
