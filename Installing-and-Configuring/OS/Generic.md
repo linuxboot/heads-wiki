@@ -35,9 +35,9 @@ Securely Booting Installation Media
 [For certian OSes](https://github.com/osresearch/heads/tree/master/initrd/etc/distro/keys),
  the Heads boot process supports standard OS bootable media where the USB
  drive contains the installation media.  This is generally created using `dd` 
- or `unetbootin` etc.  It is your responsibility to verify the integrity of the
- media before using it.  Check your ISO downloads against the signatures 
- provided by vendors.
+ or `unetbootin` etc.  
+ 
+If there is no key at the link above it is your responsibility to verify the integrity of the media before using it.  Check your ISO downloads against the signatures provided by vendors.
  
 ### Alternative Options
 
@@ -114,7 +114,9 @@ The easiest approach is to leave the /boot partition unencrypted.  This is safe 
 
 ### Using TPM for decryption of drives
 
-You may seal your Disk Unlock Key using the TPM allowing you to use ensure only a boot passphrase and the proper PCR state can access the disk.
+You may seal your Disk Unlock Key using the TPM allowing you to use ensure only a boot passphrase and the proper PCR state can access the disk. The TPM will release a Disk Unlock Key by setting a default boot option and saving the changes to disk.
+
+This passphrase will release the Disk Unlock Key to unlock LUKs on its second slot, if the measurements in PCRs are matching the ones when setting up the Disk Unlock Key for that boot option. This is the most secured option, since going into recovery will modify the PCR, having different kernel modules will invalidaate the measurements. The TPM will release the Disk Unlock key only if the measurements are coherent and if provided with the TPM NV space defined passphrase (The Disk Unlock Key passphrase), and rate limits attempts, preventing bruteforce. Consequently, someone cloning drive and trying to unlock drive with eavesdropped passphrase will fail, this passphrase being only valid on your laptop with your firmware and measured files...
 
 (\*) Ubuntu/Debian Note: These systems don't read `/etc/crypttab` in their
  initrd, so you need to adjust the crypttab in the OS and `update-initramfs -u`

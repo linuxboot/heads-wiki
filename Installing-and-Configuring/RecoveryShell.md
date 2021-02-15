@@ -31,7 +31,7 @@ The recovery shell may be accessed on boot by holding down 'r' during boot or by
 Limitations
 ----
 
-The recovery shell wipes secrets--normally used for security checks--that were pulled from the BIOS.  This may limit the features available in this environment.
+The recovery shell wipes secrets--normally used for security checks--that were pulled from the BIOS.  This will limit the features available in this environment.
 
 
 Boot Process
@@ -76,13 +76,12 @@ All files in /boot are signed using the security token paired with heads.  These
     kexec-sign-config -p /boot
 
 
-### hotp
+### hotp and totp
 
-may not work in recovery shell due to missing secrets.
+Will not work in recovery shell due to missing secrets. 
 
-### totp
+Booting into Recovery is different than choosing Recovery from heads menus.  These will not have the same pcr measurements in PCRs.  Different kernel modules are loaded.  Also entering the recovery shell modifies the PCR and wipes the secret, see [etc/functions](https://github.com/osresearch/heads/blob/master/initrd/etc/functions).
 
-may not work in recovery shell due to missing secrets.
 
 Upgrading Heads
 ----
