@@ -106,17 +106,42 @@ partition scheme
 
 Heads requires a separate /boot partition.  Other than that you may use any partition layout.
 
+The heads model leaves the /boot partition unencrypted.  This is safe because heads will verify files at boot to detect tampering.
 
 partition encryption
 ----
 
-The easiest approach is to leave the /boot partition unencrypted.  This is safe because heads will verify the files at boot.  Your other partitions may be encrypted or not at will (encryption is more secure) as the linux kernel booted by heads will be responsible for decrypting and mounting them.
+Your other partitions may be encrypted or not based on your preferences.
+
+### Using only a LUKS passphrase
+
+In this model heads is not responsible for any of the encryption of data on disk.  The linux kernel decrypts and mounts LUKS containers.  This is all handled by the Operating System.  
+
+### Security Dongle
+
+You may use a security dongle (aka smartcard) instead of a passphrase for your LUKS partitions.  This is also out of scope for heads even if using the same security dongle that heads uses for verification.
 
 ### Using TPM for decryption of drives
 
-You may seal your Disk Unlock Key using the TPM allowing you to use ensure only a boot passphrase and the proper PCR state can access the disk. The TPM will release a Disk Unlock Key by setting a default boot option and saving the changes to disk.
+Heads can seal a Disk Unlock Key using the TPM.  This will ensure that upon booting only a disk unlock passphrase and the proper PCR state can access the data on the root partition.  This approach does not use a Security Dongle for disk decryption.
 
-This passphrase will release the Disk Unlock Key to unlock LUKs on its second slot, if the measurements in PCRs are matching the ones when setting up the Disk Unlock Key for that boot option. This is the most secured option, since going into recovery will modify the PCR, having different kernel modules will invalidaate the measurements. The TPM will release the Disk Unlock key only if the measurements are coherent and if provided with the TPM NV space defined passphrase (The Disk Unlock Key passphrase), and rate limits attempts, preventing bruteforce. Consequently, someone cloning drive and trying to unlock drive with eavesdropped passphrase will fail, this passphrase being only valid on your laptop with your firmware and measured files...
+If this feature is enabled, heads will ask for a Disk Unlock Passphrase when saving the default boot partition configuration.  This is not the same as the passphrase/key used by LUKS.  The Disk Unlock passphrase will be used to generate a Disk Unlock Key to be placed in the second LUKS keyslot for the root partition.  This key is sealed in the TPM along with measurements taken at that time.
+
+On boot, heads will ask for the disk unlock passphrase that will release the Disk Unlock Key.  This will only succeed if the current measurements match the ones taken when the Key was created.  
+
+This option adds an extra layer of security.  The TPM will only release the Disk Unlock key if the measurements match and generally an attacker would not have the Disk Unlock Key passphrase.   Furthermore, if an attacker compromises the disk unlock passphrase and clones the drive they will still not have access to the decrypted data--due to this passphrase being valid only on this laptop with this firmware and these measured files.  
+
+To mitigate recovery shell attacks, entering the recovery shell will modify the PCR and measurements. Also changes to kernel or initrd files on /boot will modify the measurements.  This will be detected as tampering.
+
+In contrast to the previosly mentioned models which may be vulnerable to brute force attacks in this model the TPM enforces rate limits to prevent bruteforce attacks.
+
+#### Disable TPM Disk Unlock passphrase/key
+
+This feature may be turned off during configuration of heads.  The following will instruct heads not to ask for a disk unlock passphrase and to not store a disk unlock key in the TPM.  
+
+  CONFIG_TPM_NO_LUKS_DISK_UNLOCK=y
+
+#### Injecting LUKS key into OS boot
 
 (\*) Ubuntu/Debian Note: These systems don't read `/etc/crypttab` in their
  initrd, so you need to adjust the crypttab in the OS and `update-initramfs -u`
@@ -135,7 +160,7 @@ bootloader
 heads reads /boot/grub.cfg in order to boot your system.  Since heads is acting as the bootloader you do not need to install grub to your MBR.  It won't hurt if you do since the MBR is mostly ignored.  If you choose to not install grub make sure you generate the grub.cfg file or heads cannot boot your system.
 
 
-Boot
+Default Boot Partition
 ====
 
 Heads will prompt you to set a default boot after OS installation.
