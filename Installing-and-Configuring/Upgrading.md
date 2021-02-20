@@ -18,7 +18,10 @@ performed via software, although you'll probably want a hardware programmer
 since we don't have a fail-safe recovery mechanism in the event of
 a bad flash or buggy firmware.
 
-Additionally, *reflashing the firmware will change the TPM PCRs*.  The Disk Unlock Key will need to be renewed since not valid in TPM nv space. You will reseal HOTP/TOTP, sign /boot, and set a new boot default.  It is recommended to upgrade heads from the graphical menus--not the recovery shell.
+Additionally, *reflashing the firmware will change the TPM PCRs*. This will require generating a new TPM TOTP token and a new drive encryption key. Be sure you have your TPM owner’s password and your disk recovery key or passphrase available since, by design, the disk keys are not accessible to the recovery shell.
+
+The Disk Recovery Key is the key used at OS installation for the encrypted root partition (passphrase placed in luks keyslot 0).
+
 
 Recovery shell
 ---
