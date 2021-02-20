@@ -21,19 +21,10 @@ grand_parent: Installing and configuring
 PureOS 9
 ===
 
-Download
-----
-
-Download the PureOS iso file (https://pureos.net/download/)
-
-
-Write to Storage
-----
-
-See [Generic](../Generic/#alternative-options}) Instructions
-
 Installation
 ----
+
+Download the [PureOS ISO](https://pureos.net/download/).
 
 There is a [guide](https://tracker.pureos.net/w/installation_guide/live_system_installation/) on the pureos site for installation.  The basics are listed below with specifics related to using heads.
 
