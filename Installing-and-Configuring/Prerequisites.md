@@ -34,6 +34,8 @@ If your device requires external flashing ([see below](#supported-devices)),
 Supported devices
 ---
 
+Please see the current [heads source](https://github.com/osresearch/heads/tree/master/boards) for supported devices.
+
 |Device| Board name|Firmware base|Requires external flashing| ME should be cleaned|Notes|
 |--|--|--|:--:|:--:|--|
 |Asus KGPE-D16|`kgpe-d16`|coreboot|X|||
