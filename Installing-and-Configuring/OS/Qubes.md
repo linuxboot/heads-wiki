@@ -41,13 +41,17 @@ If that completes with no errors it will launch the Xen hypervisor from the
 
 Use default QubesOS partitioning scheme for QubesOS 4.x
 
-![Disk Recovery Key]({{ site.baseurl }}/images/Disk_encryption_recovery_key.jpg)
+![Disk Recovery Key]({ site.baseurl }}/images/Disk_encryption_recovery_key.jpg)
 
 The Disk Recovery Key that you enter here will be used as the
 "recovery password" later.  It should be a long value since you won't
 have to enter it very often; only when upgrading the Heads firmware
 or if there is a need to recover the disk on an external machine.
-You will need it again shortly, so don't lose it yet.
+
+DO NOT lose the Disk recovery key. This key passphrase will need to be [reentered](/Keys/#tpm-disk-encryption-key).
+
+This option is offered from the GUI (again lets not forget that going into recovery invalidates PCR measurements, and that having kernel modules loaded mismatch between the moment of setting the TPM disk encryption key will not fly. This is why this should be done from the GUI by saving a new boot default option and answering Y to `Do you wish to add a disk encryption to the TPM [y/N]`:
+
 
 ![Signing Qubes binaries in /boot]({{ site.baseurl }}/images/Signing_Qubes_binaries_in__boot.jpg)
 

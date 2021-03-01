@@ -21,7 +21,7 @@ nav_order: 1
 Generic OS Installation
 ===
 
-Insert OS installation media into one of the USB3 ports (blue on Thinkpads).
+Insert OS installation media into one of the USB3 ports for maximum performance (blue ports).
  Turn the system on and navigate to the USB boot in the graphical heads menu. 
 
 Main Menu => Boot Options => USB Boot
@@ -32,7 +32,7 @@ From here you will be presented with a menu of the boot options on the USB media
 Securely Booting Installation Media
 ----
 
-Heads also supports booting directly from verified ISOs on a standard disk partition.  In this scenario heads will check the ISO against a corresponding signature.  The ISO must be signed by a valid key for the boot process to succeed.  
+Heads also supports booting directly from verified ISOs on a standard disk partition.  In this scenario heads will check the ISO against a detached PGP signature file.  The ISO must be signed by a valid key for the boot process to succeed--either the distribution signing key or your own key. 
 
 If not using one of the included Operating Systems--where the vendor public key is [stored in the heads ROM](https://github.com/osresearch/heads/tree/master/initrd/etc/distro/keys)--you must verify the media immediately after download and sign it with your own key to establish a chain of trust.
 
@@ -55,7 +55,7 @@ gpg --output <iso_name>.sig --detach-sig <iso_name>
 
 ### Distro Specific ISO Boot
 
-Some distros require additional options for a successful boot directly from ISO.  See [Boot config files](#boot-config-files) for more information.
+Some distros require additional options for a successful boot directly from ISO.  See [Boot config files](#boot-config-files) for more information if your OS is not booting by selecting the default boot options from heads GUI.
 1. Boot from USB by either running `usb-scan` or reboot into USB boot mode (hit
  'u' before the normal boot)
 1. Select the install boot option for your distro of choice and work through the

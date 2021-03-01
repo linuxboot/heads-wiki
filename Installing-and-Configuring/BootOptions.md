@@ -51,12 +51,7 @@ These can be placed in any of the following locations:
 | /media/kexec_iso/$ISO_FILENAME/ | used during USB boot from a particular ISO
  file |
 
-These files are only used if there is an appropriate signature for them in
- `kexec.sig` covering all `kexec*.txt` in that location.  This can be generated
-  by running `kexec-sign-config -p /boot/`, etc.  These files are copied by
- `kexec-check-config` to `/tmp/kexec/` only there's a valid signature.  From
-  there the boot routines reference only the configs in `/tmp/kexec`.
-
+These files are only used if there is an appropriate signature for them in `kexec.sig` covering all `kexec*.txt` in that location. This can be generated from the user interface from the `Update checksums and sign all files` in /boot menu option, or manually from the recovery shell by running `kexec-sign-config -p /boot/`, etc. These files are only copied by `kexec-check-config` to `/tmp/kexec/` if there is a valid signature. From there the boot routines reference only the configs in `/tmp/kexec`.
 
 Dynamic vs Persistent Boot Options
 ====
@@ -66,11 +61,8 @@ There are two ways for heads to boot Operating systems from /boot.
 * Dynamic (no kexec_menu.txt)
 * Persistent
 
-If there is no persistent `kexec_menu.txt`, the boot directory will be searched
- for grub/syslinux-like configurations and it will be generated dynamicly (for
- any of the HD/USB/USB-ISO locations).  Creating a persistent
- `kexec_menu.txt` can be useful to limit the options displayed or to make
- persistent alterations to xen or kernel params.
+`kexec_menu.txt` is generated from GUI menu option `Default boot` while /boot contents detached signed digest is verified as valid.  If there is no persistent `kexec_menu.txt` the boot directory will be searched for grub/syslinux-like configurations and it will be generated dynamically (for any of the HD/USB/USB-ISO locations). Creating a persistent `kexec_menu.txt` can be useful to limit the options displayed or to make persistent alterations to xen or kernel params.
+
 
 Persistent Boot Options
 ----

@@ -31,7 +31,7 @@ The recovery shell may be accessed on boot by repeatedly pressing 'r' during boo
 Limitations
 ----
 
-The recovery shell wipes secrets--normally used for security checks--that were pulled from the BIOS.  This will limit the features available in this environment.
+The recovery shell wipes secrets--normally used for security checks--that were [computed](/Keys/#tpm-pcrs) from the BIOS, kernel modules loaded, etc. This will limit the features available in this environment.
 
 
 Boot Process
@@ -80,7 +80,7 @@ All files in /boot are signed using the security dongle paired with heads.  Thes
 
 Will not work in recovery shell due to missing secrets. 
 
-Booting into Recovery is different than choosing Recovery from heads menus.  These will not have the same pcr measurements in PCRs.  Different kernel modules are loaded.  Also entering the recovery shell modifies the PCR and wipes the secret, see [etc/functions](https://github.com/osresearch/heads/blob/master/initrd/etc/functions).
+Booting into Recovery is different than choosing Recovery from heads menus.  The menus may have loaded USB if using a HOTP supported USB dongle when using a HOTP supporting board. These will not have the same TPM measurements in PCRs. Also, entering the recovery shell modifies the PCR and wipes the secret.  See [etc/functions](https://github.com/osresearch/heads/blob/master/initrd/etc/functions).
 
 
 Upgrading Heads

@@ -36,9 +36,9 @@ All together there are a lot of technical decisions.  This document will attempt
 partition table
 ----
 
-heads currently requires a separate boot partition which is a common configuration for Linux.  The heads model leaves the /boot partition unencrypted.  This is safe because heads will verify files at boot to detect tampering.
+Heads currently requires a separate boot partition to verify /boot content integrity, while also using /boot to save and verify the TPM counter file for rollback prevention. Having a seperated /boot partition is a common for Linux.  The heads model leaves the /boot partition unencrypted.  This is safe because heads will verify files at boot to detect tampering.
 
-When you partition storage make sure to create /boot or have the OS installer do it for you.  Generally, the boot partition is much smaller than the other OS partition(s).  You may keep everything else on 1 partition to make it easier to manage but the kernel and initrd on the boot partition can mount any number of others--encrypted or not.
+When you partition storage make sure to create /boot or have the OS installer do it for you.  Generally, the boot partition is much smaller than the other OS partition(s).  As long as the kernel and initrd is located in the seperate boot partition you may keep everything else on one additional partition to make it easier to manage.  Linux initrd will normally have the ability to mount the other partitions--encrypted or not.
 
 The other choices mentioned below may also affect the partition layout you choose.
 
@@ -54,13 +54,13 @@ Since the root partition is the end result of the boot process you may see how e
 * key encrypted by security dongle
 * key on removable media
 
-For example, the [Pureboot](https://docs.puri.sm/PureBoot.html) model (based on heads) uses a security dongle to encrypt the LUKS decryption key and stores it on /boot which is not encrypted.  This key is decrypted on boot by the security dongle protected by a user PIN.  The security dongle is also used to sign the important files in /boot which are verified at each boot by heads.  
+For example, the [Pureboot](https://docs.puri.sm/PureBoot.html) model (based on heads) uses a public key to encrypt a LUKS decryption key and store it on /boot which is not encrypted.  This key is decrypted on boot using the user PIN and the security dongle.  The public key is also used to sign the important files in /boot which are verified at each boot by heads.  
 
 Your other partitions may be encrypted or not based on your preferences and this is outside of the scope of heads.
 
 ### Using TPM for decryption of drives
 
-Heads can seal a Disk Unlock Key using the TPM.  This will ensure that upon booting only a disk unlock passphrase and the proper PCR state can access the data on the root partition.  This approach does not use a Security Dongle for disk decryption and may be used to lock the encrypted data to the hardware.
+Heads can seal a Disk Unlock Key using the TPM.  This will ensure that upon booting only a disk unlock passphrase and the proper PCR state can access the data on the root partition.  This approach uses a Security Dongle for disk decryption and may be used to lock the encrypted data to the hardware.
 
 If this feature is enabled, heads will ask for a Disk Unlock Passphrase when saving the default boot partition configuration.  This is not the same as the passphrase/key used by LUKS.  The Disk Unlock passphrase will be used to generate a Disk Unlock Key to be placed in the second LUKS keyslot for the root partition.  The disk unlock key is sealed in the TPM along with measurements taken at that time.
 
