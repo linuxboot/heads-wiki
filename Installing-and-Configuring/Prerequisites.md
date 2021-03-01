@@ -68,7 +68,7 @@ For further information, see [Emulating Heads](/Emulating-Heads/)
 |QEMU development image|`qemu-coreboot`|coreboot|
 |QEMU development image|`qemu-linuxboot`|linuxboot|
 
-USB Security Dongles
+USB Security Dongles (aka security token aka smartcard)
 ---
 
 *NOTE* - Heads does **NOT** support FIDO2 or U2F authentication.  Be careful when

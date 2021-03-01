@@ -19,7 +19,7 @@ Overview
 
 The recovery shell is running a Linux kernel and shell based on busybox.  The environment comes from the initrd image flashed into the BIOS with the Linux kernel.  i.e.  heads
 
-The shell can be used to troubleshoot heads.  The security token paired with heads may be needed to effectively use this environment.
+The shell can be used to troubleshoot heads.  The security dongle paired with heads may be needed to effectively use this environment.
 
 
 Access
@@ -70,7 +70,7 @@ This example may work for you by changing only the root= setting.  Normally, the
 
 ### sign files
 
-All files in /boot are signed using the security token paired with heads.  These signatures are stored in /boot/kexec_hashes.txt
+All files in /boot are signed using the security dongle paired with heads.  These signatures are stored in /boot/kexec_hashes.txt
 
     mount /dev/sdaX /boot
     kexec-sign-config -p /boot

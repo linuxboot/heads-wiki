@@ -51,10 +51,10 @@ If you have taken the trouble to install and use heads it is likely that you als
 Since the root partition is the end result of the boot process you may see how encrypting it makes the boot process complicated.  There are multiple schemes for making this setup work and more will probably be invented.  The key issue is deciding where to store the decryption key so that the root partition can be accessed during boot.  Most of the following use cases are out of scope for heads but worth a quick review so that you may make an informed decision.
 
 * key in TPM
-* key encrypted by security dongle (smartcard)
+* key encrypted by security dongle
 * key on removable media
 
-For example, the [Pureboot](https://docs.puri.sm/PureBoot.html) model (based on heads) uses a security dongle (aka smartcard) to encrypt the LUKS decryption key and stores it on /boot which is not encrypted.  This key is decrypted on boot by the smartcard protected by a user PIN.  The smartcard is also used to sign the important files in /boot which are verified at each boot by heads.  
+For example, the [Pureboot](https://docs.puri.sm/PureBoot.html) model (based on heads) uses a security dongle to encrypt the LUKS decryption key and stores it on /boot which is not encrypted.  This key is decrypted on boot by the security dongle protected by a user PIN.  The security dongle is also used to sign the important files in /boot which are verified at each boot by heads.  
 
 Your other partitions may be encrypted or not based on your preferences and this is outside of the scope of heads.
 
@@ -85,13 +85,13 @@ In this model heads is not responsible for any of the encryption of data on disk
 
 This model is vulnerable to brute force attacks but does not lock the data to the hardware.
 
-### Security Dongle (aka smartcard)
+### Security Dongle (aka smartcard aka security token)
 
 You may use a security dongle to manage the passphrase for the root LUKS partition.  This is also out of scope for heads even if using the same security dongle for verification such as in the [Pureboot](https://docs.puri.sm/PureBoot.html) model.  
 
 The first advantage to this approach is that the user only needs to type a PIN on boot rather than a passphrase.  Unlike the [heads TPM](#using-tpm-for-decryption-of-drives) model this model does not lock the data on disk to the hardware.  The hard drive may be moved to a different system and used with the security dongle and/or LUKS passphrase if it is still on the partition.  Also, the security dongle enforces limits which prevent brute force attacks.
 
-In this model a large amount of text or binary data is used as the passphrase for decrypting the LUKS container.  This complex passphrase is encyrpted using the private key associated with the security dongle and placed in a 'public' location such as /boot.  After heads boots the Operating System the kernel and initrd use the smartcard to decrypt the passphrase which is used to decrypt the LUKS root partition.  
+In this model a large amount of text or binary data is used as the passphrase for decrypting the LUKS container.  This complex passphrase is encyrpted using the private key associated with the security dongle and placed in a 'public' location such as /boot.  After heads boots the Operating System the kernel and initrd use the security dongle to decrypt the passphrase which is used to decrypt the LUKS root partition.  
 
 
 single vs multiboot

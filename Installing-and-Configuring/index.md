@@ -15,7 +15,7 @@ Installing and configuring Heads
 Prerequisites
 ----
 
-Heads is supported on a limited set of hardware (laptop and security token).  First, check the [Prerequisites](/Prerequisites/) page for details.
+Heads is supported on a limited set of hardware (laptop and security dongle).  First, check the [Prerequisites](/Prerequisites/) page for details.
 
 
 Building
