@@ -70,7 +70,7 @@ This example may work for you by changing only the root= setting.  Normally, the
 
 ### sign files
 
-All files in /boot are signed using the security dongle paired with heads.  These signatures are stored in /boot/kexec_hashes.txt
+All files in /boot are signed using the security dongle paired with heads.  These signatures are stored in /boot/kexec.sig
 
     mount /dev/sdaX /boot
     kexec-sign-config -p /boot
