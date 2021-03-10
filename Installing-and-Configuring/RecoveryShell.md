@@ -70,11 +70,16 @@ This example may work for you by changing only the root= setting.  Normally, the
 
 ### sign files
 
-All files in /boot are signed using the security dongle paired with heads.  These signatures are stored in /boot/kexec.sig
+Content in /boot is hashed and recorded in a file.  The hashes are signed using the security dongle paired with heads.  These hashes are verified on boot using the public key corresponding to the security dongle.
 
     mount /dev/sdaX /boot
     kexec-sign-config -p /boot
 
+Heads uses a gpg detached signed digest for this process.  First, it finds all filenames in /boot which start with kexec and pass this as arguments to sha256sum. The output is redirected to gpg which verifies that the hashes for each file are the same as expected. Using sha256sum is faster than asking gpg to verify the files directly.  Creating the detached signed digest requires the user to sign externally with his USB Security dongle + User PIN, while the verification only requires the GPG public key fused inside of the rom.
+
+/boot/kexec_hashes.txt is a sha256sum (digest) file of all /boot content.  /boot/kexec.sig is a detached signed digest (sha256sum) of all kexec* files, including the kexec_hashes.txt file.  The function verify_global_hashes (which is duplicated in both gui-init and kexec-select-boot) verifies that the copied kexec_hashes.txt over /tmp matches the actual calculated hashes of /boot/ content prior of booting.
+
+On boot, kexec.sign is verifying detached signed integrity/authenticity of that signed file against the public key fused in rom, which was detached signed with the USB Security dongle's private key, protected in the USB Security dongle's smartcard, unlocked to sign with GPG User PIN.
 
 ### hotp and totp
 
