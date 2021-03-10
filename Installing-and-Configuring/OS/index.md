@@ -54,8 +54,6 @@ Since the root partition is the end result of the boot process you may see how e
 * key encrypted by security dongle
 * key on removable media
 
-For example, one model encrypts a LUKS decryption key so that it may be stored on /boot which is not encrypted.  This key is decrypted on boot using the user PIN and the security dongle. 
-
 Your other partitions may be encrypted or not based on your preferences and this is outside of the scope of heads.
 
 ### Using TPM for decryption of drives
@@ -91,7 +89,7 @@ You may use a security dongle to manage the passphrase for the root LUKS partiti
 
 The first advantage to this approach is that the user only needs to type a PIN on boot rather than a passphrase.  Unlike the [heads TPM](#using-tpm-for-decryption-of-drives) model this model does not lock the data on disk to the hardware.  The hard drive may be moved to a different system and used with the security dongle and/or a LUKS passphrase.  Also, the security dongle enforces limits which prevent brute force attacks.
 
-In this model a large amount of text or binary data is used as the passphrase for decrypting the LUKS container.  This complex passphrase is encyrpted using the private key associated with the security dongle and placed in a 'public' location such as /boot.  After heads boots the Operating System the kernel and initrd use the security dongle to decrypt the passphrase which is used to decrypt the LUKS root partition.  
+In this model a large amount of text or binary data is used as the passphrase for decrypting the LUKS container.  This complex passphrase is encyrpted in a 'public' location such as /boot.  After heads boots the kernel it uses the security dongle to decrypt the passphrase which is then used to decrypt the LUKS root partition.
 
 
 single vs multiboot
