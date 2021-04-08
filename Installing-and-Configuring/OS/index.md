@@ -93,9 +93,7 @@ This model is vulnerable to brute force attacks.
 
 ### Security Dongle with LUKS root
 
-In this model heads is not responsible for any of the decryption of data on disk.  You may use a security dongle (aka smartcard aka security token) to manage the passphrase for the root LUKS partition.
-
-The first difference in this approach compared to the [heads TPM](#using-tpm-for-decryption-of-drives) model is that the user may be limited to typing ONLY a short number sequence (PIN) rather than a full passphrase depending on smartcard hardware used.  The hard drive may be moved to a different system and used with the security dongle and/or a LUKS passphrase without modification.  Like the TPM, the security dongle enforces limits which prevent brute force attacks.
+In this model heads is not responsible for any of the decryption of data on disk.  You may use a security dongle (aka smartcard aka security token) to manage the passphrase for the root LUKS partition.  Like the TPM, the security dongle enforces limits which prevent brute force attacks.
 
 In contrast to [using TPM for decryption](#using-tpm-for-decryption-of-drives)--where a disk unlock passphrase is stored in the TPM--in this model the TPM is not used for LUKS decryption.  A LUKS disk unlock key/passphrase is encrypted and stored in a 'public' location such as /boot.  After heads boots the kernel a process which uses the security dongle decrypts the LUKS root partition.
 
@@ -106,7 +104,7 @@ TPM vs Security Dongle
 
 Which one you choose depends on hardware you have and threat models you are working with.  Your system may not have a TPM or you may not have a smartcard.  The core functionality is similar in that they both store private keys and allow for cryptographic operations.
 
-The significant differences between a TPM based Disk Unlock Key and USB Security dongle are
+Heads uses the TPM for various operations and may use the TPM for disk unlock.  The significant differences between a TPM based Disk Unlock Key and USB Security dongle are
 
 * they are two different proprietary hardware chips
 * TPM has access to RAM and processor so it can 'measure' system states
