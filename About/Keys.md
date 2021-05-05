@@ -147,7 +147,7 @@ The owner of the machine generates a GPG key pair as part of installing Heads.
   Ideally the private key does not live on the machine, but instead is in a
   Yubikey or other USB Security dongle.
 
-TODO: Can this be used in the disk decryption process?
+The security dongle may be used in the disk decryption process. Some of the Linux distros have incoporated this using /etc/crypttab with a keyscript option.
 
 An attacker who controls this private key can replace executables in `/boot` and
  if they also control the disk encryption key they can tamper with files in a

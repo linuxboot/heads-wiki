@@ -18,11 +18,12 @@ performed via software, although you'll probably want a hardware programmer
 since we don't have a fail-safe recovery mechanism in the event of
 a bad flash or buggy firmware.
 
-Additionally, *reflashing the firmware will change the TPM PCRs*.
-This will require generating a new TPM TOTP token and a new drive
-encryption key.  Be sure you have your TPM owner's password and your
-disk encryption recovery key or passphrase available since, by design,
-the disk key is not accessible to the recovery shell.
+Additionally, *flashing a new firmware will change the TPM PCRs*. This will require generating a new TPM TOTP token and a new drive encryption key. Be sure you have your TPM owner’s password and your disk recovery key or passphrase available since, by design, the disk keys are not accessible to the recovery shell.
+
+If you flash the same firmware and you keep settings, your TOTP will be valid, HOTP also, and Disk Unlock Key passphrase will still boot your system. In doubt, you can consequently reflash your firmware.
+
+The Disk Recovery Key is the key used at OS installation for the encrypted root partition (passphrase placed in luks keyslot 0).
+
 
 Recovery shell
 ---
@@ -31,7 +32,7 @@ Recovery shell
 
 If the flash protection bits are set correctly it is not possible to
 rewrite the firmware from the normal OS.  You'll need to reboot
-to the Heads recovery shell (hit `r` after the TPM TOTP prompt).
+to the Heads [recovery shell](/RecoveryShell/).  Repeatedly press 'r' on boot or choose 'Recovery Shell' in the heads GUI.
 
 Internal Flashing
 ---
@@ -157,10 +158,10 @@ sealtotp.sh
 This needs the TPM owner password to be able to define the NVRAM space.
 (todo: [issue #151](https://github.com/osresearch/heads/issues/151)).
 
-Resealing the disk encryption keys
+Resealing the disk encryption keys (optional)
 ---
 
-When you get to the standard boot menu and after you verify the TOTP, select 'm'
+If you want to store the Disk Unlock key in the TPM you will need to do that now.  From the recovery shell run generic-init.  When you get to the standard boot menu and after you verify the TOTP, select 'm'
  to go to the full boot menu.  Select the option you want (usually the first),
  make it the default by hitting 'd' and also say 'y' when asked to reseal the
  disk keys.

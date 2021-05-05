@@ -40,8 +40,8 @@ Select "Add a GPG key to the running BIOS" to enter the GPG Management menu.  If
 
 ![GPG Management menu]({{ site.baseurl }}/images/gpg_management.jpg)
 
-Insert your USB security dongle and USB drive into the device, then chose
- "Generate GPG keys manually on a USB security token".
+Insert your USB security dongle and USB drive into the device, then choose
+ "Generate GPG keys manually on a USB security token[dongle]".
 
 When at the GPG prompt, go into "Admin" mode and generate a new key inside the
  USB security dongle:
