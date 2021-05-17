@@ -39,7 +39,7 @@ There are many secret pins, passphrases, and keys used in heads.  These are desc
 Operating Systems
 ----
 
-We assume you want to run something other than heads on your system.  The installation procedure could vary greatly depending on which distro you choose, which version of that distro, and if you are encrypting various partitions.  See the [Operating System](/OS/) [guides](/OS#guides) for help.
+We assume you want to run something other than heads on your system.  The installation procedure could vary greatly depending on which distro you choose, which version of that distro, and if you are encrypting various partitions.  See [Operating System](/InstallingOS/) for help.
 
 
 Recovery Shell
