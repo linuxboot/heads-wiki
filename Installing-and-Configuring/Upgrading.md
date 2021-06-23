@@ -22,7 +22,7 @@ Additionally, *flashing a new firmware will change the TPM PCRs*. This will requ
 
 If you flash the same firmware and you keep settings, your TOTP will be valid, HOTP also, and Disk Unlock Key passphrase will still boot your system. In doubt, you can consequently reflash your firmware.
 
-The Disk Recovery Key is the key used at OS installation for the encrypted root partition (passphrase placed in luks keyslot 0).
+The Disk Recovery Key is the key used at OS installation for the encrypted root partition (passphrase placed in LUKS keyslot 0).
 
 
 Recovery shell
@@ -157,11 +157,3 @@ sealtotp.sh
 
 This needs the TPM owner password to be able to define the NVRAM space.
 (todo: [issue #151](https://github.com/osresearch/heads/issues/151)).
-
-Resealing the disk encryption keys (optional)
----
-
-If you want to store the Disk Unlock key in the TPM you will need to do that now.  From the recovery shell run generic-init.  When you get to the standard boot menu and after you verify the TOTP, select 'm'
- to go to the full boot menu.  Select the option you want (usually the first),
- make it the default by hitting 'd' and also say 'y' when asked to reseal the
- disk keys.
