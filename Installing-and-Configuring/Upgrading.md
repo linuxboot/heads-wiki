@@ -18,7 +18,11 @@ performed via software, although you'll probably want a hardware programmer
 since we don't have a fail-safe recovery mechanism in the event of
 a bad flash or buggy firmware.
 
-Additionally, *flashing a new firmware will change the TPM PCRs*. This will require generating a new TPM TOTP token and a new drive encryption key. Be sure you have your TPM owner’s password and your disk recovery key or passphrase available since, by design, the disk keys are not accessible to the recovery shell.
+Additionally, *reflashing the firmware will change the TPM PCRs*.
+This will require generating a new TPM TOTP token and a new drive
+encryption key.  Be sure you have your TPM owner's password and your
+disk encryption recovery key or passphrase available since, by design,
+the disk key is not accessible to the recovery shell.
 
 If you flash the same firmware and you keep settings, your TOTP will be valid, HOTP also, and Disk Unlock Key passphrase will still boot your system. In doubt, you can consequently reflash your firmware.
 
