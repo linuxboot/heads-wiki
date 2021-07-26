@@ -25,7 +25,6 @@ A user has the option to make persistent modifications to the non-Qubes boot
  process by creating one or more of the following files:
 
 | file | description |
-| ---- | ---- |
 | kexec_menu.txt | contains multiple options for parameters to the kexec command|
 | kexec_hashes.txt | a sha256sum file from within the respective boot directory |
 | kexec_iso_add.txt | a sh variable to override the standard ISO kernel argument
@@ -45,7 +44,6 @@ A user has the option to make persistent modifications to the non-Qubes boot
 These can be placed in any of the following locations:
 
 | location | description |
-| ---- | ---- |
 | /boot/ | used during internal HD boot |
 | /media/ | used during standard USB boot |
 | /media/kexec_iso/$ISO_FILENAME/ | used during USB boot from a particular ISO
