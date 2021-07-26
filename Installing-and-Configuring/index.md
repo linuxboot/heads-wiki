@@ -2,83 +2,47 @@
 layout: default
 title: Installing and configuring
 permalink: /Install-and-Configure
-nav_order: 4
+nav_order: 40
 has_children: yes
 has_toc: false
 ---
 
+
 Installing and configuring Heads
 ===
 
-Required equipment
----
 
-To install Heads on a physical device, you will need:
+Prerequisites
+----
 
-* Supported motherboard or laptop ([see below](#supported-devices))
-* A USB security dongle ([see below](#USB Security Dongles))
-* A USB flash drive for storing your GPG key.
+Heads is supported on a limited set of hardware (laptop and security dongle).  First, check the [Prerequisites](/Prerequisites/) page for details.
 
-If your device requires external flashing ([see below](#supported-devices)),
- you will also need:
 
-* [SPI Programmer](https://trmm.net/SPI_flash): ch341a programmer or raspberry
- pi or bus pirate (ch341a is recommended for new users and can be found almost
- [anywhere](https://www.amazon.com/s?k=ch341a+programmer).
-* Wires and a clip SOIC8 to connect your programmer of choice to the board’s
- SPI flash chip(s).
-  * The [Pomona 5250](https://www.pomonaelectronics.com/products/test-clips/soic-clip-8-pin)
-   is suggested as it is high quality and easier to make contact with the pins.
-* A second computer to flash from (Try to use a recommended operating system:
-  Qubes or Debian 9 or Fedora 30)
+Building
+----
 
-Supported devices
----
+If you are [building heads](/Building) check the build guides.  See below if you are using heads releases from this project.
 
-|Device| Board name|Firmware base|Requires external flashing| ME should be cleaned|Notes|
-|--|--|--|:--:|:--:|--|
-|Asus KGPE-D16|`kgpe-d16`|coreboot|X|||
-|Dell R630|`r630`|linuxboot||X||
-|Intel S2600wf|`s2600wf`|linuxboot||X||
-|Lenovo Thinkpad T420|`t420`|coreboot|X|X||
-|Lenovo Thinkpad T430|`t430-flash`|coreboot|X|X|initial flashed image|
-|Lenovo Thinkpad T430|`t430`|coreboot|X|X||
-|Lenovo Thinkpad X220|`x220`|coreboot|X|X||
-|Lenovo Thinkpad X230|`x230-flash`|coreboot|X|X|initial flashed image|
-|Lenovo Thinkpad X230|`x230-hotp-verification`|coreboot|X|X|with hotp verification|
-|Lenovo Thinkpad X230|`x230`|coreboot|X|X||
-|Open Compute Project Leopard node|`leopard`|linuxboot|||
-|Open Compute Project TiogaPass node|`tioga`|linuxboot||||
-|Open Compute Project Winterfell node|`winterfell`|linuxboot||||
-|Purism Librem 13 v2|`librem_13v2`|coreboot||||
-|Purism Librem 13 v4|`librem_13v4`|coreboot||||
-|Purism Librem 15 v3|`librem_15v3`|coreboot||||
-|Purism Librem 15 v4|`librem_15v4`|coreboot||||
-|Purism Librem Mini|`librem_mini`|coreboot||||
 
-Emulated devices
----
+Flashing Guides
+----
 
-For further information, see [Emulating Heads](/Emulating-Heads/)
+The steps for [Flashing-Guides](/Flashing-guides/) on your system may vary based on the hardware in use.  
 
-|Device| Board name|  Firmware base|
-|--|--|--|--|
-|QEMU development image|`qemu-coreboot-fbwhiptail`|coreboot|
-|QEMU development image|`qemu-coreboot`|coreboot|
-|QEMU development image|`qemu-linuxboot`|linuxboot|
 
-USB Security Dongles
----
+Secrets and Security
+----
 
-*NOTE* - Heads does **NOT** support FIDO2 or U2F authentication.  Be careful when
- purchasing to buy a compatible key.
+There are many secret pins, passphrases, and keys used in heads.  These are described in [Configuring Keys](/Configuring-Keys/).
 
- *NOTE* - HOTP is currently only supported with Librem devices and the ThinkPad
-  x230 rom with HOTP support
 
-|Manufacture|Model line|TOTP|HOTP|
-|--|--|:--:|:--:|
-|Yubico|[YubiKey 5 Series](https://www.yubico.com/products/yubikey-5-overview/)|X||
-|Nitrokey|[Nitrokey Pro 2](https://www.nitrokey.com/#comparison)|X|X|
-|Nitrokey|[Nitrokey Storage 2](https://www.nitrokey.com/#comparison)|X|X|
-|Purism|[Librem Key](https://puri.sm/products/librem-key/)|X|X|
+Operating Systems
+----
+
+We assume you want to run something other than heads on your system.  The installation procedure could vary greatly depending on which distro you choose, which version of that distro, and if you are encrypting various partitions.  See [Operating System](/InstallingOS/) for help.
+
+
+Recovery Shell
+----
+
+There is a [Recovery Shell](/RecoveryShell/) built into the heads environment which may be used for troubleshooting.
