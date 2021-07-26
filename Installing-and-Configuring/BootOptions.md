@@ -25,29 +25,24 @@ A user has the option to make persistent modifications to the non-Qubes boot
  process by creating one or more of the following files:
 
 | file | description |
+| ---- | ---- |
 | kexec_menu.txt | contains multiple options for parameters to the kexec command|
 | kexec_hashes.txt | a sha256sum file from within the respective boot directory |
-| kexec_iso_add.txt | a sh variable to override the standard ISO kernel argument
- additions |
-| kexec_iso_remove.txt | a sh variable to override the standard ISO kernel
- argument removals |
-| kexec_default.$N.txt | specifies the default kexec parameters corresponding to
- the Nth menu option |
-| kexec_default_hashes.txt | a sha256sum file for the default entry kexec file
- parameters |
-| kexec_rollback.txt | a sha256sum of the TPM counter contents in the tmp
- directory |
-| kexec_key_devices.txt | contains a list of "device uuid" combos for all LUKS
- devices to unlock |
+| kexec_iso_add.txt | a sh variable to override the standard ISO kernel argument additions |
+| kexec_iso_remove.txt | a sh variable to override the standard ISO kernel argument removals |
+| kexec_default.$N.txt | specifies the default kexec parameters corresponding to the Nth menu option |
+| kexec_default_hashes.txt | a sha256sum file for the default entry kexec file parameters |
+| kexec_rollback.txt | a sha256sum of the TPM counter contents in the tmp directory |
+| kexec_key_devices.txt | contains a list of "device uuid" combos for all LUKS devices to unlock |
 | kexec_key_lvm.txt | contains the name of an LVM group to activate on boot |
 
 These can be placed in any of the following locations:
 
 | location | description |
+| ---- | ---- |
 | /boot/ | used during internal HD boot |
 | /media/ | used during standard USB boot |
-| /media/kexec_iso/$ISO_FILENAME/ | used during USB boot from a particular ISO
- file |
+| /media/kexec_iso/$ISO_FILENAME/ | used during USB boot from a particular ISO file |
 
 These files are only used if there is an appropriate signature for them in `kexec.sig` covering all `kexec*.txt` in that location. This can be generated from the user interface from the `Update checksums and sign all files` in /boot menu option, or manually from the recovery shell by running `kexec-sign-config -p /boot/`, etc. These files are only copied by `kexec-check-config` to `/tmp/kexec/` if there is a valid signature. From there the boot routines reference only the configs in `/tmp/kexec`.
 
