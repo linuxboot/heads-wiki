@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Operating Systems
-permalink: /OS/
+permalink: /InstallingOS/
 nav_order: 80
 parent: Installing and configuring
 has_children: yes
