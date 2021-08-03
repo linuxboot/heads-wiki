@@ -1,10 +1,13 @@
 ---
 layout: default
-title: Step 4 - Installing Qubes and other OSes
-permalink: /InstallingOS/
-nav_order: 8
-parent: Installing and configuring
+title: Qubes
+permalink: /OS/Qubes
+nav_order: 1
+parent: Operating Systems
+grand_parent: Installing and configuring
+has_toc: true
 ---
+
 
 <!-- markdownlint-disable MD033 -->
 <details open markdown="block">
@@ -16,61 +19,6 @@ parent: Installing and configuring
 {:toc}
 </details>
 <!-- markdownlint-enable MD033 -->
-
-Generic OS Installation
-===
-
-1. Insert OS installation media into one of the USB3 ports (blue on Thinkpads).
-[For certian OSes](https://github.com/osresearch/heads/tree/master/initrd/etc/distro/keys)
- , the Heads boot process supports standard OS bootable media (where the USB
- drive contains the installation media which as created using `dd` or
- `unetbootin` etc.) as well as booting directly from verified ISOs on a plain
- old partition.  For example, if the USB drive has a single partition, you can
- put the ISO image along with a trusted signature in the root directory:
-
-```shell
-/Qubes-R4.0-x86_64.iso
-/Qubes-R4.0-x86_64.iso.asc
-/Fedora-Workstation-Live-x86_64-27-1.6.iso
-/Fedora-Workstation-Live-x86_64-27-1.6.iso.sig
-/tails-amd64-3.7.iso
-/tails-amd64-3.7.iso.sig
-```
-
-Each ISO is verified before booting so that you can be sure Live distros and
- installation media are not tampered with, so this route is preferred when
- available.  You can also sign the ISO with your own key:
-
-```shell
-gpg --output <iso_name>.sig --detach-sig <iso_name>
-```
-
-Some distros require additional options to boot properly directly from ISO.  See
- [Boot config files](/BootOptions) for more information.
-2. Boot from USB by either running `usb-scan` or reboot into USB boot mode (hit
- 'u' before the normal boot)
-3. Select the install boot option for your distro of choice and work through the
- standard OS installation procedures (including setting up LUKS disk encryption
- if desired)
-4. Reboot and your new boot options should be available to be chosen by
- selecting 'm' at the boot screen
-
-If you want to set a default option so that you don't have to choose at every
- boot, you can do so from the menu by selecting 'd' on the confirmation screen.
- You will also be able to seal your Disk Unlock Key using the TPM allowing
- you to use ensure only a boot passphrase and the proper PCR state can unlock this
- yet.
-
-(\*) Ubuntu/Debian Note: These systems don't read `/etc/crypttab` in their
- initrd, so you need to adjust the crypttab in the OS and `update-initramfs -u`
- to have it attempt to use the injected key.  Due to oddities in the cryptroot
- hooks, you also need keyscript to be in `/etc/crypttab` even as a no-op
- `/bin/cat`:
-
-`sda5_crypt UUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX /secret.key luks,keyscript=/bin/cat`
-
-(Credit to [https://www.pavelkogan.com/2015/01/25/linux-mint-encryption/](https://www.pavelkogan.com/2015/01/25/linux-mint-encryption/)
- for this trick).
 
 Installing Qubes
 ===
@@ -93,13 +41,17 @@ If that completes with no errors it will launch the Xen hypervisor from the
 
 Use default QubesOS partitioning scheme for QubesOS 4.x
 
-![Disk Recovery Key]({{ site.baseurl }}/images/Disk_encryption_recovery_key.jpg)
+![Disk Recovery Key]({ site.baseurl }}/images/Disk_encryption_recovery_key.jpg)
 
 The Disk Recovery Key that you enter here will be used as the
 "recovery password" later.  It should be a long value since you won't
 have to enter it very often; only when upgrading the Heads firmware
 or if there is a need to recover the disk on an external machine.
-You will need it again shortly, so don't lose it yet.
+
+DO NOT lose the Disk recovery key. This key passphrase will need to be [reentered](/Keys/#tpm-disk-encryption-key).
+
+This option is offered from the GUI (again lets not forget that going into recovery invalidates PCR measurements, and that having kernel modules loaded mismatch between the moment of setting the TPM disk encryption key will not fly. This is why this should be done from the GUI by saving a new boot default option and answering Y to `Do you wish to add a disk encryption to the TPM [y/N]`:
+
 
 ![Signing Qubes binaries in /boot]({{ site.baseurl }}/images/Signing_Qubes_binaries_in__boot.jpg)
 
