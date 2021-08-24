@@ -8,7 +8,7 @@ parent: Help
 
 # TOTP mismatch
 
-There are two possibilities why your TOTP mismatches with that on your phone.
+There are three possibilities why your TOTP mismatches with that on your phone.
 
 1. The time on your laptop has drifted off and is no longer in sync with your phone.
 2. You have updated the firmware.
@@ -16,7 +16,7 @@ There are two possibilities why your TOTP mismatches with that on your phone.
 
 ## Dissolve the issue.
 
-### **1. Set the hardware clock to the current time.**
+### **1. Set the hardware clock to the current time**
 
 Please note: If the date shown in the Heads menu is in the year 1970 your CMOS battery is dead. You have to replace it before your continue with this guide.
 
@@ -26,8 +26,10 @@ Please note: If the date shown in the Heads menu is in the year 1970 your CMOS b
 > - In the Heads menu go to: *Options* -> *TPM/TOTP/HTOP Options* -> *TOTP/HTOP does not match after refresh, troubleshoot* -> *Execute rescue shell*
 > - Select "Yes" on the newly opened window (you don't have to write down the commands shown there, they will be shown in the command line).
 > - Execute the following command. Replace HH:MM:SS with the time shown on the website (HH = hours, MM = minutes, SS = seconds).
+>
 >	*It is recommended to enter the next full minute and execute the command the moment this minute is reached.
 >	E.g.: If it is 19:29:08, replace HH:MM:SS with 19:30:00 and press return the moment it gets half past 7.*
+>
 >	`date -s HH:MM:SS && hwclock -w`
 > - Reboot your laptop with `reboot`.
 
@@ -43,7 +45,7 @@ If the TOTP doesn't match after reboot consider those points:
 
 If the TOTP still isn't matching consider the following.
 
-### **2. You have updated the firmware,**
+### **2. You have updated the firmware**
 
 When Heads and the firmware get updated the TOTP will mismatch afterwards.
 
@@ -52,9 +54,11 @@ In the Heads menu go to *Options* -> *TPM/TOTP/HOTP Options* -> *Generate new TO
 
 If you **haven't done anything** in this regard, the third cause is possible. 
 
-### **3. Your firmware has been manipulated.**
+### **3. Your firmware has been manipulated**
 
-**Please note: This possibility is the most unprobable. Make sure that you have followed thoroughly the steps in solution 1!**
+<hr>
+**Please note:** This possibility is the most unprobable. Make sure that you have followed thoroughly the steps in solution 1!
+<hr>
 
 At this point you can assume you have been compromised.
 
