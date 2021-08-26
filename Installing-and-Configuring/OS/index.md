@@ -29,6 +29,8 @@ Since a heads only system would be very limited you will need to install at leas
 * LUKS version (1 or 2)
 * single vs multiboot
 * simple distro vs hypervisor
+* use of non auditable binaries and firware
+* use TPM or not
 
 All together there are a lot of technical decisions.  This document will attempt to inform you enough to make the decisions.
 
@@ -88,15 +90,9 @@ This feature may be turned off during configuration of heads.  The following wil
 
   CONFIG_TPM_NO_LUKS_DISK_UNLOCK=y
 
-### Using Heads Disk Recovery Key 
+### Using an OS managed LUKS container (not heads)
 
-In the Disk Recovery Key scenario, Heads doesn't attempt to release the Disk Unlock Key. It simply relies on OS mechanisms to directly prompt the user for the Disk Recovery Key passphrase at standard OS prompt.  
-
-This model is vulnerable to brute force attacks.
-
-### Using an OS managed LUKS passphrase (not heads)
-
-In this model heads is not involved in processes related to the decryption of data on disk. The OS manages keys and access to the LUKS containers by asking the user for a passphrase on boot.  
+In this model heads is not involved in processes related to the decryption of data on disk. The OS manages keys and access to the LUKS containers.  
 
 This model is vulnerable to brute force attacks.
 
@@ -108,20 +104,21 @@ In contrast to [using TPM for decryption](#using-tpm-for-decryption-of-drives)--
 
 See also [TPM vs security dongle](#tpm-vs-security-dongle)
 
-TPM vs Security Dongle
+TPM vs security dongle
 ----
 
-Which one you choose depends on hardware you have and threat models you are working with.  Your system may not have a TPM or you may not have a smartcard.  The core functionality is similar in that they both store private keys and allow for cryptographic operations.
+Heads doesn't require a TPM but it is strongly suggested.  Heads does requires a USB Security dongle to enforce GPG operations such as /boot digest detach signing.  The Security dongle does not have to support HOTP but standard GPG is required.  see [/Prerequisites#usb-security-dongles-aka-security-token-aka-smartcard](/Prerequisites#usb-security-dongles-aka-security-token-aka-smartcard)
 
-Heads uses the TPM for various operations and may use the TPM for disk unlock.  The significant differences between a TPM based Disk Unlock Key and USB Security dongle are
+How you configure the use of the security hardware depends on what you have and threat models you are working with.  Your system may not even have a TPM.  Both a TPM and a security dongle store private keys and allow for cryptographic operations.
+
+Heads will use the TPM for various operations and may be configured to use the TPM for disk unlock.  You have the option to use a security dongle for disk unlock instead of the TPM.  The significant differences between a TPM based Disk Unlock Key and USB Security dongle unlock are:
 
 * they are two different proprietary hardware chips
-* TPM has access to RAM and processor so it can 'measure' system states
 * Security Dongles often have other features such as password management
-* the TPM is a non-removable chip inside the system but the USB Security dongle is removable
-* since it is removable and may be used elsewhere, an eavesdropper sniffing the USB Security dongle's User PIN may gain access or be one step closer to more than just the data on the local system.  A TPM is embedded in a system so a compromise is limited to that system
+* the TPM is a generally soldered to the motherboard but the USB Security dongle is easily removable
+* since it is removable and may be used elsewhere, an eavesdropper sniffing the USB Security dongle's User PIN may gain access or be one step closer to accessing all systems protected by that hardware.  A TPM is embedded in a system so a compromise is limited to that system
 
-When using heads, the Disk Unlock Key passphrase is valid until core components of OS are updated. This will force Heads to prompt the user to set a new boot default which gives the user the option of changing the Disk Unlock Key passphrase each time she signs files in /boot.
+When using heads for a disk unlock key in the TPM, the Disk Unlock Key passphrase is valid until core components of OS are updated. This will force Heads to prompt the user to set a new boot default which gives the user the option of changing the Disk Unlock Key passphrase each time she signs files in /boot.
 
 
 single vs multiboot
