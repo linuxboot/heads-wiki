@@ -95,7 +95,7 @@ heads reads /boot/grub.cfg in order to boot your system.  Since heads is acting 
 Injecting LUKS key into OS boot
 ----
 
-If using LUKS encryption on the root paritition you may need to modify the installation before booting will work to add the LUKS key into the process.
+If using LUKS encryption on the root partition you may need to add the TPM released LUKS key into the boot process before booting.
 
 (\*) Ubuntu/Debian Note: These systems don't read `/etc/crypttab` in their
  initrd, so you need to adjust the crypttab in the OS and `update-initramfs -u`
