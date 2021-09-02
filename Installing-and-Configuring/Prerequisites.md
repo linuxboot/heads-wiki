@@ -51,7 +51,7 @@ Please see the current [heads source](https://github.com/osresearch/heads/tree/m
 |Open Compute Project Leopard node|`leopard`|linuxboot|||
 |Open Compute Project TiogaPass node|`tioga`|linuxboot||||
 |Open Compute Project Winterfell node|`winterfell`|linuxboot||||
-|Purism Librem 13 v2|`librem_13v2`|coreboot||||
+|Purism Librem 13 v2/v3|`librem_13v2`|coreboot||||
 |Purism Librem 13 v4|`librem_13v4`|coreboot||||
 |Purism Librem 15 v3|`librem_15v3`|coreboot||||
 |Purism Librem 15 v4|`librem_15v4`|coreboot||||
