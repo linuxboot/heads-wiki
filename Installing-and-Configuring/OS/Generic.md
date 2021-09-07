@@ -32,11 +32,11 @@ From here you will be presented with a menu of the boot options on the USB media
 Securely Booting Installation Media
 ----
 
-Heads also supports booting directly from verified ISOs on a standard disk partition.  In this scenario heads will check the ISO against a detached PGP signature file.  The ISO must be signed by a valid key for the boot process to succeed--either the distribution signing key or your own key. 
+Heads also supports booting directly from detached, signed ISOs on a standard disk partition.  In this scenario heads will check the ISO against a detached PGP signature file which must be stored with the iso at the root of the partition in the standard .sig or .asc format.  The ISO must be signed by a valid key for the boot process to succeed--either the distribution signing key or your own key.
 
 If not using one of the included Operating Systems--where the vendor public key is [stored in the heads ROM](https://github.com/osresearch/heads/tree/master/initrd/etc/distro/keys)--you must verify the media immediately after download and sign it with your own key to establish a chain of trust.
 
-To verify an ISO with your key, create a partition with a Heads compatible filesystem on a USB storage device and copy the ISO image to it.  The most common filesystems are: FAT and ext. The layout might look like this:
+To verify an ISO with your key, create a partition with a Heads compatible filesystem on a USB storage device and copy the ISO image to it.  The layout might look like this:
 
 ```shell
 /Qubes-R4.0-x86_64.iso
