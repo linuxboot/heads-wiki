@@ -22,7 +22,7 @@ has_toc: yes
 Heads and Operating Systems
 ====
 
-Since a heads only system would be very limited you will need to install at least one Operating System.  The installation procedures vary greatly depending on which distro you choose, which version of that distro, and if you are encrypting partitions.  Some choices you will have to make include:
+Since a Heads only system would be very limited you will need to install at least one Operating System.  The installation procedures vary greatly depending on which distro you choose, which version of that distro, and if you are encrypting partitions.  Some choices you will have to make include:
 
 * partition table
 * LUKS encryption (yes/no)
@@ -38,7 +38,7 @@ All together there are a lot of technical decisions.  This document will attempt
 partition table
 ----
 
-Heads currently requires a separate boot partition to verify /boot content integrity, while also using /boot to save and verify the TPM counter file for rollback prevention. Having a seperated /boot partition is a common for Linux.  The heads model leaves the /boot partition unencrypted.  This is safe because heads will verify files at boot to detect tampering.
+Heads currently requires a separate boot partition to verify /boot content integrity, while also using /boot to save and verify the TPM counter file for rollback prevention. Having a seperated /boot partition is a common for Linux.  The Heads model leaves the /boot partition unencrypted.  This is safe because Heads will verify files at boot to detect tampering.
 
 When you partition storage make sure to create /boot or have the OS installer do it for you.  Generally, the boot partition is much smaller than the other OS partition(s).  As long as the kernel and initrd is located in the seperate boot partition you may keep everything else on one additional partition to make it easier to manage.  Linux initrd will normally have the ability to mount the other partitions--encrypted or not.
 
@@ -48,15 +48,15 @@ The other choices mentioned below may also affect the partition layout you choos
 root partition encryption
 ----
 
-If you have taken the trouble to install and use heads it is likely that you also want to use encryption to protect your data on storage devices.  LUKS is the most commonly used format in a heads based system.  
+If you have taken the trouble to install and use Heads it is likely that you also want to use encryption to protect your data on storage devices.  LUKS is the most commonly used format in a Heads based system.  
 
-Since the root partition is the end result of the boot process you may see how encrypting it makes the boot process complicated.  There are multiple schemes for making this setup work and more will probably be invented.  The key issue is deciding where to store the decryption key so that the root partition can be accessed during boot.  Most of the following use cases are out of scope for heads but worth a quick review so that you may make an informed decision.
+Since the root partition is the end result of the boot process you may see how encrypting it makes the boot process complicated.  There are multiple schemes for making this setup work and more will probably be invented.  The key issue is deciding where to store the decryption key so that the root partition can be accessed during boot.  Most of the following use cases are out of scope for Heads but worth a quick review so that you may make an informed decision.
 
 * key in TPM
 * key encrypted by security dongle
 * key on removable media
 
-Your other partitions may be encrypted or not based on your preferences and this is outside of the scope of heads.
+Your other partitions may be encrypted or not based on your preferences and this is outside of the scope of Heads.
 
 ### Using TPM for decryption of drives
 
@@ -86,21 +86,21 @@ See also [TPM vs security dongle](#tpm-vs-security-dongle)
 
 #### Disable TPM Disk Unlock passphrase/key
 
-This feature may be turned off during configuration of heads.  The following will instruct heads not to ask for a disk unlock passphrase and to not store a disk unlock key in the TPM.  
+This feature may be turned off during configuration of Heads.  The following will instruct Heads not to ask for a disk unlock passphrase and to not store a disk unlock key in the TPM.  
 
   CONFIG_TPM_NO_LUKS_DISK_UNLOCK=y
 
-### Using an OS managed LUKS container (not heads)
+### Using an OS managed LUKS container (not Heads)
 
-In this model heads is not involved in processes related to the decryption of data on disk. The OS manages keys and access to the LUKS containers.  
+In this model Heads is not involved in processes related to the decryption of data on disk. The OS manages keys and access to the LUKS containers.  
 
 This model is vulnerable to brute force attacks.
 
-### Security Dongle with LUKS root (not heads)
+### Security Dongle with LUKS root (not Heads)
 
-In this model heads is not responsible for any of the decryption of data on disk.  You may use a security dongle (aka smartcard aka security token) to manage the passphrase for the root LUKS partition.  Like the TPM, the security dongle enforces limits which prevent brute force attacks.
+In this model Heads is not responsible for any of the decryption of data on disk.  You may use a security dongle (aka smartcard aka security token) to manage the passphrase for the root LUKS partition.  Like the TPM, the security dongle enforces limits which prevent brute force attacks.
 
-In contrast to [using TPM for decryption](#using-tpm-for-decryption-of-drives)--where a disk unlock passphrase is stored in the TPM--in this model the TPM is not used for LUKS decryption.  A LUKS disk unlock key/passphrase is encrypted and stored in a 'public' location such as /boot.  After heads boots the kernel a process which uses the security dongle decrypts the LUKS root partition.
+In contrast to [using TPM for decryption](#using-tpm-for-decryption-of-drives)--where a disk unlock passphrase is stored in the TPM--in this model the TPM is not used for LUKS decryption.  A LUKS disk unlock key/passphrase is encrypted and stored in a 'public' location such as /boot.  After Heads boots the kernel a process which uses the security dongle decrypts the LUKS root partition.
 
 See also [TPM vs security dongle](#tpm-vs-security-dongle)
 
@@ -118,16 +118,16 @@ Heads will use the TPM for various operations and may be configured to use the T
 * the TPM is a generally soldered to the motherboard but the USB Security dongle is easily removable
 * since it is removable and may be used elsewhere, an eavesdropper sniffing the USB Security dongle's User PIN may gain access or be one step closer to accessing all systems protected by that hardware.  A TPM is embedded in a system so a compromise is limited to that system
 
-When using heads for a disk unlock key in the TPM, the Disk Unlock Key passphrase is valid until core components of OS are updated. This will force Heads to prompt the user to set a new boot default which gives the user the option of changing the Disk Unlock Key passphrase each time she signs files in /boot.
+When using Heads for a disk unlock key in the TPM, the Disk Unlock Key passphrase is valid until core components of OS are updated. This will force Heads to prompt the user to set a new boot default which gives the user the option of changing the Disk Unlock Key passphrase each time she signs files in /boot.
 
 
 single vs multiboot
 ----
 
-You may install any number of distros and use them with heads.  Currently, heads will only boot from the 'default boot' setting.  To change to a different distro change the default boot in the heads menu.
+You may install any number of distros and use them with Heads.  Currently, Heads will only boot from the 'default boot' setting.  To change to a different distro change the default boot in the Heads menu.
 
 
 hypervisor
 ----
 
-You may opt for installation of a heads compatible distro such as PureOS, Debian, Fedora, et. al.  and use a hypervisor such as xen.  The Qubes distribution focuses on using the xen hypervisor at the lowest level to maximize compartmentalization.  
+You may opt for installation of a Heads compatible distro such as PureOS, Debian, Fedora, et. al.  and use a hypervisor such as xen.  The Qubes distribution focuses on using the xen hypervisor at the lowest level to maximize compartmentalization.  
