@@ -56,6 +56,8 @@ Please see the current [heads source](https://github.com/osresearch/heads/tree/m
 |Purism Librem 15 v3|`librem_15v3`|coreboot||||
 |Purism Librem 15 v4|`librem_15v4`|coreboot||||
 |Purism Librem Mini|`librem_mini`|coreboot||||
+|Purism Librem Mini v2|`librem_mini_v2`|coreboot||||
+|Purism Librem 14|`librem_14`|coreboot||||
 
 Emulated devices
 ---
