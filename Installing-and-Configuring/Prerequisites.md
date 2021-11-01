@@ -42,21 +42,21 @@ Please see the current [heads source](https://github.com/osresearch/heads/tree/m
 |Dell R630|`r630`|linuxboot||X||
 |Intel S2600wf|`s2600wf`|linuxboot||X||
 |Lenovo Thinkpad T420|`t420`|coreboot|X|X|Legacy board config without HOTP verification|
-|Lenovo Thinkpad T420|`t420-maximized`|coreboot|X|X|Maximized board config without HOTP verification|
-|Lenovo Thinkpad T420|`t420-hotp-maximized`|coreboot|X|X|Maximized board config with HOTP verification.|
+|Lenovo Thinkpad T420|`t420-maximized`|coreboot|X||Maximized board config without HOTP verification|
+|Lenovo Thinkpad T420|`t420-hotp-maximized`|coreboot|X||Maximized board config with HOTP verification.|
 |Lenovo Thinkpad T430|`t430-flash`|coreboot|X|X|Legacy initial flashing board config producing internal flash environment to flash non-maximized legacy boards.|
-|Lenovo Thinkpad T430|`t430-hotp-verification`|coreboot|X|X|Legacy board config with HOTP verification. Flashable through legacy t430-flash image.|
-|Lenovo Thinkpad T430|`t430`|coreboot|X|X||Legacy board config without HOTP verification. Flashed internally through legacy t430-flash image.|
-|Lenovo Thinkpad T430|`t430-maximized`|coreboot|X|X|Needs unlocked IFD on initial flash to be able to first internally upgrade this full rom through manual flashrom invocation, or external reprogramming with bottom and top roms. See notes below.|
-|Lenovo Thinkpad T430|`t430-hotp-maximized`|coreboot|X|X|With HOTP verification. Needs unlocked IFD on initial flash to be able to first internally upgrade this full rom through manual flashrom invocation, or external reprogramming with bottom and top roms. See notes below.|
+|Lenovo Thinkpad T430|`t430-hotp-verification`|coreboot||X|Legacy board config with HOTP verification. Flashable through legacy t430-flash image.|
+|Lenovo Thinkpad T430|`t430`|coreboot||X|Legacy board config without HOTP verification. Flashed internally through legacy t430-flash image.|
+|Lenovo Thinkpad T430|`t430-maximized`|coreboot|X||Maximized board config without HOTP verification.|
+|Lenovo Thinkpad T430|`t430-hotp-maximized`|coreboot|X||Maximized board config with HOTP verification.|
 |Lenovo Thinkpad X220|`x220`|coreboot|X|X|Legacy board config without HOTP verification|
-|Lenovo Thinkpad X220|`x220-maximized`|coreboot|X|X|Maximized board config without HOTP verification.|
-|Lenovo Thinkpad X220|`x220-hotp-maximized`|coreboot|X|X|Maximized board config with HOTP verification.|
+|Lenovo Thinkpad X220|`x220-maximized`|coreboot|X||Maximized board config without HOTP verification.|
+|Lenovo Thinkpad X220|`x220-hotp-maximized`|coreboot|X||Maximized board config with HOTP verification.|
 |Lenovo Thinkpad X230|`x230-flash`|coreboot|X|X|Legacy initial flashing board config producing internal flash environment to flash non-maximized legacy boards.|
-|Lenovo Thinkpad X230|`x230-hotp-verification`|coreboot|X|X|Legacy board config with HOTP verification. Flashable through legacy x230-flash image.|
-|Lenovo Thinkpad X230|`x230`|coreboot|X|X||Legacy board config with HOTP verification. Flashable through legacy x230-flash image.|
-|Lenovo Thinkpad X230|`x230-hotp-maximized`|coreboot|X|X|Maximized board config with HOTP verification.|
-|Lenovo Thinkpad X230|`x230-maximized`|coreboot|X|X|Maximized board config with HOTP verification.|
+|Lenovo Thinkpad X230|`x230-hotp-verification`|coreboot||X|Legacy board config with HOTP verification. Flashable through legacy x230-flash image.|
+|Lenovo Thinkpad X230|`x230`|coreboot||X|Legacy board config with HOTP verification. Flashable through legacy x230-flash image.|
+|Lenovo Thinkpad X230|`x230-hotp-maximized`|coreboot|X||Maximized board config with HOTP verification.|
+|Lenovo Thinkpad X230|`x230-maximized`|coreboot|X||Maximized board config with HOTP verification.|
 |Open Compute Project Leopard node|`leopard`|linuxboot|||
 |Open Compute Project TiogaPass node|`tioga`|linuxboot||||
 |Open Compute Project Winterfell node|`winterfell`|linuxboot||||
@@ -102,6 +102,23 @@ xx30-maximized: Those board configuration produce 3 ROM images: One full 12MiB i
 If built locally, the builder has the option of extracting blobs from a backup image which will put ME and IFD binaries at the right place in the blobs directory which will be included into coreboot created full ROM image including Heads payload. There is a risk that ME will be bigger/smaller. In the case ME is bigger then expected, there is a chance that the flashed system will result in a brick. This is why me_cleaner instructions in this website strongly advise into upgrading to Lenovo 2.76 version prior of backuping the bottom SPI ROM, unlock IFD and clean that specific version of proprietary firmware. This is also why it is suggested to only backup your GBE to keep your MAC address for Ethernet and use the download script under blobs/xx30 to download and neuter verified version of Lenovo downloaded ME. Those do not enforce HOTP firmware verification against supported USB Security dongles and rely solely on TOTP to manually verify firmware integrity prior of each boot, that is: launching OTP application on smartphone to manually verify that the TOTP code produced on both screens of smartphone and laptop matches from smartphone scanned Qr code after first boot of Heads.
 
 xxxx-hotp-maximized: Those board configuration are the same as prior maximized board configuration, but produce ROM images enforcing TOTP+HOTP for firmware verification on supported already bought and received USB Security dongles to be bounded with Heads.
+
+Legacy to Maximized boards upgrade path
+---
+It is possible to upgrade from Legacy to Maximized boards under certain conditions.
+
+If you come from 1vyrain, this plainly not possible. 1vyrain does not unlock neither IFD nor ME regions of the SPI. Consequently, flashing internally anything else then Legacy boards with result in a brick.
+
+If coming from Skulls, where optional unlocking step has been followed, you can upgrade internally through a manual flashrom command, just like if you were coming from Heads having followed the me_cleaning page initially.
+
+If coming from Skulls or Heads Legacy board configurations having unlocked IFD initially, you can flash from the recovery shell manually. 
+Having a full xxxx-hotp-maximized or xxxx-maximized board config produced OM available on a USB stick alongside with your USB Security dongle's matching exported public key, do the following:
+```
+mount-usb
+flashrom --force --noverify-all -p internal -w /media/PathToFullRom.rom
+```
+On next reboot, Heads will guide you into factory resetting your USB Security dongle or import your previously generated public key matching your USB Security dongle's private key. It will then regenerate TOTP/HOTP secret and sign /boot content. You will then have to define a new default boot and optionally renew/change your Disk Unlock Key to be released to to OS to unlock your encrypted OS installation and move forward.
+In the case nothing is found on your installed disk, Heads will propose you to boot from USB to install a new Operating system, prior of being able to do the above steps prior of booting into your system.
 
 Emulated devices
 ---
