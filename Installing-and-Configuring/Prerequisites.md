@@ -86,9 +86,11 @@ In short, legacy boards will produce ROMs that are incomplete by themselves; the
 
 The maximized boards were created to produce fully valid and complete images for those boards. Blobs download/cleaning scripts were created for xx20 and xx30 platforms, which download ME blobs from the manufacturer, remove all the nasty bits reducing ME used space to the minimal and put resulting blob where it is needed from coreboot configuration to be integrated in the final produced ROM. A valid IFD descriptor is provided under the blob directory to match reduced ME size, giving the freed space to the BIOS region. A generated GBE blob is also provided in tree, required to have a functional e1000e ethernet interface, with an important limitation to be known from Heads users: the MAC address of maximized boards is fixed to DE:AD:C0:FF:EE. That is not so important for the majority of us connecting through wifi nowadays. But if a lot of Heads machines are living on the same LAN, or if privacy is needed through Ethernet connection, NetworkManager or other manual configuration will need to be applied to randomize/fixate Ethernet MAC address to desired value prior of connecting to a network.
 
+Legacy boards advocates that unlocking IFD regions and ME could permit ME to be modified. While it is true, the non-removable parts of ME (BUP and/or ROMP) are signed together and verified per ME copreocessor prior of permitting the platform to boot. Consequently, removing the nasty parts of ME and providing an unlocked IFD and baked GBE was the chosen path for Maximized boards. It is still possible for advanced users to decide to relock the IFD regions prior of flashing maximized boards, while this path would be manual and complexify internal upgrades. Actually provided Maximized boards take into consideration that the whole SPI flash chip is internally flashable, which would result in flashrom complaining on next internal upgrades. It is still also possible for advanced users to override Heads internally kept configuration to replace the FLASHROM_OPTIONS statement to specify manually the IFD defined specific sections to flash : `--ifd --image bios --image ME` etc
+
 Current Legacy boards
 ---
-xx30-flash: 4MiB ROM images to be flashed internally through 1vyrain or Skulls. Unlocking IFD and cleaning/neutering ME still highly recommended prior of doing initial flash.
+xx30-flash: 4MiB ROM images to be flashed internally through 1vyrain or Skulls. Unlocking IFD and cleaning/neutering ME still highly recommended prior of doing initial flash. 1vyrain deactivates ME internally. But if one leaves 1vyrain and chooses another ROM, 1vyrain applied hacks to deactivate ME will not be applied anymore. Note that Skulls permits to unlock IFD as an option prior of initial flash. So if it was not applied at that step, then the end user can only upgrade to Legacy boards produced ROMs in the future, the IFD and ME not being flashable internally and requiring an external flash to go with Maximized boards.
 
 xx30: Baked 12MiB ROM images to be flashed internally through xxxx-flash flashed ROMs. Those ROMs can only be internally flashed from/to legacy boards configuration. Flashing a legacy ROM from a maximized ROM will result in a brick, since maximized boards produced roms will flash the whole combined opaque 12MiB ROM internally, overwriting IFD, ME and GBE with empty content.
 
@@ -107,18 +109,21 @@ Legacy to Maximized boards upgrade path
 ---
 It is possible to upgrade from Legacy to Maximized boards under certain conditions.
 
-If you come from 1vyrain, this plainly not possible. 1vyrain does not unlock neither IFD nor ME regions of the SPI. Consequently, flashing internally anything else then Legacy boards with result in a brick.
+*If you come from 1vyrain, this plainly not possible*. 1vyrain does not unlock neither IFD nor ME regions of the SPI. Consequently, flashing internally anything else then Legacy boards with result in a brick.
 
-If coming from Skulls, where optional unlocking step has been followed, you can upgrade internally through a manual flashrom command, just like if you were coming from Heads having followed the me_cleaning page initially.
+If coming from Skulls, where optional unlocking step has been followed, you can upgrade internally through a manual flashrom command, just like if you were coming from Heads Legacy boards while having followed the me_cleaning page on initial flash.
 
-If coming from Skulls or Heads Legacy board configurations having unlocked IFD initially, you can flash from the recovery shell manually. 
-Having a full xxxx-hotp-maximized or xxxx-maximized board config produced OM available on a USB stick alongside with your USB Security dongle's matching exported public key, do the following:
+If coming from Skulls or Heads Legacy board configurations while having unlocked IFD initially, you can flash from the recovery shell manually. 
+Having a full xxxx-hotp-maximized or xxxx-maximized board config produced ROM available on a USB stick alongside with your USB Security dongle's matching exported public key, do the following:
 ```
 mount-usb
 flashrom --force --noverify-all -p internal -w /media/PathToFullRom.rom
 ```
-On next reboot, Heads will guide you into factory resetting your USB Security dongle or import your previously generated public key matching your USB Security dongle's private key. It will then regenerate TOTP/HOTP secret and sign /boot content. You will then have to define a new default boot and optionally renew/change your Disk Unlock Key to be released to to OS to unlock your encrypted OS installation and move forward.
-In the case nothing is found on your installed disk, Heads will propose you to boot from USB to install a new Operating system, prior of being able to do the above steps prior of booting into your system.
+On next reboot, Heads will guide you into factory resetting your USB Security dongle or import your previously generated public key matching your USB Security dongle's private key. 
+
+It will then regenerate a TOTP/HOTP secret and sign /boot content. You will then have to define a new default boot and optionally renew/change your Disk Unlock Key to be released to to OS to unlock your encrypted OS installation to move forward.
+
+In the case nothing is found installed on your disk, Heads will propose you to boot from USB to install a new Operating System, prior of being able to do the above steps prior of booting into your system.
 
 Emulated devices
 ---
