@@ -117,7 +117,7 @@ If coming from Skulls or Heads Legacy board configurations while having unlocked
 Having a full xxxx-hotp-maximized or xxxx-maximized board config produced ROM available on a USB stick, alongside with your USB Security dongle's matching exported public key, do the following:
 ```
 mount-usb
-flashrom --force --noverify-all -p internal -w /media/PathToFullRom.rom
+flashrom --force --noverify-all -p internal -w /media/PathToMaximizedRom.rom
 ```
 On next reboot, Heads will guide you into factory resetting your USB Security dongle or import your previously generated public key matching your USB Security dongle's private key. 
 
