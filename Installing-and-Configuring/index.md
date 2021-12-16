@@ -27,7 +27,7 @@ If you are [building heads](/Building) check the build guides.  See below if you
 Flashing Guides
 ----
 
-The steps for [Flashing-Guides](/Flashing-guides/) on your system may vary based on the hardware in use.  
+The steps for [Flashing-Guides](/Flashing-guides) on your system may vary based on the hardware in use.  
 
 
 Secrets and Security
