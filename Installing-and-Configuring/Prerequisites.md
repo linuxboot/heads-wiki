@@ -21,7 +21,7 @@ To install Heads on a physical device, you will need:
 If your device requires flashing with an external programmer ([see below](#supported-devices)),
  you will also need:
 
-* [SPI Programmer](https://trmm.net/SPI_flash): ch341a programmer or [Raspberry Pi](https://www.raspberrypi.org/) or [Bus Pirate](https://github.com/BusPirate/Bus_Pirate) (ch341a is recommended for new users and can be found almost [anywhere](https://duckduckgo.com/?q=ch341a%2Bprogrammer&t=h_&iax=shopping&ia=shopping)).
+* [SPI Programmer](https://trmm.net/SPI_flash): [ch341a programmer](https://duckduckgo.com/?q=ch341a%2Bprogrammer&t=h_&iax=shopping&ia=shopping) or [Raspberry Pi](https://www.raspberrypi.org/) or [Bus Pirate](https://github.com/BusPirate/Bus_Pirate) (ch341a is recommended for new users).
 * Wires and a clip SOIC8 to connect your programmer of choice to the board’s SPI flash chip(s). The [Pomona 5250](https://www.pomonaelectronics.com/products/test-clips/soic-clip-8-pin) is suggested as it is high quality and easier to make contact with the pins.
 * Optional: a second computer to flash from, if you are NOT using raspberry pi or bus pirate
 
