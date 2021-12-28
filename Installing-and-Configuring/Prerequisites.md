@@ -14,7 +14,7 @@ Required equipment
 
 To install Heads on a physical device, you will need:
 
-* Supported motherboard or laptop ([see below](#supported-devices))
+* Supported motherboard (laptop) ([see below](#supported-devices))
 * A heads compatible USB security dongle ([see below](#USB Security Dongles))
 * A heads compatible storage device for your public GPG key (USB flash drive)
 
@@ -23,7 +23,7 @@ If your device requires external flashing ([see below](#supported-devices)),
 
 * [SPI Programmer](https://trmm.net/SPI_flash): ch341a programmer or raspberry
  pi or bus pirate (ch341a is recommended for new users and can be found almost
- [anywhere](https://www.amazon.com/s?k=ch341a+programmer).
+ [anywhere](https://duckduckgo.com/?q=ch341a%2Bprogrammer&t=h_&iax=shopping&ia=shopping)).
 * Wires and a clip SOIC8 to connect your programmer of choice to the board’s
  SPI flash chip(s).
   * The [Pomona 5250](https://www.pomonaelectronics.com/products/test-clips/soic-clip-8-pin)
@@ -36,7 +36,7 @@ Supported devices
 
 Please see the current [heads source](https://github.com/osresearch/heads/tree/master/boards) for supported devices.
 
-|Device| Board name|Firmware base|Requires external flashing| ME should be cleaned|Notes|
+|Device| Board name|Firmware base|Requires external flashing| ME needs to be cleaned manually |Notes|
 |--|--|--|:--:|:--:|--|
 |Asus KGPE-D16|`kgpe-d16`|coreboot|X|||
 |Dell R630|`r630`|linuxboot||X||
@@ -68,25 +68,23 @@ Please see the current [heads source](https://github.com/osresearch/heads/tree/m
 |Purism Librem Mini v2|`librem_mini_v2`|coreboot||||
 |Purism Librem 14|`librem_14`|coreboot||||
 
-Legacy vs Maximized boards
+Legacy vs. Maximized motherboards
 ---
-Some history first on the historical x230-flash and x230 boards that initially created the Heads project.
+Heads was initially developed on the x230 [motherboard](https://wikiless.org/wiki/Motherboard). 
 
-Heads was initially developped on the x230 board. 
-At that time, ME cleaning/neutering was not a thing. Then me_cleaner facilitated the task.
-The X230 board, as all xx30 family boards do not have a single SPI flash, but two. 
-On the bottom SPI flash chip lies the IFD, ME, GBE and some BIOS available space spanning from 4MB chip. On the top SPI flash is the original BIOS region.
-Original work done on Heads without ME cleaning led to the creation of a two phase flashing of the board. It required an original external flashing of the x230-flash ROM to the 4MB top chip, which permitted to boot into a minimal BIOS recovery shell from which the x230 board 12MB ROM could be internally flashed through flashrom and Linux, fitting into the 4MB SPI flash from x230-flash ROM. Booting into x230-flash launches a recovery shell which made possible to flash only the BIOS region from the x230 created ROM. This ROM image is incomplete, and flashing the whole 12MB image would create a brick. A script made available through x230-flash was taking care of only flashing the BIOS region defined under untouched IFD region, which permitted to flash the 7MB defined BIOS region inside of the IFD descriptor, without touching ME, GBE or the IFD itself.
+The X230 board - as all xx30 family boards - does not have a single [SPI flash](https://wikiless.org/wiki/Flash_memory?lang=en#Serial_flash), but two. On the bottom SPI flash chip (8MB in size) lies the IFD, ME, GBE and some BIOS available space spanning from the top chip (4MB in size). On the top SPI flash is the original BIOS region. Both physical chips (4MB + 12MB) result in a "virtual" 12MB available space.
 
-Then me_cleaner came to life, which permitted to clean ME in different ways. me_cleaner project grew mature, and eventually permitted, for xx20 and xx30 families, to not only clean ME, but neuter it. Neutering here means that not only ME was asked to deactivate itself, but most of the modules inside of it could be removed. For the xx20 family, it eventually meant that only BUP was required for the computer to function, while for the xx30, BUP and ROMP were necessary. This also meant that the space used by the ME kernel and libraries being deleted could be reused for other purposes. But that space being freed could never be took for granted. Unless the IFD descriptor was modified to reduce ME region to match freed space, coreboot CBFS region maximized to match freed ME available space. Doing so permitted the BIOS region (coreboot + Heads) to jump from a 7MB available BIOS region in IFD descriptor to 11.5MB on the x230 and the whole xx30 family boards. But no board configuration permitted to take advantage of that for numerous reasons, most of which being legal matters, with blobs being non redistributable.
+In early stages of Heads, [ME cleaning/neutering](https://github.com/corna/me_cleaner) was not a thing. Original work done led to the creation of a two-phase flashing process of the x230 motherboard. It required flashing via external programmer of the x230-flash ROM to the 4MB top chip, which permitted to boot into a minimal BIOS recovery shell. The recovery shell allowed to flash the x230 board internally (without external programmer) with a 12 MB ROM through flashrom and linux kernel. Flashrom and linux kernel fit into the 4MB SPI flash from the x230-flash ROM. Booting into via external programmer flashed x230-flash ROM launches a recovery shell, which made possible to flash only the BIOS region from the x230 created ROM **(PLEASE EXPLAIN, WHAT DO YOU MEAN BY "x230 created ROM"?)**. This ROM image is incomplete and flashing the whole 12MB image would create a brick. A script made available through x230-flash was taking care of only flashing the BIOS region defined under untouched IFD region, which permitted to flash the 7MB defined BIOS region inside of the IFD descriptor, without touching ME, GBE or the IFD itself.
 
-The consequence of that is the multiple xx20 and xx30 boards now lying under Heads repository, and the complexity for newcomers to build and use Heads for the first time.
+Later on, me_cleaner came to life, which permitted to clean ME in different ways. me_cleaner project grew mature, and eventually permitted, for xx20 and xx30 families, to not only clean ME, but neuter it. Neutering here means that not only ME was asked to deactivate itself, but most of the modules inside of it could be removed. For the xx20 family, it eventually meant that only BUP was required for the computer to function, while for the xx30, BUP and ROMP were necessary. This also meant that the space used by the ME kernel and libraries being deleted could be reused for other purposes. But that space being freed could never be took for granted. Unless the IFD descriptor was modified to reduce ME region to match freed space, coreboot CBFS region maximized to match freed ME available space. Doing so permitted the BIOS region (coreboot + Heads) to jump from a 7MB available BIOS region in IFD descriptor to 11.5MB on the x230 and the whole xx30 family boards. But no board configuration permitted to take advantage of that for numerous reasons, most of which being legal matters, with blobs being non redistributable. **(PLEASE EXPLAIN, WHY SHOULD BLOBS BE REDISTRIBUTED WITH HEADS?)**
+
+The consequence of that are the multiple xx20 and xx30 boards now lying under Heads repository, and the complexity for newcomers to build and use Heads for the first time.
 
 In short, legacy boards will produce ROMs that are incomplete by themselves; they do not contain a valid IFD descriptor and require internal and manual flashrom program invocation with proper parameters from a script to inform flashrom to use the actual IFD defined BIOS region and flash that area only. Otherwise a non-booting system would result. A brick.
 
-The maximized boards were created to produce fully valid and complete images for those boards. Blobs download/cleaning scripts were created for xx20 and xx30 platforms, which download ME blobs from the manufacturer, remove all the nasty bits reducing ME used space to the minimal and put resulting blob where it is needed from coreboot configuration to be integrated in the final produced ROM. A valid IFD descriptor is provided under the blob directory to match reduced ME size, giving the freed space to the BIOS region. A generated GBE blob is also provided in tree, required to have a functional e1000e ethernet interface, with an important limitation to be known from Heads users: the MAC address of maximized boards is fixed to DE:AD:C0:FF:EE. That is not so important for the majority of us connecting through wifi nowadays. But if a lot of Heads machines are living on the same LAN, or if privacy is needed through Ethernet connection, NetworkManager or other manual configuration will need to be applied to randomize/fixate Ethernet MAC address to desired value prior of connecting to a network.
+The maximized boards were created to produce fully valid and complete images for those boards - so after building those, they can be flashed directly via an external programmer to the respective chip(s). Blobs download/cleaning scripts were created for xx20 and xx30 platforms, which download ME blobs from the manufacturer, remove all the nasty bits reducing ME used space to the minimal and put resulting blob where it is needed from coreboot configuration to be integrated in the final produced ROM. A valid IFD descriptor is provided under the blob directory to match reduced ME size, giving the freed space to the BIOS region. A generated GBE blob is also provided in tree, required to have a functional e1000e ethernet interface, with an important limitation to be known from Heads users: the MAC address of maximized boards is fixed to DE:AD:C0:FF:EE. That is not so important for the majority of us connecting through wifi nowadays. But if a lot of Heads machines are living on the same LAN, or if privacy is needed through Ethernet connection, NetworkManager or other manual configuration will need to be applied to randomize/fixate Ethernet MAC address to desired value prior of connecting to a network.
 
-Legacy boards advocates that unlocking IFD regions and ME could permit ME to be modified. While it is true, the non-removable parts of ME (BUP and/or ROMP) are signed together and verified per ME coproocessor prior of permitting the platform to boot. Consequently, removing the nasty parts of ME and providing an unlocked IFD and baked GBE was the chosen path for *Maximized* boards. It is still possible for advanced users to decide to relock the IFD regions prior of flashing maximized boards, while this path would be manual and complexify future internal upgrades. Actually provided Maximized boards take into consideration that the whole SPI flash chip is internally flashable, which would result in flashrom complaining on next internal upgrades. It is still also possible for advanced users to override Heads internally kept configuration to replace the *FLASHROM_OPTIONS* statement to specify manually the IFD defined specific sections to flash : `--ifd --image bios --image ME` etc
+Legacy boards advocates that unlocking IFD regions and ME could permit ME to be modified. While it is true, the non-removable parts of ME (BUP and/or ROMP) are signed together and verified per ME coproocessor prior of permitting the platform to boot. Consequently, removing the nasty parts of ME and providing an unlocked IFD and baked GBE was the chosen path for *Maximized* boards. It is still possible for advanced users to decide to relock the IFD regions prior of flashing maximized boards, while this path would be manual and complexify future internal upgrades. Actually provided Maximized boards take into consideration that the whole SPI flash chip is internally flashable, which would result in flashrom complaining on next internal upgrades. It is still also possible for advanced users to override Heads internally kept configuration to replace the *FLASHROM_OPTIONS* statement to specify manually the IFD defined specific sections to flash : `--ifd --image bios --image ME` etc.
 
 Current Legacy boards
 ---
