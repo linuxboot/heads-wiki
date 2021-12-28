@@ -18,18 +18,12 @@ To install Heads on a physical device, you will need:
 * A heads compatible USB security dongle ([see below](#USB Security Dongles))
 * A heads compatible storage device for your public GPG key (USB flash drive)
 
-If your device requires external flashing ([see below](#supported-devices)),
+If your device requires flashing with an external programmer ([see below](#supported-devices)),
  you will also need:
 
-* [SPI Programmer](https://trmm.net/SPI_flash): ch341a programmer or raspberry
- pi or bus pirate (ch341a is recommended for new users and can be found almost
- [anywhere](https://duckduckgo.com/?q=ch341a%2Bprogrammer&t=h_&iax=shopping&ia=shopping)).
-* Wires and a clip SOIC8 to connect your programmer of choice to the board’s
- SPI flash chip(s).
-  * The [Pomona 5250](https://www.pomonaelectronics.com/products/test-clips/soic-clip-8-pin)
-   is suggested as it is high quality and easier to make contact with the pins.
-* A second computer to flash from (Try to use a recommended operating system:
-  Qubes or Debian 9 or Fedora 30)
+* [SPI Programmer](https://trmm.net/SPI_flash): ch341a programmer or [Raspberry Pi](https://www.raspberrypi.org/) or [Bus Pirate](https://github.com/BusPirate/Bus_Pirate) (ch341a is recommended for new users and can be found almost [anywhere](https://duckduckgo.com/?q=ch341a%2Bprogrammer&t=h_&iax=shopping&ia=shopping)).
+* Wires and a clip SOIC8 to connect your programmer of choice to the board’s SPI flash chip(s). The [Pomona 5250](https://www.pomonaelectronics.com/products/test-clips/soic-clip-8-pin) is suggested as it is high quality and easier to make contact with the pins.
+* Optional: a second computer to flash from, if you are NOT using raspberry pi or bus pirate
 
 Supported devices
 ---
