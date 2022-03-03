@@ -117,28 +117,35 @@ key (Disk Unlock Key), or if there is a need to recover the disk on an external 
 
 You should now have Qubes 4.1 installed!
 
-![Signing Qubes binaries in /boot]({{ site.baseurl }}/images/Signing_Qubes_binaries_in__boot.jpg)
 
-Once Qubes has finished installing, you'll need to reboot and select the 'Boot
- menu' option by hitting 'm'.
+Taking ownership of the states
+===
 
-Select the first boot option:
+ 
+Taking ownership of the TPM
+====
+Heads keeps TPM and HOTP rollback counters under /boot. Since we just installed, those doesn't exist and we need to create them. 
+First things first, we need to acknowledge current firmware state for the newly installed OS.
 
-```text
-1. Qubes, with Xen hypervisor [...]
-```
+![Heads-Options_After-Install](https://user-images.githubusercontent.com/827570/156663999-c0b30f06-10c6-4f84-aedc-cc979826a3d2.jpeg)
+![Heads-TPM_TOTP_HOTP](https://user-images.githubusercontent.com/827570/156664003-a912e566-378b-41ab-b364-6ba9cd289888.jpeg)
+![Heads-TPM_reset_option](https://user-images.githubusercontent.com/827570/156664015-caecc4a4-6400-45c9-8841-110b251fb2b5.jpeg)
+![Heads-TPM_reset_option_confirmation](https://user-images.githubusercontent.com/827570/156664020-7c54a240-ef77-40de-b7d7-834574bd361c.jpeg)
+![Heads-TPM_reset_seals_TOTP_And_HOTP](https://user-images.githubusercontent.com/827570/156664023-adf85064-3556-4758-8d50-b9e2e93370e7.jpeg)
+That's it. You now have TOTP scanned over your preferred TOTP smartphone app, or have entered manually the challenge secret under your favorite external TOTP app on another computer because you do not own a smartphone.
 
-Then make this the default boot entry by hitting 'd'.  This will also allow you
- to seal the Disk Unlock Key in TPM, if the device supports it.
+Signing /boot content
+====
 
-You will need to input the Disk Recovery Key here (almost for the last time),
- and this should start the final stage of the Qubes installer.  Under
- `Configure Qubes` you should select `Create USB qube holding all USB controllers`
- so that they are protected from outside devices.  This step takes a little
- while as the templates are configured...
+Now that firmware state is sealed under TPM and remotely attested through TOTP/HOTP, now is the time to sign /boot content until your next dom0 upgrade, which will most probably update Xen, initrd and kernel binaries, as well as grub configuration. This will be prompted automatically when selecting default boot option, since we have no digests nor detached signature of /boot content as of now.
 
-Eventually this will be done and you can click "Finish", then Qubes will
-give you a login screen with your login password.
+![Heads_default_boot_after_sealing](https://user-images.githubusercontent.com/827570/156664026-f6b03eaf-3f38-4b14-8ecc-db6f7078e209.jpeg)
+![Heads_warns_about_no_hashes](https://user-images.githubusercontent.com/827570/156664029-ba065887-edb7-4111-881f-597ec6a1a33d.jpeg)
+![Heads_warns_about_no_default_after_signing](https://user-images.githubusercontent.com/827570/156664031-756d8f31-6ed5-4e26-aa75-8da969a05fa5.jpeg)
+
+
+Setting a new boot default
+====
 
 If you choose to add the Disk Unlock Key to the TPM, you'll need to specify
  which LUKS volume.  A default Qubes install will work if you leave the
@@ -146,33 +153,34 @@ If you choose to add the Disk Unlock Key to the TPM, you'll need to specify
  'Encrypted devices?'.  For more details see the TPM Disk Unlock Keys
  section below. You'll then be asked to enter the Disk Recovery Key as well as
  the new boot passphrase you'll use to unseal that key.
+ 
+![Heads_prompts_to_set_default_boot_option](https://user-images.githubusercontent.com/827570/156664033-362c0853-75f8-4c60-bd8f-3d5cbf4546c7.jpeg)
+![Heads_prompts_to_set_default_boot_option_confirmation](https://user-images.githubusercontent.com/827570/156664039-980ea2c8-0400-492a-a1cb-563ad5034824.jpeg)
+![Heads_prompts_to_set_default_boot_option_setting_disk_unlock_key](https://user-images.githubusercontent.com/827570/156664043-50fcbb40-b748-49fc-881b-4ae9a02b1f13.jpeg)
 
-To start Heads now (and in the future), just hit 'y' for default boot.
+Until next dom0 upgrade, this is the normal boot process
+====
+![Heads_HOTP_dongle_flashes_green](https://user-images.githubusercontent.com/827570/156664048-b1527c60-91d8-46c1-af3e-d70974fa23a7.jpeg)
+![Heads_HOTP_Success_main_screen](https://user-images.githubusercontent.com/827570/156664050-00e623ab-f942-4477-aace-47813b2978d4.jpeg)
+![Heads_default_boot_DiskUnlock_key_prompt_until_next_dom0_upgrade](https://user-images.githubusercontent.com/827570/156664055-e0adfa8d-e2d4-4f3f-af78-5fba97f8355b.jpeg)
 
-This should start the final stage of the Qubes installer.  Under
-'Configure Qubes' you should select `Create USB qube holding all USB controllers`
- so that they are protected from outside devices.  This step takes a little
- while as the templates are configured...
-
-Eventually this will be done and you can click "Finish", then Qubes will
-give you a login screen with your login password.
-
-After the first reboot, the boot entry will be different post-installation, so
- after you hit 'y' to select default boot you will see a message:
+When updating dom0 from Qubes OS update widget
+====
+You need to reboot directly after applying dom0 upgrades:
 
 ```text
 !!! Boot entry has changed - please set a new default
 ```
 
-This will also happen on OS updates that changed the boot process (updating the
-   kernel or the initramfs, etc.).  If someone has tampered with your `/boot`
+Applying dom0 (or OS updates) that changed the boot related binaries and config files (updating the
+   kernel, Xen, or the initramfs, etc) will modify /boot content.  If someone has tampered with your `/boot`
    partition, this can also happen, so if you're not sure of the situation,
-   don't proceed.
+   don't proceed and investigate. The onlyway to make sure you are the origin of the changes is to reboot and sign /boot content right after the upgrade. On Qubes OS, that should only happen when upgrading dom0. For Other OSes, that can happen in any unattended upgrades, which requires you to inspect system upgrade logs or be aware of updates propositions: if a kernel update is involved, you sure need to reboot and sign now.
 
 Choose the first option again ('1'), then make it the new default ('d'), confirm
  that you're modifying the boot partition ('y'), and that you don't need to
  reseal the disk key ('n').  You'll be asked to insert your USB Security dongle
- and enter the PIN to sign the new configs and the system will reboot and allow
+ and enter the GPG User PIN to sign the new configs and the system will reboot and allow
  you to proceed as normal.
 
 Installing extra software
