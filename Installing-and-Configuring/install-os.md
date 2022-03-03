@@ -27,7 +27,6 @@ Generic OS Installation
  `unetbootin` etc.) as well as booting directly from verified ISOs on a plain
  old partition.  For example, if the USB drive has a single partition, you can
  put the ISO image along with a trusted signature in the root directory:
-
 ```shell
 /Qubes-R4.0-x86_64.iso
 /Qubes-R4.0-x86_64.iso.asc
@@ -35,7 +34,12 @@ Generic OS Installation
 /tails-amd64-3.7.iso.sig
 ```
 
-Each ISO is verified before booting so that you can be sure Live distros and
+- Some distros will require additional options to boot directly from ISO.  See [Boot config files](/BootOptions) for more information.
+- Boot from USB by Boot menu options, or by calling `usb-scan` from the recovery shell.
+  - Select the install boot option for your distro of choice and work through the standard OS installation procedures (including setting up LUKS disk encryption if desired)
+- Reboot and your new boot option should be available through boot options: show boot options.
+
+Each ISO file is verified for integrity and authenticity before booting so that you can be sure Live distros and
  installation media are not tampered with or corrupted, so this route is preferred when
  available.  You can also sign the ISO with your own key from Heads recovery shell 
  menu option :
@@ -44,19 +48,10 @@ Each ISO is verified before booting so that you can be sure Live distros and
 gpg --output <iso_name>.sig --detach-sig <iso_name>
 ```
 
-Some distros require additional options to boot properly directly from ISO.  See
- [Boot config files](/BootOptions) for more information.
-2. Boot from USB by Boot menu options, or by calling `usb-scan` from the recovery shell.
-3. Select the install boot option for your distro of choice and work through the
- standard OS installation procedures (including setting up LUKS disk encryption
- if desired)
-4. Reboot and your new boot option should be available through boot options, show boot options.
 
 If you want to set a default option so that you don't have to choose at every
  boot, you can do so from the menu by selecting 'd' on the confirmation screen.
- You will also be able to seal your Disk Unlock Key using into the TPM, allowing
- you to use ensure only the good TPM disk encryption key passphrase and the proper PCR state will unseal 
- the disk unlock key on default boot option selection.
+ You will also be able to seal your Disk Unlock Key into the TPM, which would be unsealed only when provided with the good TPM disk encryption key passphrase and when firmware measurement and LUKS header are the same as when the Disk Unlock Key was sealed when booting from detached signed default boot option selection.
 
 (\*) Ubuntu/Debian Note: These systems don't read `/etc/crypttab` in their
  initrd, so you need to adjust the crypttab in the OS and `update-initramfs -u`
