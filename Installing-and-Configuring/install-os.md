@@ -39,7 +39,8 @@ Generic OS Installation
 
 Each ISO is verified before booting so that you can be sure Live distros and
  installation media are not tampered with, so this route is preferred when
- available.  You can also sign the ISO with your own key:
+ available.  You can also sign the ISO with your own key from Heads recovery shell 
+ menu option :
 
 ```shell
 gpg --output <iso_name>.sig --detach-sig <iso_name>
@@ -72,12 +73,12 @@ If you want to set a default option so that you don't have to choose at every
 (Credit to [https://www.pavelkogan.com/2015/01/25/linux-mint-encryption/](https://www.pavelkogan.com/2015/01/25/linux-mint-encryption/)
  for this trick).
 
-Installing Qubes
+Installing Qubes 4.1
 ===
 
 ![Heads splash screen]({{ site.baseurl }}/images/Heads_splash_screen.jpg)
 
-Plus in the USB stick with the R4.0 install media into one of the USB port and
+Plug in the USB stick with the R4.0 install media into one of the USB port and
  boot into USB mode (hit 'u' at the prompt), then boot using this option:
 
 ```text
@@ -87,7 +88,7 @@ Plus in the USB stick with the R4.0 install media into one of the USB port and
 If that completes with no errors it will launch the Xen hypervisor from the
  ROM image and start the Qubes installer.  The first few seconds are run
  with an archaic video mode, so things appear a little weird, but once the dom0
- kernel initializes the graphics it should look right.
+ kernel initializes the graphics should look right.
 
 ![Qubes partitioning]({{ site.baseurl }}/images/Qubes_partitioning.jpg)
 
@@ -97,9 +98,9 @@ Use default QubesOS partitioning scheme for QubesOS 4.x
 
 The Disk Recovery Key that you enter here will be used as the
 "recovery password" later.  It should be a long value since you won't
-have to enter it very often; only when upgrading the Heads firmware
-or if there is a need to recover the disk on an external machine.
-You will need it again shortly, so don't lose it yet.
+have to enter it very often; only when upgrading the Heads firmware, 
+when setting a new boot default and desiring to change TPM released disk encryption 
+key (Disk Unlock Key), or if there is a need to recover the disk on an external machine.
 
 ![Signing Qubes binaries in /boot]({{ site.baseurl }}/images/Signing_Qubes_binaries_in__boot.jpg)
 
@@ -113,7 +114,7 @@ Select the first boot option:
 ```
 
 Then make this the default boot entry by hitting 'd'.  This will also allow you
- to seal the Disk Unlock Key if the device supports it.
+ to seal the Disk Unlock Key in TPM, if the device supports it.
 
 You will need to input the Disk Recovery Key here (almost for the last time),
  and this should start the final stage of the Qubes installer.  Under
