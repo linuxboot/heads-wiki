@@ -21,12 +21,14 @@ Generic OS Installation
 ===
 
 1. Insert OS installation media into one of the USB3 ports (blue on Thinkpads).
-[For certian OSes](https://github.com/osresearch/heads/tree/master/initrd/etc/distro/keys)
- , the Heads boot process supports standard OS bootable media (where the USB
- drive contains the installation media which as created using `dd` or
- `unetbootin` etc.) as well as booting directly from verified ISOs on a plain
- old partition.  For example, if the USB drive has a single partition, you can
- put the ISO image along with a trusted signature in the root directory:
+[For certain OSes](https://github.com/osresearch/heads/tree/master/initrd/etc/distro/keys)
+ , Heads boot process supports standard OS ISO bootable media (where the USB
+ drive contains the ISO installation media alongside of its detached signature).
+ For other OS, you will need to create USB installation media with using `dd` or
+ `unetbootin` etc.).  
+
+For supported OSes, on a EXT3/EXT4 formatted partition on USB drive, you can
+ put the ISO image along with a trusted detached signature in the root directory:
 ```shell
 /Qubes-R4.0-x86_64.iso
 /Qubes-R4.0-x86_64.iso.asc
@@ -105,6 +107,9 @@ key (Disk Unlock Key), or if there is a need to recover the disk on an external 
 ![19-Q41-package_installation](https://user-images.githubusercontent.com/827570/156627989-90ac14aa-0374-418c-89ac-4e21750ff659.jpeg)
 ![20-Q41-package_installation2](https://user-images.githubusercontent.com/827570/156627992-54cdcac2-da5f-4e34-9a89-b7fd4aa53667.jpeg)
 ![21-Q41_installation_complete-reboot_system](https://user-images.githubusercontent.com/827570/156627998-c698ddc6-f565-4332-b31e-d87effb25035.jpeg)
+First stage install is finished. 
+
+Disconnect your USB Security dongle prior of going further. Otherwise Qubes will detect it as USB Keyboard (HID device) and will prevent sys-usb from being created properly:
 ![22-Heads_Options_to_boot_options](https://user-images.githubusercontent.com/827570/156628000-b48415ce-f525-4140-94b2-63c31c044dc0.jpeg)
 ![23-Heads_Boot_options_to_unsafe_boot](https://user-images.githubusercontent.com/827570/156628003-6d086bd9-f96d-436d-a28d-0d71b469c75e.jpeg)
 ![24-Heads_unsafe_boot](https://user-images.githubusercontent.com/827570/156628007-d6b8b1e1-9305-4c54-b444-519d8a77f893.jpeg)
