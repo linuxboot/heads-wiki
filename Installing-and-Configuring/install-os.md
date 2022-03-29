@@ -109,7 +109,7 @@ key (Disk Unlock Key), or if there is a need to recover the disk on an external 
 ![21-Q41_installation_complete-reboot_system](https://user-images.githubusercontent.com/827570/156627998-c698ddc6-f565-4332-b31e-d87effb25035.jpeg)
 First stage install is finished. 
 
-Disconnect your USB Security dongle prior of going further. Otherwise Qubes will detect it as USB Keyboard (HID device) and will prevent sys-usb from being created properly:
+Disconnect your USB Security dongle (and any external keyboard/mouses) prior of going further. Otherwise Qubes might detect those as USB Keyboards (HID devices) and will prevent sys-usb from being created properly:
 ![22-Heads_Options_to_boot_options](https://user-images.githubusercontent.com/827570/156628000-b48415ce-f525-4140-94b2-63c31c044dc0.jpeg)
 ![23-Heads_Boot_options_to_unsafe_boot](https://user-images.githubusercontent.com/827570/156628003-6d086bd9-f96d-436d-a28d-0d71b469c75e.jpeg)
 ![24-Heads_unsafe_boot](https://user-images.githubusercontent.com/827570/156628007-d6b8b1e1-9305-4c54-b444-519d8a77f893.jpeg)
