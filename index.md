@@ -37,7 +37,6 @@ components are included in the measurements and are at least guaranteed
 to be unchanging.  Once the system is in a known good state, the TPM is
 used as a hardware key storage to decrypt the drive.
 
-![TPM TOTP in action]({{ site.baseurl }}/images/TPM_TOTP_in_action.jpg)
 
 Additionally, the hypervisor, kernel and initrd images are signed by
  keys controlled by the user.  While all of these firmware and software changes
