@@ -104,4 +104,4 @@ Generally, everything that is needed to flash the SPI flash of a board is a
 
 Please continue to the corresponding flashing guide for your device.
 
-More options and detail about Heads modules under [Makefile](/Makefile/)
+More options and detail about Heads modules under [Makefile](https://github.com/osresearch/heads/blob/master/Makefile)
