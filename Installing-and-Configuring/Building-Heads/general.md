@@ -88,7 +88,7 @@ Generic
 ---
 
 Generally, everything that is needed to flash the SPI flash of a board is a
- single rom generated through `make BOARD=$BOARD bootstrap` and make `BOARD=$BOARD` commands, where $BOARD is the
+ single rom generated through `make BOARD=$BOARD bootstrap` and `make BOARD=$BOARD` commands, where $BOARD is the
  name of the board that can be found under `board` directory of the git
  downloaded tree.
 
