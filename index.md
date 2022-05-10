@@ -7,7 +7,7 @@ permalink: /
 nav_order: 1
 ---
 
-![Heads booting on an x230]({{ site.baseurl }}/images/Heads_booting_on_an_x230.jpg)
+![Heads booting on an x230](https://user-images.githubusercontent.com/827570/156627927-7239a936-e7b1-4ffb-9329-1c422dc70266.jpeg)
 
 Overview
 ===
