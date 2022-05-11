@@ -104,6 +104,9 @@ replacing `YOUR_USERNAME_HERE` with your GitHub username.
 
 Please note that the URL is similar but NOT the same as the wiki pages feature in your fork in github.
 
+### Verifying broken links
+Please verify `https://YOUR_USERNAME_HERE.github.io/heads-wiki/` with `https://validator.w3.org/checklink` prior of pushing your changes. 
+
 ### Pushing Changes Upstream
 
 Create a pull request in the osresearch/heads-wiki project that points to your changes to request review and contribute back to the parent project.

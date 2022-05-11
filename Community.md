@@ -9,7 +9,8 @@ Slack Open Source Firmware
 ===
 
 * [Register to Slack's Open Source Firmware](https://slack.osfw.dev/)
-* [Head's Slack Channel](https://osfw.slack.com/archives/C92MNSRC1)
+* [Heads Slack Channel](https://osfw.slack.com/archives/C92MNSRC1)
+* [Matrix bridge to Heads Slack Channel ](https://matrix.to/#/#OSFW-Heads:matrix.org)
 
 Found a bug
 ===

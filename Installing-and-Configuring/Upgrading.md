@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Upgrading Heads
-permalink: /Updating/
+permalink: /Updating
 nav_order: 99
 parent: Installing and configuring
 ---
@@ -20,62 +20,55 @@ parent: Installing and configuring
 
 ![Flashing Heads on an x230 at HOPE]({{ site.baseurl }}/images/Flashing_Heads_on_an_x230_at_HOPE.jpg)
 
-
-Acessing Heads Recovery shell
+Upgrading Heads
 ===
 
-![Recovery shell](/images/Recovery_shell.jpg)
+The first time you install Heads, you'll need [some SPI programmer]({{ site.baseurl }}/Prerequisites#required-equipment)
+ to be able to replace the existing vendor firmware.
 
-If the flash protection bits are set correctly it is not possible to
- rewrite the firmware from the normal OS.  You'll need to reboot
- to the Heads [recovery shell](/RecoveryShell/).
+Outside of migrating from Legacy to Maximized firmware, all subsequent upgrades can be performed
+ internally through Heads menus although you'll probably want a hardware programmer since we don't
+ have a fail-safe recovery mechanism in the event of a bad flash or buggy firmware.
 
-Repeatedly press 'r' on boot or choose 'Exit to Recovery Shell' from Heads menus.
+Additionally, *upgrading the firmware will change the [TPM PCRs]({{ site.baseurl }}/Keys/#tpm-pcrs)*.
+ This will require resealing TOTP/HOTP and to setup a new TPM Disk Unlock Key and passphrase
+ by setuping a new boot default.
+
+Be sure you have your TPM owner's password and your Disk Recovery Key passphrase available
+ since, by design, the TPM Disk Unlock Key will become invalid. Also note that TPM PCRs are
+ extended by going to the recovery shell anyway, which does not permit to have access to
+ sealed secrets from there.
 
 
 Reflashing the same firmware
 ===
 If you reflash the same firmware image by selecting the retain settings option from Heads GUI, your 
- TOTP/HOTP/TPM Disk Unlock Key and passphrase will stay valid since measurements will repopulate PCRs
- exactly the same way, resulting in the same sealed secrets.
+ TOTP/HOTP/TPM Disk Unlock Key and passphrase will stay valid since measurements will repopulate [PCRs]({{ site.baseurl }}/Keys/#tpm-pcrs)
+ exactly the same way they were sealed, resulting in the same unsealed secrets from the TPM, resulting
+ in the same HOTP/TOTP/TPM Disk Unlock Key.
 
-So if you are in doubt of the current firmware state, you can consequently reflash the firmware image 
- to validate it's current integrity. It is a good idea to keep last flashed firmware image on a USB
- drive.
+So if you are in doubt of the current firmware state, you can consequently reflash the firmware image
+ through the GUI to validate it's current integrity. It is a good idea to keep last flashed firmware image 
+ on a USB drive.
 
 Bonus, Maximized ROMs reflash the whole SPI flash; not just the BIOS region like Legacy ROMs do.
-
-
-Upgrading Heads
-===
-
-The first time you install Heads, you'll need [some SPI programmer](/Prerequisites#required-equipment) 
- to be able to replace the existing vendor firmware.  
-
-Subsequent upgrades can be performed internally through Heads menus although you'll probably 
- want a hardware programmer since we don't have a fail-safe recovery mechanism in the event of
- a bad flash or buggy firmware.
-
-Additionally, *upgrading the firmware will change the [TPM PCRs](/Keys/#tpm-pcrs)*.
- This will require resealing TOTP/HOTP and to setup a new TPM Disk Unlock Key and passphrase
- by setuping a new boot default.  
-
-Be sure you have your TPM owner's password and your Disk Recovery Key passphrase available 
- since, by design, the TPM Disk Unlock Key will become invalid. Also note that TPM PCRs are 
- extended by going to the recovery shell anyway, which does not permit to have access to
- sealed secrets from there.
-
 
 Verify upgradeability paths of the firmware
 ====
 
-It is a good time to review if the Intel Firmware Descriptor (IFD) and
- Intel Management Engine (ME) were unlocked or not. 
+First things first, verify the [supported platforms]({{ site.baseurl }}/Prerequisites#supported-devices).
+If you have a *ThinkPad (xx30/xx20 flavors), proceed with caution.*
+*Also select hotp variant if you own a [Heads supported USB Security dongle]({{ site.baseurl }}/Prerequisites#usb-security-dongles-aka-security-token-aka-smartcard) for visual remote attestation*
+
+
+Review if the Intel Firmware Descriptor (IFD) and Intel Management Engine (ME) were unlocked or 
+not from the [Recovery Shell]({{ site.baseurl }}/RecoveryShell) prior of going forward. 
 
 ```shell
 flashrom -p internal
 ```
 
+The two following situations must apply, which will define what to do next.
 
 Unlocked IFD and ME
 ----
@@ -83,7 +76,9 @@ This is the expected output if the initial external flashing of the firmware unl
 ![CanBeFlashedToMaximizedRom](https://user-images.githubusercontent.com/827570/167728631-85a5ca9e-48f6-4d4f-8544-532fa75bf5d3.jpeg)
 - This means you can internally migrate from Legacy boards (xxxx-hotp/xxxx boards ROM) to their Maximized boards counterpart (xxx-hotp-maximized/xxxx-maximized boards ROM).
   - If you are presently on a Legacy board (If Heads boot screen is not showing Maximized):
-    - You will have to manually call flashrom from the Recovery Console:
+    - You will have to manually call flashrom from the Recovery Console: 
+      - `mount-usb`
+      - `flashrom -p internal -w /media/heads-hotp-maximized-version-gcommit.rom`
     - ![InternalUpgradeToMaximizedROM](https://user-images.githubusercontent.com/827570/167729694-6ff8da60-986a-4ec3-9b2d-4fa94e42d3fa.jpeg)
 - If you are already running a Maximized board ROM, you can safely upgrade through Heads GUI keeping your current settings. 
 
@@ -102,8 +97,9 @@ Otherwise, initial external flashing of the firmware didn't unlock the IFD/ME re
 Internal Flashing
 ===
 
-On the laptop used to build/download Heads 
+Preparing a compliant USB thumb drive
 ---
+On the laptop used to build/download Heads: 
 For safety, list the drives available without plugging your USB drive:
 ```shell
 sudo fdisk -l
