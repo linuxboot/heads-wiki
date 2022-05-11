@@ -18,6 +18,10 @@ Prerequisites
 Heads is supported on a limited set of hardware (laptop and security dongle).  First, check the [Prerequisites](/Prerequisites) page for details.
 
 
+Downloading
+----
+You can [download ROMs](/Downloading) directly from CircleCI for most of the boards configurations supported.
+
 Building
 ----
 
