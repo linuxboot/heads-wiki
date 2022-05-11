@@ -6,6 +6,17 @@ nav_order: 1
 parent: Installing and configuring
 ---
 
+<!-- markdownlint-disable MD033 -->
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+<!-- markdownlint-enable MD033 -->
+
 Prerequisites for Heads
 ===
 
@@ -68,8 +79,24 @@ Please see the current [heads source](https://github.com/osresearch/heads/tree/m
 |Purism Librem Mini v2|`librem_mini_v2`|coreboot||||
 |Purism Librem 14|`librem_14`|coreboot||||
 
-Legacy vs Maximized boards
+USB Security Dongles (aka security token aka smartcard)
 ---
+
+*NOTE* - Heads does **NOT** support FIDO2 or U2F authentication.  Be careful when
+ purchasing to buy a compatible key.
+
+ *NOTE* - HOTP is currently only supported with Librem devices and the ThinkPad
+  x230 rom with HOTP support
+
+|Manufacture|Model line|TOTP|HOTP|
+|--|--|:--:|:--:|
+|Yubico|[YubiKey 5 Series](https://www.yubico.com/products/yubikey-5-overview/)|X||
+|Nitrokey|[Nitrokey Pro 2](https://www.nitrokey.com/#comparison)|X|X|
+|Nitrokey|[Nitrokey Storage 2](https://www.nitrokey.com/#comparison)|X|X|
+|Purism|[Librem Key](https://puri.sm/products/librem-key/)|X|X|
+
+Legacy vs Maximized boards
+===
 Some history first on the historical x230-flash and x230 boards that initially created the Heads project.
 
 Heads was initially developped on the x230 board. 
@@ -113,11 +140,13 @@ It is possible to upgrade from Legacy to Maximized boards under certain conditio
 
 If coming from Skulls, *if and only optional unlocking step has been followed*, you can upgrade internally through a manual flashrom call, just like if you were coming from Heads Legacy boards while having followed the me_cleaning page instructions prior of initial flash.
 
-If coming from Skulls or Heads Legacy board configurations while having unlocked IFD initially, you can flash from the recovery shell manually. 
+If coming from Skulls or Heads Legacy board configurations while having unlocked IFD initially, you can flash from the recovery shell manually.
+[**IF UNSURE, PLEASE VERIFY FIRST**](/Prerequisites#legacy-vs-maximized-boards) 
+
 Having a full xxxx-hotp-maximized or xxxx-maximized board config produced ROM available on a USB stick, alongside with your USB Security dongle's matching exported public key, do the following:
 ```
 mount-usb
-flashrom --force --noverify-all -p internal -w /media/PathToMaximizedRom.rom
+flashrom -p internal -w /media/PathToMaximizedRom.rom
 ```
 On next reboot, Heads will guide you into factory resetting your USB Security dongle or import your previously generated public key matching your USB Security dongle's private key. 
 
@@ -126,7 +155,7 @@ It will then regenerate a TOTP/HOTP secret and sign /boot content. You will then
 In the case nothing is found installed on your disk, Heads will propose you to boot from USB to install a new Operating System, prior of being able to do the above steps prior of booting into your system.
 
 Emulated devices
----
+===
 
 For further information, see [Emulating Heads](/Emulating-Heads/)
 
@@ -135,19 +164,3 @@ For further information, see [Emulating Heads](/Emulating-Heads/)
 |QEMU development image|`qemu-coreboot-fbwhiptail`|coreboot|
 |QEMU development image|`qemu-coreboot`|coreboot|
 |QEMU development image|`qemu-linuxboot`|linuxboot|
-
-USB Security Dongles (aka security token aka smartcard)
----
-
-*NOTE* - Heads does **NOT** support FIDO2 or U2F authentication.  Be careful when
- purchasing to buy a compatible key.
-
- *NOTE* - HOTP is currently only supported with Librem devices and the ThinkPad
-  x230 rom with HOTP support
-
-|Manufacture|Model line|TOTP|HOTP|
-|--|--|:--:|:--:|
-|Yubico|[YubiKey 5 Series](https://www.yubico.com/products/yubikey-5-overview/)|X||
-|Nitrokey|[Nitrokey Pro 2](https://www.nitrokey.com/#comparison)|X|X|
-|Nitrokey|[Nitrokey Storage 2](https://www.nitrokey.com/#comparison)|X|X|
-|Purism|[Librem Key](https://puri.sm/products/librem-key/)|X|X|
