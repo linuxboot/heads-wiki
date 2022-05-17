@@ -55,7 +55,7 @@ Further reading
 Learn more about Heads
 ---
 
-* [Heads threat model](/Heads-threat-model/) - goes into more
+* [Heads threat model]({{ site.baseurl }}/Heads-threat-model/) - goes into more
  detail about what classes of threats Heads attempts to counter.
-* [Frequently Asked Questions](/FAQ/)
-* [Requirements for Heads](/Install-and-Configure)
+* [Frequently Asked Questions]({{ site.baseurl }}/FAQ/)
+* [Requirements for Heads]({{ site.baseurl }}/Install-and-Configure)
