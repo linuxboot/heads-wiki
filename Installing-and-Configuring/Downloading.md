@@ -30,7 +30,8 @@ If Heads is already installed on your board and you want to migrate to its Maxim
 - Under Heads: go into [Recovery Shell]({{ site.baseurl }}/RecoveryShell) to make sure if you should download [Legacy or Maximized]({{ site.baseurl }}/Prerequisites#legacy-vs-maximized-boards) board ROMs:
   - If aiming to go to Maximized firmware, make sure you have unlocked Intel Flash Descriptor (IFD) and ME regions on initial flash
     - *This is compatible* ![CanBeFlashedToMaximizedRom](https://user-images.githubusercontent.com/827570/167728631-85a5ca9e-48f6-4d4f-8544-532fa75bf5d3.jpeg)
-      - If you have no warning/error (see above), you can proceed with a manual flashrom command to migrate once and for all to Maximized board: ![InternalUpgradeToMacimizedROM](https://user-images.githubusercontent.com/827570/167729694-6ff8da60-986a-4ec3-9b2d-4fa94e42d3fa.jpeg)
+      - If you have no warning/error (see above), you can proceed with a manual flashrom command to migrate once and for all to Maximized board: `flashrom -p internal -w /media/heads-hotp-maximized-version-gcommit.rom`
+![InternalUpgradeToMacimizedROM](https://user-images.githubusercontent.com/827570/167729694-6ff8da60-986a-4ec3-9b2d-4fa94e42d3fa.jpeg)
     - *!!!This is not compatible!!!* ![CantBeInternallyUpgradeToMaximizedROM](https://user-images.githubusercontent.com/827570/167728658-731362da-a676-4610-becb-ff94f2ff48b1.jpeg)
       - You either have to download a non-maximized ROM version, or have to flash externally the (xx30 boards: top and bottom) ROM(s) for your platform's maximized board configuration. This needs to be done once, after which you can upgrade from the GUI.
 
