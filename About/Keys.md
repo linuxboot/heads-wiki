@@ -174,7 +174,7 @@ TPM PCRs
 
 ![TPM]({{ site.baseurl }}/images/TPM.jpg)
 
-0: Nothing for the moment (Populated by binary blobs where applicable for [DRTM](https://doc.coreboot.org/security/vboot/measured_boot.html#ibb-crtm))
+0: Nothing for the moment (Populated by binary blobs where applicable for [SRTM](https://doc.coreboot.org/security/vboot/measured_boot.html#ibb-crtm))
 
 1: Nothing for the moment
 
@@ -189,6 +189,8 @@ TPM PCRs
 6: Drive LUKS headers
 
 7: Heads user-specific files stored in CBFS (config.user, GPG keyring, etc).
+
+(16): Used for TPM futurecalc of LUKS header when setting up a TPM disk encryption key
 
 Some history
 ---
