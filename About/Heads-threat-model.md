@@ -35,7 +35,7 @@ Complicating this goal is that modern x86 hardware is full of modifiable state
 
 This document discusses some of the threats that make building slightly more
  secure mobile systems very difficult. There is a separate Heads FAQ as well as
- a guide on installing Heads on the Thinkpad x230 or Chell Chromebook, which
+ a guide on installing Heads on the Thinkpad x230, which
  covers the practical issues of hardening a laptop against some of the threats
  described here.
 

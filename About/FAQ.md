@@ -107,8 +107,7 @@ Why use ancient Thinkpads instead of modern Macbooks
 ----
 
 The x230 Thinkpad has coreboot support, TPM, nice keyboards and are very cheap
- to experiment on. If you're willing to spend a bit more, the Chell Chromebooks
- (commericaly available as the HP Chromebook 13 G1) has Skylake.  Newer
+ to experiment on. Newer
  [Thinkpads contain Bootguard](https://mjg59.dreamwidth.org/33981.html), a
  closed source security function implemented by Intel to prevent unsigned custom
  firmware, such as coreboot and heads, from being installed.
