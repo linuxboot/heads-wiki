@@ -26,7 +26,7 @@ Required equipment
 To install Heads on a physical device, you will need:
 
 * Supported motherboard or laptop ([see below](#supported-devices))
-* A heads compatible USB security dongle ([see below](#USB Security Dongles))
+* A heads compatible USB security dongle ([see below](#usb-security-dongles-aka-security-token-aka-smartcard))
 * A heads compatible storage device for your public GPG key (USB flash drive)
 
 If your device requires external flashing ([see below](#supported-devices)),
