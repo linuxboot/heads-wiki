@@ -74,6 +74,7 @@ To bootstrap a complete working VM from scratch:
    * `make BOARD=qemu-coreboot-fbwhiptail-tpm1-hotp USB_TOKEN=<token> run`
    * For `<token>`, use one of:
      * `NitrokeyPro` - a Nitrokey Pro by VID/PID
+     * `NitrokeyStorage` - a Nitrokey Storage by VID/PID
      * `LibremKey` - a Librem Key by VID/PID
      * `hostbus=#,hostport=#` - indicate a host bus and port (see qemu usb-host)
      * `vendorid=#,productid=#` - indicate a device by VID/PID (decimal, see qemu usb-host)
