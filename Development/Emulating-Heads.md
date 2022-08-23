@@ -47,4 +47,4 @@ Comprehensive test
 
 The `qemu-coreboot-fbwhiptail-tpm1-hotp` configuration permits testing of most features of Heads.
 
-For more information and setup instructions, refer to the [qemu-coreboot-fbwhiptail-tpm1-hotp documentation](https://github.com/osresearch/heads/blob/master/boards/qemu-coreboot-fbwhiptail-tpm1-hotp/qemu-coreboot-fbwhiptail-tpm1-hotp).
+For more information and setup instructions, refer to the [qemu-coreboot-fbwhiptail-tpm1-hotp documentation](https://github.com/osresearch/heads/blob/master/boards/qemu-coreboot-fbwhiptail-tpm1-hotp/qemu-coreboot-fbwhiptail-tpm1-hotp.md).
