@@ -20,9 +20,9 @@ parent: Installing and configuring
 Generic OS Installation
 ===
 
-1. Insert OS installation media into one of the USB3 ports (blue on Thinkpads).
-[For certain OSes](https://github.com/osresearch/heads/tree/master/initrd/etc/distro/keys)
- , Heads boot process supports standard OS ISO bootable media (where the USB
+Insert OS installation media into one of the USB3 ports (blue on Thinkpads).
+ [For certain OSes](https://github.com/osresearch/heads/tree/master/initrd/etc/distro/keys),
+ Heads boot process supports standard OS ISO bootable media (where the USB
  drive contains the ISO installation media alongside of its detached signature).
  For other OS, you will need to create USB installation media with using `dd` or
  `unetbootin` etc.).  
@@ -50,6 +50,29 @@ Each ISO file is verified for integrity and authenticity before booting so that 
 gpg --output <iso_name>.sig --detach-sig <iso_name>
 ```
 
+Compatibility
+===
+
+Heads requires unencrypted `/boot`.  Graphical OSes generally have the best support.  Debian live installers,
+ Fedora Workstation (or spins), Qubes, and PureOS all work well.
+
+* *For Debian*:
+    1. Use a live desktop image.  The network installer image does not work on all systems.
+    2. Ensure `/boot` is unencrypted.  Debian 11 defaults to a single encrypted partition, so you must
+       partition manually.  This may not apply to all Debian derivatives.
+        * Create one 1G ext4 partition mounted at `/boot`
+        * Create a LUKS container with one ext4 partition mounted at `/`.
+        * For swap, you can create a swapfile later on the encrypted root, or create a swap partition.
+* *For Fedora*: The default partitioning works, but `/` is btrfs by default, which Heads' recovery console does
+ not support.  Use ext4 instead for recovery console support.
+* *For Qubes*: Be sure to disconnect USB tokens during configuration on first boot.  Otherwise, the Qubes
+ installer may prevent the creation of a sys-usb qube if they are detected as keyboards (HID devices).  If you
+ are using a USB keyboard, follow the
+ [Qubes instructions for USB keyboards](https://www.qubes-os.org/doc/usb-qubes/#usb-keyboards).
+* *For PureOS*: The default installation works.
+
+Default Boot and Disk Unlock
+===
 
 If you want to set a default option so that you don't have to choose at every
  boot, you can do so from the menu by selecting 'd' on the confirmation screen.
