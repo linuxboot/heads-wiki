@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Makefile
-permalink: /Makefile
+permalink: /Makefile/
 nav_order: 1
 parent: Development
 ---
