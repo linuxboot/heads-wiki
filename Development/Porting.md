@@ -21,11 +21,11 @@ named `./initrd.cpio.xz`.  No command line options are necessary.
 
 * If you want to use `menuconfig` to reconfigure the coreboot file,
 it is a little tricky since we have an external config file.  From the
-top level of the Heads directory you can run:
+top level of the Heads directory you can run, for a x86 board example:
 
 ```shell
 make \
-  -C build/coreboot-4.5 \
+  -C build/x86/coreboot-4.13 \
   DOTCONFIG=../../config/coreboot-newarch.config \
   menuconfig
 ```
@@ -83,7 +83,7 @@ Solution:
 * Run `make BOARD=$BOARD_DIR` (where `$BOARD_DIR` is the board directory
   (`x230`, `x230-flash` and others found under `./boards` directory) to setup
   the coreboot tree, using the new coreboot config file.  This will create the
-  output directory `build/$BOARD_DIR/*.rom`, the rom name should be named
+  output directory `build/x86/$BOARD_DIR/*.rom`, the rom name should be named
   `coreboot.rom`.
 
 * If things don't work, please open an issue on [https://github.com/osresearch/heads/issues](https://github.com/osresearch/heads/issues)

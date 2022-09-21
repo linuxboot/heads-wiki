@@ -82,7 +82,7 @@ If the files differ then try reconnecting your programmer to the SPI flash chip
 If they are the same then write `x230-maximized-top.rom` to the SPI flash chip:
 
 ```shell
-sudo flashrom -p ch341a_spi -c “YYY” -w ~/heads/build/x230-maximized/x230-maximized-top.rom
+sudo flashrom -p ch341a_spi -c “YYY” -w ~/heads/build/x86/x230-maximized/x230-maximized-top.rom
 ```
 
 Try to read the name on the bottom SPI flash chip. Then, connect the clip and
@@ -103,7 +103,7 @@ sudo flashrom -r ~/bottom.bin --programmer ch341a_spi -c ZZZ && \
 The 8M bottom chip contains the ME firmware.  It is neutralized in maximized version.
 You can flash it specifying the same chip you found under ZZZ:
 ```shell
-sudo flashrom -p ch341a_spi -c “ZZZ” -w ~/heads/build/x230-maximized/x230-maximized-bottom.rom
+sudo flashrom -p ch341a_spi -c “ZZZ” -w ~/heads/build/x86/x230-maximized/x230-maximized-bottom.rom
 ```
 
 

@@ -29,7 +29,7 @@ make BOARD=qemu-coreboot
 Boot it in qemu:
 
 ```Shell
-build/make-4.2/make BOARD=qemu-coreboot run
+make BOARD=qemu-coreboot run
 ```
 
 Use `qemu-coreboot-fbwhiptail` as the board instead for the graphical interface.
