@@ -134,7 +134,7 @@ sudo mount /dev/sdb1 ~/usb/
 Move the full Heads rom file to the usb drive and unmount the drive:
 
 ```shell
-sudo cp ~/heads/build/x230/heads.rom ~/usb/
+sudo cp ~/heads/build/x86/x230/heads.rom ~/usb/
 sudo umount /dev/sdb1
 ```
 

@@ -99,8 +99,8 @@ Generally, everything that is needed to flash the SPI flash of a board is a
  make BOARD=XXX CPUS=YY
  ```
 
- The resulting rom file will be either `./build/XXX/XXX.rom` or
-  `./build/XXX/heads-XXX-vYYYY-gZZZZZZZ.rom` (`XXX` should be the name of your board in
+ The resulting rom file for a x86 board will be either `./build/x86/XXX/XXX.rom` or
+  `./build/x86/XXX/heads-XXX-vYYYY-gZZZZZZZ.rom` (`XXX` should be the name of your board in
   `./boards, vYYYY the pinned Heads version and ZZZZZZ the commit id from which your build comes from`).
 
 Please continue to the corresponding flashing guide for your device.
