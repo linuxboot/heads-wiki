@@ -129,8 +129,8 @@ Configuring the TPM
 
 Once you own the TPM, a QR code will generated that you can scan with your
  google authenticator or [FreeOTP+](https://f-droid.org/en/packages/org.liberty.android.freeotpplus/)
- application and use to validate that the bootblock, ram/rom stages and Linux
- payload are un-altered.
+ application and use to validate that the firmware (bootblock, ram/rom stages, Linux
+ payload and user config injected files are un-altered.
  
  If you have the HOTP version of the firmware, this is also where Heads will
  ask you for your GPG Admin PIN to seal the secret inside of a HOTP compatible 
@@ -140,13 +140,14 @@ On the next boot, the current TOTP will be computed and you can compare
  this one-time-password against the value that your phone generates.
 
 
-TPM Disk encryption keys
+TPM Disk Encryption Key (TPM Disk Unlock Key)
 ---
 
-The keys are currently derived only from the user passphrase, which is expanded
- via the LUKS expansion algorithm to increase the time to brute force it. For
- extra protection it is possible to store the keys in the TPM so that they will
- only be released if the PCRs match.
+The LUKS Disk Recovery Key stored under LUKS header at OS install is derived from its user passphrase, 
+ which is expanded via the LUKS expansion algorithm to increase the time needed to brute force it. 
+ For extra protection it is possible to store an additional LUKS key in the TPM so that it will
+ only be released to unlock the LUKS container if the PCRs match (firmware measurements, kernel 
+ modules loaded, no recovery shell access) from Heads when selecting a boot option.
 
 If you want to use the TPM to seal a secret used to unlock your LUKS volumes:
 Go to boot options, show OS boot options and select a new default boot option:
@@ -166,7 +167,7 @@ Reboot and you will be prompted for your boot password when that device is
 ![IMG_20720216_061726](https://user-images.githubusercontent.com/827570/168889805-4f606591-1a0c-41c2-8c8a-3493a65bba04.JPG)
 
 
-The key file can not persist on diskanywhere, since it would allow an adversary to decrypt the drive. 
+The key file can not persist on disk anywhere, since it would allow an adversary to decrypt the drive. 
  Instead it is necessary to unseal/decrypt the key from the TPM and then bundle the key file
  into a RAM copy of Qubes' dom0 initrd on each boot. The initramfs format allows
  concatenated cpio files, so it is easy for the Heads firmware to inject files
