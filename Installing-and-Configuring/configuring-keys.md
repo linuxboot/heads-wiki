@@ -77,7 +77,7 @@ It is recommended to write those secrets down and fill them as you go:
 - TPM Disk Unlock Key passphrase:  
 
 Process
----
+----
 This will go first briefly over a survey, asking you if you want to: 
 - Re-encrypt the LUKS encrypted container (Say yes here if you didn't install the OS yourself)
   - As explained on screen, anyone having a LUKS header backup could restore it and decrypt with
@@ -106,7 +106,7 @@ This is the last chance you have to note provisioned secrets correctly until you
 That piece of paper's content is precious, and should be safeguarded accordingly. 
 
 Adding your PGP key
-===
+---
 ![IMG_20720216_040452](https://user-images.githubusercontent.com/827570/168885326-67a3b8e6-ba17-483e-b5ea-72fdc8123dbc.JPG)
 
 
