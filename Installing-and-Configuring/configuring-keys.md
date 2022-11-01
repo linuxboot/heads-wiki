@@ -54,7 +54,7 @@ components under Heads. The easiest way is through `OEM Factory Reset/Re-Ownersh
 The Secrets involved under Heads are the following (and their recommended lengths):
 - Disk Recovery Key passphrase (6 words. *Do not forget this one)*
   - This passphrase is required to setup a TPM Disk Unlock Key passphrase.
-  - This passphrase is required to access encrypted data on any computer
+  - This passphrase is required to access encrypted data from any computer
   - This passphrase is required to "unsafe boot", where the installed OS will prompt for it.
 - TPM Ownership passphrase (2 words.)
   - Used to set ownership on the TPM.
@@ -86,7 +86,7 @@ This will go first briefly over a survey, asking you if you want to:
 - Change the disk encryption key passphrase (Say yes here if you didn't install the OS yourself)
   - You should have also said yes above.
 - Define a single shared passphrase across all security components (not recommended)
-  - This option is used by some OEMs to provision initial secrets. Passphrases whould be different
+  - This option is used by some OEMs to provision initial secrets. Passphrases should be different
 - Define individual passphrases for each security components (recommended:y )
   - This is the preferred option
 - Set custom under information for the GnuPG key (recommended: y)
