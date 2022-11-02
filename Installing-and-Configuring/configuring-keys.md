@@ -49,9 +49,13 @@ OEM Factory Reset/Re-Ownership
 Once you have installed the OS, you will need to take ownership of the different security
 components under Heads. The easiest way is through `OEM Factory Reset/Re-Ownership` option.
 
-** Note that the passphrases you will type will be echoed back to you. You need to accomplish this step in a safe environement **
+**Note that the passphrases you will type will be echoed back to you. You need to accomplish this step in a safe environement**
 
-[EFF Diceware passphrases are recommended](https://www.rempe.us/diceware/#eff)
+**_EFF Diceware passphrases are recommended_** 
+You can generate those on a seperate device from the following recommended sites:
+- https://www.rempe.us/diceware/#eff Explains why those are important as opposed to passwords
+- https://diceware.dmuth.org/ Explains as well
+- https://romeljacinto.github.io/diceware/ Minimalist, first letter captitalizer, customizes word seperator.
  
 The Secrets involved under Heads are the following (and their recommended lengths):
 - Disk Recovery Key passphrase (6 words. *Do not forget this one)*
