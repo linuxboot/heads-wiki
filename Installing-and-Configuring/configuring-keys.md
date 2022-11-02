@@ -49,6 +49,8 @@ OEM Factory Reset/Re-Ownership
 Once you have installed the OS, you will need to take ownership of the different security
 components under Heads. The easiest way is through `OEM Factory Reset/Re-Ownership` option.
 
+** Note that the passphrases you will type will be echoed back to you. You need to accomplish this step in a safe environement **
+
 [EFF Diceware passphrases are recommended](https://www.rempe.us/diceware/#eff)
  
 The Secrets involved under Heads are the following (and their recommended lengths):
