@@ -194,7 +194,16 @@ Until next dom0 upgrade, this is the normal boot process
 
 When updating dom0 from Qubes OS update widget
 ====
-You need to reboot directly after applying dom0 upgrades:
+You need to reboot directly after applying dom0 upgrades.
+You should follow this Qube's forum [Verifying Installation](https://forum.qubes-os.org/t/verifying-installation/11739) post to investigate integrity of dom0 and /boot components.
+
+You will then get a similar prompt when selecting the Default boot option:
+![signal-2022-11-09-141307](https://user-images.githubusercontent.com/827570/200931081-c2c6ff23-2b5f-431c-89c8-f33428dbf0cf.jpeg)
+
+This is the result of Heads having verified that /boot/kexec.sig detached signature file of kexec_*.txt digests are still valid, but that the content of kexec_hashes.txt differs for some of the files measured under that digest. Heads will require you to generetate new digests and sign them.
+
+
+Then, Heads will ask you to define a new boot default if grub.cfg file has changed:
 
 ```text
 !!! Boot entry has changed - please set a new default
