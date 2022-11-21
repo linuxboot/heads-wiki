@@ -15,6 +15,7 @@ https://user-images.githubusercontent.com/827570/203147231-4791a1f1-bb9b-4373-9b
 
 
 A video showing how to automatize SPI chip detection upon correct SOIC clip connection:
+
 https://user-images.githubusercontent.com/827570/203147643-528e9828-2666-4bd6-900f-3b915a11f633.mp4
 
 
