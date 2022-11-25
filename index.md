@@ -19,7 +19,8 @@ stateless OS that leaves no trace on the computer of its presence, Heads
 is intended for the case where you need to store data and state on the
 computer.
 
-![Flashing an x230 bootrom]({{ site.baseurl }}/images/Flashing_an_x230_bootrom.jpg)
+![ch341a_flashing](https://user-images.githubusercontent.com/827570/204050962-66f78acb-4dfa-4465-9cda-b212905b8bb8.png)
+
 
 Heads is not just another Linux distribution -- it combines physical
 hardening of specific hardware platforms and flash security features with
