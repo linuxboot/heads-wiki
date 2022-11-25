@@ -18,7 +18,8 @@ parent: Installing and configuring
 <!-- markdownlint-enable MD033 -->
 
 
-![Flashing Heads on an x230 at HOPE]({{ site.baseurl }}/images/Flashing_Heads_on_an_x230_at_HOPE.jpg)
+![Flash_gui-init](https://user-images.githubusercontent.com/827570/204049689-ec4af8b7-5cc3-46f5-b4fe-bcbc47d61d34.jpeg)
+
 
 Upgrading Heads
 ===
