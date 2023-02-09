@@ -102,8 +102,8 @@ Some history first on the historical x230-flash and x230 boards that initially c
 Heads was initially developped on the x230 board (first xx30 board supported).
 
 At that time, ME cleaning/neutering was not a thing. Then me_cleaner facilitated the task.
-The X230 board, as all xx30 family boards do not have a single SPI flash, but two. 
-On the bottom SPI flash chip lies the Intel Flash Descriptor (IFD), Intel Management Enging (ME), Intel Gigabit Configuration (GBE) and some BIOS available space spanning from 4MB chip. On the top SPI flash is the original BIOS region which spans to BIOS region on the 8MB chip.
+[The X230 board, as all xx30 family boards do not have a single SPI flash, but two. 
+On the bottom SPI flash chip lies the Intel Flash Descriptor (IFD), Intel Management Enging (ME), Intel Gigabit Configuration (GBE) and some BIOS available space spanning from 4MB chip. On the top SPI flash is the original BIOS region which spans to BIOS region on the 8MB chip.](https://doc.coreboot.org/mainboard/lenovo/Ivy_Bridge_series.html?highlight=t430#flash-layout)
 
 Original work done on Heads without ME cleaning led to the creation of a two phase flashing of the board. It required an original external flashing of the x230-flash ROM to the 4MB top chip, which permitted to boot into a minimal BIOS recovery shell from which the x230 board 12MB ROM could be internally flashed through flashrom and Linux, fitting into the 4MB SPI flash from x230-flash ROM. Booting into x230-flash launches a recovery shell which made possible to flash only the BIOS region from the x230 created ROM. This ROM image is incomplete, and flashing the whole 12MB image would create a brick. A script made available through x230-flash was taking care of only flashing the BIOS region defined under untouched IFD region, which permitted to flash the 7MB defined BIOS region inside of the IFD descriptor, without touching ME, GBE or the IFD itself.
 
