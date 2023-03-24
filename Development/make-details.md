@@ -18,10 +18,10 @@ Verbose build (otherwise all log output goes into `build/x86/logs/$(submodule).l
 make V=1
 ```
 
-Produce just the build of a single sub-module with the `.intermediate` suffix:
+Produce just the build of a single sub-module invoking its name as the target:
 
 ```shell
-make gpg.intermediate
+make gpg
 ```
 
 Clean a single submodule or all (?) volatile submodules:
