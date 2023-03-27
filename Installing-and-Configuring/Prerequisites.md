@@ -32,9 +32,10 @@ To install Heads on a physical device, you will need:
 If your device requires external flashing ([see below](#supported-devices)),
  you will also need:
 
-* [SPI Programmer](https://trmm.net/SPI_flash): ch341a programmer or raspberry
- pi or bus pirate (ch341a is recommended for new users and can be found almost
- [anywhere](https://www.amazon.com/s?k=ch341a+programmer).
+* [SPI Programmer](https://trmm.net/SPI_flash): green pcb ch341a programmer or raspberry
+ pi or bus pirate (green ch341a is recommended for new users and can be found almost
+ [anywhere with preassembled clip as a kit](https://www.amazon.com/s?k=ch341a+programmer).
+  * [Beware that black ch341a are known to not provide 3.3V as most NOR chips requires and should me manually fixed. If you intend to use a ch341a for initial flashing and occasional unbricking, this is perfectly fine without modification. Otherwise, you should look into other programmers or do the fix yourself. A lot of people suggest against using ch341a unless modified.](https://libreboot.org/docs/install/spi.html#do-not-use-ch341a)
 * Wires and a clip SOIC8 to connect your programmer of choice to the board’s
  SPI flash chip(s).
   * The [Pomona 5250](https://www.pomonaelectronics.com/products/test-clips/soic-clip-8-pin)
@@ -55,17 +56,17 @@ Please see the current [heads source](https://github.com/osresearch/heads/tree/m
 |Lenovo Thinkpad T420|`t420`|coreboot|X|X|Legacy board config without HOTP verification|
 |Lenovo Thinkpad T420|`t420-maximized`|coreboot|X||Maximized board config without HOTP verification|
 |Lenovo Thinkpad T420|`t420-hotp-maximized`|coreboot|X||Maximized board config with HOTP verification.|
-|Lenovo Thinkpad T430|`t430-flash`|coreboot|X|X|Legacy initial flashing board config producing internal flash environment to flash non-maximized legacy boards.|
-|Lenovo Thinkpad T430|`t430-hotp-verification`|coreboot||X|Legacy board config with HOTP verification. Flashable through legacy t430-flash image.|
+|Lenovo Thinkpad T430|`t430-legacy-flash`|coreboot|X|X|Legacy initial flashing board config producing internal flash environment to flash non-maximized legacy boards.|
+|Lenovo Thinkpad T430|`t430-hotp-legacy`|coreboot||X|Legacy board config with HOTP verification. Flashable through legacy t430-flash image.|
 |Lenovo Thinkpad T430|`t430`|coreboot||X|Legacy board config without HOTP verification. Flashed internally through legacy t430-flash image.|
 |Lenovo Thinkpad T430|`t430-maximized`|coreboot|X||Maximized board config without HOTP verification.|
 |Lenovo Thinkpad T430|`t430-hotp-maximized`|coreboot|X||Maximized board config with HOTP verification.|
 |Lenovo Thinkpad X220|`x220`|coreboot|X|X|Legacy board config without HOTP verification|
 |Lenovo Thinkpad X220|`x220-maximized`|coreboot|X||Maximized board config without HOTP verification.|
 |Lenovo Thinkpad X220|`x220-hotp-maximized`|coreboot|X||Maximized board config with HOTP verification.|
-|Lenovo Thinkpad X230|`x230-flash`|coreboot|X|X|Legacy initial flashing board config producing internal flash environment to flash non-maximized legacy boards.|
-|Lenovo Thinkpad X230|`x230-hotp-verification`|coreboot||X|Legacy board config with HOTP verification. Flashable through legacy x230-flash image.|
-|Lenovo Thinkpad X230|`x230`|coreboot||X|Legacy board config with HOTP verification. Flashable through legacy x230-flash image.|
+|Lenovo Thinkpad X230|`x230-legacy-flash`|coreboot|X|X|Legacy initial flashing board config producing internal flash environment to flash non-maximized legacy boards.|
+|Lenovo Thinkpad X230|`x230-hotp-legacy`|coreboot||X|Legacy board config with HOTP verification. Flashable through legacy x230-flash image.|
+|Lenovo Thinkpad X230|`x230-legacy`|coreboot||X|Legacy board config with HOTP verification. Flashable through legacy x230-flash image.|
 |Lenovo Thinkpad X230|`x230-hotp-maximized`|coreboot|X||Maximized board config with HOTP verification.|
 |Lenovo Thinkpad X230|`x230-maximized`|coreboot|X||Maximized board config with HOTP verification.|
 |Open Compute Project Leopard node|`leopard`|linuxboot|||
