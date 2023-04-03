@@ -51,6 +51,8 @@ Please see the current [heads source](https://github.com/osresearch/heads/tree/m
 |Device| Board name|Firmware base|Requires external flashing| ME should be cleaned|Notes|
 |--|--|--|:--:|:--:|--|
 |Asus KGPE-D16|`kgpe-d16`|coreboot|X|||
+|Asus P8Z77-M Pro|`p8z77-m_pro-tpm1-maximized`|coreboot|X|X|Maximized board config without HOTP verification.|
+|Asus P8Z77-M Pro|`p8z77-m_pro-tpm1-hotp-maximized`|coreboot|X|X|Maximized board config with HOTP verification.|
 |Dell R630|`r630`|linuxboot||X||
 |Intel S2600wf|`s2600wf`|linuxboot||X||
 |Lenovo Thinkpad T420|`t420`|coreboot|X|X|Legacy board config without HOTP verification|
