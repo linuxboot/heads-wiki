@@ -25,8 +25,8 @@ Building Heads
 Heads is supposed to be a [reproducible build](https://reproducible-builds.org/)
  since [v0.1.0](https://github.com/osresearch/heads/releases/tag/v0.1.0) since it
  achieved this goal. Unfortunately, things broke since release 0.2.1, since some
- host tools and paths are now bleeding into the final ROM. An alternative build
- system is being proposed [here](https://github.com/osresearch/linux-builder),
+ host tools and paths are now bleeding into the final ROM. An [alternative build
+ system is being proposed](https://github.com/osresearch/linux-builder),
  with it's own issues. More research and development needs to be done to bring
  Heads to be reproducible again, with some [additional thinking on reproducibility](https://github.com/osresearch/linux-builder/issues/1).
  Reproducible builds mean that you are supposed to get the same bit by bit output
@@ -53,9 +53,9 @@ Heads builds will eventiually be fully reproducible again on any Linux-ish syste
 
 With a vanilla Debian 11 or Ubuntu 20.04 install, such as a digitalocean
 droplet, you need to first install some support tools. This takes a
-short while, so get a cup of coffee and [install host build requirements packages as specified here](https://github.com/osresearch/heads/blob/master/.circleci/config.yml#L10-L11)
+short while, so get a cup of coffee and [install host build requirements packages as specified in the Debian continuous integration configuration](https://github.com/osresearch/heads/blob/master/.circleci/config.yml#L18)
 
-On a Fedora machine, [install host build requirements packages as specified here](https://github.com/osresearch/heads/blob/master/.gitlab-ci.yml.deprecated#L19).
+On a Fedora machine, [install host build requirements packages as specified in the old Fedora-based continuous integration configuration](https://github.com/osresearch/heads/blob/master/.gitlab-ci.yml.deprecated#L19).
 
 For emulation and analysis with UEFITool under Fedora, install `qemu` and `qt5-devel`:
 
