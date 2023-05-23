@@ -24,7 +24,7 @@ What board configuration should I choose?
 ---
 Please refer to the [devices compatibility matrix]({{ site.baseurl }}/Prerequisites#supported-devices).
 
-Migrating from on board configuration to another
+Migrating from one board configuration to another
 ---
 If Heads is already installed on your board and you want to migrate to its Maximized version:
 - Under Heads: go into [Recovery Shell]({{ site.baseurl }}/RecoveryShell) to make sure if you should download [Legacy or Maximized]({{ site.baseurl }}/Prerequisites#legacy-vs-maximized-boards) board ROMs:
