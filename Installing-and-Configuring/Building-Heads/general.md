@@ -51,17 +51,9 @@ Heads builds will eventiually be fully reproducible again on any Linux-ish syste
  If you don't get the same hashes as reported on the release page, please 
  search/file an issue with the [reproducible build milestone](https://github.com/osresearch/heads/milestone/1).
 
-With a vanilla Debian 11 or Ubuntu 20.04 install, such as a digitalocean
+With a vanilla Debian 11/12 or Ubuntu 20.04/23.04 install, such as a digitalocean
 droplet, you need to first install some support tools. This takes a
-short while, so get a cup of coffee and [install host build requirements packages as specified here](https://github.com/osresearch/heads/blob/master/.circleci/config.yml#L10-L11)
-
-On a Fedora machine, [install host build requirements packages as specified here](https://github.com/osresearch/heads/blob/master/.gitlab-ci.yml.deprecated#L19).
-
-For emulation and analysis with UEFITool under Fedora, install `qemu` and `qt5-devel`:
-
-```shell
-dnf install -y qemu qt5-devel
-```
+short while, so get a cup of coffee and [install host build requirements packages as specified by apt calls here](https://github.com/osresearch/heads/blob/master/.circleci/config.yml)
 
 Clone the tree:
 
@@ -89,9 +81,9 @@ Generic
 ---
 
 Generally, everything that is needed to flash the SPI flash of a board is a
- single rom generated through `make BOARD=$BOARD bootstrap` and `make BOARD=$BOARD` commands, where $BOARD is the
+ single rom generated through `make BOARD=$BOARD` commands, where $BOARD is the
  name of the board that can be found under `board` directory of the git
- downloaded tree.
+ downloaded tree. You can do the build verbose by doing `make BOARD=$BOARD V=1`
 
  Make Heads for another board (`XXX` should be the name of your board in ./boards and YY the number of CPUs you want to build with):
 
