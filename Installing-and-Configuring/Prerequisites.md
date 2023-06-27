@@ -146,7 +146,7 @@ It is possible to upgrade from Legacy to Maximized boards under certain conditio
 If coming from Skulls, *if and only optional unlocking step has been followed*, you can upgrade internally through a manual flashrom call, just like if you were coming from Heads Legacy boards while having followed the me_cleaning page instructions prior of initial flash.
 
 If coming from Skulls or Heads Legacy board configurations while having unlocked IFD initially, you can flash from the recovery shell manually.
-[**IF UNSURE, PLEASE VERIFY FIRST**](/Prerequisites#legacy-vs-maximized-boards) 
+[**IF UNSURE, PLEASE VERIFY FIRST**](/Updating#verify-upgradeability-paths-of-the-firmware) 
 
 Having a full xxxx-hotp-maximized or xxxx-maximized board config produced ROM available on a USB stick, alongside with your USB Security dongle's matching exported public key, do the following:
 ```
