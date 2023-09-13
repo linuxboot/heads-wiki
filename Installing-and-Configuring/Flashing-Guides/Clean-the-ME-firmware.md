@@ -76,7 +76,7 @@ If it's not, replace the reprogrammer clip and try again :)
 
 Next, unlock the descriptor and ME regions with ifdtool. We consider here that
  you already build Heads through `make BOARD=x230`:
-`~/heads/build/coreboot-4.8.1/util/ifdtool/ifdtool -u down.rom`
+`~/heads/build/x86/coreboot-4.13/util/ifdtool/ifdtool -u down.rom`
 This produced a new unlocked rom under `down.rom.new`
 
 Next, let's strip all the nasty bits:  

@@ -1,54 +1,124 @@
 ---
 layout: default
 title: Upgrading Heads
-permalink: /Updating/
+permalink: /Updating
 nav_order: 99
 parent: Installing and configuring
 ---
 
-![Flashing Heads on an x230 at HOPE]({{ site.baseurl }}/images/Flashing_Heads_on_an_x230_at_HOPE.jpg)
+<!-- markdownlint-disable MD033 -->
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+<!-- markdownlint-enable MD033 -->
+
+
+![Flash_gui-init](https://user-images.githubusercontent.com/827570/204049689-ec4af8b7-5cc3-46f5-b4fe-bcbc47d61d34.jpeg)
+
 
 Upgrading Heads
 ===
 
-The first time you install Heads, you'll need a
-[hardware flash programmer](https://trmm.net/SPI_flash) to be able to
-replace the existing vendor firmware.  Subsequent upgrades can be
-performed via software, although you'll probably want a hardware programmer
-since we don't have a fail-safe recovery mechanism in the event of
-a bad flash or buggy firmware.
+The first time you install Heads, you'll need [some SPI programmer]({{ site.baseurl }}/Prerequisites#required-equipment)
+ to be able to replace the existing vendor firmware.
 
-Additionally, *reflashing the firmware will change the TPM PCRs*.
-This will require generating a new TPM TOTP token and a new drive
-encryption key.  Be sure you have your TPM owner's password and your
-disk encryption recovery key or passphrase available since, by design,
-the disk key is not accessible to the recovery shell.
+Outside of migrating from Legacy to Maximized firmware, all subsequent upgrades can be performed
+ internally through Heads menus although you'll probably want a hardware programmer since we don't
+ have a fail-safe recovery mechanism in the event of a bad flash or buggy firmware.
 
-Recovery shell
----
+Additionally, *upgrading the firmware will change the [TPM PCRs]({{ site.baseurl }}/Keys/#tpm-pcrs)*.
+ This will require resealing TOTP/HOTP and to setup a new TPM Disk Unlock Key and passphrase
+ by setuping a new boot default.
 
-![Recovery shell]({{ site.baseurl }}/images/Recovery_shell.jpg)
+Be sure you have your TPM owner's password and your Disk Recovery Key passphrase available
+ since, by design, the TPM Disk Unlock Key will become invalid. Also note that TPM PCRs are
+ extended by going to the recovery shell anyway, which does not permit to have access to
+ sealed secrets from there.
 
-If the flash protection bits are set correctly it is not possible to
-rewrite the firmware from the normal OS.  You'll need to reboot
-to the Heads recovery shell (hit `r` after the TPM TOTP prompt).
+
+Reflashing the same firmware
+===
+If you reflash the same firmware image by selecting the retain settings option from Heads GUI, your 
+ TOTP/HOTP/TPM Disk Unlock Key and passphrase will stay valid since measurements will repopulate [PCRs]({{ site.baseurl }}/Keys/#tpm-pcrs)
+ exactly the same way they were sealed, resulting in the same unsealed secrets from the TPM, resulting
+ in the same HOTP/TOTP/TPM Disk Unlock Key.
+
+So if you are in doubt of the current firmware state, you can consequently reflash the firmware image
+ through the GUI to validate it's current integrity. It is a good idea to keep last flashed firmware image 
+ on a USB drive.
+
+Bonus, Maximized ROMs reflash the whole SPI flash; not just the BIOS region like Legacy ROMs do.
+
+Verify upgradeability paths of the firmware
+====
+
+First things first, verify the [supported platforms]({{ site.baseurl }}/Prerequisites#supported-devices).
+If you have a *ThinkPad (xx30/xx20 flavors), proceed with caution.*
+*Also select hotp variant if you own a [Heads supported USB Security dongle]({{ site.baseurl }}/Prerequisites#usb-security-dongles-aka-security-token-aka-smartcard) for visual remote attestation*
+
+
+Review if the Intel Firmware Descriptor (IFD) and Intel Management Engine (ME) were unlocked or 
+not from the [Recovery Shell]({{ site.baseurl }}/RecoveryShell) prior of going forward. 
+
+```shell
+flashrom -p internal
+```
+
+The two following situations must apply, which will define what to do next.
+
+Unlocked IFD and ME
+----
+This is the expected output if the initial external flashing of the firmware unlocked IFD and ME regions:
+![CanBeFlashedToMaximizedRom](https://user-images.githubusercontent.com/827570/167728631-85a5ca9e-48f6-4d4f-8544-532fa75bf5d3.jpeg)
+- This means you can internally migrate from Legacy boards (xxxx-hotp/xxxx boards ROM) to their Maximized boards counterpart (xxx-hotp-maximized/xxxx-maximized boards ROM).
+  - If you are presently on a Legacy board (If Heads boot screen is not showing Maximized):
+    - You will have to manually call flashrom from the Recovery Console: 
+      - `mount-usb`
+      - `flashrom -p internal -w /media/heads-hotp-maximized-version-gcommit.rom`
+    - ![InternalUpgradeToMaximizedROM](https://user-images.githubusercontent.com/827570/167729694-6ff8da60-986a-4ec3-9b2d-4fa94e42d3fa.jpeg)
+- If you are already running a Maximized board ROM, you can safely upgrade through Heads GUI keeping your current settings. 
+
+
+Locked IFD and ME
+----
+Otherwise, initial external flashing of the firmware didn't unlock the IFD/ME regions:
+![CantBeInternallyUpgradeToMaximizedROM](https://user-images.githubusercontent.com/827570/167728658-731362da-a676-4610-becb-ff94f2ff48b1.jpeg)
+- This means you either have to:
+  - Externally reflash Maximized board ROM 
+    - xx30: xx30-*maximized-top.rom(4Mb) and xx30-*maximized-bottom.rom(8Mb) ROMs 
+    - xx20: xx20-*-maximized.rom (8Mb ROM)
+  - Stay with Legacy board ROMs. This means you can safely update through Heads GUI, keeping your current settings.
+
 
 Internal Flashing
+===
+
+Preparing a compliant USB thumb drive
 ---
+On the laptop used to build/download Heads: 
+For safety, list the drives available without plugging your USB drive:
+```shell
+sudo fdisk -l
+```
 
-Reconnect power to the laptop and you should be able to boot into the Heads
- recovery shell.
 
-Plug your USB flash drive into the laptop that you used to build Heads. If your
- USB drive is already formatted as ext4 or you are confident you can format it
- then just move the coreboot.rom file to the usb drive. Otherwise, find your usb
- drive using fdisk:
+Plug your USB flash drive and redo last command to witness appearance of a new drive:
 
 ```shell
 sudo fdisk -l
 ```
 
-Format your usb drive as ext4 (My usb drive is /dev/sdb):
+Note that Heads currently supports ext3/ext4/fat32 filesystems, where fat32 limits 
+ file size to a maximum of 4Gb. So if you intend to use that USB drive to host bigger
+ files, you should probably backup current content and format to ext3/ext4.
+ Otherwise, fat32 is fine now to put only firmware image.
+
+If you want to reformat your usb drive as ext4 (USB drive is /dev/sdb here):
 
 ```shell
 sudo mkfs.ext4 /dev/sdb1
@@ -62,105 +132,44 @@ mkdir ~/usb
 sudo mount /dev/sdb1 ~/usb/
 ```
 
-Move the full Heads rom file to the usb drive:
+Move the full Heads rom file to the usb drive and unmount the drive:
 
 ```shell
-sudo cp ~/heads/build/x230/coreboot.rom ~/usb/
+sudo cp ~/heads/build/x86/x230/heads.rom ~/usb/
+sudo umount /dev/sdb1
 ```
 
-Insert the usb drive into the Thinkpad x230 and mount it:
 
-```shell
-mount-usb
-```
-
-You should now see the file coreboot.rom in /media:
-
-```shell
-ls /media/
-```
-
-Internally flash coreboot.rom (This command will write to both SPI flash chips
-  as if they are one 12Mb chip):
-
-```shell
-flash.sh -c /media/coreboot.rom
-```
-
-Wait for the flashing to finish and you should be able to reboot into Heads!
-
-Mounting the USB media
+Flashing new firmware under Heads
 ---
+As discussed above: 
 
-![insmod]({{ site.baseurl }}/images/insmod.jpg)
+- If you are not migrating from Legacy boards to Maximized board configurations, 
+ you can safely upgrade from Heads GUI through `Options->Flash/Update BIOS`
+ and choose the retain settings option. This will copy your GPG keyring and user configuration
+ into the new ROM prior of flashing it the whole combined 12Mb SPI flash with the ROM.
 
-The Heads boot process does not have USB or network drivers by default
-and neither does the recovery shell (although this might change).
-You need to load the Linux kernel modules, which will change the
-default module PCR 5:
+- If you are migrating from Legacy to Maximized ROM, you need to manually call flashrom
+ from the Recovery Shell, having a copy of your public key on a USB drive to inject it back
+ on next Heads boot.
 
-```shell
-insmod /lib/modules/ehci-hcd.ko
-insmod /lib/modules/ehci-pci.ko
-```
 
-When you insert the drive you'll see a console message about the partitions
-on the new device.  Typically it will be the first partition, `/dev/sdb1`,
-or sometimes just `/dev/sdb` if there is no partition table.  Make a
-directory and mount the device read only:
+Re-Owning the states
+===
+Reboot and verify that the new firmware is running. Don't be scared if you have to power off twice
+ The trained memory cache in firmware might have been wiped and reconstructed. Hold the power
+ button for 10 seconds and power back on.
 
-```shell
-mkdir /media
-mount -o ro /dev/sdb1 /media
-```
+- If you migrated from Legacy to Maximized builds (no migration of settings), you will
+ be prompted on next reboot by the same prompts following an initial flash. That is:
+  - To inject your public key or do OEM Factory Reset/Re-Ownership
+    - The Factory Reset/Re-Ownership option will guide you into re-owning all security components
+     including resetting USB Security dongle, injecting public key in ROM and signing /boot.
+  - Then on next reboot, you will be prompted to generate new TOTP/HOTP token. Normal, since none
+   of the previous measurements are valid anymore (GPG Admin PIN and TPM Ownership passphrase required)
+  - Sign /boot content (GPG User PIN required)
+  - Select a new boot default through Boot Options (GPG User PIN required to sign the new default)
+    - Optionally set a TPM Disk Unlock Key (Disk Recovery Key passphrase and GPG User PIN required)
 
-Flashing the ROM
----
-
-![Mount and flash]({{ site.baseurl }}/images/Mount_and_flash.jpg)
-
-There is a helper script `/bin/flashrom-x230.sh` that uses the x230
-flash ROM layout and the Heads modified version of `flashrom` to
-write to the chip.  One of the modifications is to avoid touching or
-reading the ME section, so it is not necessary to have used the
-[ME cleaner](/Clean-the-ME-firmware/) or unlocked the flash descriptor.
-
-```shell
-flashrom-x230.sh /media/x230.full.rom
-```
-
-![Flashrom]({{ site.baseurl }}/images/Flashrom.jpg)
-
-If all goes well it will write for about a minute and then report
-success.  Due to hacks in `flashrom`, it does not read back what it
-wrote to verify, so hopefully it worked.
-
-Reboot and verify that the new firmware is running.  You'll be dropped
-into the recovery shell immediately since the TPM TOTP secret will not
-be unlocked.  Since the first boot after flashing will also adjust
-the MRC cache, it is necessary to do a second reboot to ensure that
-the TPM values are at their persistent state
-([issue #150](https://github.com/osresearch/heads/issues/150) aims to fix this).
-
-Regenerating the TOTP token
----
-
-![TPM TOTP QR]({{ site.baseurl }}/images/TPM_TOTP_QR.jpg)
-
-After the second post-flash reboot, generate a new token and store the
-QR code in your phone by running:
-
-```shell
-sealtotp.sh
-```
-
-This needs the TPM owner password to be able to define the NVRAM space.
-(todo: [issue #151](https://github.com/osresearch/heads/issues/151)).
-
-Resealing the disk encryption keys
----
-
-When you get to the standard boot menu and after you verify the TOTP, select 'm'
- to go to the full boot menu.  Select the option you want (usually the first),
- make it the default by hitting 'd' and also say 'y' when asked to reseal the
- disk keys.
+- If you upgraded your firmware by choosing the retain settings options for a same board configuration 
+  - The same steps above will be required, outside of the public key injection/Re-Ownership.

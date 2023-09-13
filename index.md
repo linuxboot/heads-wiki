@@ -7,7 +7,7 @@ permalink: /
 nav_order: 1
 ---
 
-![Heads booting on an x230]({{ site.baseurl }}/images/Heads_booting_on_an_x230.jpg)
+![Heads booting on an x230](https://user-images.githubusercontent.com/827570/156627927-7239a936-e7b1-4ffb-9329-1c422dc70266.jpeg)
 
 Overview
 ===
@@ -19,7 +19,8 @@ stateless OS that leaves no trace on the computer of its presence, Heads
 is intended for the case where you need to store data and state on the
 computer.
 
-![Flashing an x230 bootrom]({{ site.baseurl }}/images/Flashing_an_x230_bootrom.jpg)
+![ch341a_flashing](https://user-images.githubusercontent.com/827570/204050962-66f78acb-4dfa-4465-9cda-b212905b8bb8.png)
+
 
 Heads is not just another Linux distribution -- it combines physical
 hardening of specific hardware platforms and flash security features with
@@ -37,7 +38,6 @@ components are included in the measurements and are at least guaranteed
 to be unchanging.  Once the system is in a known good state, the TPM is
 used as a hardware key storage to decrypt the drive.
 
-![TPM TOTP in action]({{ site.baseurl }}/images/TPM_TOTP_in_action.jpg)
 
 Additionally, the hypervisor, kernel and initrd images are signed by
  keys controlled by the user.  While all of these firmware and software changes
@@ -56,7 +56,7 @@ Further reading
 Learn more about Heads
 ---
 
-* [Heads threat model](/Heads-threat-model/) - goes into more
+* [Heads threat model]({{ site.baseurl }}/Heads-threat-model/) - goes into more
  detail about what classes of threats Heads attempts to counter.
-* [Frequently Asked Questions](/FAQ/)
-* [Requirements for Heads](/Install-and-Configure)
+* [Frequently Asked Questions]({{ site.baseurl }}/FAQ/)
+* [Requirements for Heads]({{ site.baseurl }}/Install-and-Configure)

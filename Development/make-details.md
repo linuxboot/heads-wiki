@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Makefile
-permalink: /Makefile
+permalink: /Makefile/
 nav_order: 1
 parent: Development
 ---
@@ -12,16 +12,16 @@ Makefile
 Helpful targets and options
 ---
 
-Verbose build (otherwise all log output goes into `build/logs/$(submodule).log`):
+Verbose build (otherwise all log output goes into `build/x86/logs/$(submodule).log`):
 
 ```shell
 make V=1
 ```
 
-Produce just the build of a single sub-module with the `.intermediate` suffix:
+Produce just the build of a single sub-module invoking its name as the target:
 
 ```shell
-make gpg.intermediate
+make gpg
 ```
 
 Clean a single submodule or all (?) volatile submodules:
@@ -87,7 +87,7 @@ cryptsetup_hash := af2b04e8475cf40b8d9ffd97a1acfa73aa787c890430afd89804fb544d6ad
 # build path.
 cryptsetup_configure := ./configure \
   CC="$(heads_cc)" \
-  --host i386-elf-linux \
+  --host $(MUSL_ARCH)-elf-linux \
   --prefix "" \
   --disable-gcrypt-pbkdf2 \
   --with-crypto_backend=kernel \
@@ -124,7 +124,7 @@ The main components that every submodule must define are:
  after unpacking and patching (see below) `cryptsetup_configure`
 ** Note that we provide the compiler `CC="$(heads_cc)"` in quotes, since there
  might be spaces in the variable
-  * `--host i386-elf-linux` is used to indicate that this is a cross compile
+  * `--host $(MUSL_ARCH)-elf-linux` is used to indicate that this is a cross compile
   * `--prefix` avoids writing path names into the executable
   * plus some additional submodule specific stuff
 * The target to be called by make in this directory to generate the output

@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Lenovo X230 Legacy
-permalink: /x230-flashing/
+title: Lenovo X230 Maximized
+permalink: /x230-maximized-flashing/
 nav_order: 1
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
 
-Lenovo X230 (Legacy)
+Lenovo X230 (Maximized)
 ===
 
 [X230 Hardware Maintenance Manual](https://web.archive.org/web/20201112030049/https://thinkpads.com/support/hmm/hmm_pdf/x230_x230i_hmm_en_0b48666_01.pdf)  
@@ -58,6 +58,9 @@ Based on [the work done here](https://github.com/osresearch/heads/issues/716),
 |Winbond | W25Q32.V, W25Q32.W | 4M|
 |Winbond | W25Q64.V, W25Q32.W  | 8M|
 
+First [download]({{ site.baseurl }}/Downloading) / [build]({{ site.baseurl }}/x230-maximized-building/) the maximized board roms (top and bottom) for this board and verify their hashes.
+
+
 Try to read the name on the top SPI flash chip. Then, connect the clip and
  ch341a programmer to the top SPI flash chip. Use flashrom to check the chip
   that you are connected to:
@@ -76,10 +79,10 @@ sudo flashrom -r ~/top.bin --programmer ch341a_spi -c YYY && \
 If the files differ then try reconnecting your programmer to the SPI flash chip
  and make sure your flashrom software is up to date.
 
-If they are the same then write `x230-flash.rom` to the SPI flash chip:
+If they are the same then write `x230-maximized-top.rom` to the SPI flash chip:
 
 ```shell
-sudo flashrom -p ch341a_spi -c “YYY” -w ~/heads/build/x86/x230-flash/x230-flash.rom
+sudo flashrom -p ch341a_spi -c “YYY” -w ~/heads/build/x86/x230-maximized/x230-maximized-top.rom
 ```
 
 Try to read the name on the bottom SPI flash chip. Then, connect the clip and
@@ -97,12 +100,18 @@ sudo flashrom -r ~/bottom.bin --programmer ch341a_spi -c ZZZ && \
     sudo flashrom -v ~/bottom.bin --programmer ch341a_spi -c ZZZ
 ```
 
-The 8M bottom chip contains the ME firmware.  It is strongly suggested that this
- is neutralized.  Please see the section on [Cleaning ME](/Clean-the-ME-firmware/)
+The 8M bottom chip contains the ME firmware.  It is neutralized in maximized version.
+You can flash it specifying the same chip you found under ZZZ:
+```shell
+sudo flashrom -p ch341a_spi -c “ZZZ” -w ~/heads/build/x86/x230-maximized/x230-maximized-bottom.rom
+```
 
-If all goes well, you should see the keyboard LED flash, and within a second the
- Heads recovery splash screen will appear. It currently drops you immediately
- into the shell, to allow you to flash the full 12MB `x230` Heads built rom, with 
- on screen instructions to mount a USB drive and flash that file from it.
- If it doesn't work, well, sorry about that. Please let me know what the symptoms 
- are or what happened during the flashing.
+
+If all goes well, you should see the keyboard LED flash, and within a second Heads will boot
+ in its GUI. 
+
+Two reboots are sometimes needed after flash. Force power off by holding the power button for 
+ 10 seconds. Since the memory training data was wiped by the content of the full flashed ROM, 
+ this is normal.
+
+You should then follow through with [configuring keys]({{ site.baseurl }}/Configuring-Keys/).
