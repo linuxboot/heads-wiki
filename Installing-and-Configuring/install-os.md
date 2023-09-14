@@ -78,16 +78,8 @@ If you want to set a default option so that you don't have to choose at every
  boot, you can do so from the menu by selecting 'd' on the confirmation screen.
  You will also be able to seal your Disk Unlock Key into the TPM, which would be unsealed only when provided with the good TPM disk encryption key passphrase and when firmware measurement and LUKS header are the same as when the Disk Unlock Key was sealed when booting from detached signed default boot option selection.
 
-(\*) Ubuntu/Debian Note: These systems don't read `/etc/crypttab` in their
- initrd, so you need to adjust the crypttab in the OS and `update-initramfs -u`
- to have it attempt to use the injected key.  Due to oddities in the cryptroot
- hooks, you also need keyscript to be in `/etc/crypttab` even as a no-op
- `/bin/cat`:
+This should work for Qubes OS, Fedora, Debian (and derivatives).
 
-`sda5_crypt UUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX /secret.key luks,keyscript=/bin/cat`
-
-(Credit to [https://www.pavelkogan.com/2015/01/25/linux-mint-encryption/](https://www.pavelkogan.com/2015/01/25/linux-mint-encryption/)
- for this trick).
 
 Installing Qubes 4.1
 ===
