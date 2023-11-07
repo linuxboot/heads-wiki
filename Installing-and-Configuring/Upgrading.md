@@ -113,12 +113,12 @@ Plug your USB flash drive and redo last command to witness appearance of a new d
 sudo fdisk -l
 ```
 
-Note that Heads currently supports ext3/ext4/fat32 filesystems, where fat32 limits 
+Note that Heads currently supports Ext3 /Ext4/Exfat/fat32 filesystems, where fat32 limits 
  file size to a maximum of 4Gb. So if you intend to use that USB drive to host bigger
  files, you should probably backup current content and format to ext3/ext4.
  Otherwise, fat32 is fine now to put only firmware image.
 
-If you want to reformat your usb drive as ext4 (USB drive is /dev/sdb here):
+If you want to reformat your usb drive as ext4 (USB drive is /dev/sdb here) where ExFat is recommended now:
 
 ```shell
 sudo mkfs.ext4 /dev/sdb1
