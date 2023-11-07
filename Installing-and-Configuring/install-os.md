@@ -86,7 +86,7 @@ Installing Qubes 4.1
 Qubes OS and Tails can boot directly from ISO when provided with accompanying detached signatures (iso.asc or iso.sig), thanks to 
 distribution signing keys being provided under Heads, permitting to validate both integrity and authenticity of the ISOs prior of booting into them.
 
-Plug in the ext3/ext4 formatted USB stick containing Qubes R4.1 iso and iso.asc files into one of the USB port and
+Plug in the EXT3/EXT4/ExFat formatted USB stick containing Qubes iso and iso.asc files into one of the USB port and
  boot it from USB mode:
 
 ![1-Heads-Options](https://user-images.githubusercontent.com/827570/156627927-7239a936-e7b1-4ffb-9329-1c422dc70266.jpeg)
