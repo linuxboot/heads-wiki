@@ -27,7 +27,7 @@ Insert OS installation media into one of the USB3 ports (blue on Thinkpads).
  For other OS, you will need to create USB installation media with using `dd` or
  `unetbootin` etc.).  
 
-For supported OSes, on a EXT3/EXT4 formatted partition on USB drive, you can
+For supported OSes, on a EXT3/EXT4/ExFat formatted partition on USB drive, you can
  put the ISO image along with a trusted detached signature in the root directory:
 ```shell
 /Qubes-R4.0-x86_64.iso
