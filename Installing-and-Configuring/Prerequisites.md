@@ -70,7 +70,7 @@ Please see the current [heads source](https://github.com/osresearch/heads/tree/m
 |Lenovo Thinkpad X230|`x230-hotp-legacy`|coreboot||X|Legacy board config with HOTP verification. Flashable through legacy x230-flash image.|
 |Lenovo Thinkpad X230|`x230-legacy`|coreboot||X|Legacy board config with HOTP verification. Flashable through legacy x230-flash image.|
 |Lenovo Thinkpad X230|`x230-hotp-maximized`|coreboot|X||Maximized board config with HOTP verification.|
-|Lenovo Thinkpad X230|`x230-maximized`|coreboot|X||Maximized board config with HOTP verification.|
+|Lenovo Thinkpad X230|`x230-maximized`|coreboot|X||Maximized board config without HOTP verification.|
 |Open Compute Project Leopard node|`leopard`|linuxboot|||
 |Open Compute Project TiogaPass node|`tioga`|linuxboot||||
 |Open Compute Project Winterfell node|`winterfell`|linuxboot||||
