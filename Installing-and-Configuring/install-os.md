@@ -81,7 +81,7 @@ If you want to set a default option so that you don't have to choose at every
 This should work for Qubes OS, Fedora, Debian (and derivatives).
 
 
-Installing Qubes 4.1
+Installing Qubes 4.X
 ===
 Qubes OS and Tails can boot directly from ISO when provided with accompanying detached signatures (iso.asc or iso.sig), thanks to 
 distribution signing keys being provided under Heads, permitting to validate both integrity and authenticity of the ISOs prior of booting into them.
