@@ -94,8 +94,9 @@ USB Security Dongles (aka security token aka smartcard)
 |Manufacture|Model line|TOTP|HOTP|
 |--|--|:--:|:--:|
 |Yubico|[YubiKey 5 Series](https://www.yubico.com/products/yubikey-5-overview/)|X||
-|Nitrokey|[Nitrokey Pro 2](https://www.nitrokey.com/#comparison)|X|X|
-|Nitrokey|[Nitrokey Storage 2](https://www.nitrokey.com/#comparison)|X|X|
+|Nitrokey|[Nitrokey Pro 2](https://www.nitrokey.com/products/nitrokeys#comparison)|X|X|
+|Nitrokey|[Nitrokey Storage 2](https://www.nitrokey.com/products/nitrokeys#comparison)|X|X|
+|Nitrokey|[Nitrokey 3](https://www.nitrokey.com/products/nitrokeys#comparison)|X|X|
 |Purism|[Librem Key](https://puri.sm/products/librem-key/)|X|X|
 
 Legacy vs Maximized boards
