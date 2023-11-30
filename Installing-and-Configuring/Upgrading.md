@@ -163,13 +163,18 @@ Reboot and verify that the new firmware is running. Don't be scared if you have 
 - If you migrated from Legacy to Maximized builds (no migration of settings), you will
  be prompted on next reboot by the same prompts following an initial flash. That is:
   - To inject your public key or do OEM Factory Reset/Re-Ownership
-    - The Factory Reset/Re-Ownership option will guide you into re-owning all security components
-     including resetting USB Security dongle, injecting public key in ROM and signing /boot.
-  - Then on next reboot, you will be prompted to generate new TOTP/HOTP token. Normal, since none
-   of the previous measurements are valid anymore (GPG Admin PIN and TPM Ownership passphrase required)
+    - Injecting the public key will reflash the firmware with your public key fused in. 
+    - The Factory Reset/Re-Ownership option will guide you into re-owning all security components including resetting USB Security dongle, injecting public key in ROM and signing /boot.
+  - Then on next reboot, you will be prompted to generate new TOTP/HOTP token/Reset TPM. Normal, since none of the previous measurements are valid anymore (GPG Admin PIN and TPM Ownership passphrase required)
+    - Reset TPM if you ever get TPM counter increments errors (new TPM Owner passphrase will be requested.)
+    - Choose HOTP/TOTP otherwise (TPM Owner password will be prompted in TPM2 case + GPG Admin PIN in case of HOTP board) 
   - Sign /boot content (GPG User PIN required)
   - Select a new boot default through Boot Options (GPG User PIN required to sign the new default)
     - Optionally set a TPM Disk Unlock Key (Disk Recovery Key passphrase and GPG User PIN required)
-
 - If you upgraded your firmware by choosing the retain settings options for a same board configuration 
   - The same steps above will be required, outside of the public key injection/Re-Ownership.
+
+
+ Notes:
+ - Since commit https://github.com/linuxboot/heads/commit/6873df60c1c965ac812a49d9d245f338d8a3b128 : users using Heads with that commit or more recent as current firmware can upgrade with zip files. Those automatically verify rom integrity and if valid continue with flashing the rom contained in the zip file.
+ - Since commit https://github.com/linuxboot/heads/commit/133da0e48e2996674f60f186c520cfad0d4848d0: users having a TPM Disk Unlock Key (DUK) defined previously will be guided to reseal a new passphrase when resealing TOTP/HOTP and to needed magic automatically. Enjoy. 
