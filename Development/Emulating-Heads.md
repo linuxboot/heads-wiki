@@ -11,40 +11,36 @@ Available Targets
 
 Multiple qemu targets are provided for Heads.
 
-| Target | Interface | Features |
+| Target | Interface | Configuration |
 |--|--|--|--|
-| `qemu-coreboot` | Text | Basic build/boot test |
-| `qemu-coreboot-fbwhiptail` | Graphical | Basic build/boot test |
-| `qemu-coreboot-fbwhiptail-tpm1-hotp` | Graphical | TPM, HOTP with USB token, /boot signing and OS booting. |
+| `qemu-coreboot-whiptail-tpm1` | Text | TPM1 |
+| `qemu-coreboot-whiptail-tpm1-hotp` | Text | TPM1, with HOTP |
+| `qemu-coreboot-fbwhiptail-tpm1-hotp` | Graphical | TPM1, with HOTP |
+| `qemu-coreboot-fbwhiptail-tpm2-hotp` | Graphical | TPM2, with HOTP |
+| ... | ... | Other permutations |
 
 Basic build/boot tests
 ===
 
-Generate the `qemu.rom` image:
+Generate the ROM:
 
 ```Makefile
-make BOARD=qemu-coreboot
+make BOARD=qemu-coreboot-fbwhiptail-tpm1-hotp
 ```
 
 Boot it in qemu:
 
 ```Shell
-make BOARD=qemu-coreboot run
+make BOARD=qemu-coreboot-fbwhiptail-tpm1-hotp run
 ```
-
-Use `qemu-coreboot-fbwhiptail` as the board instead for the graphical interface.
-
-Issues with emulation:
-
-* TPM is not available
-* Xen won't start dom0 correctly, but it is sufficient to test that the
- `initrd.cpio` file was correctly generated
-* This also lets us test Xen patches for legacy-free systems
-* SATA controller sometimes takes minutes to timeout?
 
 Comprehensive test
 ===
 
-The `qemu-coreboot-fbwhiptail-tpm1-hotp` configuration permits testing of most features of Heads.
+Most functionality of Heads can be tested in these ROMs with some manual steps
+in initial setup.
 
-For more information and setup instructions, refer to the [qemu-coreboot-fbwhiptail-tpm1-hotp documentation](https://github.com/osresearch/heads/blob/master/boards/qemu-coreboot-fbwhiptail-tpm1-hotp/qemu-coreboot-fbwhiptail-tpm1-hotp.md).
+For more information and setup instructions, refer to the [qemu documentation](https://github.com/linuxboot/heads/blob/sample-brand-acmeboot/targets/qemu.md).
+
+Flashing firmware is not currently possible in QEMU - a GPG key must be injected
+at build time, config changes / firmware upgrades cannot be tested, etc.
