@@ -10,7 +10,7 @@ Heads Threat model
 {: .fs-8 .m-0 }
 
 The threat model that Heads proposes to address is very different from that of
- [Tails](https://tails.boum.org). Tails's goal is to allow users to to do
+ [Tails](https://tails.boum.org). Tails's goal is to allow users to do
  computation on a machine in a way that doesn't leave in trace on that system.
  This requires that the hardware in the system is trusted, which unfortunately
  is not the case for many users.  Additionally many users need a way to keep
