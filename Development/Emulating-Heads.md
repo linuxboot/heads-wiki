@@ -40,7 +40,7 @@ Comprehensive test
 Most functionality of Heads can be tested in these ROMs with some manual steps
 in initial setup.
 
-For more information and setup instructions, refer to the [qemu documentation](https://github.com/linuxboot/heads/blob/sample-brand-acmeboot/targets/qemu.md).
+For more information and setup instructions, refer to the [qemu documentation](https://github.com/linuxboot/heads/blob/master/targets/qemu.md).
 
 Flashing firmware is not currently possible in QEMU - a GPG key must be injected
 at build time, config changes / firmware upgrades cannot be tested, etc.
