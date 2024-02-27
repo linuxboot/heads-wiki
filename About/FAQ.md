@@ -83,7 +83,7 @@ Using coreboot and Linux as a boot loader allows us to restrict the signature
 What is the concern with the Intel Management Engine
 ----
 
-* ["Rootkit in your laption" (PDF)]({{ site.baseurl }}/PDFs/Rootkit_in_your_laptop.pdf)
+* ["Rootkit in your laptop" (PDF)]({{ site.baseurl }}/PDFs/Rootkit_in_your_laptop.pdf)
 by Igor Skochinsky of Hex-Rays, Breakpoint 2012 Melbourne
 * ["Intel ME Secrets" (PDF)]({{ site.baseurl }}/PDFs/Recon_2014_Skochinsky.pdf) by
 Igor Skochinsky of Hex-Rays, RECON 2014 Montreal
