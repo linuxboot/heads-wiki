@@ -12,6 +12,12 @@ Slack Open Source Firmware
 * [Heads Slack Channel](https://osfw.slack.com/archives/C92MNSRC1)
 * [Matrix bridge to Heads Slack Channel ](https://matrix.to/#/#OSFW-Heads:matrix.org)
 
+Other Matrix Rooms
+===
+
+* [Coreboot Matrix Room](https://matrix.to/#/#coreboot:matrix.org)
+* [Nitrokey Matrix Room](https://matrix.to/#/#nitrokey:nitro.chat)
+
 Found a bug
 ===
 
