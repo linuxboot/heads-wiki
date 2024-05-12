@@ -18,42 +18,14 @@ grand_parent: Installing and configuring
 </details>
 <!-- markdownlint-enable MD033 -->
 
-
 Building Heads
 ===
 
-Heads is supposed to be a [reproducible build](https://reproducible-builds.org/)
- since [v0.1.0](https://github.com/osresearch/heads/releases/tag/v0.1.0) since it
- achieved this goal. Unfortunately, things broke since release 0.2.1, since some
- host tools and paths are now bleeding into the final ROM. An alternative build
- system is being proposed [here](https://github.com/osresearch/linux-builder),
- with it's own issues. More research and development needs to be done to bring
- Heads to be reproducible again, with some [additional thinking on reproducibility](https://github.com/osresearch/linux-builder/issues/1).
- Reproducible builds mean that you are supposed to get the same bit by bit output
- for the same commit. When this idea is confronted to time and inclusion of
- upstream code which also change and do not necessarily follow guidelines for
- reproducibility, things are more complicated then it seems. You can try to build
- 0.2.1 for yourself today to see that it simply doesn't build anymore to get an
- idea of some of the problems of such concept if things care not carefully thought
- forward to be future proof, and get into [reproducible build milestone](https://github.com/osresearch/heads/milestone/1)
- to see current issues that need to be addressed. If you have redroducible build
- kung fu, please help.
+With the new Nix build system, building Heads has become more streamlined.
 
-The downside of the reproducibility goal is that the initial build can take a 
- very long time as it downloads and builds all of the its dependencies. One 
- issue right now is that it builds not just one, but *two* cross compilers and 
- as a result takes about 45 minutes.  Luckily subsequent builds only take about 
- 30 seconds to produce a full coreboot and Linux ROM image, but that first ones 
- a doozy...
+Please refer to the [Building Heads](https://github.com/linuxboot/heads/blob/master/README.md#building-heads) section in the [Heads README](https://github.com/linuxboot/heads/blob/master/README.md) for updated instructions on how to build Heads using the Nix build system's produced docker image reproducibly.
 
-Heads builds will eventiually be fully reproducible again on any Linux-ish system
- ([OSX build is not supported](https://github.com/osresearch/heads/issues/96)).
- If you don't get the same hashes as reported on the release page, please 
- search/file an issue with the [reproducible build milestone](https://github.com/osresearch/heads/milestone/1).
-
-With a vanilla Debian 11/12 or Ubuntu 20.04/23.04 install, such as a digitalocean
-droplet, you need to first install some support tools. This takes a
-short while, so get a cup of coffee and [install host build requirements packages as specified by apt calls here](https://github.com/osresearch/heads/blob/master/.circleci/config.yml)
+For more information, you can also check out the [pull request #1661](https://github.com/linuxboot/heads/pull/1661) which provides additional details and updates to the build process.
 
 Clone the tree:
 
@@ -76,7 +48,6 @@ However, this also means that the first time you build Heads it must first build
 
 Useful targets, stored under the `boards` directory of the git tree.
 
-
 Generic
 ---
 
@@ -88,7 +59,7 @@ Generally, everything that is needed to flash the SPI flash of a board is a
  Make Heads for another board (`XXX` should be the name of your board in ./boards and YY the number of CPUs you want to build with):
 
  ```Makefile
- make BOARD=XXX CPUS=YY
+ docker run -e DISPLAY=$DISPLAY --network host --rm -ti -v $(pwd):$(pwd) -w $(pwd) tlaurion/heads-dev-env:latest -- make BOARD=XXX CPUS=YY
  ```
 
  The resulting rom file for a x86 board will be either `./build/x86/XXX/XXX.rom` or
