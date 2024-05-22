@@ -21,6 +21,12 @@ Once fixed, please open an issue under heads-wiki to correct this notice accordi
 Thierry Laurion 
 
 
+Other Matrix Rooms
+===
+
+* [Coreboot Matrix Room](https://matrix.to/#/#coreboot:matrix.org)
+* [Nitrokey Matrix Room](https://matrix.to/#/#nitrokey:nitro.chat)
+
 Found a bug
 ===
 
