@@ -15,8 +15,8 @@ You can lurk the channels by not installing any client, use web browser as clien
 
 Matrix is a federated network: choose your home server
 ====
-[Join Matrix page](https://servers.joinmatrix.org/)
-[Hello Matrix page](https://www.hello-matrix.net/public_servers.php)
+* [Join Matrix page](https://servers.joinmatrix.org/)
+* [Hello Matrix page](https://www.hello-matrix.net/public_servers.php)
 
 EG: Tested (No e-mail required at registration, tor friendly) home server: 
 * [the-apothecary.club](https://the-apothecary.club/)
