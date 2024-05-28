@@ -51,7 +51,10 @@ Thierry Laurion
 Found a bug under Heads?
 ===
 
-* [Open a new issue on Github](https://github.com/osresearch/heads/issues)
+1. [Search past open/close issues](https://github.com/linuxboot/heads/issues?q=is%3Aissue+%22My+issue+keywords%22)
+2. [Open a new issue on Github is none previously existing were found](https://github.com/osresearch/heads/issues)
+
+(Please reapply same logic principles for [Heads-wiki](https://github.com/linuxboot/heads-wiki/issues/)!)
 
 Contributing
 ====
