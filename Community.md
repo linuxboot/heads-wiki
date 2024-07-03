@@ -25,27 +25,39 @@ Official Matrix documentation
 ====
 * [Element feature-rich multi-platform client](https://element.io/help)
 
-Matrix<->Slack bridge is dead: long lived the bridge
+Matrix<->Slack bridge update
 ====
 
-Notice : **The original Slack channel has moved from paid tier to free tier for over more than one year which makes Heads OSFW Slack channel was dead: it's not the case**.
+## Current Status
 
-That's the consequences unfortunate circumstance that are not under my control.
+The Matrix<->Slack bridge for the Heads OSFW channel is currently non-functional. This situation arose due to the Slack channel transitioning from a paid to a free tier, which has limited functionality and retains only 90 days of chat history.
 
-The free tier has only 90 days of chat history and is inferior to the integration provided by Element/Matrix, which haven't loss its chat history since the bridge was create, even after Slack bridge went dead. 
-**The community lives over Matrix and GitHub**. 
+- The Matrix channel remains fully operational with complete chat history.
+- The Slack channel has limited functionality and reduced message retention.
+- The bridge between Matrix and Slack is inactive.
 
-Unfortunately, there is not much I can do on the Slack side of the bridge and I do not use Slack on a daily basis.
-Until some apps linked on the Slack channel are removed for the Matrix bridge to come back active and interconnected with Matrix, the slack side of the bridge will continue to look dead.
+## Community Communication
 
-I am not present over Slack but through Matrix. 
-I reminded folks responsible for Slack channel on 19/04/2024 once more and edited this page accordingly to not have to repeat myself over and over and have an historical trace of what happened and what needs to be done to correct the situation.
+**The community primarily communicates via Matrix and GitHub.**
 
-**Please use the Element/whatever client works for you (open source) with the Matrix channel referred above. That channel is alive and the ecosystem is evolving. Slack channel is dead until fixed by either Ronald Minnich or Felix Singer which have the proper permissions to do something about it on the Slack side of things.**
+- For optimal communication and full access to chat history, please use the Matrix channel (#heads:matrix.org) via Element or any compatible open-source client.
+- GitHub remains an essential platform for project collaboration and issue tracking.
 
-Once fixed, please open an issue under heads-wiki to correct this notice accordingly. 
+## Next Steps
 
-Thierry Laurion 
+We are working with the Slack channel administrators to resolve this issue. The bridge can be reactivated once necessary adjustments are made on the Slack side.
+
+To restore the bridge functionality, action is required from Slack channel administrators (Ronald Minnich or Felix Singer).
+
+## Contact
+
+If you have any questions or concerns, please reach out through the Matrix channel or by opening an issue on the Heads-wiki GitHub repository.
+
+Once the issue is resolved, please open an issue on the Heads-wiki to update this notice accordingly.
+
+We appreciate your understanding and continued support as we work to improve our community communication infrastructure.
+
+Thierry Laurion
 
 
 Found a bug under Heads?
