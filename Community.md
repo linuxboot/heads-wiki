@@ -9,7 +9,7 @@ Official Heads is over Matrix
 ===
 
 * [Heads channel: official community channel, once bridged to Slack Heads OSFW room](https://matrix.to/#/#OSFW-Heads:matrix.org)
-* [Heads-Changes channel: All github changes as a changelog channel] (https://matrix.to/#/#Heads-verbose:matrix.org)
+* [Heads-Changes channel: All github changes as a changelog channel](https://matrix.to/#/#Heads-verbose:matrix.org)
 
 You can lurk the channels by not installing any client, use web browser as client if you register but full experience is through recommended Element client.
 
