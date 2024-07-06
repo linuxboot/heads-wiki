@@ -47,7 +47,7 @@ The Matrix<->Slack bridge for the Heads OSFW channel is currently non-functional
 
 We are working with the Slack channel administrators to resolve this issue. The bridge can be reactivated once necessary adjustments are made on the Slack side.
 
-To restore the bridge functionality, action is required from Slack channel administrators (Ronald Minnich or Felix Singer).
+To restore the bridge functionality, action is required from Slack channel administrators.
 
 ## Contact
 
