@@ -12,18 +12,7 @@ Asus KGPE-D16
 Clone repo
 git clone https://github.com/linuxboot/heads.git
 
-Install nix
-[ -d /nix ] || sh <(curl -L https://nixos.org/nix/install) --no-daemon
-. /home/user/.nix-profile/etc/profile.d/nix.sh
+Follow README.md instructions for building located here https://github.com/linuxboot/heads/blob/master/README.md
 
-Enable flake support
-mkdir -p ~/.config/nix
-echo 'experimental-features = nix-command flakes' >>~/.config/nix/nix.conf
-
-Build docker image
-nix --print-build-logs --verbose develop --ignore-environment --command true
-nix --print-build-logs --verbose build .#dockerImage && docker load < result
-
-Build ISO
-docker run -e DISPLAY=$DISPLAY --network host --rm -ti -v $(pwd):$(pwd) -w $(pwd) linuxboot/heads:dev-env
+After having prepared nix and docker you can build using:
 make BOARD=UNMAINTAINED_kgpe-d16_workstation-usb_keyboard
