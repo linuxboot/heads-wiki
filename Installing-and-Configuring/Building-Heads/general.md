@@ -56,6 +56,8 @@ Generally, everything that is needed to flash the SPI flash of a board is a
  name of the board that can be found under `board` directory of the git
  downloaded tree. You can do the build verbose by doing `make BOARD=$BOARD V=1`
 
+ You can also run make in debug mode to trace errors in the buildsystem while you try to improve it through `make -d BOARD=$BOARD V=1`
+
  Make Heads for another board (`XXX` should be the name of your board in ./boards and YY the number of CPUs you want to build with):
 
  ```shell
