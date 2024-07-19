@@ -50,7 +50,7 @@ Supported devices
 
 *Note* repeatedly untested boards from willing to test board owners were moved to [unmaintained_boards directory and aren't built by CircleCI anymore](https://github.com/linuxboot/heads/tree/master/unmaintained_boards)
 
-If *you have an external programmer* and *are techsavvy enough to bring their support back yourself*, read the [Community page](/community/ and reach out. I will gladly assist in your quest :)
+If *you have an external programmer* and *are techsavvy enough to bring their support back yourself*, read the [Community page](/community/) and reach out. I will gladly assist in your quest :)
 
 USB Security Dongles (aka security token aka smartcard)
 ---
