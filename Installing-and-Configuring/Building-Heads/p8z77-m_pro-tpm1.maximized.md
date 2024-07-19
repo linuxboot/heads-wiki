@@ -23,16 +23,6 @@ These boards have a script in the 'blobs/p8z77-m_pro' folder which will automati
 
 You can also [download the ROMs directly from CircleCI]({{ site.baseurl }}/Downloading)
 
-```Makefile
-make BOARD=p8z77-m_pro-tpm1-maximized
-```
-
-or
-
-```Makefile
-make BOARD=p8z77-m_pro-tpm1-hotp-maximized
-```
-
 Please continue with the [flashing guide]({{ site.baseurl }}/Asus-p8z77-m_pro-flashing/)
 
 More options and detail about Heads modules under [Makefile]({{ site.baseurl }}/Makefile/)
