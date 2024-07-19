@@ -165,6 +165,9 @@ Signing /boot content
 
 Now that firmware state is sealed under TPM and remotely attested through TOTP/HOTP, now is the time to sign /boot content until your next dom0 upgrade, which will most probably update Xen, initrd and kernel binaries, as well as grub configuration. This will be prompted automatically when selecting default boot option, since we have no digests nor detached signature of /boot content as of now.
 
+**NOTE** : It is advisable to remove all USB security dongles (yubikeys and others) and only plug in the corresponding one when you want to update kernel settings to avoid some issues.
+
+
 ![Heads_default_boot_after_sealing](https://user-images.githubusercontent.com/827570/156664026-f6b03eaf-3f38-4b14-8ecc-db6f7078e209.jpeg)
 ![Heads_warns_about_no_hashes](https://user-images.githubusercontent.com/827570/156664029-ba065887-edb7-4111-881f-597ec6a1a33d.jpeg)
 ![Heads_warns_about_no_default_after_signing](https://user-images.githubusercontent.com/827570/156664031-756d8f31-6ed5-4e26-aa75-8da969a05fa5.jpeg)
