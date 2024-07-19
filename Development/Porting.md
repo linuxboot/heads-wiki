@@ -5,6 +5,7 @@ permalink: /Porting/
 nav_order: 3
 parent: Development
 ---
+TODO: UPDATE ME!
 
 To add a new board to the Heads build hopefully you only need to modify
 the coreboot configuration and add a top-level image configuration.
