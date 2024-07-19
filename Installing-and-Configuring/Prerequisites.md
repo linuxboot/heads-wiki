@@ -46,41 +46,11 @@ If your device requires external flashing ([see below](#supported-devices)),
 Supported devices
 ---
 
-Please see the current [heads source](https://github.com/osresearch/heads/tree/master/boards) for up-to-date supported board configurations.
+**Please see the current [heads source](https://github.com/osresearch/heads/tree/master/boards) for up-to-date supported board configurations.**
 
-|Device| Board name|Firmware base|Requires external flashing| ME should be cleaned|Notes|
-|--|--|--|:--:|:--:|--|
-|Asus KGPE-D16|`kgpe-d16`|coreboot|X|||
-|Asus P8Z77-M Pro|`p8z77-m_pro-tpm1-maximized`|coreboot|X|X|Maximized board config without HOTP verification.|
-|Asus P8Z77-M Pro|`p8z77-m_pro-tpm1-hotp-maximized`|coreboot|X|X|Maximized board config with HOTP verification.|
-|Dell R630|`r630`|linuxboot||X||
-|Intel S2600wf|`s2600wf`|linuxboot||X||
-|Lenovo Thinkpad T420|`t420`|coreboot|X|X|Legacy board config without HOTP verification|
-|Lenovo Thinkpad T420|`t420-maximized`|coreboot|X||Maximized board config without HOTP verification|
-|Lenovo Thinkpad T420|`t420-hotp-maximized`|coreboot|X||Maximized board config with HOTP verification.|
-|Lenovo Thinkpad T430|`t430-legacy-flash`|coreboot|X|X|Legacy initial flashing board config producing internal flash environment to flash non-maximized legacy boards.|
-|Lenovo Thinkpad T430|`t430-hotp-legacy`|coreboot||X|Legacy board config with HOTP verification. Flashable through legacy t430-flash image.|
-|Lenovo Thinkpad T430|`t430`|coreboot||X|Legacy board config without HOTP verification. Flashed internally through legacy t430-flash image.|
-|Lenovo Thinkpad T430|`t430-maximized`|coreboot|X||Maximized board config without HOTP verification.|
-|Lenovo Thinkpad T430|`t430-hotp-maximized`|coreboot|X||Maximized board config with HOTP verification.|
-|Lenovo Thinkpad X220|`x220`|coreboot|X|X|Legacy board config without HOTP verification|
-|Lenovo Thinkpad X220|`x220-maximized`|coreboot|X||Maximized board config without HOTP verification.|
-|Lenovo Thinkpad X220|`x220-hotp-maximized`|coreboot|X||Maximized board config with HOTP verification.|
-|Lenovo Thinkpad X230|`x230-legacy-flash`|coreboot|X|X|Legacy initial flashing board config producing internal flash environment to flash non-maximized legacy boards.|
-|Lenovo Thinkpad X230|`x230-hotp-legacy`|coreboot||X|Legacy board config with HOTP verification. Flashable through legacy x230-flash image.|
-|Lenovo Thinkpad X230|`x230-legacy`|coreboot||X|Legacy board config with HOTP verification. Flashable through legacy x230-flash image.|
-|Lenovo Thinkpad X230|`x230-hotp-maximized`|coreboot|X||Maximized board config with HOTP verification.|
-|Lenovo Thinkpad X230|`x230-maximized`|coreboot|X||Maximized board config without HOTP verification.|
-|Open Compute Project Leopard node|`leopard`|linuxboot|||
-|Open Compute Project TiogaPass node|`tioga`|linuxboot||||
-|Open Compute Project Winterfell node|`winterfell`|linuxboot||||
-|Purism Librem 13 v2/v3|`librem_13v2`|coreboot||||
-|Purism Librem 13 v4|`librem_13v4`|coreboot||||
-|Purism Librem 15 v3|`librem_15v3`|coreboot||||
-|Purism Librem 15 v4|`librem_15v4`|coreboot||||
-|Purism Librem Mini|`librem_mini`|coreboot||||
-|Purism Librem Mini v2|`librem_mini_v2`|coreboot||||
-|Purism Librem 14|`librem_14`|coreboot||||
+*Note* repeatedly untested boards from willing to test board owners were moved to [unmaintained_boards directory and aren't built by CircleCI anymore](https://github.com/linuxboot/heads/tree/master/unmaintained_boards)
+
+If *you have an external programmer* and *are techsavvy enough to bring their support back yourself*, read the [Community page](/community/ and reach out. I will gladly assist in your quest :)
 
 USB Security Dongles (aka security token aka smartcard)
 ---
