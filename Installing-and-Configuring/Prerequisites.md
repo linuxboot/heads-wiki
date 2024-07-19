@@ -164,9 +164,3 @@ Emulated devices
 ===
 
 For further information, see [Emulating Heads](/Emulating-Heads/)
-
-|Device| Board name|  Firmware base|
-|--|--|--|
-|QEMU development image|`qemu-coreboot-fbwhiptail`|coreboot|
-|QEMU development image|`qemu-coreboot`|coreboot|
-|QEMU development image|`qemu-linuxboot`|linuxboot|
