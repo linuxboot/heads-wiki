@@ -43,12 +43,18 @@ For supported OSes, on a EXT3/EXT4/ExFat formatted partition on USB drive, you c
 
 Each ISO file is verified for integrity and authenticity before booting so that you can be sure Live distros and
  installation media are not tampered with or corrupted, so this route is preferred when
- available.  You can also sign the ISO with your own key from Heads recovery shell 
- menu option :
+ available.  You can also sign the ISO with your own key **from Heads Recovery Shell 
+ menu option (Options-> Exit to recovery shell)** :
 
 ```shell
-gpg --output <iso_name>.sig --detach-sig <iso_name>
+mount-usb --mode rw #Loads USB controller kernel modules, scan for partitions, ask which one to mount under /media
+cd /media # Change directory to /media to do the detach-sign operation
+gpg --detach-sign <iso_name> # You can use TAB keyboard's key for autocompletion of file names here. This requires a provisioned USB security dongle: Factory Reset/Re-Ownership
+reboot # Will remount everything in Read Only and sync changes to block devices automatically.
 ```
+Then boot from detached signed ISO after having rebooted your machine.
+ To do so, from main menu, select: Options-> Boot Options-> USB boot
+ Select your ISO from list, see detached signature validation succeeding, then select GRUB parsed options with label and main boot parameters from the options provided to you.
 
 Compatibility
 ===
