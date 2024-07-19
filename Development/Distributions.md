@@ -14,6 +14,7 @@ distributions are:
 
 * [Nitrokey](https://github.com/Nitrokey/heads/)
 * [PureBoot](https://source.puri.sm/firmware/pureboot)
+* [Dasharo](https://github.com/Dasharo/heads)
 
 Configuration
 ===
