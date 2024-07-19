@@ -19,6 +19,8 @@ More info: [Intel Active Management Technology](https://en.wikipedia.org/wiki/In
 How to disable/deactive most of it
 ===
 
+***ALL MAXIMIZED BOARDS DO THE NEUTERING AUTOMATICALLY WHEN YOU BUILD THE BOARD. SEE GENERAL BUILDING GUIDE***
+
 The ME firmware sits on the second SPI flash chip of the x230 (the 8MB one). We
  cannot remove it completely, otherwise the machine will shut itself off after
  30 minutes. We can, however, reduce it to the bare minimum necessary to keep it

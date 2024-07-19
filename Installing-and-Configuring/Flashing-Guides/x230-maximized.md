@@ -7,7 +7,7 @@ parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
 
-Lenovo X230 (Maximized)
+Lenovo X230 (Maximized) (applies to all 4mb+8mb SPI chips maximized boards)
 ===
 
 [X230 Hardware Maintenance Manual](https://web.archive.org/web/20201112030049/https://thinkpads.com/support/hmm/hmm_pdf/x230_x230i_hmm_en_0b48666_01.pdf)  
