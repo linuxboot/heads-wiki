@@ -51,7 +51,19 @@ Further reading
 
 ![33c3]({{ site.baseurl }}/images/33c3.jpg)
 
-* [Presentation at 33c3](https://trmm.net/Heads_33c3)
+Conferences
+===
+
+* [2016 - 33C3 - Trammel Hudson - Heads Presentation](https://trmm.net/Heads_33c3)
+* [2017 - 34C3 - Trammel Hudson - LinuxBoot Presentation](https://trmm.net/LinuxBoot_34c3/)
+* [2020 - FOSDEM - Thierry Laurion - Heads OEM device initial/trasfer of ownership](https://archive.fosdem.org/2020/schedule/event/firmware_hodorateatria/)
+* [2020 - SOCALINUXEXPO - Kyle Rankin - Tamper Evident Firmware with User-controlled keys](https://www.youtube.com/watch?v=NqQI3nr1dqk)
+* [2023 - FOSDEM - Thierry Laurion - Heads status update](https://archive.fosdem.org/2023/schedule/event/heads_status_update/)
+
+Articles
+===
+* [2023 - BLOG - Michael Atfield - Trusted Boot (Anti-Evil-Mail, Heads and Pureboot](https://tech.michaelaltfield.net/2023/02/16/evil-maid-heads-pureboot/)
+
 
 Learn more about Heads
 ---
