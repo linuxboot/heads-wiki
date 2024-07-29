@@ -60,17 +60,14 @@ We appreciate your understanding and continued support as we work to improve our
 Thierry Laurion
 
 
-Found a bug under Heads?
+Found a bug under Heads/How to Contribute
 ===
 
-1. [Search past open/close issues](https://github.com/linuxboot/heads/issues?q=is%3Aissue+%22My+issue+keywords%22)
-2. [Open a new issue on Github is none previously existing were found](https://github.com/osresearch/heads/issues)
+1. Refer to [Contributing guidelines](https://github.com/linuxboot/heads/blob/master/CONTRIBUTING.md)
 
 (Please reapply same logic principles for [Heads-wiki](https://github.com/linuxboot/heads-wiki/issues/)!)
 
-Contributing
-====
-
+Some specifics:
 * [Issues tagged with "Help Wanted"](https://github.com/osresearch/heads/labels/help%20wanted)
 * [Issues tagged with "Bounty"](https://github.com/osresearch/heads/labels/Bounty)
 * [Contributing to the Heads wiki](/Contributing-to-Heads-wiki/)
