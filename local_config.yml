@@ -1,5 +1,5 @@
-#This is remote configuration, used by github for github pages rendering. See local_config.yml for local jekyll serving of pages editions 
-remote_theme: just-the-docs/just-the-docs
+#This is local jekyll for local rendering of edits, used by github for github pages. Use with: 'jekyll serve --config local_config.yml'
+theme: "just-the-docs"
 color_scheme: dark
 heading_anchors: true
 aux_links:
