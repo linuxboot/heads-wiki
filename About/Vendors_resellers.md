@@ -32,30 +32,33 @@ devices.
 - **Products:** Servers
 
 ### Nitrokey (Heads)
-Nitrokey offers Heads preinstalled on some of their devices. Nitrokey is also
-a reseller of some of NovaCustom's laptops with BootGuard unfused. Additionally,
-Nitrokey sells refurbished laptops with Intel ME neutralized for their older
-refurbished models.
+Nitrokey offers Heads preinstalled on some of their devices. They also sell
+older refurbished laptop models with Intel ME neutralized and Nitrokey USB
+security dongles. Additionally, Nitrokey resells some of NovaCustom's laptops.
 
 - **Website:** [Nitrokey](https://www.nitrokey.com)
-- **Products:** Laptops, servers, workstations, USB security dongles, and
-  refurbished laptops with ME neutralized
+- **Products:** Laptops, phones, servers, workstations, mini-PCs, USB security
+  dongles, and older refurbished laptop models with ME neutralized
 
 ### NovaCustom (Heads)
 NovaCustom offers devices with Heads preinstalled. They focus on providing
-customizable and secure devices for their customers. They also resell Nitrokey
-USB security dongles. NovaCustom sells Clevo laptops with BootGuard not fused,
-meaning the final manufacturing step of fusing BootGuard keys is not done. This
-ensures that the firmware remains user-controlled.
+customizable and secure devices for their customers. NovaCustom buys Clevo
+laptops in bulk, ensuring BootGuard keys are not fused at the last manufacturing
+steps. They also resell Nitrokey 3 USB security dongles bundled with their
+Heads-based firmware devices.
 
 - **Website:** [NovaCustom](https://novacustom.com)
 - **Products:** Laptops and USB security dongles
 
-### Purism (Pureboot Heads fork)
-Purism offers their Pureboot (a fork of Heads) preinstalled on their devices.
+### Purism (PureBoot Heads distribution)
+Purism offers laptops, tablets, mini PCs, and servers with PureBoot (a
+distribution of Heads) preinstalled. BootGuard is unfused to ensure firmware
+remains user-controlled. Purism makes and sells the Librem Key, which is a clone
+of the Nitrokey Pro 2. The Librem Key is made in the USA.
 
 - **Website:** [Purism](https://puri.sm)
-- **Products:** Laptops, phones, workstations, tablets, and USB security dongles
+- **Products:** Laptops, phones, tablets, mini PCs, servers, and USB security
+  dongles
 
 ## General Information
 
@@ -68,13 +71,18 @@ Many of these vendors offer additional services and features, including:
 - **QubesOS Certification:** Some devices may be QubesOS certified, ensuring
   compatibility and security.
 - **CSME/ME Status:** Some vendors offer options to neutralize or disable Intel
-  CSME/ME. "Neutralized" means most parts of the ME are removed, while "disabled"
-  means the ME is deactivated. Users should verify these options on the respective
-  vendor websites. For more information, refer to Purism's blog post on this topic:
-  [Deep Dive into Intel ME Disablement](https://puri.sm/posts/deep-dive-into-intel-me-disablement/).
+  CSME/ME. "Neutralized" means most parts of the ME are removed, while
+  "disabled" means the ME is deactivated. Users should verify these options on
+  the respective vendor websites. For more information, refer to Purism's blog
+  post on this topic: [Deep Dive into Intel ME Disablement](https://puri.sm/posts/deep-dive-into-intel-me-disablement/).
 - **Blob Status:** The newer the platform, the more it relies on proprietary
   blobs. Users should consider their threat model when choosing a device. For
   more information, refer to the [threat modeling page](/Heads-threat-model/).
+- **HOTP Security Dongles:** Purism and Nitrokey are makers of HOTP-compatible
+  security dongles. USB security dongles are used for both remote attestation
+  and to authenticate and sign boot content. Heads relies on HOTP for tamper
+  evidence. Users should verify the specific offerings on the respective vendor
+  websites.
 
 Please verify the specific offerings and services on the respective vendor
 websites.
