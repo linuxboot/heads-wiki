@@ -2,7 +2,7 @@
 layout: default
 title: FAQ
 permalink: /FAQ/
-nav_order: 1
+nav_order: 4
 parent: About
 ---
 
