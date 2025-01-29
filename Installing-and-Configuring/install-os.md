@@ -82,7 +82,7 @@ Default Boot and Disk Unlock
 
 If you want to set a default option so that you don't have to choose at every
  boot, you can do so from the menu by selecting 'd' on the confirmation screen.
- You will also be able to seal your Disk Unlock Key into the TPM, which would be unsealed only when provided with the good TPM disk encryption key passphrase and when firmware measurement and LUKS header are the same as when the Disk Unlock Key was sealed when booting from detached signed default boot option selection.
+ You will also be able to seal your Disk Unlock Key into the TPM, which would be unsealed only when provided with the good TPM Disk Unlock Key passphrase and when firmware measurement and LUKS header are the same as when the Disk Unlock Key was sealed when booting from detached signed default boot option selection.
 
 This should work for Qubes OS, Fedora, Debian (and derivatives).
 

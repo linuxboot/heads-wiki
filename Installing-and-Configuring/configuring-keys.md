@@ -89,7 +89,7 @@ This will go first briefly over a survey, asking you if you want to:
   - As explained on screen, anyone having a LUKS header backup could restore it and decrypt with
     past corresponding passphrase. Changing passphrase without reencrypting doesn't change the
     encryption key.
-- Change the disk encryption key passphrase (Say yes here if you didn't install the OS yourself)
+- Change the Disk Recovery Key passphrase (Say yes here if you didn't install the OS yourself)
   - You should have also said yes above.
 - Define a single shared passphrase across all security components (not recommended)
   - This option is used by some OEMs to provision initial secrets. Passphrases should be different
