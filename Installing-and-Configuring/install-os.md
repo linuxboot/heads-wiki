@@ -21,14 +21,15 @@ Generic OS Installation
 ===
 
 Insert OS installation media into one of the USB3 ports (blue on Thinkpads).
- [For certain OSes](https://github.com/osresearch/heads/tree/master/initrd/etc/distro/keys),
- Heads boot process supports standard OS ISO bootable media (where the USB
- drive contains the ISO installation media alongside of its detached signature).
- For other OS, you will need to create USB installation media with using `dd` or
- `unetbootin` etc.).  
+[For certain OSes](https://github.com/osresearch/heads/tree/master/initrd/etc/distro/keys),
+Heads boot process supports standard OS ISO bootable media (where the USB drive
+contains the ISO installation media alongside of its detached signature). For
+other OS, you will need to create USB installation media with using `dd` or
+`unetbootin` etc.).
 
-For supported OSes, on a EXT3/EXT4/ExFat formatted partition on USB drive, you can
- put the ISO image along with a trusted detached signature in the root directory:
+For supported OSes, on a EXT3/EXT4/ExFat formatted partition on USB drive, you
+can put the ISO image along with a trusted detached signature in the root
+directory:
 ```shell
 /Qubes-R4.0-x86_64.iso
 /Qubes-R4.0-x86_64.iso.asc
@@ -36,64 +37,84 @@ For supported OSes, on a EXT3/EXT4/ExFat formatted partition on USB drive, you c
 /tails-amd64-3.7.iso.sig
 ```
 
-- Some distros will require additional options to boot directly from ISO.  See [Boot config files](/BootOptions) for more information.
-- Boot from USB by Boot menu options, or by calling `usb-scan` from the recovery shell.
-  - Select the install boot option for your distro of choice and work through the standard OS installation procedures (including setting up LUKS disk encryption if desired)
-- Reboot and your new boot option should be available through boot options: show boot options.
+- Some distros will require additional options to boot directly from ISO. See
+	[Boot config files](/BootOptions) for more information.
+- Boot from USB by Boot menu options, or by calling `usb-scan` from the recovery
+	shell.
+	- Select the install boot option for your distro of choice and work through
+		the standard OS installation procedures (including setting up LUKS disk
+		encryption if desired)
+- Reboot and your new boot option should be available through boot options: show
+	boot options.
 
-Each ISO file is verified for integrity and authenticity before booting so that you can be sure Live distros and
- installation media are not tampered with or corrupted, so this route is preferred when
- available.  You can also sign the ISO with your own key **from Heads Recovery Shell 
- menu option (Options-> Exit to recovery shell)** :
+Each ISO file is verified for integrity and authenticity before booting so that
+you can be sure Live distros and installation media are not tampered with or
+corrupted, so this route is preferred when available. You can also sign the ISO
+with your own key **from Heads Recovery Shell menu option (Options-> Exit to
+recovery shell)** :
 
 ```shell
-mount-usb --mode rw #Loads USB controller kernel modules, scan for partitions, ask which one to mount under /media
+mount-usb --mode rw #Loads USB controller kernel modules, scan for partitions,
+ask which one to mount under /media
 cd /media # Change directory to /media to do the detach-sign operation
-gpg --detach-sign <iso_name> # You can use TAB keyboard's key for autocompletion of file names here. This requires a provisioned USB security dongle: Factory Reset/Re-Ownership
-reboot # Will remount everything in Read Only and sync changes to block devices automatically.
+gpg --detach-sign <iso_name> # You can use TAB keyboard's key for autocompletion
+of file names here. This requires a provisioned USB security dongle: Factory
+Reset/Re-Ownership
+reboot # Will remount everything in Read Only and sync changes to block devices
+automatically.
 ```
-Then boot from detached signed ISO after having rebooted your machine.
- To do so, from main menu, select: Options-> Boot Options-> USB boot
- Select your ISO from list, see detached signature validation succeeding, then select GRUB parsed options with label and main boot parameters from the options provided to you.
+Then boot from detached signed ISO after having rebooted your machine. To do so,
+from main menu, select: Options-> Boot Options-> USB boot Select your ISO from
+list, see detached signature validation succeeding, then select GRUB parsed
+options with label and main boot parameters from the options provided to you.
 
 Compatibility
 ===
 
-Heads requires unencrypted `/boot`.  Graphical OSes generally have the best support.  Debian live installers,
- Fedora Workstation (or spins), Qubes, and PureOS all work well.
+Heads requires unencrypted `/boot`. Graphical OSes generally have the best
+support. Debian live installers, Fedora Workstation (or spins), Qubes, and
+PureOS all work well.
 
 * *For Debian*:
-    1. Use a live desktop image.  The network installer image does not work on all systems.
-    2. Ensure `/boot` is unencrypted.  Debian 11 defaults to a single encrypted partition, so you must
-       partition manually.  This may not apply to all Debian derivatives.
-        * Create one 1G ext4 partition mounted at `/boot`
-        * Create a LUKS container with one ext4 partition mounted at `/`.
-        * For swap, you can create a swapfile later on the encrypted root, or create a swap partition.
-* *For Fedora*: The default partitioning works, but `/` is btrfs by default, which Heads' recovery console does
- not support.  Use ext4 instead for recovery console support.
-* *For Qubes*: Be sure to disconnect USB tokens during configuration on first boot.  Otherwise, the Qubes
- installer may prevent the creation of a sys-usb qube if they are detected as keyboards (HID devices).  If you
- are using a USB keyboard, follow the
- [Qubes instructions for USB keyboards](https://www.qubes-os.org/doc/usb-qubes/#usb-keyboards).
+	1. Use a live desktop image. The network installer image does not work on all
+		 systems.
+	2. Ensure `/boot` is unencrypted. Debian 11 defaults to a single encrypted
+		 partition, so you must partition manually. This may not apply to all Debian
+		 derivatives.
+		* Create one 1G ext4 partition mounted at `/boot`
+		* Create a LUKS container with one ext4 partition mounted at `/`.
+		* For swap, you can create a swapfile later on the encrypted root, or create
+			a swap partition.
+* *For Fedora*: The default partitioning works, but `/` is btrfs by default,
+	which Heads' recovery console does not support. Use ext4 instead for recovery
+	console support.
+* *For Qubes*: Be sure to disconnect USB tokens during configuration on first
+	boot. Otherwise, the Qubes installer may prevent the creation of a sys-usb
+	qube if they are detected as keyboards (HID devices). If you are using a USB
+	keyboard, follow the [Qubes instructions for USB keyboards](https://www.qubes-os.org/doc/usb-qubes/#usb-keyboards).
 * *For PureOS*: The default installation works.
 
 Default Boot and Disk Unlock
 ===
 
 If you want to set a default option so that you don't have to choose at every
- boot, you can do so from the menu by selecting 'd' on the confirmation screen.
- You will also be able to seal your Disk Unlock Key into the TPM, which would be unsealed only when provided with the good TPM disk encryption key passphrase and when firmware measurement and LUKS header are the same as when the Disk Unlock Key was sealed when booting from detached signed default boot option selection.
+boot, you can do so from the menu by selecting 'd' on the confirmation screen.
+You will also be able to seal your Disk Unlock Key into the TPM, which would be
+unsealed only when provided with the good TPM Disk Unlock Key passphrase and
+when firmware measurement and LUKS header are the same as when the Disk Unlock
+Key was sealed when booting from detached signed default boot option selection.
 
 This should work for Qubes OS, Fedora, Debian (and derivatives).
 
-
 Installing Qubes 4.X
 ===
-Qubes OS and Tails can boot directly from ISO when provided with accompanying detached signatures (iso.asc or iso.sig), thanks to 
-distribution signing keys being provided under Heads, permitting to validate both integrity and authenticity of the ISOs prior of booting into them.
+Qubes OS and Tails can boot directly from ISO when provided with accompanying
+detached signatures (iso.asc or iso.sig), thanks to distribution signing keys
+being provided under Heads, permitting to validate both integrity and
+authenticity of the ISOs prior of booting into them.
 
-Plug in the EXT3/EXT4/ExFat formatted USB stick containing Qubes iso and iso.asc files into one of the USB port and
- boot it from USB mode:
+Plug in the EXT3/EXT4/ExFat formatted USB stick containing Qubes iso and iso.asc
+files into one of the USB port and boot it from USB mode:
 
 ![1-Heads-Options](https://user-images.githubusercontent.com/827570/156627927-7239a936-e7b1-4ffb-9329-1c422dc70266.jpeg)
 ![2-Heads-Boot-Options](https://user-images.githubusercontent.com/827570/156627934-8051cd38-ad5e-452d-b340-9d13317f33b8.jpeg)
@@ -102,8 +123,8 @@ Plug in the EXT3/EXT4/ExFat formatted USB stick containing Qubes iso and iso.asc
 ![5-Heads-USB-Boot-ISO-verification-Selection-of-ISO-boot-option](https://user-images.githubusercontent.com/827570/156627944-1cc0ad56-d0b2-4552-8ee7-a159871038f7.jpeg)
 ![6-Heads-USB-Boot-ISO-verification-Selection-of-ISO-boot-kexec](https://user-images.githubusercontent.com/827570/156627950-6ec7e3e9-a13e-4c2c-920c-c61fbb74af1f.jpeg)
 
-
-If that completes with no errors it will launch the Xen hypervisor, kernel and initrd provided from ISO and start the Qubes installer:
+If that completes with no errors it will launch the Xen hypervisor, kernel and
+initrd provided from ISO and start the Qubes installer:
 ![7-Q41-first-screen](https://user-images.githubusercontent.com/827570/156627951-bc29e472-db90-4a01-a870-0ab2ffa70c2c.jpeg)
 ![8-Q41-Select-Installation-destination](https://user-images.githubusercontent.com/827570/156627954-e5681533-80cd-41b8-9b47-4ecd2cb7d132.jpeg)
 
