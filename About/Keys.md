@@ -6,7 +6,7 @@ nav_order: 4
 parent: About
 ---
 
-# Keys and passwords in Heads
+## Keys and passwords in Heads
 
 There are "too many secrets" involved in booting a Heads system. Luckily most
 of them are stored in hardware and only a few need to be memorized by the
@@ -28,19 +28,21 @@ compromise the different keys.
 
 ![Bootguard fuses]({{ site.baseurl }}/images/Bootguard_fuses.jpg)
 
-The first key used is Intel's public key that signs the Management Engine
-firmware partition table in the SPI flash. This key is stored in the on-die ROM
-of the ME and the ME will not start up if this signature does not match. An
-attacker who controls this key (highly unlikely) can subvert the Bootguard
-checks and the measured boot process.
+The very first key used in the system is Intel's public key that signs the
+ Management Engine firmware partition table in the SPI flash.  This key is
+ stored in the on-die ROM of the ME and the ME will not start up if this
+ signature does not match.  An attacker who controls this key (which is highly
+ unlikely) can subvert the Bootguard checks as well as the measured boot
+ process.
 
-The [Bootguard fuses](https://trmm.net/Bootguard) provide protection against
-most "evil maid" attacks against the firmware. The hash of the ACM signing key
-is set in write-once fuses in the CPU chipset. During CPU bringup, the ME and
-the CPU microcode validate the "Startup ACM" in the SPI flash. An evil maid
-attack would need to replace the CPU to install malicious firmware into the SPI
-flash. The x230 Thinkpads do not support Bootguard and only the Librem laptops
-ship with unfused keys.
+The [Bootguard fuses](https://trmm.net/Bootguard) fuses provide protection
+ against most "evil maid" attacks against the firmware.  The hash of the ACM
+ signing key is set in write-once fuses in the CPU chipset and during the CPU
+ bringup phase the ME and the CPU microcode cooperate in some undocumented way
+ to validate the "Startup ACM" in the SPI flash.  Since this key is fused into
+ hardware, an evil maid attack would need to replace the CPU to install
+ malicious firmware into the SPI flash.  The x230 Thinkpads do not support
+ bootguard and only the Librem laptops ship with unfused keys.
 
 An attacker who controls this key can flash new firmware via hardware means
 (and possibly remotely via software, unless other steps are taken).
@@ -48,15 +50,15 @@ An attacker who controls this key can flash new firmware via hardware means
 ## TPM Owner password
 
 As part of setting up Heads, the TPM is "owned" by the user and the owner
-password is set. This clears all existing NVRAM and spaces (but does not reset
-counters?).
+password is set. This clears all existing NVRAM and spaces.
 
-Are there any consequences of an attacker controlling this key?
+An attacker who controls this key can reseal TPMTOTP shared secret.
 
 ## TPMTOTP shared secret
 
 ![TPMTOTP in use]({{ site.baseurl }}/images/TPMTOTP_in_use.jpg)
 
+Since humans have trouble doing RSA public key cryptography in their brains,
 Heads uses [TPM TOTP](https://trmm.net/Tpmtotp) to let the system attest to the
 user that the firmware is unmodified. During setup, a random 20-byte value is
 generated and shared (via QR code) to the user's phone and sealed with the
@@ -83,12 +85,12 @@ back to an old version.
 The TPM NVRAM stores one of the disk encryption keys, which is encrypted with
 the user's Disk Unlock Key passphrase and sealed with the TPM PCR values for
 the firmware and the LUKS headers of the disk. On every boot, the user types in
-their TPM Disk Unlock Key passphrase and the TPM will unseal and decrypt the disk encryption key if
-the firmware is unmodified and the passphrase matches. Since the TPMTOTP
-one-time code matched, the user can have confidence that the firmware is
-unmodified before they enter their TPM Disk Unlock Key passphrase. If the system is booted in
-recovery mode, the PCRs will not match and this key is not accessible to the
-user.
+their TPM Disk Unlock Key passphrase and the TPM will unseal and decrypt the
+disk encryption key if the firmware is unmodified and the passphrase matches.
+Since the TPMTOTP one-time code matched, the user can have confidence that the
+firmware is unmodified before they enter their TPM Disk Unlock Key passphrase.
+If the system is booted in recovery mode, the PCRs will not match and this key
+is not accessible to the user.
 
 The Heads firmware inserts this key into the Qubes `initramfs.cpio` as
 `/secret.key`, which is listed in the `/etc/crypttab` file as the decryption
@@ -160,7 +162,7 @@ modify a dm-verity protected root filesystem.
 The root password is not enabled by default on Qubes, so it is functionally
 equivalent to the login password. Other operating systems might differ.
 
-# TPM PCRs
+## TPM PCRs
 
 ![TPM]({{ site.baseurl }}/images/TPM.jpg)
 
@@ -180,68 +182,67 @@ initrd)
 
 6: Drive LUKS headers
 
-
-2: coreboot's Boot block, ROM stage, RAM stage, Payload (Heads linux kernel and initrd)
-
-3: Nothing for the moment
-
-4: Boot mode (0 during `/init`, then `recovery` or `normal-boot`)
-
-5: Heads Linux kernel modules
-
-6: Drive LUKS headers
-
 7: Heads user-specific files stored in CBFS (config.user, GPG keyring, etc).
 
-(16): Used for TPM futurecalc of LUKS header when setting up a TPM disk encryption key
+(16): Used for TPM futurecalc of LUKS header when setting up a TPM disk
+encryption key
 
-Some history
----
-Heads relied on coreboot patches until coreboot 4.8.1 for measured boot 
-implementation, since coreboot had none.
-Heads measured boot scheme [changed](https://github.com/osresearch/heads/pull/793) to match coreboot 4.12's, which for the first time included seperated measured boot implementation from vboot implementation.
+### Some history
+Heads relied on coreboot patches until coreboot 4.8.1 for measured boot
+implementation, since coreboot had none. Heads measured boot scheme
+[changed](https://github.com/osresearch/heads/pull/793) to match coreboot
+4.12's, which for the first time included separated measured boot
+implementation from vboot implementation.
 
-Since coreboot 4.12, Heads stopped patching coreboot to implement measured boot. 
-coreboot measured boot implementation is the one filling PCR2, above.
+Since coreboot 4.12, Heads stopped patching coreboot to implement measured
+boot. coreboot measured boot implementation is the one filling PCR2, above.
 
-Heads since then solely extends PCRs of it's own (PCRs 4-5-6-7 above) which are used when 
-sealing/unsealing. 
+Heads since then solely extends PCRs of its own (PCRs 4-5-6-7 above) which are
+used when sealing/unsealing.
 
-As you can see above, coreboot measures itself from bootblock then other boot phases up to its
-payload in PCR2, in conformity of their [SRTM](https://doc.coreboot.org/security/vboot/measured_boot.html#srtm-mode) measured boot policy.
-An example is given from [coreboot docs](https://doc.coreboot.org/security/vboot/measured_boot.html#platform-configuration-register).
+As you can see above, coreboot measures itself from bootblock then other boot
+phases up to its payload in PCR2, in conformity of their
+[SRTM](https://doc.coreboot.org/security/vboot/measured_boot.html#srtm-mode)
+measured boot policy. An example is given from [coreboot
+docs](https://doc.coreboot.org/security/vboot/measured_boot.html#platform-configuration-register).
 
-TPM_Unseal errors
----
-Consequently, if either coreboot phases, boot mode, kernel modules, LUKS headers
-or CBFS files are different then when those measurements were used to seal secrets, 
-unseal operations will fail. HOTP/TOTP/TPM Disk Unlock Key passphrase should give errors
-in case of tempering. 
+### TPM_Unseal errors
+Consequently, if either coreboot phases, boot mode, kernel modules, LUKS
+headers or CBFS files are different then when those measurements were used to
+seal secrets, unseal operations will fail. HOTP/TOTP/TPM Disk Unlock Key
+passphrase should give errors in case of tampering.
 
-The TPM Disk Unlock Key passphrase would fail with a different error then: 
-`Error Authentication failed (Incorrect Password) from TPM_Unseal` when  a user types
-a [TPM Disk Unlock key passphrase](/Keys/#disk-unlock-key-passphrase-prompt-output).
- 
-Indeed, the PCRs measurements used to seal the Disk Unlock Key in TPM NV memory cannot unseal 
-that secret, even with a good TPM Disk Unlock Key passphrase, while HOTP/TOTP should not be able
-to unseal either.
- 
+The TPM Disk Unlock Key passphrase would fail with a different error then:
+`Error Authentication failed (Incorrect Password) from TPM_Unseal` when a user
+types a [TPM Disk Unlock key passphrase](/Keys/#disk-unlock-key-passphrase-prompt-output).
 
-TCPA Event log
----
-From the [Recovery Shell](/Recovery), it is possible to review PCR2 [TCPA event log](https://doc.coreboot.org/security/vboot/measured_boot.html#tcpa-eventlog) by typing:
-`cbmem -L`
+Indeed, the PCRs measurements used to seal the Disk Unlock Key in TPM NV memory
+cannot unseal that secret, even with a good TPM Disk Unlock Key passphrase,
+while HOTP/TOTP should not be able to unseal either.
 
+### TCPA Event log
+From the [Recovery Shell](/Recovery), it is possible to review PCR2 [TCPA event
+log](https://doc.coreboot.org/security/vboot/measured_boot.html#tcpa-eventlog)
+by typing: `cbmem -L`
 
-Disk Unlock Key passphrase prompt output
-==== 
-![Disk Unlock Key passphrase showed PCRs when passphrase fails](https://user-images.githubusercontent.com/827570/82279087-b2da2000-9959-11ea-8020-6ff36e947576.jpeg)
+### Disk Unlock Key passphrase prompt output
+![Disk Unlock Key passphrase showed PCRs when passphrase
+fails](https://user-images.githubusercontent.com/827570/82279087-b2da2000-9959-11ea-8020-6ff36e947576.jpeg)
 
-Here you can see that "Boot block, ROM stage, RAM stage, Heads payload", "Drive LUKS headers" and "Heads user-specific config files" have filled the registers PCR-02, PCR-06 and PCR-07 respectively. You can also see the TPM returning the error "Error Authentication failed (Incorrect Password)" which is an invitation to try again, this time typing more slowly. Measurements are consistent to what was sealed, but the passphrase is bad. This is good news.
+Here you can see that "Boot block, ROM stage, RAM stage, Heads payload", "Drive
+LUKS headers" and "Heads user-specific config files" have filled the registers
+PCR-02, PCR-06 and PCR-07 respectively. You can also see the TPM returning the
+error "Error Authentication failed (Incorrect Password)" which is an invitation
+to try again, this time typing more slowly. Measurements are consistent to what
+was sealed, but the passphrase is bad. This is good news.
 
-After 3 unsuccessful attempts releasing TPM Disk Unlock Key, Heads will propose you to decrypt with your Disk Recovery Key passphrase, directly from the OS, bypassing Heads protection. Still good news.
+After 3 unsuccessful attempts releasing TPM Disk Unlock Key, Heads will propose
+you to decrypt with your Disk Recovery Key passphrase, directly from the OS,
+bypassing Heads protection. Still good news.
 
-If Disk Unlock Key passphrase throws a different error, it would be a good idea to meditate on your threat model and what happened to your computer since your last normal default boot.
+If Disk Unlock Key passphrase throws a different error, it would be a good idea
+to meditate on your threat model and what happened to your computer since your
+last normal default boot.
 
-The Disk Unlock Key is sealed in TPM NV memory with PCRs-2-4-5-6-7, which includes external content from the firmware, like your LUKS header measurements.
-
+The Disk Unlock Key is sealed in TPM NV memory with PCRs-2-4-5-6-7, which
+includes external content from the firmware, like your LUKS header measurements.
