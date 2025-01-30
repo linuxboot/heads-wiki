@@ -58,7 +58,7 @@ USB Security Dongles (aka security token aka smartcard)
 *NOTE* - Heads does **NOT** support FIDO2 or U2F authentication.  Be careful when
  purchasing to buy a compatible key.
 
- *NOTE* - HOTP remote attestation is supported from Librem platforms by default, 
+ *NOTE* - HOTP remote attestation is supported from Librem/NovaCustom/Nitropad platforms by default, 
   Otherwise HOTP is explicitely supported by board configurations having `hotp` in their [board names](/Prerequisites#supported-devices).
   
 *NOTE* - The NitroKey 3 comes in three sizes: USB A, A-mini and C. Nk3a mini (USB A-mini) is the one most shipped with novacustom and nitropads.
