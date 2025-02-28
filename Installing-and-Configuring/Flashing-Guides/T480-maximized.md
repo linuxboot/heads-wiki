@@ -14,14 +14,14 @@ Lenovo T480 (Maximized)
 
 It has never been so easy to access and flash the BIOS chip on a T series machine. It is a straightforward process and takes approximately 10 minutes. 
 
-The thinkpad T480 has two SPI flash chips important for the port. First chip holds the BIOS, ME, etc. Second holds the thunderbolt firmware. To access these chips, you only need to remove the back panel.  For whole procedure you will need: a screwdriver, an assembled raspberry pi pico or ch341a SPI programmer 3.3V (3.3V is important!) (e.g. [Modified ch341a SPI programmer](https://novacustom.com/product/modded-ch341a-bios-firmware-programmer-3v/) by Novacustom) and an other laptop/PC with Ubuntu installed. Other linux based OS (in this example Qubes OS, fedora-41-xfce) should be fine too. 
-
-Before you follow the guide make sure you read the [README.md](https://github.com/linuxboot/heads/tree/master/blobs/xx80/README.md) and following information. Some T480 on used marked are affected by an intel bug in the thunderbolt firmware. In short, the flash chip gets full, so the thunderbolt fast charging stops working, but slow charging still works. It can affect the usb-c port too. You may want to resolve the problem before flashing Heads using [Lenovo guide ](https://pcsupport.lenovo.com/us/en/products/laptops-and-netbooks/thinkpad-t-series-laptops/thinkpad-t480-type-20l5-20l6/solutions/ht508988-critical-intel-thunderbolt-software-and-firmware-updates-thinkpad) or [libreboot guide](https://libreboot.org/docs/install/t480.html#thunderbolt-issue-read-this-before-flashing).
-Please note, at the moment (Feb 2025) the thunderbolt data tranfser is not supported upstream by coreboot. However, the video output through the thunderbolt and charging works. So, only the usb-c charging port can be used for the data transfer. Heads provides fixed and padded thunderbolt firmware for your convinience that will only fix "charging problem" if the bug affected your laptop. The flashing steps are based on libreboot strategy and described in the second part of the guide. Board testers did not have the problem. It is unlikely that you get it if your laptop was in use longer than 12 months before. If you get "charging bug" it is possible to fix with external flashing. However, please note that this neither was tested after Heads installation nor the bug appeared after extensive Heads testing of the board.
+The ThinkPad T480 has two SPI flash chips important for the port. First chip holds the BIOS, ME, etc. Second holds the Thunderbolt firmware. To access these chips, you only need to remove the back panel.  For whole procedure you will need: a screwdriver, an assembled raspberry pi pico or ch341a SPI programmer 3.3V (3.3V is important!) (e.g. [Modified ch341a SPI programmer](https://novacustom.com/product/modded-ch341a-bios-firmware-programmer-3v/) by Novacustom) and an other laptop/PC with Ubuntu installed. Other linux based OS (in this example Qubes OS, fedora-41-xfce) should be fine too. 
+It is still debated [which programmer should be used and which software (flashprog vs flashrom).
+Before you follow the guide make sure you read the [README.md](https://github.com/linuxboot/heads/tree/master/blobs/xx80/README.md) and following information. Some T480 on used marked are affected by an intel bug in the Thunderbolt firmware. In short, the flash chip gets full, so the Thunderbolt fast charging stops working, but slow charging still works. It can affect the usb-c port too. You may want to resolve the problem before flashing Heads using [Lenovo guide ](https://pcsupport.lenovo.com/us/en/products/laptops-and-netbooks/thinkpad-t-series-laptops/thinkpad-t480-type-20l5-20l6/solutions/ht508988-critical-intel-thunderbolt-software-and-firmware-updates-thinkpad) or [libreboot guide](https://libreboot.org/docs/install/t480.html#thunderbolt-issue-read-this-before-flashing).
+Please note, at the moment (Feb 2025) the Thunderbolt data transfer is not supported upstream by coreboot. However, the video output through the Thunderbolt and charging works. So, only the usb-c charging port can be used for the data transfer. Heads provides fixed and padded Thunderbolt firmware for your convenience that will only fix "charging problem" if the bug affected your laptop. The flashing steps are based on libreboot strategy and described in the second part of the guide. Board testers did not have the problem. It is unlikely that you get it if your laptop was in use longer than 12 months before. If you get "charging bug" it is possible to fix with external flashing. However, please note that this neither was tested after Heads installation nor the bug appeared after extensive Heads testing of the board.
 
 ## Flashing Heads
 
-First remove the battery and the cable powering your device. Removing these screws will allow you to remove the back panel.
+First remove the battery and the cable powering your device. Removing these screws will allow you to remove the back panel. Using a guitar pick or an old credit card may be helpful for removing the panel.
 
 ![Back view]({{ site.baseurl }}/images/T480/1_screws.jpg)
 
@@ -99,8 +99,8 @@ You should then follow through with [configuring keys]({{ site.baseurl }}/Config
 
 ## Flash Thundebolt firmware
 This guide was adopted from libreboot. The original instructions were provided by [Adam McNutt](https://gitlab.com/MobileAZN/lenovo-t480-thunderbolt-firmware-fixes).
-
-After connecting the clip to the thunderbolt chip (the figure is shown above) read from the chip, making sure the connection is stable. 
+Ensure that the batteries and CMOS are not connected.
+After connecting the clip to the Thunderbolt chip (the figure is shown above) read from the chip, making sure the connection is stable. 
 
 ```shell
 sudo flashrom -r ~/t480_original_tb.bin --programmer ch341a_spi - c YYY
@@ -116,24 +116,11 @@ Make sure that files do not differ.
 sha256sum t480_original_tb.bin
 sha256sum t480_original_tb_1.bin
 ```
-First erase the thunderbolt chip.
+First erase the Thunderbolt chip.
 ```shell
 sudo flashrom -E --programmer ch341a_spi - c YYY
 ```
-Create a file null.bin containing all zeros.
-```shell
-dd if=/dev/zero of=null.bin bs=1M count=1
-```
-Ensure that everyting went smoothly.
-```shell
-hexdump -v -e '1/1 "%02X\n"' null.bin | grep -vqE '^00$' && echo "null.bin contain non-zero bytes" || echo "null.bin contains only zero bytes"
-```
-If yes, flash the null.bin on the thunderbolt chip.
-
-```shell
-sudo flashrom -p ch341a_spi -c YYY -w ~/null.bin
-```
-Remove the clip, connect the battery and boot the machine. It should boot. Next, shutdown, remove the battery and reconnect the clip again in order to flash the padded thunderbolt firmware. The firwmare is located in the blobs folder after you build the Heads locally, or in the CircleCI artificats. Alternatively, it can be taken from libreboot. 
+Flash the padded Thunderbolt firmware. The firwmare is located in the blobs folder after you build the Heads locally, or in the CircleCI artificats. Alternatively, it can be taken from libreboot. 
 
 ```shell
 sudo flashrom -p ch341a_spi -c YYY -w ~/tb.bin
