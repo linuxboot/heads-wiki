@@ -120,15 +120,15 @@ You should then follow through with [configuring keys]({{ site.baseurl }}/Config
 Important, ensure that power supply and all batteries, including the CMOS battery, are disconnected. After connecting the clip to the Thunderbolt chip as shown in the figure above read from the chip, making sure the connection is stable. The procedure is similar to the flashing Heads on the SPI chip. Therefore, comments are skipped.
 
 ```shell
-sudo flashrom -r ~/t480_original_tb.bin --programmer ch341a_spi - c YYY
+sudo flashrom -r ~/t480_original_tb.bin --programmer ch341a_spi -c YYY
 ```
 
 ```shell
-sudo flashrom -r ~/t480_original_tb_1.bin --programmer ch341a_spi - c YYY
+sudo flashrom -r ~/t480_original_tb_1.bin --programmer ch341a_spi -c YYY
 ```
 
 ```shell
-sudo flashrom -v ~/t480_original_tb.bin --programmer ch341a_spi - c YYY
+sudo flashrom -v ~/t480_original_tb.bin --programmer ch341a_spi -c YYY
 ```
 
 ```shell
