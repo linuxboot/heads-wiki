@@ -35,35 +35,23 @@ Files needed to be created/modified are depicted on the scheme.
 
 Prerequisites for building the ROM
 ===
-The goal is to build a ROM before the code review. `new_board` refers to the name of your board (e.g., `t480`). It is recommended to clone the Heads GitHub repository and create a new branch: 
+The goal is to build a ROM before the code review. `NEW_BOARD` refers to the name of your board (e.g., `t480`). It is recommended to clone the Heads GitHub repository and create a new branch: 
 ```shell
 git clone https://github.com/linuxboot/heads.git
-git checkout -b Poc_new_board
+git checkout -b Poc_NEW_BOARD
 ```
 
-coreboot.config:
+modules/coreboot:
 ---
-You need a coreboot configuration. Ideally, this config should be adapted from the closest possible platform. You can inspect existing configurations for boards in the master branch and select one with a similar architecture, if available. Next, you can create a coreboot config using coreboot's `make menuconfig` for `new_board` and adapt it accordingly.
-```shell
-cp config/coreboot-CLOSEST_PLATFORM.config config/coreboot-new_board.config
-./docker_repro.sh make coreboot.modiy_and_save_oldconfig_in_place
-```
-Note, the configuration needs to define the correct path references to all binary blobs, that are not provided by coreboot, on most architectures this includes at least `IFD`, `ME` and `GBE`(see below).  The configuration file path should be: `heads/config/coreboot-new_board.config`.
-* Note:
-TPM measured boot (```CONFIG_TPM_MEASURED_BOOT=y```) and verified boot (```CONFIG_VBOOT_LIB=y```) should be enabled. Ensure that you select CONFIG_TPM_MEASURED_BOOT and CONFIG_VBOOT_LIB in Kconfig. Furthermore, enable the TPM and pick the correct TPM version for the board. 
-Other parameters depend on the board. It is up to you to determine the correct settings, as not all community members will have access to your board.
-
-linux.config:
----
-This should be adapted from a similar board. The file path should be `heads/config/linux-new_board.config`.
+coreboot fork that will be used should be added under `heads/modules/coreboot`. This will be the version you reference from the board config files. You should aim for building the board with an existing coreboot version, usually the main version that most boards use. If you need a different coreboot version, consider patching an existing version without breaking any other boards depending on it, of course. However, if you need to add a new coreboot fork, it should be done here. This is not ideal and not recommended, as there are already 2 different coreboot forks. It often leads to maintenance and resources burden.
 
 board.config: 
 ---
-There should be a file `new_board-hotp-maximized.config`, which inherits all the parameters from `new_board-maximized.config` and adds  HOTP verification. This is Heads specific configuration and should be adapted from a similar platform. The top of the board config files is also a good place to put some technical board-specific documentation, known issues etc.
-You should point in `new_board-hotp-maximized` and `new_board-maximized` to the coreboot version e.g. `export CONFIG_COREBOOT_VERSION=X.Y.Z.`- that will be modified under modules/coreboot (see corresponding section below). Additionally, the configurations should reference the appropriate coreboot and linux configs created above:
+There should be a file `NEW_BOARD-hotp-maximized.config`, which inherits all the parameters from `NEW_BOARD-maximized.config` and adds  HOTP verification. Those files should be located in the folder `heads/boards/NEW_BOARD-hotp-maximized` and `heads/boards/NEW_BOARD-maximized`, respectively. This is Heads specific configuration and should be adapted from a similar platform. The top of the board config files is also a good place to put some technical board-specific documentation, known issues etc.
+You should point in `NEW_BOARD-hotp-maximized` and `NEW_BOARD-maximized` to the coreboot version e.g. `export CONFIG_COREBOOT_VERSION=X.Y.Z.`- that was modified under `modules/coreboot` (see corresponding section above). Additionally, the configurations should reference the appropriate coreboot and linux configs created below:
 ```
-CONFIG_COREBOOT_CONFIG=config/coreboot-new_board.config
-CONFIG_LINUX_CONFIG=config/linux-new_board.config
+CONFIG_COREBOOT_CONFIG=config/coreboot-NEW_BOARD.config
+CONFIG_LINUX_CONFIG=config/linux-NEW_BOARD.config
 ```
 * For early testing, enabling debug mode is a good idea. However, these options should be removed before merging:
 ```
@@ -71,7 +59,7 @@ export CONFIG_DEBUG_OUTPUT=y
 export CONFIG_ENABLE_FUNCTION_TRACING_OUTPUT=y
 ```
 Note: This may cause glitches where the screen output appears overwritten until an arrow key is pressed. This is normal for DEBUG mode, as the additional tracing output uses the same console as fbwhiptail. The issue will disappear once debug options are removed from the board configs.
-* It is important to define the correct TPM configuration (TPM 1.2 vs. TPM 2.0), ensuring they are mutually exclusive, similar to the coreboot configuration. The selected option misses `#`:
+* It is important to define the correct TPM configuration (TPM 1.2 vs. TPM 2.0), ensuring they are mutually exclusive, similar to the coreboot configuration (described in coreboot config below). The selected option misses `#`:
 ```
 #TPM2 requirements
 export CONFIG_TPM2_TOOLS=y
@@ -81,61 +69,71 @@ export CONFIG_PRIMARY_KEY_TYPE=ecc
 #TPM1 requirements
 #export CONFIG_TPM=y
 ```
-In the configuration, the path to the folder containing binary blobs must be specified. These are required by coreboot for building the ROM (please see binary blobs session).
-
-modules/coreboot:
----
-coreboot fork that will be used should be added under `heads/modules/coreboot`. You should aim for building the board with an existing coreboot version, usually the main version that most boards use. If you need a different coreboot version, consider patching an existing version. Without breaking any other boards depending on it, of course. However if you need to add a new coreboot fork add it under modules/coreboot. This will be the version you reference from the board config files. 
+In the configuration, the path to the folder containing binary blobs must be specified. It is the line at the bottom of the board config `BOARD_TARGETS := NEW_BOARD` declaring the dependency. It corresponds to the name of the `mk file` referencing the needed binary blobs. These are required by coreboot for building the ROM.
 
 binary blobs:
 ---
-Check the coreboot configuration for the ported board. This will indicate which binary blobs are required and where they are expected to be located. Heads has architecture-/board-specific scripts under `blobs/*` which do the magic, called by the main makefile that handles everything in Heads. For additional details please see [Makefiles]({{ site.baseurl }}/Development/make-details.md). These scripts must create reproducible binary blobs when invoked. The blobs should be placed in the `blobs/new_board/`. Make sure the coreboot config file references the correct path for each blob.
+Check the coreboot configuration for the ported board. This will indicate which binary blobs are required and where they are expected to be located. Heads has architecture-/board-specific scripts under `blobs/*` which do the magic, called by the main makefile that handles everything in Heads. These scripts must create reproducible binary blobs when invoked. The blobs should be placed in the `blobs/NEW_BOARD/`. Make sure the coreboot config file references the correct path for each blob.
 Generally,  three binary blobs are required: Management Engine (ME), Intel Flash Descriptor Region (IFD), and Gigabit Ethernet (GBE) The IFD and GBE can be extracted from a donor board using coreboot’s ifdtool. For more details, refer to the [upstream documentation](https://doc.coreboot.org/util/ifdtool/layout.html). On some boards it may be necessary to provide more blobs to coreboot, for instance an MRC blob for ram initialization if coreboot cannot distribute the blob itself for legal reasons.
 
 Please note, if the ME is neutered, the IFD, coreboot CBFS region, and ME neutering space should be adjusted accordingly. Rationale: the ME region defined under IFD must fit. With the IFD ME region reduced, the BIOS region can grow with the freed ME space. With the BIOS region augmented, the CBFS region of the coreboot configuration must be increased to fit the ["maximized" space](https://osresearch.net/Prerequisites#legacy-vs-maximized-boards).
 
 Please note the GBE MAC address should be forged to: `00:DE:AD:C0:FF:EE MAC`. It can be done with [nvmutil](https://libreboot.org/docs/install/nvmutil.html). Due to licensing restrictions, the ME firmware cannot be uploaded to the GitHub. However, scripts can be used to build it locally and within CircleCI (a gray area legally, but still possible).
-* Note: When calling scripts in Nix-based environments, Python must be invoked explicitly, as Nix does not allow executing Python scripts directly from files. One can use last clean example for t480:`python ./finalimage.py` will work and just `./finalimage.py` will not work. 
+* Note: When calling scripts in Nix-based environments, Python must be invoked explicitly, as Nix does not allow executing Python scripts directly from files. One can use last clean example for t480: `python ./finalimage.py` will work and just `./finalimage.py` will not work. 
 The blobs folder should have a script.sh which handles downloading, deactivating ME etc. It should also contain a README.md file briefly explaining the process. Hashes of the blobs should be stored either in `README.md` or in `hashes.txt file`. Furthermore, the script must ensure the integrity of the blobs it produced by comparing a SHA256 hash.
 
-new_board.mk:
+NEW_BOARD.mk:
 ---
-Create a new `heads/targets/new_board.mk` file which deals with calling blobs/script.sh* download and extraction of blobs placing the blobs in correct location. This will be used by the main makefile and defines the board specific targets and dependencies, such as the binary blobs.
-Please not that you should add a line at the bottom of the board config `BOARD_TARGETS := new_board` to declare the dependency.
+Create a new `heads/targets/NEW_BOARD.mk` file which deals with calling blobs/script.sh*, download and extraction, and placing the blobs in correct location. This will be used by the main makefile and defines the board specific targets and dependencies, such as the binary blobs. For additional details, please see [Makefiles]({{ site.baseurl }}/Development/make-details.md).
+
+coreboot.config:
+---
+You need a coreboot configuration for the new board. Ideally, this config should be adapted from the closest possible platform. You can inspect existing configurations for boards in the master branch and select one with a similar architecture, if available. Next, you can create a coreboot config by copying it from closest platform and adapt it accordingly. You may use coreboot's `make menuconfig` for `NEW_BOARD`:
+```shell
+cp config/coreboot-CLOSEST_PLATFORM.config config/coreboot-NEW_BOARD.config
+./docker_repro.sh make coreboot.modify_and_save_oldconfig_in_place
+```
+Note, the configuration needs to define the correct path references to all binary blobs, that are not provided by coreboot, on most architectures this includes at least `IFD`, `ME` and `GBE`(see below). The configuration file path should be: `heads/config/coreboot-NEW_BOARD.config`.
+* Note:
+TPM measured boot (```CONFIG_TPM_MEASURED_BOOT=y```) and verified boot (```CONFIG_VBOOT_LIB=y```) should be enabled. Ensure that you select CONFIG_TPM_MEASURED_BOOT and CONFIG_VBOOT_LIB in Kconfig. Furthermore, enable the TPM and pick the correct TPM version for the board. 
+Other parameters depend on the board. It is up to you to determine the correct settings, as not all community members will have access to your board. `git diff` between `coreboot-CLOSEST_PLATFORM.config` and `coreboot-NEW_BOARD.config` may help.
+
+linux.config:
+---
+This should be adapted from a similar board. The file path should be `heads/config/linux-NEW_BOARD.config`.
 
 CircleCI: 
 ---
-Modify `heads/.circleci/config.yml` to add support for the `new_board`. Initially, configure it to depend directly on musl-cross-make. At this stage, do not reuse caches—this simplifies debugging and ensures a clean build process. 
+Modify `heads/.circleci/config.yml` to add support for the `NEW_BOARD`. Initially, configure it to depend directly on musl-cross-make. At this stage, do not reuse caches—this simplifies debugging and ensures a clean build process. 
 ```
-# new_board is based on `X.Y.Z`. coreboot release, not sharing any buildstack from now, depend on muscl-cross cache
+# NEW_BOARD is based on `X.Y.Z`. coreboot release, not sharing any buildstack from now, depend on muscl-cross cache
       - build:
-          name: new_board-hotp-maximized
-          target: new_board-hotp-maximized
+          name: NEW_BOARD-hotp-maximized
+          target: NEW_BOARD-hotp-maximized
           subcommand: ""
           requires:
             - x86-musl-cross-make
 ```
-CircleCI creates reproducible builds, allowing users to verify that the flashable roms were indeed produced by the given source code. In the development/debugging phase, it helps to ensure that you talk about the same build. It optimizes the collaboration between peers-board owners. Moreover, CI builds are significantly faster than local builds, reducing overall development time. As circleCI always builds all boards it makes it easier to find regression early.
+CircleCI creates reproducible builds, allowing users to verify that the "flashable" roms were indeed produced by the given source code. In the development/debugging phase, it helps to ensure that you talk about the same build. It optimizes the collaboration between peers-board owners. Moreover, CI builds are significantly faster than local builds, reducing overall development time. As circleCI always builds all boards it makes it easier to find regression early.
 
 * Optional: local builds.
-If you need to build locally (e.g. to ensure that some new features work) pay attention to the helper functions at the end of the Makefiles. It is strongly recommended that local builders review the end of the Makefiles (including modules/*files), as these helper functions were designed to facilitate coreboot and Linux version bumps.
-For a completely clean build (the most radical approach), remove all build artifacts using:
+If you need to build locally (e.g. to ensure that some features work) pay attention to the helper functions at the end of the Makefiles. It is strongly recommended that local builders review the end of the Makefiles (including modules/*files), as these helper functions were designed to facilitate coreboot and Linux version bumps.
+For a completely clean build (the most radical approach), either clone the Heads repository again or remove all build artifacts using:
 ```bash
-./docker_repro.sh BOARD=new_board real.clean
+./docker_repro.sh BOARD=NEW_BOARD real.clean
 ```
-For a less radical approach, run:
+Building all tools needed will take a while depending on the number of cores and RAM available on your machine. For a less radical approach, run:
 ```shell
-./docker_repro.sh BOARD=new_board real.remove_canary_files-extract_patch_rebuild_what_changed
+./docker_repro.sh BOARD=NEW_BOARD real.remove_canary_files-extract_patch_rebuild_what_changed
 ```
 Then, inject any changes into the coreboot fork canary file so that the build system refetches, repatches, and rebuilds the coreboot fork:
 ```shell
 echo "bogus" | sudo tee build/x86/coreboot-t480/.canary
 ```
-Note, patches that attempt to create files that are not expected to exist but exist will fail, showing at console what files already existed that couldn't be created. In this case, you need to remove them manually `rm -rf`, and restart the build with `./docker_repro.sh BOARD=new_board` which will progress until each modules/* required per board config is successfully built.
+Note, patches that attempt to create files that are not expected to exist but exist will fail, showing at console what files already existed that couldn't be created. In this case, you need to remove them manually `rm -rf`, and restart the build with `./docker_repro.sh BOARD=NEW_BOARD` which will progress until each modules/* required per board config is successfully built.
 	
 Testing
 ===
-
 For thorough testing—especially for a new board—using the following template (tasks to check) may be beneficial. Copy and paste this template into the GitHub message window when reporting test results. Mark completed tasks with an `x` inside the brackets [ ]. Replace `X.Y.Z` with the relevant information. It is recommended also to upload relevant screenshots For additional safety, you may wish to remove the metadata from these files.
 ```
 - [ ] Successful external flash link to circleci: https://X.Y.Z. from commit `X.Y.Z.` using external programmer model `X.Y.Z.` on `X.Y.Z.` Voltage mode
