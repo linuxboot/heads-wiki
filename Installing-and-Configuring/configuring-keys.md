@@ -48,6 +48,11 @@ Once you have installed the OS, you will need to take ownership of the
 different security components under Heads. The easiest way is through `OEM 
 Factory Reset/Re-Ownership` option.
 
+The wizard will prompt you to use default configuration options.
+**It is strongly advised to refuse the defaults, and answer the questionnaire thoroughtly.
+This only happens once, and will permit you to reencrypt encrypted containers and provision
+properly to your use case the different security components of your system before use.**
+
 **Note that the passphrases you will type will be echoed back to you. You need 
 to accomplish this step in a safe environment**
 
