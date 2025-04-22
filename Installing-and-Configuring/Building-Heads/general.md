@@ -61,7 +61,7 @@ Generally, everything that is needed to flash the SPI flash of a board is a
  Make Heads for another board (`XXX` should be the name of your board in ./boards and YY the number of CPUs you want to build with):
 
  ```shell
- docker run -e DISPLAY=$DISPLAY --network host --rm -ti -v $(pwd):$(pwd) -w $(pwd) tlaurion/heads-dev-env:latest -- make BOARD=XXX CPUS=YY
+ ./docker_repro.sh make BOARD=XXX CPUS=YY
  ```
 
  The resulting rom file for a x86 board will be either `./build/x86/XXX/XXX.rom` or
