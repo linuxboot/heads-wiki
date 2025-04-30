@@ -7,6 +7,7 @@ permalink: /
 nav_order: 1
 ---
 
+
 ![Heads booting on an x230](https://user-images.githubusercontent.com/827570/156627927-7239a936-e7b1-4ffb-9329-1c422dc70266.jpeg)
 
 Overview
@@ -46,8 +47,6 @@ Additionally, the hypervisor, kernel and initrd images are signed by
  that have been neglected in traditional installations, hopefully raising
  the difficulty beyond what most attackers are willing to spend.
 
-Further reading
----
 
 ![33c3]({{ site.baseurl }}/images/33c3.jpg)
 
@@ -65,6 +64,10 @@ Conferences
 
 Articles
 ===
+* [2016 - BLOG - Trammel Hudson - Heads 33c3 - Bootstrapping slightly more secure systems](https://trmm.net/Heads_33c3/)
+* [2017 - BLOG - Trammel Hudson - Linuxboot 34c3 - Bringing linux back to the server BIOS with LinuxBoot](https://trmm.net/LinuxBoot_34c3/)
+* [2018 - Linux Journal - David Hendricks - Linuxboot: Linux as firmware](https://www.linuxjournal.com/content/foss-project-spotlight-linuxboot)
+* [2019 - Linux Journal - Kyle Rankin - Tamper-Evident Boot with Heads](https://www.linuxjournal.com/content/tamper-evident-boot-heads)
 * [2023 - BLOG - Michael Atfield - Trusted Boot (Anti-Evil-Mail, Heads and Pureboot](https://tech.michaelaltfield.net/2023/02/16/evil-maid-heads-pureboot/)
 
 
