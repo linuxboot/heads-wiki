@@ -66,7 +66,8 @@ Articles
 ===
 * [2016 - BLOG - Trammel Hudson - Heads 33c3 - Bootstrapping slightly more secure systems](https://trmm.net/Heads_33c3/)
 * [2017 - BLOG - Trammel Hudson - Linuxboot 34c3 - Bringing linux back to the server BIOS with LinuxBoot](https://trmm.net/LinuxBoot_34c3/)
-* [2018 - Linux Journal - David Hendricks - Linuxboot: Linux as firmware](https://www.linuxjournal.com/content/foss-project-spotlight-linuxboot)
+* [2018 - Linux Journal - David Hendricks - LinuxBoot: Linux as firmware](https://www.linuxjournal.com/content/foss-project-spotlight-linuxboot)
+* [2018 - Linux Journal - Michael J. Hammel - LinuxBoot: Custom Embedded Linux Distributions](https://www.linuxjournal.com/content/custom-embedded-linux-distributions)
 * [2019 - Linux Journal - Kyle Rankin - Tamper-Evident Boot with Heads](https://www.linuxjournal.com/content/tamper-evident-boot-heads)
 * [2023 - BLOG - Michael Atfield - Trusted Boot (Anti-Evil-Mail, Heads and Pureboot](https://tech.michaelaltfield.net/2023/02/16/evil-maid-heads-pureboot/)
 
