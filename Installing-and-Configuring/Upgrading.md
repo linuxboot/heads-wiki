@@ -25,45 +25,152 @@ Upgrading Heads
 ===
 
 The first time you install Heads, you'll need [some SPI programmer]({{ site.baseurl }}/Prerequisites#required-equipment)
- to be able to replace the existing vendor firmware.
+ to replace the existing vendor firmware. This process involves **initial external flashing** using `.rom` files.
 
-Outside of migrating from Legacy to Maximized firmware, all subsequent upgrades can be performed
- internally through Heads menus although you'll probably want a hardware programmer since we don't
- have a fail-safe recovery mechanism in the event of a bad flash or buggy firmware.
+For subsequent upgrades, you can use the Heads GUI to perform **internal upgrading** using `.zip` files. This method is supported for firmware versions built after [this November 2023 commit](https://github.com/linuxboot/heads/commit/6873df60c1c965ac812a49d9d245f338d8a3b128).
 
-Additionally, *upgrading the firmware will change the [TPM PCRs]({{ site.baseurl }}/Keys/#tpm-pcrs)*.
- This will require resealing TOTP/HOTP and to setup a new TPM Disk Unlock Key and passphrase
- by setuping a new boot default.
+---
 
-Be sure you have your TPM owner's password and your Disk Recovery Key passphrase available
- since, by design, the TPM Disk Unlock Key will become invalid. Also note that TPM PCRs are
- extended by going to the recovery shell anyway, which does not permit to have access to
- sealed secrets from there.
+Global Warning: No Hardware Programmer? Be Cautious!
+---
+Heads is a rolling release. If you do not have an external programmer to recover from potential issues, exercise caution when upgrading. Follow these guidelines:
 
+1. **Wait Before Upgrading**:
+   - Wait a day or two after a new commit is merged, especially if it involves coreboot or kernel updates. This allows time for potential regressions to be identified and resolved.
 
-Reflashing the same firmware
+2. **Check Reported Issues**:
+   - Review the [most recently reported issues](https://github.com/linuxboot/heads/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) to ensure no critical problems have been reported for your platform.
+
+3. **Verify Community Testing**:
+   - Confirm that other users with the same platform have successfully tested the changes. Heads relies on community testing to validate updates across supported devices.
+
+4. **Understand the Risks**:
+   - Major updates, such as coreboot or kernel version bumps, require extensive testing. Untested platforms may experience regressions or even bricking.
+
+5. **Pay Attention to Board Labels**:
+   - Boards labeled as `UNTESTED` or `UNMAINTAINED` in their names indicate limited or no support. These labels mean exactly what they state:
+     - **UNTESTED**: The board has not been tested and may not function as expected.
+     - **UNMAINTAINED**: The board is no longer actively supported or maintained.
+   - For additional details, refer to the [UNTESTED and UNMAINTAINED boards documentation](https://github.com/linuxboot/heads/blob/master/unmaintained_boards/README.md).
+
+By following these precautions, you can minimize the risk of encountering issues during an upgrade. If in doubt, wait for additional feedback from the community or consider using an external programmer for recovery.
+
+---
+
+Initial External Flashing
+---
+If you are installing Heads for the first time, you will need to perform an external flash using `.rom` files. Refer to the [Downloading documentation]({{ site.baseurl }}/Downloading) for detailed instructions on:
+- Downloading `.rom` files and `hashes.txt`.
+- Verifying file integrity.
+- Preparing for external flashing.
+
+**Note**: This process is only required for the initial installation of Heads.
+
+---
+
+Internal Upgrading Using ZIP Files
+---
+If Heads is already installed on your device, you can upgrade the firmware internally using a `.zip` file. This method is simpler and does not require an external programmer.
+
+1. **Prepare the ZIP File**:
+   - Download the `.zip` file for your board from the CircleCI "Artifacts" tab (refer to the [Downloading documentation]({{ site.baseurl }}/Downloading)).
+
+2. **Transfer to Target System**:
+   - Save the `.zip` file to a USB drive and insert it into the target system.
+
+3. **Upgrade via Heads GUI**:
+   - Boot into the Heads GUI.
+   - Navigate to `Options -> Flash/Update BIOS`.
+   - Select the `.zip` file from the USB drive. The system will automatically verify the ROM integrity and flash the firmware.
+
+**Note**: Internal upgrading via `.zip` files is supported for firmware versions built after [this November 2023 commit](https://github.com/linuxboot/heads/commit/6873df60c1c965ac812a49d9d245f338d8a3b128).
+
+---
+
+Caution for Rolling Releases
+---
+Heads is a rolling release. If you do not have an external programmer, wait a few days after a new commit before upgrading to ensure no regressions are reported. Check the [most recently reported issues](https://github.com/linuxboot/heads/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) and confirm that other users have tested the changes on your platform.
+
+---
+
+Reflashing the Same Firmware
+---
+If you need to validate the current firmware integrity against the last flashed firmware image stored on a USB thumb drive, follow these steps to back up the current ROM and ensure no changes occur during the process:
+
+1. **Back Up the Current ROM**:
+   - Insert a USB thumb drive and mount it in read-write mode:
+     ```shell
+     mount-usb --mode rw
+     ```
+   - Back up the current ROM to the USB drive:
+     ```shell
+     ${CONFIG_FLASH_OPTIONS} -r /media/backup.rom
+     ```
+   - Remount the USB drive in read-only mode for safety:
+     ```shell
+     mount -o remount,ro /media
+     ```
+
+2. **Reflash the Same Firmware**:
+   - Use the Heads Flashing GUI (for zip file downloaded) or the following command to reflash the same firmware image from Heads Recovery shell:
+     ```shell
+     ${CONFIG_FLASH_OPTIONS} -w /media/same_rom_image_previously_flashed.rom
+     ```
+   - The process should report **no changes** to the SPI flash.
+
+**Note on `CONFIG_FLASH_OPTIONS`**:
+- The `CONFIG_FLASH_OPTIONS` variable specifies the board-specific flash options to ensure proper handling of SPI regions during flashing. These options are defined in the board's configuration file.
+- Boards may specify different SPI regions to flash. For example:
+  - The `novacustom-v540tu` board preserves the `GBE` (Gigabit Ethernet) region, ensuring the manufacturing MAC address remains intact.
+  - The `x230-hotp-maximized` board overwrites the entire SPI flash, including the `GBE` region, replacing it with a generic configuration.
+- To inspect the flash options for your board, use the `env` command in the recovery shell:
+  ```shell
+  env
+  ```
+  This will display all environment variables, including `CONFIG_FLASH_OPTIONS`, as defined for your board.
+
+**Tip**: Advanced users can review the board-specific configuration files under the Heads repository (`boards/<boardname>/<boardname>.config`) to understand what their board's flash options entail.
+
+---
+
+Migrating from Legacy to Maximized Firmware
+---
+**Warning**: Migration from Legacy to Maximized builds is now considered a legacy process. Legacy builds were officially deprecated in [October 2024](https://github.com/linuxboot/heads/pull/1803), while Maximized builds have been promoted since [December 2020](https://github.com/linuxboot/heads/pull/703). Use maximum caution when upgrading internally to Maximized builds, as improper steps may result in a bricked device.
+
+### How to Identify Legacy vs Maximized Builds
+To determine whether you are using a Legacy or Maximized build:
+1. Boot into the Heads main menu.
+2. Check the main screen title:
+   - If the build is **Maximized**, the label will explicitly include the word "Maximized."
+     - Example: `x230-hotp-maximized`
+   - If the label does not include "Maximized," you are using a Legacy build.
+     - Example: `x220-legacy`, `x220`, `t430`, `x230-hotp` (no "Maximized" in the board name).
+
+For migration instructions, refer to the [Downloading documentation]({{ site.baseurl }}/Downloading) and ensure you follow both the upgradability validation and integrity validation steps before flashing.
+
+**Important Note for Nitrokey Customers**:  
+If you are using a NitroPad X230 or T430 with firmware version **1.2 or earlier**, you should contact [Nitrokey support](https://support.nitrokey.com/) to get their flashing service. For more details, refer to this [Nitrokey support thread](https://support.nitrokey.com/t/nitropad-t430-firmware-update-brick/3777/2).
+
+---
+
+Re-Owning the States
 ===
-If you reflash the same firmware image by selecting the retain settings option from Heads GUI, your 
- TOTP/HOTP/TPM Disk Unlock Key and passphrase will stay valid since measurements will repopulate [PCRs]({{ site.baseurl }}/Keys/#tpm-pcrs)
- exactly the same way they were sealed, resulting in the same unsealed secrets from the TPM, resulting
- in the same HOTP/TOTP/TPM Disk Unlock Key.
+After upgrading or migrating, follow these steps to re-own the security components:
+- Inject your public key or perform a Factory Reset/Re-Ownership.
+- Generate new TOTP/HOTP tokens and reset the TPM if necessary.
+- Sign `/boot` content and set a new boot default.
 
-So if you are in doubt of the current firmware state, you can consequently reflash the firmware image
- through the GUI to validate it's current integrity. It is a good idea to keep last flashed firmware image 
- on a USB drive.
+For more details on re-owning, refer to the relevant sections above.
 
-Bonus, Maximized ROMs reflash the whole SPI flash; not just the BIOS region like Legacy ROMs do.
+---
 
-Verify upgradeability paths of the firmware
+Verify Upgradeability Paths of the Firmware
 ====
+First, verify the [supported platforms]({{ site.baseurl }}/Prerequisites#supported-devices).  
+If you have a *ThinkPad (xx30/xx20 flavors), proceed with caution.*  
+*Also select the HOTP variant if you own a [Heads-supported USB Security dongle]({{ site.baseurl }}/Prerequisites#usb-security-dongles-aka-security-token-aka-smartcard) for visual remote attestation.*
 
-First things first, verify the [supported platforms]({{ site.baseurl }}/Prerequisites#supported-devices).
-If you have a *ThinkPad (xx30/xx20 flavors), proceed with caution.*
-*Also select hotp variant if you own a [Heads supported USB Security dongle]({{ site.baseurl }}/Prerequisites#usb-security-dongles-aka-security-token-aka-smartcard) for visual remote attestation*
-
-
-Review if the Intel Firmware Descriptor (IFD) and Intel Management Engine (ME) were unlocked or 
-not from the [Recovery Shell]({{ site.baseurl }}/RecoveryShell) prior of going forward. 
+Review whether the Intel Firmware Descriptor (IFD) and Intel Management Engine (ME) were unlocked from the [Recovery Shell]({{ site.baseurl }}/RecoveryShell) before proceeding.
 
 ```shell
 flashrom -p internal
@@ -83,98 +190,19 @@ This is the expected output if the initial external flashing of the firmware unl
     - ![InternalUpgradeToMaximizedROM](https://user-images.githubusercontent.com/827570/167729694-6ff8da60-986a-4ec3-9b2d-4fa94e42d3fa.jpeg)
 - If you are already running a Maximized board ROM, you can safely upgrade through Heads GUI keeping your current settings. 
 
-
 Locked IFD and ME
 ----
 Otherwise, initial external flashing of the firmware didn't unlock the IFD/ME regions:
 ![CantBeInternallyUpgradeToMaximizedROM](https://user-images.githubusercontent.com/827570/167728658-731362da-a676-4610-becb-ff94f2ff48b1.jpeg)
-- This means you either have to:
+- This means you will have to:
   - Externally reflash Maximized board ROM 
     - xx30: xx30-*maximized-top.rom(4Mb) and xx30-*maximized-bottom.rom(8Mb) ROMs 
     - xx20: xx20-*-maximized.rom (8Mb ROM)
-  - Stay with Legacy board ROMs. This means you can safely update through Heads GUI, keeping your current settings.
 
+Legacy board variants were [officially deprecated in October 2024 per this PR](https://github.com/linuxboot/heads/pull/1803).
 
-Internal Flashing
-===
-
-Preparing a compliant USB thumb drive
 ---
-On the laptop used to build/download Heads: 
-For safety, list the drives available without plugging your USB drive:
-```shell
-sudo fdisk -l
-```
 
-
-Plug your USB flash drive and redo last command to witness appearance of a new drive:
-
-```shell
-sudo fdisk -l
-```
-
-Note that Heads currently supports Ext3 /Ext4/Exfat/fat32 filesystems, where fat32 limits 
- file size to a maximum of 4Gb. So if you intend to use that USB drive to host bigger
- files, you should probably backup current content and format to ext3/ext4.
- Otherwise, fat32 is fine now to put only firmware image.
-
-If you want to reformat your usb drive as ext4 (USB drive is /dev/sdb here) where ExFat is recommended now:
-
-```shell
-sudo mkfs.ext4 /dev/sdb1
-```
-
-These are the commands I used to create a directory ~/usb/ and mount my usb
- drive there, but you can mount it wherever you want:
-
-```shell
-mkdir ~/usb
-sudo mount /dev/sdb1 ~/usb/
-```
-
-Move the full Heads rom file to the usb drive and unmount the drive:
-
-```shell
-sudo cp ~/heads/build/x86/x230/heads.rom ~/usb/
-sudo umount /dev/sdb1
-```
-
-
-Flashing new firmware under Heads
----
-As discussed above: 
-
-- If you are not migrating from Legacy boards to Maximized board configurations, 
- you can safely upgrade from Heads GUI through `Options->Flash/Update BIOS`
- and choose the retain settings option. This will copy your GPG keyring and user configuration
- into the new ROM prior of flashing it the whole combined 12Mb SPI flash with the ROM.
-
-- If you are migrating from Legacy to Maximized ROM, you need to manually call flashrom
- from the Recovery Shell, having a copy of your public key on a USB drive to inject it back
- on next Heads boot.
-
-
-Re-Owning the states
-===
-Reboot and verify that the new firmware is running. Don't be scared if you have to power off twice
- The trained memory cache in firmware might have been wiped and reconstructed. Hold the power
- button for 10 seconds and power back on.
-
-- If you migrated from Legacy to Maximized builds (no migration of settings), you will
- be prompted on next reboot by the same prompts following an initial flash. That is:
-  - To inject your public key or do OEM Factory Reset/Re-Ownership
-    - Injecting the public key will reflash the firmware with your public key fused in. 
-    - The Factory Reset/Re-Ownership option will guide you into re-owning all security components including resetting USB Security dongle, injecting public key in ROM and signing /boot.
-  - Then on next reboot, you will be prompted to generate new TOTP/HOTP token/Reset TPM. Normal, since none of the previous measurements are valid anymore (GPG Admin PIN and TPM Ownership passphrase required)
-    - Reset TPM if you ever get TPM counter increments errors (new TPM Owner passphrase will be requested.)
-    - Choose HOTP/TOTP otherwise (TPM Owner password will be prompted in TPM2 case + GPG Admin PIN in case of HOTP board) 
-  - Sign /boot content (GPG User PIN required)
-  - Select a new boot default through Boot Options (GPG User PIN required to sign the new default)
-    - Optionally set a TPM Disk Unlock Key (Disk Recovery Key passphrase and GPG User PIN required)
-- If you upgraded your firmware by choosing the retain settings options for a same board configuration 
-  - The same steps above will be required, outside of the public key injection/Re-Ownership.
-
-
- Notes:
- - Since commit https://github.com/linuxboot/heads/commit/6873df60c1c965ac812a49d9d245f338d8a3b128 : users using Heads with that commit or more recent as current firmware can upgrade with zip files. Those automatically verify rom integrity and if valid continue with flashing the rom contained in the zip file.
- - Since commit https://github.com/linuxboot/heads/commit/133da0e48e2996674f60f186c520cfad0d4848d0: users having a TPM Disk Unlock Key (DUK) defined previously will be guided to reseal a new passphrase when resealing TOTP/HOTP and to needed magic automatically. Enjoy. 
+Notes:
+- Since commit [6873df60](https://github.com/linuxboot/heads/commit/6873df60c1c965ac812a49d9d245f338d8a3b128): Users with this or newer firmware can upgrade with `.zip` files. These automatically verify ROM integrity and flash the contained firmware if valid.
+- Since commit [133da0e4](https://github.com/linuxboot/heads/commit/133da0e48e2996674f60f186c520cfad0d4848d0): Users with a TPM Disk Unlock Key (DUK) defined previously will be guided to reseal a new passphrase when resealing TOTP/HOTP automatically.
