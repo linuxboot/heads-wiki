@@ -10,7 +10,7 @@ nav_order: 1
 Heads main menu
 ===
 
-Left: laptop/worskstation. Right: server (BMC/SSH/Console)
+Left: laptop/workstation. Right: server (BMC/SSH/Console)
 <a href="https://github.com/user-attachments/assets/69621d18-c4ed-4fb9-bf35-02768b64cd76" target="_blank">
   <img src="https://github.com/user-attachments/assets/69621d18-c4ed-4fb9-bf35-02768b64cd76"
        alt="Heads booting on qemu-fbwhiptail-tpm2-hotp and qemu-whiptail-tpm1"
