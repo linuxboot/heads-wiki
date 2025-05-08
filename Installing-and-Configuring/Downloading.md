@@ -17,88 +17,63 @@ parent: Installing and configuring
 </details>
 <!-- markdownlint-enable MD033 -->
 
-What to download/How to upgrade
+Downloading Heads ROMs
 ===
 
 What board configuration should I choose?
 ---
 Please refer to the [devices compatibility matrix]({{ site.baseurl }}/Prerequisites#supported-devices).
 
-Migrating from one board configuration to another
+Downloading ROM files for initial flashing
 ---
-If Heads is already installed on your board and you want to migrate to its Maximized version:
-- Under Heads: go into [Recovery Shell]({{ site.baseurl }}/RecoveryShell) to make sure if you should download [Legacy or Maximized]({{ site.baseurl }}/Prerequisites#legacy-vs-maximized-boards) board ROMs:
-  - If aiming to go to Maximized firmware, make sure you have unlocked Intel Flash Descriptor (IFD) and ME regions on initial flash
-    - *This is compatible* ![CanBeFlashedToMaximizedRom](https://user-images.githubusercontent.com/827570/167728631-85a5ca9e-48f6-4d4f-8544-532fa75bf5d3.jpeg)
-      - If you have no warning/error (see above), you can proceed with a manual flashrom command to migrate once and for all to Maximized board: `flashrom -p internal -w /media/heads-hotp-maximized-version-gcommit.rom`
-![InternalUpgradeToMacimizedROM](https://user-images.githubusercontent.com/827570/167729694-6ff8da60-986a-4ec3-9b2d-4fa94e42d3fa.jpeg)
-    - *!!!This is not compatible!!!* ![CantBeInternallyUpgradeToMaximizedROM](https://user-images.githubusercontent.com/827570/167728658-731362da-a676-4610-becb-ff94f2ff48b1.jpeg)
-      - You either have to download a non-maximized ROM version, or have to flash externally the (xx30 boards: top and bottom) ROM(s) for your platform's maximized board configuration. This needs to be done once, after which you can upgrade from the GUI.
+If you are performing an initial external flash, follow these steps to download the required ROM files and verify their integrity:
 
+1. **Access CircleCI Builds**:
+   - Go to the [Heads GitHub repository](https://github.com/linuxboot/heads) and click on the latest commit's green checkmark.
+   ![Github-green-circle-ci-checkmark](https://github.com/user-attachments/assets/ed928ced-a723-4d03-b24a-34961e5f2d90)   
+   - This will display a list of CircleCI jobs. Locate the job corresponding to your board's name and click the "Details" link.
+   ![CircleCI-list-of-boards-in-pipeline](https://github.com/user-attachments/assets/d09d1e9f-fac6-40ff-b980-8a9dd4b77ec3)
 
+2. **Navigate to Artifacts**:
+   - On the CircleCI job page, click the "Artifacts" tab to view the output files of the build.
+   ![CircleCI-page-showing-artifact-tabs](https://github.com/user-attachments/assets/ba27c1ba-6e7b-4411-809e-b72912cc7549)
 
-Downloading Heads from CircleCI
-===
-Alternatively to building your own ROM, you can download ROMs directly from CircleCI for 
-the most recent commits (build artifacts are kept for 30 days automatically). If no
-artifacts are available for download, please [poke us]({{ site.baseurl }}/community/) so we manually relaunch a build.
+3. **Download Required Files**:
+   - Download the following files by right-clicking their links and selecting "Save Link as...":
+   ![CircleCI-artifacts-tabs-showing-files-including-hashes-txt](https://github.com/user-attachments/assets/ad30a6e5-d7a2-444a-88ba-1a420d1f0f9d)
+     - `*.rom` files (e.g., `top.rom` and `bottom.rom` for two SPI chip boards).
+     - `hashes.txt` file containing the SHA256 hashes of the ROM files.
 
-A lot of efforts have been put into CircleCI so that most of the community platforms 
-have their ROMs built and downloadable as artifacts from CircleCI. 
+4. **Verify ROM File Integrity**:
+   - Use `sha256sum` or an equivalent tool to compute the hash of the downloaded ROM files.
+   - Compare the computed hash with the corresponding entry in the `hashes.txt` file to ensure the files are valid.
 
-Note that CircleCI keeps artifacts for 30 days after build time.
+5. **Prepare for Flashing**:
+   - Save the verified ROM files and `hashes.txt` to the computer or USB drive that will be used for external flashing.
 
-No hardware programmer? BE CAUTIOUS!
+For more details on external flashing, refer to the [Upgrading documentation]({{ site.baseurl }}/Updating).
+
+Internal upgrading from ZIP files
 ---
-Considering Heads is a rolling release as of now, it is advised to wait a day
-or two prior of flashing a ROM downloaded from CircleCI if you do not own a 
-[external programmer]({{ site.baseurl }}/Prerequisites). 
-Maybe wait even longer when last merge was linked to a coreboot upgrade 
-or kernel upgrade, just to be sure no regression happened.
-Watch the [most recently reported issues](https://github.com/osresearch/heads/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc). 
-Heads project is hosted on GitHub where most of the Pull Requests (PR) are 
-[merged and closed after review(purple)](https://github.com/osresearch/heads/pulls?q=is%3Apr+is%3Aclosed+sort%3Aupdated-desc). 
-The general advise here is to review the latest PR linked to last commit 
-that was merged and make sure that some [other owners of the same platform you use](https://github.com/osresearch/heads/issues/692) 
-have tested the changes if you are in doubt.
+If you are upgrading an existing Heads installation, you can use the ZIP file provided in the CircleCI artifacts:
 
-Most of the changes happening in the codebase are policy related (scripts).
+1. **Download the ZIP File**:
+   - From the CircleCI "Artifacts" tab, download the ZIP file corresponding to your board.
 
-Those changes are normally tested on at least 2 different platforms to validate 
-no regression happened prior of merging. 
+2. **Transfer to Target System**:
+   - Save the ZIP file to a USB drive and transfer it to the target system.
 
-Kernel and coreboot version bumps require a lot more testing from the community
-board owners prior of merging the changes in the project. When those cause 
-regressions, an untested platform might simply brick. This is why coreboot/linux
-version bumps are not following upstream projects versions tightly: it requires
-a lot of collaboration and time with [board owners](https://github.com/osresearch/heads/issues/692).
+3. **Perform the Upgrade**:
+   - Use the Heads GUI to upgrade the firmware by selecting the ZIP file. This method automatically verifies the ROM integrity and flashes the firmware.
 
-How to download
+**Note**: Internal upgrading via ZIP files is supported for firmware versions built after [this November 2023 commit](https://github.com/linuxboot/heads/commit/6873df60c1c965ac812a49d9d245f338d8a3b128).
+
+For more details on internal upgrading, refer to the [Upgrading documentation]({{ site.baseurl }}/Updating).
+
+Caution for Rolling Releases
 ---
+Heads is a rolling release. If you do not have an external programmer, refer to the [Upgrading documentation]({{ site.baseurl }}/Updating#global-warning-no-hardware-programmer-be-cautious) for important precautions before upgrading. This includes:
+- Waiting for community testing and reviewing reported issues to avoid potential regressions.
+- Understanding the implications of `UNTESTED` and `UNMAINTAINED` labels in board names. For more details, refer to the [UNTESTED and UNMAINTAINED boards documentation](https://github.com/linuxboot/heads/blob/master/unmaintained_boards/README.md).
 
-- Go to Heads GitHub repository and click on latest commit's green check
-![2022-05-10-161753](https://user-images.githubusercontent.com/827570/167725941-e6fcad76-2549-4ffe-88ac-33f92545397b.png)
-- Select your desired platform (hopefully, [choosing maximized builds over legacy counterparts]({{ site.baseurl }}/Prerequisites#legacy-vs-maximized-boards) and choosing hotp variants if you already own a [compatible USB Security dongle]({{ site.baseurl }}/Prerequisites#usb-security-dongles-aka-security-token-aka-smartcard)). Here, we choose x230-hotp-maximized as an example.
-![2022-05-10-161811](https://user-images.githubusercontent.com/827570/167726540-d8ce8d1f-f25a-4ff2-b4e6-2e88e5051cd8.png)
-- This brings us to CircleCI web interface. First, we scroll and click on the `Make Board` step so we can see the hash of the ROM we are about to download
-![2022-05-10-161907](https://user-images.githubusercontent.com/827570/167726969-5ff7fdfc-81df-4a2e-b552-0ec2ec4aa659.png)
-- This opens the build log and shows the last output of the board being built. Highlight/copy the hash for future comparison.
-![2022-05-10-162016](https://user-images.githubusercontent.com/827570/167727116-a7559cd4-6db2-4fd2-a4a4-a254a4add0eb.png)
-- Scroll back up and select the `Artifacts` tab.
-![2022-05-10-162037](https://user-images.githubusercontent.com/827570/167727221-b158912b-c798-4002-8d9a-93a6fbf14f85.png)
-- This opens the artifacts that were saved for that commit id. We are interested in the ROM we are interested to download, which is the full ROM in this upgrade example, as opposed to `bottom` and `top` ROM images which are aimed to be flashed externally.
-![2022-05-10-162056](https://user-images.githubusercontent.com/827570/167727408-1e1c23bb-5afb-4ead-806f-7c65d58ab906.png)
-- Save the link to your already prepared and mounted USB drive locally
-![2022-05-10-162112](https://user-images.githubusercontent.com/827570/167727582-2c15cdc1-c1ec-4289-8548-7b9afc79a40b.png)
-- Validate the checksum against saved checksum
-![2022-05-10-162349](https://user-images.githubusercontent.com/827570/167727751-44d6ba06-29f5-48ea-b955-48db4edbe251.png)
-- If you saved it locally, pass it over to sys-usb once you verified checksum for compartmentalization
-![2022-05-10-162649](https://user-images.githubusercontent.com/827570/167727877-32606e55-4601-4ff8-ad3b-916cb8bde922.png)
-- Mount your USB drive and move the ROM to it
-![2022-05-10-162825](https://user-images.githubusercontent.com/827570/167727965-7a7e9e7f-73fa-4d4c-a0ac-83b30d38584d.png)
-![2022-05-10-162915](https://user-images.githubusercontent.com/827570/167728027-a5918a1e-4c8d-478c-8365-a0b512da0944.png)
-- Unmount your USB drive by pressing the eject button.
-
-Upgrading firmware
-===
-The documentation related to upgrading is [here]({{ site.baseurl }}/Updating)
+For more details on upgrading, refer to the [Upgrading documentation]({{ site.baseurl }}/Updating).
