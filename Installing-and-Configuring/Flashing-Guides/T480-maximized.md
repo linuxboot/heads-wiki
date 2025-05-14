@@ -44,7 +44,7 @@ The chip located in the middle of the board contains the [Intel Management Engin
 
 ![Chips]({{ site.baseurl }}/images/T480/3_chips.jpg)
 
-First [download]({{ site.baseurl }}/Downloading)  or build (please see [general building]({{ site.baseurl }}/{{ site.baseurl }}/x230-maximized-building/) / [building x230]({{ site.baseurl }}/x230-maximized-building/)) the board rom for this board and verify its hash value.
+First [download]({{ site.baseurl }}/Downloading)  or build (please see [general building]({{ site.baseurl }}/general-building/) / [building x230]({{ site.baseurl }}/x230-maximized-building/)) the board rom for this board and verify its hash value.
 
 Try to read the name of the SPI flash chip. The dot on the chip helps to identify the correct clip orientation. 
 
@@ -143,6 +143,6 @@ diff <(hexdump -C t480_original_tb.bin) <(hexdump -C t480_original_tb_1.bin)
 Flash the padded Thunderbolt firmware. The firmware file tb.bin is located in the blobs folder after you build the Heads locally, or in the CircleCI artifacts.
 
 ```shell
-sudo flashrom -p ch341a_spi -c YYY -w ~/tb.bin
+sudo flashrom -p ch341a_spi -c YYY -w ~/t480_tb.bin
 ```
 Done.
