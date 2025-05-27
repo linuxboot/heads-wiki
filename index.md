@@ -60,8 +60,8 @@ Additionally, the hypervisor, kernel and initrd images are signed by
 Conferences
 ===
 
-* [2016 - 33C3 - Trammel Hudson - Heads Presentation](https://trmm.net/Heads_33c3)
-* [2017 - 34C3 - Trammel Hudson - LinuxBoot Presentation](https://trmm.net/LinuxBoot_34c3/)
+* [2016 - 33C3 - Trammel Hudson - Heads Presentation](https://media.ccc.de/v/33c3-8314-bootstraping_a_slightly_more_secure_laptop)
+* [2017 - 34C3 - Trammel Hudson - LinuxBoot Presentation](https://media.ccc.de/v/34c3-9056-bringing_linux_back_to_server_boot_roms_with_nerf_and_heads)
 * [2019 - Platform Security Summit - Thierry Laurion - Accessible Security: An OEM approach to transferring device and secrets ownership](https://www.platformsecuritysummit.com/2019/)
 * [2020 - FOSDEM - Thierry Laurion - Heads OEM device initial ownership of platform/transfer of ownership (Re-Ownership concept)](https://archive.fosdem.org/2020/schedule/event/firmware_hodorateatria/)
 * [2020 - SOCALINUXEXPO - Kyle Rankin - Tamper Evident Firmware with User-controlled keys](https://www.youtube.com/watch?v=NqQI3nr1dqk)
