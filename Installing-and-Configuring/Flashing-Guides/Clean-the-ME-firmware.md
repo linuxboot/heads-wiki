@@ -27,14 +27,6 @@ The ME firmware sits on the second SPI flash chip of the x230 (the 8MB one). We
  running, but without any malicious code in it (or so we hope, depending of what
    the ROMP and BUP modules really do...).
 
-The initial step is to upgrade the proprietary BIOS to the last upgradeable
- version one for each platform.
-As an example, for the x230, the latest upgradeable version would be
- [version 2.76](https://download.lenovo.com/pccbbs/mobiles/g2uj32us.iso) without
- [EC signature verification](https://support.lenovo.com/us/en/solutions/len-27764)
- . Newer firmware version [won't permit to swap a x220 keyboard on the x230](https://github.com/hamishcoleman/thinkpad-ec/pull/130)
- .  
-
 Prepare a USB bootable disk by following
  [el torito instructions](https://askubuntu.com/questions/651281/write-bootable-bios-update-iso-to-usb-stick)
  , then boot that prepared USB disk and upgrade the prioprietary firmware to
@@ -53,8 +45,10 @@ Flashrom can be downloaded on most linux distribution on the external laptop
 With a ch341a programmer, the command would look like the following:
 
 ```shell
-sudo flashrom -r ~/down.rom --programmer ch341a_spi && \
-  sudo flashrom -v ~/down.rom --programmer ch341a_spi
+sudo flashrom --programmer [programmer] --read ~/down.rom
+# Quick sanity check: inspect the start of the dump for obvious garbage
+hexdump -C ~/down.rom | head -20
+sudo flashrom --programmer [programmer] --verify ~/down.rom
 ```
 
 If they match, clone this repo:  
@@ -139,6 +133,6 @@ After that, you got your new, cleaned up version of the ME firmware inside
 clean_flash.bin  
 Flash it back on the SPI:
 
-`sudo flashrom -w clean_flash.bin --programmer ch341a_spi`
+`sudo flashrom --programmer [programmer] --write clean_flash.bin`
 
 You're now good to go :)

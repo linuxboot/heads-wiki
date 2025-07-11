@@ -74,6 +74,7 @@ USB Security Dongles (aka security token aka smartcard)
 
 ### Supported USB Security dongles:
 
+### Supported USB Security dongles:
 |Manufacturer|Model|OpenPGP|HOTP verification|Compatible|
 |--|--|:--:|:--:|:--:|
 |Yubico|[YubiKey 5 Series](https://www.yubico.com/products/yubikey-5-overview/)|✅|❌|OpenPGP only|
@@ -82,18 +83,71 @@ USB Security Dongles (aka security token aka smartcard)
 |Nitrokey|[Nitrokey 3](https://www.nitrokey.com/products/nitrokeys#comparison)|✅|✅|Full support|
 |Purism|[Librem Key](https://puri.sm/products/librem-key/)|✅|✅|Full support|
 
-**Notes**: 
+**Notes**:
 - **OpenPGP only**: Can be used with non-HOTP board configurations (manual TPMTOTP verification)
 - **Full support**: Can be used with both HOTP and non-HOTP board configurations
 
 *NOTE* - If you prefer not to use USB security dongles or want simplified security procedures, see the [Purism Boot Modes](/PurismBootModes) documentation for information about Basic and Restricted boot modes that provide different security/usability trade-offs.
 
-Board Architecture Overview
+## EC firmware & customizations 🔧
+
+The Embedded Controller (EC) is responsible for platform functions such as keyboard hotkeys, keyboard layout enforcement, battery/charging policies, and thermal control. On many supported ThinkPad boards the EC can only be updated as part of the vendor BIOS update process. Because of that, **apply any EC changes you require via vendor firmware before performing the initial Heads flash.**
+
+Common EC customizations and caveats:
+- **Keyboard mappings / key swaps** (e.g., allowing an X220 keyboard layout on an X230).
+- **Battery whitelisting or vendor-specific battery policies** that can prevent booting with third-party batteries.
+- **Power, charging, or thermal behavior** changes that alter how the system charges or manages thermals.
+
+Recommended workflow:
+1. If you do not need EC changes: update the vendor BIOS/firmware first, then proceed with SPI backups and Heads flashing.
+2. If you do need EC changes: apply and verify them using vendor tools/firmware before flashing Heads; ensure the system boots normally under vendor firmware.
+3. Always back up BIOS/EC images and SPI dumps before making firmware changes.
+
+References:
+- ThinkPad EC examples: https://github.com/hamishcoleman/thinkpad-ec
+
+**Note:** Heads/Coreboot will not modify an EC. If a board requires a custom EC blob, follow the board-specific build instructions and include the blob at build time.
+
+(Add comprehensive SPI Programmer Best Practices guide and update existing flashing guides)
 ===
 
 **Note**: All current Heads boards use a modern architecture where the Intel Management Engine (ME) is deactivated and the Intel Flash Descriptor (IFD) is unlocked. On older Intel platforms (up to Ivy Bridge/3rd gen), the ME can be neutered (most modules removed), while on newer platforms (Skylake and later), the ME is deactivated using HAP bits or other methods. The historical distinction between "Legacy" and "Maximized" boards is no longer relevant as of 2024, since all supported boards now use the approach that was previously called "maximized."
 
-For users upgrading from very old firmware (pre-2024), see the [Historical Legacy Migration](/Historical-Legacy-Migration) page.
+### Supported USB Security dongles:
+|Manufacturer|Model|OpenPGP|HOTP verification|Compatible|
+|--|--|:--:|:--:|:--:|
+|Yubico|[YubiKey 5 Series](https://www.yubico.com/products/yubikey-5-overview/)|✅|❌|OpenPGP only|
+|Nitrokey|[Nitrokey Pro 2](https://www.nitrokey.com/products/nitrokeys#comparison)|✅|✅|Full support|
+|Nitrokey|[Nitrokey Storage 2](https://www.nitrokey.com/products/nitrokeys#comparison)|✅|✅|Full support|
+|Nitrokey|[Nitrokey 3](https://www.nitrokey.com/products/nitrokeys#comparison)|✅|✅|Full support|
+|Purism|[Librem Key](https://puri.sm/products/librem-key/)|✅|✅|Full support|
+
+**Notes**:
+- **OpenPGP only**: Can be used with non-HOTP board configurations (manual TPMTOTP verification)
+- **Full support**: Can be used with both HOTP and non-HOTP board configurations
+
+*NOTE* - If you prefer not to use USB security dongles or want simplified security procedures, see the [Purism Boot Modes](/PurismBootModes) documentation for information about Basic and Restricted boot modes that provide different security/usability trade-offs.
+
+## EC firmware & customizations 🔧
+
+The Embedded Controller (EC) is responsible for platform functions such as keyboard hotkeys, keyboard layout enforcement, battery/charging policies, and thermal control. On many supported ThinkPad boards the EC can only be updated as part of the vendor BIOS update process. Because of that, **apply any EC changes you require via vendor firmware before performing the initial Heads flash.**
+
+Common EC customizations and caveats:
+- **Keyboard mappings / key swaps** (e.g., allowing an X220 keyboard layout on an X230).
+- **Battery whitelisting or vendor-specific battery policies** that can prevent booting with third-party batteries.
+- **Power, charging, or thermal behavior** changes that alter how the system charges or manages thermals.
+
+Recommended workflow:
+1. If you do not need EC changes: update the vendor BIOS/firmware first, then proceed with SPI backups and Heads flashing.
+2. If you do need EC changes: apply and verify them using vendor tools/firmware before flashing Heads; ensure the system boots normally under vendor firmware.
+3. Always back up BIOS/EC images and SPI dumps before making firmware changes.
+
+References:
+- ThinkPad EC examples: https://github.com/hamishcoleman/thinkpad-ec
+
+**Note:** Heads/Coreboot will not modify an EC. If a board requires a custom EC blob, follow the board-specific build instructions and include the blob at build time.
+
+(Add comprehensive SPI Programmer Best Practices guide and update existing flashing guides)
 
 Emulated devices
 ===
