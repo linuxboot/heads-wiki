@@ -67,6 +67,16 @@ Based on extensive community testing and feedback, here are the recommended SPI 
 - **Additional features**: EHCI debugging, serial console
 - **Best for**: Advanced debugging, development
 
+### 5. **CH347 (Newer alternative to CH341A)**
+- **Cost**: $5-15 USD
+- **Speed**: Significantly faster than CH341A
+- **Voltage**: 3.3V only (5V tolerant inputs)
+- **Protocols**: SPI, I2C
+- **Safety**: Safer than old CH341A (no dangerous 5V output)
+- **Best for**: Budget option with better performance than CH341A
+
+**Note**: The CH347 is a newer alternative to CH341A with proper 3.3V operation and faster speeds. However, it lacks voltage selection for 1.8V chips.
+
 ## Programmer Comparison Table
 
 | Programmer | Cost | Speed (16MB) | Voltage Selection | Protocols | Debugging Features | Reliability |
@@ -75,6 +85,7 @@ Based on extensive community testing and feedback, here are the recommended SPI 
 | **CH341A rev 1.6+** | $5-15 | ~120 seconds | 1.8V, 2.5V, 3.3V, 5V | SPI, I2C | None | Good |
 | **Raspberry Pi Pico** | $4-10 | ~30 seconds | 3.3V (configurable) | SPI | None | High |
 | **BeagleBone Black** | $60-90 | ~16 seconds | 3.3V, 1.8V | SPI, UART | EHCI debugging | High |
+| **CH347** | $5-15 | ~60 seconds | 3.3V only | SPI, I2C | None | Good |
 | **CH341A old** | $2-10 | ~480 seconds | 5V (dangerous) | SPI, I2C | None | **Not recommended** |
 
 ## Essential Safety Procedures
@@ -119,6 +130,23 @@ Pin Functions:
 7 - HOLD# / N/C  (Hold)
 8 - VCC          (Power)
 ```
+
+### Wiring Color Code Reference (from community testing)
+
+When using custom wiring with color-coded cables, this mapping has been tested:
+
+| SPI Chip Pin | Pomona Clip | Function | Wire Color | CH341A/Programmer |
+|:------------:|:-----------:|:--------:|:----------:|:-----------------:|
+| Pin 1 (dot)  | Pin 1 (red dot) | VCC | Red | 25XX (red stripe) |
+| Pin 2        | Pin 2       | SO/MISO | Blue | DO (blue) |
+| Pin 3        | Pin 3       | WP# | Brown | NC |
+| Pin 4        | Pin 4       | GND | Black | GND (black) |
+| Pin 5        | Pin 5       | SI/MOSI | Purple | DI (purple) |
+| Pin 6        | Pin 6       | SCLK | Orange | CLK (orange) |
+| Pin 7        | Pin 7       | HOLD# | White | NC |
+| Pin 8        | Pin 8       | VCC | Red | VCC |
+
+**Note**: Always verify pin 1 orientation by looking for the dot or notch on the chip. The red wire should connect to pin 1.
 
 ## Connection Procedures
 
