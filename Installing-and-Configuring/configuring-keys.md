@@ -196,3 +196,13 @@ to decrypt the drive. Instead it is necessary to unseal/decrypt the key from
 the TPM and then bundle the key file into a RAM copy of Qubes' dom0 initrd on 
 each boot. The initramfs format allows concatenated cpio files, so it is easy 
 for the Heads firmware to inject files into the Qubes startup script.
+
+Forgot Security dongle user pin
+---
+
+In case of being unable to sign /boot due to forgotten and or mistyped (three times)
+user pin one can unlock/change the user pin by utlizing the admin pin
+simply enter the recovery shell and with the dongle plugged in execute ```gpg --change-pin```
+you will be promoted for admin pin then asked to enter the new user pin
+from there its as simple as rebooting and signing /boot with the new pin.
+Warning! if you miss type the admin pin three times there is no recovery.
