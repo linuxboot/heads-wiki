@@ -39,6 +39,8 @@ Secrets and Security
 
 There are many secret pins, passphrases, and keys used in heads.  These are described in [Configuring Keys](/Configuring-Keys/).
 
+For information about different security modes available (Basic vs Restricted), see [Purism Boot Modes](/PurismBootModes).
+
 
 Operating Systems
 ----
