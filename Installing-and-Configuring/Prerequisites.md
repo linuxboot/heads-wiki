@@ -72,6 +72,8 @@ USB Security Dongles (aka security token aka smartcard)
 |Nitrokey|[Nitrokey 3](https://www.nitrokey.com/products/nitrokeys#comparison)|X|X|
 |Purism|[Librem Key](https://puri.sm/products/librem-key/)|X|X|
 
+*NOTE* - If you prefer not to use USB security dongles or want simplified security procedures, see the [Purism Boot Modes](/PurismBootModes) documentation for information about Basic and Restricted boot modes that provide different security/usability trade-offs.
+
 Legacy vs Maximized boards
 ===
 Some history first on the historical x230-flash and x230 boards that initially created the Heads project.
