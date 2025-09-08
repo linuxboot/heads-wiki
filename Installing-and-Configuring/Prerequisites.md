@@ -90,7 +90,7 @@ The table below shows compatibility with Heads-specific requirements (OpenPGP + 
 |Nitrokey|[Nitrokey 3](https://www.nitrokey.com/products/nitrokeys#comparison)|X|X|✅|
 |Purism|[Librem Key](https://puri.sm/products/librem-key/)|X|X|✅|
 
-**Why YubiKey 5 Series is not compatible**: While YubiKey 5 Series supports standard HOTP/TOTP and OpenPGP, it does **not** support the reverse HOTP protocol that Heads requires for firmware verification. Only Librem Key and Nitrokey dongles include the specialized firmware needed for Heads reverse HOTP functionality.
+**Why YubiKey 5 Series is not compatible**: While YubiKey 5 Series supports standard HOTP/TOTP and OpenPGP, it does **not** support the reverse HOTP protocol that Heads requires for firmware verification. Only dongles listed as compatible in the table above include the specialized firmware needed for Heads reverse HOTP functionality.
 
 *NOTE* - If you prefer not to use USB security dongles or want simplified security procedures, see the [Purism Boot Modes](/PurismBootModes) documentation for information about Basic and Restricted boot modes that provide different security/usability trade-offs.
 
