@@ -143,7 +143,8 @@ Historical: Migrating from Very Old Firmware
 
 **Warning**: Migration from pre-2024 firmware requires careful attention. Legacy boards were [officially deprecated in October 2024](https://github.com/linuxboot/heads/pull/1803). Use maximum caution when upgrading from very old firmware, as improper steps may result in a bricked device.
 
-### Identifying Very Old Firmware
+**Identifying Very Old Firmware**
+
 If you are running very old Heads firmware:
 1. Boot into the Heads main menu
 2. Check if the main screen title includes "Maximized" in the board name
@@ -151,7 +152,8 @@ If you are running very old Heads firmware:
    - Examples of old firmware: `x220-legacy`, `x220`, `t430`, `x230-hotp` (without "Maximized")
    - Current firmware: All board names are standardized and use modern architecture
 
-### Migration Steps
+**Migration Steps**
+
 1. Refer to the [Downloading documentation]({{ site.baseurl }}/Downloading) for current board configurations
 2. Follow the [upgrade verification steps](#verify-upgradeability-paths-of-the-firmware) below
 3. Ensure you have proper recovery equipment before proceeding
