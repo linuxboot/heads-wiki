@@ -55,6 +55,14 @@ If *you have an external programmer* and *are techsavvy enough to bring their su
 USB Security Dongles (aka security token aka smartcard)
 ---
 
+**All USB Security dongles used with Heads must support OpenPGP** for storing your private key and signing `/boot` contents.
+
+**HOTP verification is optional** but provides automatic firmware verification at boot. Without HOTP, you'll use TPMTOTP (manual verification with your phone). Most [board configurations](/Prerequisites#supported-devices) are available in both HOTP and non-HOTP variants, though some vendors only support HOTP-enabled configurations.
+
+### USB Security dongle compatibility:
+
+**Compatible dongles** must support the specialized HOTP verification protocol developed by Nitrokey. For technical details about this protocol, see the [Nitrokey HOTP verification project](https://github.com/Nitrokey/nitrokey-hotp-verification).
+
 *NOTE* - Heads does **NOT** support FIDO2 or U2F authentication.  Be careful when
  purchasing to buy a compatible key.
 
@@ -64,13 +72,19 @@ USB Security Dongles (aka security token aka smartcard)
 *NOTE* - The NitroKey 3 comes in three sizes: USB A, A-mini and C. Nk3a mini (USB A-mini) is the one most shipped with novacustom and nitropads.
   - ThinkPads have USB A ports, not C. After that, it's users preferences for the form factor desired. 
 
-|Manufacture|Model line|TOTP|HOTP|
-|--|--|:--:|:--:|
-|Yubico|[YubiKey 5 Series](https://www.yubico.com/products/yubikey-5-overview/)|X||
-|Nitrokey|[Nitrokey Pro 2](https://www.nitrokey.com/products/nitrokeys#comparison)|X|X|
-|Nitrokey|[Nitrokey Storage 2](https://www.nitrokey.com/products/nitrokeys#comparison)|X|X|
-|Nitrokey|[Nitrokey 3](https://www.nitrokey.com/products/nitrokeys#comparison)|X|X|
-|Purism|[Librem Key](https://puri.sm/products/librem-key/)|X|X|
+### Supported USB Security dongles:
+
+|Manufacturer|Model|OpenPGP|HOTP verification|Compatible|
+|--|--|:--:|:--:|:--:|
+|Yubico|[YubiKey 5 Series](https://www.yubico.com/products/yubikey-5-overview/)|✅|❌|OpenPGP only|
+|Nitrokey|[Nitrokey Pro 2](https://www.nitrokey.com/products/nitrokeys#comparison)|✅|✅|Full support|
+|Nitrokey|[Nitrokey Storage 2](https://www.nitrokey.com/products/nitrokeys#comparison)|✅|✅|Full support|
+|Nitrokey|[Nitrokey 3](https://www.nitrokey.com/products/nitrokeys#comparison)|✅|✅|Full support|
+|Purism|[Librem Key](https://puri.sm/products/librem-key/)|✅|✅|Full support|
+
+**Notes**: 
+- **OpenPGP only**: Can be used with non-HOTP board configurations (manual TPMTOTP verification)
+- **Full support**: Can be used with both HOTP and non-HOTP board configurations
 
 *NOTE* - If you prefer not to use USB security dongles or want simplified security procedures, see the [Purism Boot Modes](/PurismBootModes) documentation for information about Basic and Restricted boot modes that provide different security/usability trade-offs.
 

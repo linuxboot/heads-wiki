@@ -161,25 +161,31 @@ Unlike [Tails](https://tails.boum.org/), which aims to be a stateless OS that
 leaves no trace on the computer of its  presence, Heads is intended for the
 case where you need to store data and state on the computer.
 
-HOTP vs TOTP
+USB Security dongles and firmware verification in Heads
 ----
 
-HOTP (HMAC-based One-time Password algorithm) generates a password
-using hash-based message authentication codes (HMAC) that can be used only for
-the one authentication attempt.  Uniqueness is based on a counter which is
-incremented each authentication attempt.
+Heads can verify firmware integrity using two methods:
 
-TOTP (Time-based One-time Password algorithm) is an extension of HOTP but
-replaces the counter with time.  Because of latency, both network and human,
-and unsynchronised clocks, the one-time password must validate over a range of
-times between the authenticator and the user. Here, time is
-downsampled into larger durations (e.g., 30 seconds) to allow for validity
-between the parties.
+### HOTP verification (with USB Security dongle)
+**Heads generates HOTP codes** and sends them to your USB Security dongle. The dongle verifies these codes automatically. If verification succeeds, Heads boots normally. If it fails, the dongle's LED shows red and boot is halted.
 
-Secuirty wise, HOTP is more susceptible to brute force attacks without
-throttling or limiting the number of failed attempted while TOTP is susceptible
-to phishing attacks and requires a user to enter the code within a given time
-period.
+**Requirements**: Compatible USB Security dongle (see [Prerequisites compatibility table](/Prerequisites#usb-security-dongles-aka-security-token-aka-smartcard))
+
+**Advantages**: Automatic verification, no manual interaction needed, works without accurate time
+
+### TPMTOTP verification (with smartphone)  
+**Heads generates TOTP codes** displayed on screen. You compare these with codes from your phone's authenticator app. If they match, your firmware is verified as safe.
+
+**Requirements**: 
+- Smartphone with authenticator app
+- **Accurate time synchronization**: Heads system clock must be set to UTC/GMT through Options menu. Phone time is typically synced automatically.
+
+**Note**: Time synchronization is critical - if clocks don't match, codes will differ and verification fails.
+
+### OpenPGP signing (all configurations)
+All Heads configurations use your USB Security dongle's OpenPGP support to store your private key and sign `/boot` contents. This works with any OpenPGP-compatible dongle.
+
+For technical details about HOTP verification, see the [Nitrokey HOTP verification project](https://github.com/Nitrokey/nitrokey-hotp-verification).
 
 coreboot vs Linuxboot
 ----

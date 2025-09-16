@@ -68,6 +68,8 @@ password based on the current clock time, which the user can compare to the
 value displayed on their phone. A new secret must be generated each time the
 firmware is updated since this will change the PCRs.
 
+**Note**: Heads generates TPMTOTP codes that appear on your screen. You compare these with codes from your phone's authenticator app to verify firmware integrity. This works independently of your USB Security dongle. **Critical requirement**: You must manually set the correct time in Heads through the Options menu (UTC/GMT timezone) - if the time doesn't match your phone, verification will fail.
+
 If an attacker can control this shared secret (such as by directly sending PCR
 values into the TPM), they can install malicious firmware in the SPI flash and
 generate valid TOTP codes.
