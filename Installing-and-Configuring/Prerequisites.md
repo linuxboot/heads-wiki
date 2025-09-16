@@ -79,44 +79,7 @@ Board Architecture Overview
 
 **Note**: All current Heads boards use a modern architecture where the Intel Management Engine (ME) is deactivated and the Intel Flash Descriptor (IFD) is unlocked. On older Intel platforms (up to Ivy Bridge/3rd gen), the ME can be neutered (most modules removed), while on newer platforms (Skylake and later), the ME is deactivated using HAP bits or other methods. The historical distinction between "Legacy" and "Maximized" boards is no longer relevant as of 2024, since all supported boards now use the approach that was previously called "maximized."
 
-For users upgrading from very old firmware (pre-2024), see the [Historical Legacy Migration](#historical-legacy-migration) section below.
-
----
-
-### Historical Legacy Migration
-
-<details>
-<summary>Click to expand historical information about legacy vs maximized boards (for users on very old firmware only)</summary>
-
-**This section is preserved for historical reference and applies only to users upgrading from very old Heads firmware (pre-2024). All new installations should use current board configurations.**
-
-**Historical Background**
-
-Originally, Heads supported two types of board configurations:
-
-- **Legacy boards**: Produced incomplete ROM images that required specific flashing procedures and only worked with locked IFD/ME regions
-- **Maximized boards**: Produced complete ROM images with neutered/deactivated ME and unlocked IFD, allowing full internal flashing
-
-Legacy boards were [officially deprecated in October 2024](https://github.com/linuxboot/heads/pull/1803), and all current boards now use the approach that was previously called "maximized."
-
-**Migration from Very Old Firmware**
-
-If you are upgrading from very old Heads firmware that predates the 2024 standardization:
-
-1. **Identify your current firmware type**: Check if your boot screen shows "Maximized" in the board name
-2. **Verify upgrade compatibility**: Follow the [upgrade verification steps](/Updating#verify-upgradeability-paths-of-the-firmware) in the Upgrading documentation
-3. **Contact support if needed**: For NitroPad users with firmware version 1.2 or earlier, contact [Nitrokey support](https://support.nitrokey.com/)
-
-**Technical Details (Historical)**
-
-The historical approach involved:
-- **ME neutering/deactivation**: For older Intel platforms (up to Ivy Bridge), reducing the Intel Management Engine to only essential components (BUP and ROMP for xx30 family, BUP only for xx20). For newer platforms, ME is deactivated using HAP bits or other methods
-- **IFD unlocking**: Allowing the Intel Flash Descriptor regions to be modified
-- **Space optimization**: Reclaiming freed ME space for the BIOS region (expanding from ~7MB to ~11.5MB on x230 family)
-
-This approach is now standard for all Heads boards, adapted to each platform's capabilities.
-
-</details>
+For users upgrading from very old firmware (pre-2024), see the [Historical Legacy Migration](/Historical-Legacy-Migration) page.
 
 Emulated devices
 ===

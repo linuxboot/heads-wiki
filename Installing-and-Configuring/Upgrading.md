@@ -136,32 +136,9 @@ If you need to validate the current firmware integrity against the last flashed 
 Historical: Migrating from Very Old Firmware
 ---
 
-<details>
-<summary>Click to expand historical migration information (for very old firmware only)</summary>
+**Note**: If you are upgrading from very old Heads firmware that predates the 2024 standardization, please refer to the [Historical Legacy Migration](/Historical-Legacy-Migration) page for detailed information and migration steps.
 
-**Note**: This section applies only to users upgrading from very old Heads firmware that predates the 2024 standardization. All current Heads boards use a modern architecture, and new installations should use current board configurations.
-
-**Warning**: Migration from pre-2024 firmware requires careful attention. Legacy boards were [officially deprecated in October 2024](https://github.com/linuxboot/heads/pull/1803). Use maximum caution when upgrading from very old firmware, as improper steps may result in a bricked device.
-
-**Identifying Very Old Firmware**
-
-If you are running very old Heads firmware:
-1. Boot into the Heads main menu
-2. Check if the main screen title includes "Maximized" in the board name
-   - If it does NOT include "Maximized," you may be on very old firmware
-   - Examples of old firmware: `x220-legacy`, `x220`, `t430`, `x230-hotp` (without "Maximized")
-   - Current firmware: All board names are standardized and use modern architecture
-
-**Migration Steps**
-
-1. Refer to the [Downloading documentation]({{ site.baseurl }}/Downloading) for current board configurations
-2. Follow the [upgrade verification steps](#verify-upgradeability-paths-of-the-firmware) below
-3. Ensure you have proper recovery equipment before proceeding
-
-**Important for Nitrokey Customers**:  
-If you are using a NitroPad X230 or T430 with firmware version **1.2 or earlier**, contact [Nitrokey support](https://support.nitrokey.com/) for their flashing service. See this [support thread](https://support.nitrokey.com/t/nitropad-t430-firmware-update-brick/3777/2) for details.
-
-</details>
+All current Heads boards use modern architecture, and new installations should use current board configurations.
 
 ---
 
