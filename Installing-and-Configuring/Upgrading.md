@@ -164,8 +164,10 @@ First, verify the [supported platforms]({{ site.baseurl }}/Prerequisites#support
 Review whether the Intel Firmware Descriptor (IFD) and Intel Management Engine (ME) regions are unlocked from the [Recovery Shell]({{ site.baseurl }}/RecoveryShell):
 
 ```shell
-flashrom -p internal
+flashprog -p internal
 ```
+
+**Note**: On older Heads firmware (pre-2025), use `flashrom -p internal` if `flashprog` is not available. Newer firmware versions use `flashprog` as the flash tool.
 
 The output will show whether you can upgrade internally or need external flashing.
 
@@ -177,7 +179,7 @@ This is the expected output for modern Heads firmware with unlocked IFD and ME r
 - **Current firmware**: You can safely upgrade through the Heads GUI using `.zip` files
 - **Very old firmware**: If upgrading from pre-2024 firmware, you may need to manually flash:
   - `mount-usb`
-  - `flashrom -p internal -w /media/heads-current-version-gcommit.rom`
+  - `flashprog -p internal -w /media/heads-current-version-gcommit.rom` (or `flashrom` on older firmware)
   - ![InternalUpgradeToMaximizedROM](https://user-images.githubusercontent.com/827570/167729694-6ff8da60-986a-4ec3-9b2d-4fa94e42d3fa.jpeg)
 
 Locked IFD and ME (Very Old Firmware)

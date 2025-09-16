@@ -86,7 +86,7 @@ It was possible to upgrade from Legacy to Maximized boards under certain conditi
 
 - **If you come from 1vyrain, this was impossible**. 1vyrain does not unlock neither IFD nor ME regions of the SPI. Consequently, flashing internally anything else then Legacy boards produced ROMs would result in a brick.
 
-- **If coming from Skulls**, if and only optional unlocking step has been followed, you could upgrade internally through a manual flashrom call, just like if you were coming from Heads Legacy boards while having followed the me_cleaning page instructions prior of initial flash.
+- **If coming from Skulls**, if and only optional unlocking step has been followed, you could upgrade internally through a manual flash tool call (`flashprog` on newer firmware or `flashrom` on older firmware), just like if you were coming from Heads Legacy boards while having followed the me_cleaning page instructions prior of initial flash.
 
 - **If coming from Skulls or Heads Legacy board configurations** while having unlocked IFD initially, you could flash from the recovery shell manually.
 
@@ -96,8 +96,10 @@ Having a full xxxx-hotp-maximized or xxxx-maximized board config produced ROM av
 
 ```
 mount-usb
-flashrom -p internal -w /media/PathToMaximizedRom.rom
+flashprog -p internal -w /media/PathToMaximizedRom.rom
 ```
+
+**Note**: Use `flashprog` on newer Heads firmware (2025+) or `flashrom` on older firmware versions, depending on what is available in your Heads system.
 
 On next reboot, Heads would guide you into factory resetting your USB Security dongle or import your previously generated public key matching your USB Security dongle's private key.
 
