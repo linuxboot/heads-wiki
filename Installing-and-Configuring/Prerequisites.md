@@ -55,18 +55,13 @@ If *you have an external programmer* and *are techsavvy enough to bring their su
 USB Security Dongles (aka security token aka smartcard)
 ---
 
-**Important**: Your USB Security dongle must support OpenPGP for storing your private key. It can also optionally support HOTP verification, which provides an extra security check when Heads starts up. You can use Heads without this extra check, but it's strongly recommended.
+**All USB Security dongles used with Heads must support OpenPGP** for storing your private key and signing `/boot` contents.
 
-### What Heads needs from your USB Security dongle:
+**HOTP verification is optional** but provides automatic firmware verification at boot. Without HOTP, you'll use TPMTOTP (manual verification with your phone). Most [board configurations](/Prerequisites#supported-devices) are available in both HOTP and non-HOTP variants, though some vendors only support HOTP-enabled configurations.
 
-1. **OpenPGP support**: Required - stores your private key for signing files
-2. **HOTP verification support**: Optional but recommended - allows Heads to verify firmware integrity through your dongle
+### USB Security dongle compatibility:
 
-### Why some dongles don't work with Heads:
-
-**YubiKey 5 Series and similar dongles**: These support standard security features but cannot do the specific verification check that Heads requires. Only dongles listed in our compatibility table have the specialized firmware needed for Heads.
-
-For technical details, see [Nitrokey HOTP verification documentation](https://github.com/Nitrokey/nitrokey-hotp-verification).
+**Compatible dongles** must support the specialized HOTP verification protocol developed by Nitrokey. For technical details about this protocol, see the [Nitrokey HOTP verification project](https://github.com/Nitrokey/nitrokey-hotp-verification).
 
 *NOTE* - Heads does **NOT** support FIDO2 or U2F authentication.  Be careful when
  purchasing to buy a compatible key.
@@ -77,19 +72,19 @@ For technical details, see [Nitrokey HOTP verification documentation](https://gi
 *NOTE* - The NitroKey 3 comes in three sizes: USB A, A-mini and C. Nk3a mini (USB A-mini) is the one most shipped with novacustom and nitropads.
   - ThinkPads have USB A ports, not C. After that, it's users preferences for the form factor desired. 
 
-### Compatible USB Security Dongles:
+### Supported USB Security dongles:
 
-The table below shows compatibility with Heads-specific requirements (OpenPGP + reverse HOTP):
-
-|Manufacture|Model line|OpenPGP Smartcard|Reverse HOTP|Heads Compatible|
+|Manufacturer|Model|OpenPGP|HOTP verification|Compatible|
 |--|--|:--:|:--:|:--:|
-|Yubico|[YubiKey 5 Series](https://www.yubico.com/products/yubikey-5-overview/)|X||❌|
-|Nitrokey|[Nitrokey Pro 2](https://www.nitrokey.com/products/nitrokeys#comparison)|X|X|✅|
-|Nitrokey|[Nitrokey Storage 2](https://www.nitrokey.com/products/nitrokeys#comparison)|X|X|✅|
-|Nitrokey|[Nitrokey 3](https://www.nitrokey.com/products/nitrokeys#comparison)|X|X|✅|
-|Purism|[Librem Key](https://puri.sm/products/librem-key/)|X|X|✅|
+|Yubico|[YubiKey 5 Series](https://www.yubico.com/products/yubikey-5-overview/)|✅|❌|OpenPGP only|
+|Nitrokey|[Nitrokey Pro 2](https://www.nitrokey.com/products/nitrokeys#comparison)|✅|✅|Full support|
+|Nitrokey|[Nitrokey Storage 2](https://www.nitrokey.com/products/nitrokeys#comparison)|✅|✅|Full support|
+|Nitrokey|[Nitrokey 3](https://www.nitrokey.com/products/nitrokeys#comparison)|✅|✅|Full support|
+|Purism|[Librem Key](https://puri.sm/products/librem-key/)|✅|✅|Full support|
 
-**Why YubiKey 5 Series is not compatible**: While YubiKey 5 Series supports standard HOTP/TOTP and OpenPGP, it does **not** support the reverse HOTP protocol that Heads requires for firmware verification. Only dongles listed as compatible in the table above include the specialized firmware needed for Heads reverse HOTP functionality.
+**Notes**: 
+- **OpenPGP only**: Can be used with non-HOTP board configurations (manual TPMTOTP verification)
+- **Full support**: Can be used with both HOTP and non-HOTP board configurations
 
 *NOTE* - If you prefer not to use USB security dongles or want simplified security procedures, see the [Purism Boot Modes](/PurismBootModes) documentation for information about Basic and Restricted boot modes that provide different security/usability trade-offs.
 
