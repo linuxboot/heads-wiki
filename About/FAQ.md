@@ -169,7 +169,7 @@ Heads can verify firmware integrity using two methods:
 ### HOTP verification (with USB Security dongle)
 **Heads generates HOTP codes** and sends them to your USB Security dongle. The dongle verifies these codes automatically. If verification succeeds, Heads boots normally. If it fails, the dongle's LED shows red and boot is halted.
 
-**Requirements**: Compatible USB Security dongle (see [Prerequisites compatibility table](/Installing-and-Configuring/Prerequisites#supported-usb-security-dongles))
+**Requirements**: Compatible USB Security dongle (see [Prerequisites compatibility table](/Installing-and-Configuring/Prerequisites#usb-security-dongles-aka-security-token-aka-smartcard))
 
 **Advantages**: Automatic verification, no manual interaction needed, works without accurate time
 
