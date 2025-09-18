@@ -17,7 +17,7 @@ Please determine the [version]({{ site.baseurl }}/Prerequisites#supported-device
 
 For the ASUS P8Z77-M Pro there are multiple maximized boards under `./boards`,  p8z77-m_pro-tpm1-maximized and p8z77-m_pro-tpm1-maximized-hotp.
 
-As opposed to Legacy boards produced ROM images, Maximized boards produced ROMs are totally valid ROMs, including a valid Intel Flash Descriptor (IFD), Ethernet, a valid neutered Intel ME containing only BUP+ROMP modules which liberated space is given back to the BIOS (coreboot+payload) region. The IFD also has the VSCC table remove in these boards](https://github.com/corna/me_cleaner/issues/80) which prevents the ME having an instruction of what model of flash chip to write to.
+Current Heads boards produce totally valid ROM images, including a valid Intel Flash Descriptor (IFD), Ethernet, a valid neutered Intel ME containing only BUP+ROMP modules which liberated space is given back to the BIOS (coreboot+payload) region. The IFD also has the VSCC table removed in these boards](https://github.com/corna/me_cleaner/issues/80) which prevents the ME having an instruction of what model of flash chip to write to.
 
 These boards have a script in the 'blobs/p8z77-m_pro' folder which will automatically download a factory rom and perform the necassary modifications and extraction.
 

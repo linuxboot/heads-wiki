@@ -146,7 +146,7 @@ inserted. Select "Add a GPG key to the running BIOS" to enter the GPG
 Management menu, then "Add a GPG key to the running BIOS + reflash". Follow the 
 steps and your GPG key will be added to the Heads rom.
 
-Once `flashrom` is complete, reboot and now you should now be back in the Heads 
+Once the flash tool (`flashprog` on newer firmware or `flashrom` on older firmware) is complete, reboot and now you should now be back in the Heads 
 runtime. It should display a message that it is unable to unseal TOTP.
 
 ## Configuring the TPM

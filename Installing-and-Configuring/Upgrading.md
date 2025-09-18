@@ -133,23 +133,12 @@ If you need to validate the current firmware integrity against the last flashed 
 
 ---
 
-Migrating from Legacy to Maximized Firmware
+Historical: Migrating from Very Old Firmware
 ---
-**Warning**: Migration from Legacy to Maximized builds is now considered a legacy process. Legacy builds were officially deprecated in [October 2024](https://github.com/linuxboot/heads/pull/1803), while Maximized builds have been promoted since [December 2020](https://github.com/linuxboot/heads/pull/703). Use maximum caution when upgrading internally to Maximized builds, as improper steps may result in a bricked device.
 
-### How to Identify Legacy vs Maximized Builds
-To determine whether you are using a Legacy or Maximized build:
-1. Boot into the Heads main menu.
-2. Check the main screen title:
-   - If the build is **Maximized**, the label will explicitly include the word "Maximized."
-     - Example: `x230-hotp-maximized`
-   - If the label does not include "Maximized," you are using a Legacy build.
-     - Example: `x220-legacy`, `x220`, `t430`, `x230-hotp` (no "Maximized" in the board name).
+**Note**: If you are upgrading from very old Heads firmware that predates the 2024 standardization, please refer to the [Historical Legacy Migration](/Historical-Legacy-Migration) page for detailed information and migration steps.
 
-For migration instructions, refer to the [Downloading documentation]({{ site.baseurl }}/Downloading) and ensure you follow both the upgradability validation and integrity validation steps before flashing.
-
-**Important Note for Nitrokey Customers**:  
-If you are using a NitroPad X230 or T430 with firmware version **1.2 or earlier**, you should contact [Nitrokey support](https://support.nitrokey.com/) to get their flashing service. For more details, refer to this [Nitrokey support thread](https://support.nitrokey.com/t/nitropad-t430-firmware-update-brick/3777/2).
+All current Heads boards use modern architecture, and new installations should use current board configurations.
 
 ---
 
@@ -167,39 +156,44 @@ For more details on re-owning, refer to the relevant sections above.
 Verify Upgradeability Paths of the Firmware
 ====
 First, verify the [supported platforms]({{ site.baseurl }}/Prerequisites#supported-devices).  
-If you have a *ThinkPad (xx30/xx20 flavors), proceed with caution.*  
-*Also select the HOTP variant if you own a [Heads-supported USB Security dongle]({{ site.baseurl }}/Prerequisites#usb-security-dongles-aka-security-token-aka-smartcard) for visual remote attestation.*
 
-Review whether the Intel Firmware Descriptor (IFD) and Intel Management Engine (ME) were unlocked from the [Recovery Shell]({{ site.baseurl }}/RecoveryShell) before proceeding.
+**For ThinkPad users (xx30/xx20 families)**: If you are upgrading from very old firmware that predates 2024, proceed with extra caution and ensure you have recovery equipment available.
+
+*Select the HOTP variant if you own a [Heads-supported USB Security dongle]({{ site.baseurl }}/Prerequisites#usb-security-dongles-aka-security-token-aka-smartcard) for visual remote attestation.*
+
+Review whether the Intel Firmware Descriptor (IFD) and Intel Management Engine (ME) regions are unlocked from the [Recovery Shell]({{ site.baseurl }}/RecoveryShell):
 
 ```shell
-flashrom -p internal
+flashprog -p internal
 ```
 
-The two following situations must apply, which will define what to do next.
+**Note**: On older Heads firmware (pre-2025), use `flashrom -p internal` if `flashprog` is not available. Newer firmware versions use `flashprog` as the flash tool.
 
-Unlocked IFD and ME
+The output will show whether you can upgrade internally or need external flashing.
+
+Unlocked IFD and ME (Modern Firmware)
 ----
-This is the expected output if the initial external flashing of the firmware unlocked IFD and ME regions:
+This is the expected output for modern Heads firmware with unlocked IFD and ME regions:
 ![CanBeFlashedToMaximizedRom](https://user-images.githubusercontent.com/827570/167728631-85a5ca9e-48f6-4d4f-8544-532fa75bf5d3.jpeg)
-- This means you can internally migrate from Legacy boards (xxxx-hotp/xxxx boards ROM) to their Maximized boards counterpart (xxx-hotp-maximized/xxxx-maximized boards ROM).
-  - If you are presently on a Legacy board (If Heads boot screen is not showing Maximized):
-    - You will have to manually call flashrom from the Recovery Console: 
-      - `mount-usb`
-      - `flashrom -p internal -w /media/heads-hotp-maximized-version-gcommit.rom`
-    - ![InternalUpgradeToMaximizedROM](https://user-images.githubusercontent.com/827570/167729694-6ff8da60-986a-4ec3-9b2d-4fa94e42d3fa.jpeg)
-- If you are already running a Maximized board ROM, you can safely upgrade through Heads GUI keeping your current settings. 
 
-Locked IFD and ME
+- **Current firmware**: You can safely upgrade through the Heads GUI using `.zip` files
+- **Very old firmware**: If upgrading from pre-2024 firmware, you may need to manually flash:
+  - `mount-usb`
+  - `flashprog -p internal -w /media/heads-current-version-gcommit.rom` (or `flashrom` on older firmware)
+  - ![InternalUpgradeToMaximizedROM](https://user-images.githubusercontent.com/827570/167729694-6ff8da60-986a-4ec3-9b2d-4fa94e42d3fa.jpeg)
+
+Locked IFD and ME (Very Old Firmware)
 ----
-Otherwise, initial external flashing of the firmware didn't unlock the IFD/ME regions:
+If you see this output, your firmware has locked IFD/ME regions:
 ![CantBeInternallyUpgradeToMaximizedROM](https://user-images.githubusercontent.com/827570/167728658-731362da-a676-4610-becb-ff94f2ff48b1.jpeg)
-- This means you will have to:
-  - Externally reflash Maximized board ROM 
-    - xx30: xx30-*maximized-top.rom(4Mb) and xx30-*maximized-bottom.rom(8Mb) ROMs 
-    - xx20: xx20-*-maximized.rom (8Mb ROM)
 
-Legacy board variants were [officially deprecated in October 2024 per this PR](https://github.com/linuxboot/heads/pull/1803).
+- This indicates very old firmware that requires external flashing
+- You will need to externally reflash using current board ROM files:
+  - xx30 family: Use the appropriate `.rom` files (typically split into 4MB + 8MB images)
+  - xx20 family: Use the appropriate single `.rom` file
+- **Warning**: External flashing is required - internal flashing will not work
+
+**Historical Note**: Legacy board variants were [officially deprecated in October 2024](https://github.com/linuxboot/heads/pull/1803). All current boards use modern architecture.
 
 ---
 
