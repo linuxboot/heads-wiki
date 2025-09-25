@@ -135,7 +135,7 @@ Validating boots using TPMTOTP, TPM-based TOTP in Heads, requires a threat model
  using a cellphone or secure remote authenticator service. Without this time synchronization
  *within seconds*, the Measured Boot will estimate a different TOTP code than matches your device.
  Hardware-based OTP providers are excluded from this time requirement, as they calculate 
- calculate the secret as your Heads device by HOTP secrets using the bootcounts.
+ the secret as your Heads device by HOTP secrets using the bootcounts.
 
 Trammell Hudson ported [mjg59's tpmtotp](https://mjg59.dreamwidth.org/35742.html)
  to run from inside the boot ROM of a Thinkpad x230 using CoreBoot with a Linux
