@@ -26,9 +26,9 @@ For these reasons, Tails is not sufficient for many users who want a laptop that
  won't be able to modify the hardware underneath them.
 
 Complicating this goal is that modern x86 hardware is full of modifiable state
- [State considered harmful, Rutkowska 2015]({{ site.baseurl }}/PDFs/state_harmful.pdf)
+ ([State considered harmful, Rutkowska 2015]({{ site.baseurl }}/PDFs/state_harmful.pdf))
  and it is full of dusty corners that can hide malware or unauthorized code.
- Additionally there is unverifiable code running in the Intel Management Engine,
+ Additionally, there is *unverifiable* code running in the Intel Management Engine,
  which has access to memory, to the network and various other peripherals. As a
  result we must trust certain entities more than others and this does affect our
  threat model.
@@ -94,6 +94,7 @@ As we consider building secure hardware, it is very important to keep in mind
 * System Administrators
   * Protection of Key escrow for storage keys
   * Deliberate tampering with HW/SW config
+  * For TOTP: Time Synchronization on Motherboard Time VS TOTP Provider 
   * Can we implement two-key authentication to reduce chance of backdoors?
 
 System Firmware
@@ -118,12 +119,23 @@ Before the user enters a disk decryption password it must prove to the user that
  the Measured Boot process has started the expected firmware. This presents a
  problem: the system can't simply display a secret message since that could be
  replayed by an attacker's firmware and the user doesn't want to enter the
- password without knowing that the system is in a safe state. TPMTOTP
- [Anti Evil maid 2 Turbo Edition, Matthew Garret 2015](https://mjg59.dreamwidth.org/35742.html)
- and [Beyond anti evil maid](https://media.ccc.de/v/32c3-7343-beyond_anti_evil_maid)
- addresses this by using the Time-based One-time Password Algorithm (TOTP) to
- compute a function on a shared secret and the current time, which allows the
- user to verify the output on a second mobile device or TOTP display token.
+ password without knowing that the system is in a safe state. The answer Heads
+ uses, is inspired by work on Anti Evil Maid software; [Anti Evil maid 2 Turbo Edition, Matthew Garret 2015](https://mjg59.dreamwidth.org/35742.html) and [Beyond anti evil maid](https://media.ccc.de/v/32c3-7343-beyond_anti_evil_maid).
+ Heads computes a value using data stored in the TPM, producing a One-Time-Code 
+ measured boot code that you verify by matching this to a Time-based One Time 
+ Password based on device time or Hardware-based One Time Password based on boots.
+ 
+Validating boots using TPMTOTP, TPM-based TOTP in Heads, requires a threat model including user error for time.
+ The TPM and Heads addresses a change in boot media by using a One-time Password Algorithm (OTP) to
+ compute a function made from a shared secret and one other piece of information: the *current
+ UTC time*, or *the bootcount*, the former allows the user to verify the output on a second 
+ mobile device or TOTP display token, and the latter verifies using a Hardware-based OTP provider.
+ ***_TOTP requires time security and synchronicity between your booting Heads machine time
+ and your TOTP device's UTC hardware time_***, _which may be changed intentionally or automatically_
+ using a cellphone or secure remote authenticator service. Without this time synchronization
+ *within seconds*, the Measured Boot will estimate a different TOTP code than matches your device.
+ Hardware-based OTP providers are excluded from this time requirement, as they calculate 
+ calculate the secret as your Heads device by HOTP secrets using the bootcounts.
 
 Trammell Hudson ported [mjg59's tpmtotp](https://mjg59.dreamwidth.org/35742.html)
  to run from inside the boot ROM of a Thinkpad x230 using CoreBoot with a Linux
@@ -266,7 +278,7 @@ Goals of the attacker
 * Monitor the user's communications
 * Exfiltrate data from running system
 * Recover data from a shutdown system
-* Masquarade as the user
+* Masquerade as the user
 * Install unauthorized software
 
 Capabilities of the attacker
