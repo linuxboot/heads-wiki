@@ -101,11 +101,21 @@ diff <(hexdump -C t480_original_bios.bin) <(hexdump -C t480_original_bios_1.bin)
 If the files differ or the chip content does not match the dump, try reconnecting your programmer to the SPI flash chip and make sure your flashrom/flashprog software is up-to-date.
 
 
-If they are the same, then write `T480-hotp-maximized.rom` to the SPI flash chip:
+If they are the same, you can then write `T480-hotp-maximized.rom` to the SPI flash chip:
 
 ```shell
 sudo flashrom -p ch341a_spi -c YYY -w ~/heads/build/x86/T480-hotp-maximized/T480-hotp-maximized.rom
 ```
+
+If you want to perserve the orignal ethernet mac adress you would need to extract GbE from the original firmware and insert that into the heads firmware. Otherwise the ethernet will have the general mac: 00:DE:AD:C0:FF:EE. The orignal mac adress is a identifier of you laptop which can be used to track you in local network, otherwise in networks with other heads devices with the same mac you will have connectivty problems. You need the [ifdtool](https://doc.coreboot.org/util/ifdtool/binary_extraction.html) from coreboot for that.
+To extract and insert the GbE into heads run: 
+
+```shell
+ifdtool -x t480_original_bios.bin
+ifdtool -i GbE:flashregion_3_gbe.bin ~/heads/build/x86/T480-hotp-maximized/T480-hotp-maximized.rom
+```
+
+this will create `T480-hotp-maximized.rom.new` which you then can write directly to the SPI flash chip (see above).
 
 Here is a successful attempt. Be patient, it may take a while.
 ![erase/write done]({{ site.baseurl }}/images/T480/9_flash.jpg)
