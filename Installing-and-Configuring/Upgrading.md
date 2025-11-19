@@ -64,6 +64,16 @@ If you are installing Heads for the first time, you will need to perform an exte
 - Verifying file integrity.
 - Preparing for external flashing.
 
+You can use this command
+```shell
+    sudo flashrom -p ch341a_spi -c YYY -w [HEADS_ROM]
+```
+On boards with Intel-based Ethernet, this will also overwrite the GbE region in the BIOS, which stores the MAC address of the chip, with a forged one (MAC: 00:DE:AD:C0:FF:EE). This has the privacy benefit that the chip uses this shared MAC so it can't be used as a personal identifier for this exact board. The downside is that this can create connectivity problems on local networks if other heads boards with the same MAC address are present. To preserve the original MAC address of the board, use:
+
+```shell
+    sudo flashrom -p ch341a_spi -c YYY --ifd -i bios -i me -i fd -w [HEADS_ROM]
+```
+
 **Note**: This process is only required for the initial installation of Heads.
 
 ---
@@ -121,8 +131,7 @@ If you need to validate the current firmware integrity against the last flashed 
 **Note on `CONFIG_FLASH_OPTIONS`**:
 - The `CONFIG_FLASH_OPTIONS` variable specifies the board-specific flash options to ensure proper handling of SPI regions during flashing. These options are defined in the board's configuration file.
 - Boards may specify different SPI regions to flash. For example:
-  - The `novacustom-v540tu` board preserves the `GBE` (Gigabit Ethernet) region, ensuring the manufacturing MAC address remains intact.
-  - The `x230-hotp-maximized` board overwrites the entire SPI flash, including the `GBE` region, replacing it with a generic configuration.
+  - All boards with intel based ethernet chips preserves the `GBE` (Gigabit Ethernet) region, ensuring the MAC address remains intact.
 - To inspect the flash options for your board, use the `env` command in the recovery shell:
   ```shell
   env
