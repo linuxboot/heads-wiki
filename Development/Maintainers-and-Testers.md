@@ -21,15 +21,15 @@ parent: Development
 Maintainers
 ===
 
-- [@tlaurion](https://github.com/tlaurion) (was Insurgo, not selling hardware anymore, project is currently under-funded)
-- [@JonathonHall-Purism](https://github.com/JonathonHall-Purism) (purism)
-- [@nestire](https://github.com/nestire) (nitrokey)
-- [@osresearch](https://github.com/osresearch) (founder of project, not active)
+- [@tlaurion](https://github.com/tlaurion) (Sold the PrivacyBeast through Insurgo. Main maintainer/developer of Heads since 2018. Need a feature? https://osresearch.net/Consultation-Services/)
+- [@JonathonHall-Purism](https://github.com/JonathonHall-Purism) (Purism)
+- [@nestire](https://github.com/nestire) (Nitrokey)
+- [@osresearch](https://github.com/osresearch) (Founder of the Heads project and main maintainer/developer up to 2018)
 
 Board testers
 ===
 
-See [Board Testers](https://github.com/linuxboot/heads/blob/master/BOARD_TESTERS.md).
+See [Board Testers](https://github.com/linuxboot/heads/blob/master/BOARDS_AND_TESTERS.md).
 
 Integration/Test
 ===
