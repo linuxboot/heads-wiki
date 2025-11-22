@@ -26,11 +26,14 @@ Intel
 - xxx0: [gm45 bridge, Montevina: no FSP, no ME: X200, T400, T500, R500, X300](https://doc.coreboot.org/mainboard/lenovo/montevina_series.html) : **no QubesOS support there** (no proper vt-d2)
 - [xx20](https://doc.coreboot.org/mainboard/lenovo/x2xx_series.html): [Sandy bridge, no FSP. ME<10: BUP module required only: X220/T420/T520](https://doc.coreboot.org/mainboard/lenovo/Sandy_Bridge_series.html)
 - xx30: [Ivy bridge, no FSP. ME<10: ROMP and BUP required: X230/T430/W530](https://doc.coreboot.org/mainboard/lenovo/Ivy_Bridge_series.html) Z220 CMT and others
+- xx40: [Haswell, no FSP, ME<10: ROMP and BUP required: t440p w541 without MRC blob (upsteam docs outdated)](https://doc.coreboot.org/northbridge/intel/haswell/index.html)
+  - NRI was merged in upstream 25.03 and under [Heads 25.09 coreboot version bump](https://github.com/linuxboot/heads/pull/2025)
 
 Additional required Intel blobs:
 =====
 
 - [FSP is present in all Broadwell+ platforms](https://doc.coreboot.org/soc/intel/fsp/index.html)
+- [MRC blob present in all Broadwell+ plaforms](https://doc.coreboot.org/soc/intel/broadwell/blobs.html)
 
 ME status on different boards models
 =====
