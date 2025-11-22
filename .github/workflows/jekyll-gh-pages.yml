@@ -28,6 +28,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Fetch sources from main repo
+        working-directory: ./Development
+        run: |
+          curl -H 'Accept: application/vnd.github.v3.raw' -O -L https://github.com/linuxboot/heads/BOARDS_AND_TESTERS.md
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
