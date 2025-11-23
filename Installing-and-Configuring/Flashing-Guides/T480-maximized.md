@@ -101,11 +101,18 @@ diff <(hexdump -C t480_original_bios.bin) <(hexdump -C t480_original_bios_1.bin)
 If the files differ or the chip content does not match the dump, try reconnecting your programmer to the SPI flash chip and make sure your flashrom/flashprog software is up-to-date.
 
 
-If they are the same, then write `T480-hotp-maximized.rom` to the SPI flash chip:
+If they are the same, you can then write `T480-hotp-maximized.rom` to the SPI flash chip.
 
 ```shell
 sudo flashrom -p ch341a_spi -c YYY -w ~/heads/build/x86/T480-hotp-maximized/T480-hotp-maximized.rom
 ```
+
+On boards with Intel-based Ethernet, such as the T480, this will also overwrite the GbE region in the BIOS, which stores the MAC address of the chip, with a forged one (MAC: 00:DE:AD:C0:FF:EE). This has the privacy benefit that the chip uses this shared MAC so it can't be used as a personal identifier for this exact board. The downside is that this can create connectivity problems on local networks if other heads boards with the same MAC address are present. To preserve the original MAC address of the board, use:
+
+```shell
+sudo flashrom -p ch341a_spi -c YYY --ifd -i bios -i me -i fd -w ~/heads/build/x86/T480-hotp-maximized/T480-hotp-maximized.rom
+```
+
 
 Here is a successful attempt. Be patient, it may take a while.
 ![erase/write done]({{ site.baseurl }}/images/T480/9_flash.jpg)
