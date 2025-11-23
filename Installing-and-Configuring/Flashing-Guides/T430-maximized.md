@@ -2,7 +2,7 @@
 layout: default
 title: Lenovo T430 Maximized
 permalink: /T430-maximized-flashing/
-nav_order: 1
+nav_order: 3
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -10,11 +10,15 @@ grand_parent: Installing and configuring
 Lenovo T430 (Maximized)
 ===
 
+## ⚠️ Safety First
+
+**Before starting, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**
+
 [T430 Hardware Maintenance Manual](https://download.lenovo.com/ibmdl/pub/pc/pccbbs/mobiles_pdf/t430_t430i_hmm_en_0b48304_04.pdf)  
 
-Similarly to the x230, the thinkpad T430 has two SPI flash chips that hold the BIOS, ME, etc. They are located under the palm rest. To access these chips, complete disassembly is required. It is a straightforward process and takes approximately 30 minutes. For this you will need: some screwdrivers, thermal paste (since the CPU cooler needs to be removed too), an assembled ch341a SPI programmer (e.g. [Modified ch341a SPI programmer](https://novacustom.com/product/modded-ch341a-bios-firmware-programmer-3v/) by Novacustom) and a other laptop/PC with Ubuntu installed. Other linux based OS should be fine too. 
+Similarly to the x230, the thinkpad T430 has two SPI flash chips that hold the BIOS, ME, etc. They are located under the palm rest. To access these chips, complete disassembly is required. It is a straightforward process and takes approximately 30 minutes. For this you will need: some screwdrivers, thermal paste (since the CPU cooler needs to be removed too), a recommended SPI programmer (see our [Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/)), and another laptop/PC with Ubuntu installed. Other linux based OS should be fine too. 
 
-First remove the battery and the cable powering your device.
+**Critical**: Remove the battery AND disconnect the AC adapter before starting.
 
 ![Keyboard tilted up]({{ site.baseurl }}/images/t430/1_1_back_view_removed_battery.jpg)
 
@@ -62,7 +66,9 @@ Try to read the name on the top SPI flash chip. I was unable to do that. The dot
 
 ![SPI flash chips closed view]({{ site.baseurl }}/images/t430/11_spi_chips_closed_view.jpg)
 
- Then, connect the clip and ch341a programmer to the "top" (4096 kb) SPI flash chip. In my set up, the red wire should be where the dot is.
+ Then, connect the clip and SPI programmer to the "top" (4096 kb) SPI flash chip. In my set up, the red wire should be where the dot is.
+
+**Note**: For safety and reliability, we recommend using [Tigard or CH341A rev 1.6+]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) instead of older CH341A programmers. The commands below use ch341a_spi as an example, but replace with your programmer's parameters.
 
 ![Flashing 4 mb chip]({{ site.baseurl }}/images/t430/12_flash_4mb_spi_chip.jpg)
 
@@ -105,7 +111,7 @@ sudo flashrom -p ch341a_spi -c YYY -w ~/heads/build/x86/t430-maximized/t430-maxi
 
 
 Try to read the name on the bottom SPI flash chip. Then, connect the clip and
- ch341a programmer to the bottom SPI flash chip. 
+ SPI programmer to the bottom SPI flash chip. 
  
 ![flashing bottom 8 mb chip]({{ site.baseurl }}/images/t430/16_flash_8mb_chip.jpg)
  
