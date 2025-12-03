@@ -1,4 +1,4 @@
-# orkflow for building and deploying a Jekyll site to GitHub Pages
+# Workflow for building and deploying a Jekyll site to GitHub Pages
 name: Deploy Heads Wiki Jekyll with GitHub Pages
 
 on:
