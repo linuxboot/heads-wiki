@@ -62,7 +62,7 @@ Based on extensive community testing and feedback, here are the recommended SPI 
 
 ### 4. **CH347 (Newer alternative to CH341A)**
 - **Cost**: $5-15 USD
-- **Speed**: Significantly faster than CH341A
+- **Speed**: ~60 seconds for 16MB chip (significantly faster than CH341A)
 - **Voltage**: 3.3V only (5V tolerant inputs)
 - **Protocols**: SPI, I2C
 - **Safety**: Safer than old CH341A (no dangerous 5V output)
