@@ -2,7 +2,7 @@
 layout: default
 title: Lenovo T480 Maximized
 permalink: /T480-maximized-flashing/
-nav_order: 1
+nav_order: 5
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -10,15 +10,21 @@ grand_parent: Installing and configuring
 Lenovo T480 (Maximized)
 ===
 
+## ⚠️ Safety First
+
+**Before starting, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**
+
 [T480 Hardware Maintenance Manual](https://download.lenovo.com/pccbbs/mobiles_pdf/t480_hmm_en.pdf)  
 
 Accessing and flashing the BIOS chip on a T-series machine has never been easier. The process is straightforward and takes approximately 10 minutes.
 
 The ThinkPad T480 has two SPI flash chips important for the port. The first chip holds the BIOS, ME, etc., while the second holds the Thunderbolt firmware. To access these chips, you only need to remove the back panel, which is secured by six screws. 
 
+**Critical**: Remove the battery AND disconnect the AC adapter before starting.
+
 For whole procedure you will need: 
 - A Phillips screwdriver +1 (PH1), which is standard for most laptop screws.
-- An assembled Raspberry Pi or CH341A SPI programmer. You should use a CH341A revision 1.6 or later (e.g., 1.6, 1.7, etc.) because these versions have a properly implemented and enforced voltage regulator, ensuring stable 3.3V operation (3.3V is important!) (e.g. [Modified CH341A SPI programmer](https://novacustom.com/product/modded-ch341a-bios-firmware-programmer-3v/) by Novacustom) or [open-source Tigard tool](https://github.com/tigard-tools/tigard). Using Raspberry Pi pico is  described in the [Libreboot flash guide](https://libreboot.org/docs/install/spi.html).
+- A recommended SPI programmer (see our [Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/))
 - Other laptop/PC with a Linux-based OS installed.  
 - Optional: A plastic guitar pick or an old credit card to help detach the bottom case from the clips holding it in place. Otherwise, it can be difficult to remove, increasing the risk of breaking the tabs or the top part of the bottom case above the battery connector.
 

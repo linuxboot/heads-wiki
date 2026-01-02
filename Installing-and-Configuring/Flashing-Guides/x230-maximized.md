@@ -2,7 +2,7 @@
 layout: default
 title: Lenovo X230 Maximized
 permalink: /x230-maximized-flashing/
-nav_order: 1
+nav_order: 2
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -10,12 +10,16 @@ grand_parent: Installing and configuring
 Lenovo X230 (Maximized) (applies to all 4mb+8mb SPI chips maximized boards)
 ===
 
+## ⚠️ Safety First
+
+**Before starting, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**
+
 [X230 Hardware Maintenance Manual](https://web.archive.org/web/20201112030049/https://thinkpads.com/support/hmm/hmm_pdf/x230_x230i_hmm_en_0b48666_01.pdf)  
 [X230 Tablet Hardware Maintenance Manual](https://web.archive.org/web/20130908100917/http://download.lenovo.com/pccbbs/mobiles_pdf/0b48730.pdf)
 
 ![Underside of the x230]({{ site.baseurl }}/images/Underside_of_the_x230.jpg)
 
-First remove the battery or cable powering your device. The Thinkpad x230 has
+**Critical**: Remove the battery AND disconnect the AC adapter before starting. The Thinkpad x230 has
  two SPI flash chips that hold the BIOS, ME, etc. and are located under the
  palm rest. To access these chips, first remove the indicated screws on the back
  of the laptop.
@@ -62,8 +66,11 @@ First [download]({{ site.baseurl }}/Downloading) / [build]({{ site.baseurl }}/x2
 
 
 Try to read the name on the top SPI flash chip. Then, connect the clip and
- ch341a programmer to the top SPI flash chip. Use flashrom to check the chip
-  that you are connected to:
+ SPI programmer to the top SPI flash chip. 
+
+**Note**: For safety and reliability, we recommend using [Tigard or CH341A rev 1.6+]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) instead of older CH341A programmers. The commands below use ch341a_spi as an example, but replace with your programmer's parameters.
+
+Use flashrom to check the chip that you are connected to:
 
 ```shell
 sudo flashrom -p ch341a_spi
@@ -86,7 +93,7 @@ sudo flashrom -p ch341a_spi -c “YYY” -w ~/heads/build/x86/x230-maximized/x23
 ```
 
 Try to read the name on the bottom SPI flash chip. Then, connect the clip and
- ch341a programmer to the bottom SPI flash chip. Use flashrom to check the chip
+ SPI programmer to the bottom SPI flash chip. Use flashrom to check the chip
   that you are connected to:
 
 ```shell
