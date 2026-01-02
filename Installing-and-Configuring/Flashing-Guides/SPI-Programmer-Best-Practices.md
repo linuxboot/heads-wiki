@@ -60,14 +60,7 @@ Based on extensive community testing and feedback, here are the recommended SPI 
 - **Reliability**: High
 - **Best for**: DIY enthusiasts, custom setups
 
-### 4. **BeagleBone Black (Advanced debugging)**
-- **Cost**: $60-90 USD
-- **Speed**: ~16 seconds for 16MB chip
-- **Voltage**: 3.3V, some pins 1.8V
-- **Additional features**: EHCI debugging, serial console
-- **Best for**: Advanced debugging, development
-
-### 5. **CH347 (Newer alternative to CH341A)**
+### 4. **CH347 (Newer alternative to CH341A)**
 - **Cost**: $5-15 USD
 - **Speed**: Significantly faster than CH341A
 - **Voltage**: 3.3V only (5V tolerant inputs)
@@ -84,7 +77,6 @@ Based on extensive community testing and feedback, here are the recommended SPI 
 | **Tigard** | $67-89 | ~42 seconds | 1.8V, 3.3V, 5V, external | SPI, I2C, JTAG, SWD, UART | Logic analyzer, USB debugging | Excellent |
 | **CH341A rev 1.6+** | $5-15 | ~120 seconds | 1.8V, 2.5V, 3.3V, 5V | SPI, I2C | None | Good |
 | **Raspberry Pi Pico** | $4-10 | ~30 seconds | 3.3V (configurable) | SPI | None | High |
-| **BeagleBone Black** | $60-90 | ~16 seconds | 3.3V, 1.8V | SPI, UART | EHCI debugging | High |
 | **CH347** | $5-15 | ~60 seconds | 3.3V only | SPI, I2C | None | Good |
 | **CH341A old** | $2-10 | ~480 seconds | 5V (dangerous) | SPI, I2C | None | **Not recommended** |
 
@@ -242,9 +234,6 @@ For WSON8 packages (surface mount without leads):
 
 ### Tigard Logic Analysis
 Tigard can function as a logic analyzer for debugging SPI communication issues.
-
-### BeagleBone Black EHCI Debugging
-When configured with screwdriver firmware, BeagleBone Black can capture boot logs via EHCI debugging.
 
 ## Recommended Kits
 
