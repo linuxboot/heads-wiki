@@ -69,7 +69,6 @@ Conferences
 * [2023 - FOSDEM - Thierry Laurion - Heads status update](https://archive.fosdem.org/2023/schedule/event/heads_status_update/)
 * [2024 - QubesOS mini-summit - Thierry Laurion - Heads rolling release : roles of upstream and downstream forks (Design Session)](https://youtu.be/mAb_kHrF6SQ?list=PLuISieMwVBpL5S7kPUHKenoFj_YJ8Y0_d)
 * [2024 - QubesOS mini-summit - Jan Suhr & Thierry Laurion - Future of Measured Boot such as Heads (Design Session)](https://youtu.be/ZPeidhgNBtg?list=PLuISieMwVBpL5S7kPUHKenoFj_YJ8Y0_d)
-* [2025 - Linux Foundation Member Summit - Ronald (Ron) Minnich - Deploying Linux as Firmware at Global Scale: Update](https://github.com/user-attachments/files/20680368/Deploying.Linux.as.firmware.at.global.scale.--.LF.2025.pdf)
 
 Articles
 ===
@@ -79,6 +78,7 @@ Articles
 * [2018 - Linux Journal - Michael J. Hammel - LinuxBoot: Custom Embedded Linux Distributions](https://www.linuxjournal.com/content/custom-embedded-linux-distributions)
 * [2019 - Linux Journal - Kyle Rankin - Tamper-Evident Boot with Heads](https://www.linuxjournal.com/content/tamper-evident-boot-heads)
 * [2023 - BLOG - Michael Atfield - Trusted Boot (Anti-Evil-Mail, Heads and Pureboot](https://tech.michaelaltfield.net/2023/02/16/evil-maid-heads-pureboot/)
+* [2025 - Linux Foundation Member Summit - Ronald (Ron) Minnich - Deploying Linux as Firmware at Global Scale: Update](https://github.com/user-attachments/files/20680368/Deploying.Linux.as.firmware.at.global.scale.--.LF.2025.pdf)
 
 
 Learn more about Heads
