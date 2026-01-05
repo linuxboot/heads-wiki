@@ -52,3 +52,9 @@ Recovery Shell
 ----
 
 There is a [Recovery Shell](/RecoveryShell/) built into the heads environment which may be used for troubleshooting.
+
+
+Technical References
+----
+
+For detailed technical documentation on TPM integration, security mechanisms, TOTP/HOTP authentication, LUKS encryption, and firmware internals, see the [Heads DeepWiki](https://deepwiki.com/linuxboot/heads/3-secure-boot-runtime).
