@@ -33,19 +33,19 @@ devices.
 
 ### Nitrokey (Heads)
 Nitrokey offers Heads preinstalled on some of their devices. They also sell
-older refurbished laptop models with Intel ME neutralized and Nitrokey USB
+older refurbished laptop models with Intel ME neutralized/deactivated and Nitrokey USB
 security dongles. Additionally, Nitrokey resells some of NovaCustom's laptops.
 
 - **Website:** [Nitrokey](https://www.nitrokey.com)
 - **Products:** Laptops, phones, servers, workstations, mini-PCs, USB security
-  dongles, and older refurbished laptop models with ME neutralized
+  dongles, and older refurbished laptop models with ME neutralized/deactivated
 
 ### NovaCustom (Heads)
 NovaCustom offers devices with Heads preinstalled. They focus on providing
 customizable and secure devices for their customers. NovaCustom buys Clevo
 laptops in bulk, ensuring BootGuard keys are not fused at the last manufacturing
 steps. They also resell Nitrokey 3 USB security dongles bundled with their
-Heads-based firmware devices.
+Heads-based firmware devices. They provide recent laptop models with ME deactivated.
 
 - **Website:** [NovaCustom](https://novacustom.com)
 - **Products:** Laptops and USB security dongles
@@ -53,8 +53,9 @@ Heads-based firmware devices.
 ### Purism (PureBoot Heads distribution)
 Purism offers laptops, tablets, mini PCs, and servers with PureBoot (a
 distribution of Heads) preinstalled. BootGuard is unfused to ensure firmware
-remains user-controlled. Purism makes and sells the Librem Key, which is a clone
-of the Nitrokey Pro 2. The Librem Key is made in the USA.
+remains user-controlled. They provide recent laptop models with ME deactivaated.
+Purism makes and sells the Librem Key, which is a clone of the Nitrokey Pro 2. 
+The Librem Key is made in the USA.
 
 - **Website:** [Purism](https://puri.sm)
 - **Products:** Laptops, phones, tablets, mini PCs, servers, and USB security
