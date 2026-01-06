@@ -99,6 +99,14 @@ mount-usb
 flashprog -p internal -w /media/PathToMaximizedRom.rom
 ```
 
+on board with Intel based Ethernet you might want to use: 
+
+```
+sudo flashrom -p internal --ifd -i bios -i me -i fd -w /media/PathToMaximizedRom.rom
+```
+
+to perserve the orignal mac adresse
+
 **Note**: Use `flashprog` on newer Heads firmware (2025+) or `flashrom` on older firmware versions, depending on what is available in your Heads system.
 
 On next reboot, Heads would guide you into factory resetting your USB Security dongle or import your previously generated public key matching your USB Security dongle's private key.
