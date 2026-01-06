@@ -88,3 +88,4 @@ Learn more about Heads
  detail about what classes of threats Heads attempts to counter.
 * [Frequently Asked Questions]({{ site.baseurl }}/FAQ/)
 * [Requirements for Heads]({{ site.baseurl }}/Install-and-Configure)
+* [Technical Deep Dive](https://deepwiki.com/linuxboot/heads) - comprehensive technical documentation on architecture, build systems, security mechanisms, and firmware internals
