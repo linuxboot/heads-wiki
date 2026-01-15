@@ -27,12 +27,7 @@ The ME firmware sits on the second SPI flash chip of the x230 (the 8MB one). We
  running, but without any malicious code in it (or so we hope, depending of what
    the ROMP and BUP modules really do...).
 
-Prepare a USB bootable disk by following
- [el torito instructions](https://askubuntu.com/questions/651281/write-bootable-bios-update-iso-to-usb-stick)
- , then boot that prepared USB disk and upgrade the prioprietary firmware to
- latest available version following on screen instructions. Be sure to have a
- fully charged battery, be connected to power source prior of attempting to
- upgrade, else you will have to wait for the battery to be changed.
+If vendor EC updates are required for your board, see the **EC firmware & customizations** section in the [Prerequisites]({{ site.baseurl }}/Prerequisites) for vendor BIOS/EC pre-update instructions (prepare USB bootable disk, apply vendor firmware updates, and verify boot).
 
 Once the proprietary firmware is updated to the latest available user ownable
  version, take a flash dump of the bottom SPI chip and verify that its backup is

@@ -101,6 +101,11 @@ Common EC customizations and caveats:
 Recommended workflow:
 1. If you do not need EC changes: update the vendor BIOS/firmware first, then proceed with SPI backups and Heads flashing.
 2. If you do need EC changes: apply and verify them using vendor tools/firmware before flashing Heads; ensure the system boots normally under vendor firmware.
+
+Important pre-update step — apply vendor BIOS/EC updates first:
+- Prepare a USB bootable disk following El Torito instructions (for example: https://askubuntu.com/questions/651281/write-bootable-bios-update-iso-to-usb-stick), boot the prepared USB disk, and run the vendor's BIOS/firmware upgrade utility to apply EC updates. Doing this ensures vendor EC changes (keyboard mappings, battery whitelists, power/thermal policies) are applied prior to installing Heads and reduces the risk of unexpected behavior.
+- Be sure the device is on AC power and the battery is charged before starting firmware updates; record the vendor firmware version and keep a copy of the firmware image and your SPI backups in a safe place.
+
 3. Always back up BIOS/EC images and SPI dumps before making firmware changes.
 
 References:
@@ -140,6 +145,11 @@ Common EC customizations and caveats:
 Recommended workflow:
 1. If you do not need EC changes: update the vendor BIOS/firmware first, then proceed with SPI backups and Heads flashing.
 2. If you do need EC changes: apply and verify them using vendor tools/firmware before flashing Heads; ensure the system boots normally under vendor firmware.
+
+Important pre-update step — apply vendor BIOS/EC updates first:
+- Prepare a USB bootable disk following El Torito instructions (for example: https://askubuntu.com/questions/651281/write-bootable-bios-update-iso-to-usb-stick), boot the prepared USB disk, and run the vendor's BIOS/firmware upgrade utility to apply EC updates. Doing this ensures vendor EC changes (keyboard mappings, battery whitelists, power/thermal policies) are applied prior to installing Heads and reduces the risk of unexpected behavior.
+- Be sure the device is on AC power and the battery is charged before starting firmware updates; record the vendor firmware version and keep a copy of the firmware image and your SPI backups in a safe place.
+
 3. Always back up BIOS/EC images and SPI dumps before making firmware changes.
 
 References:
