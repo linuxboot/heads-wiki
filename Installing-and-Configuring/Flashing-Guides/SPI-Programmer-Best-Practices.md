@@ -79,7 +79,7 @@ Based on extensive community testing and feedback, here are the recommended SPI 
 ### 4. **CH347 (Newer alternative to CH341A)**
 - **Cost**: $5-15 USD
 - **Typical read time**: ~60 seconds for 16MB chip (community measurement; see issue #120 for write/verify timings)
-- **Voltage**: Varies by module. Some CH347 modules expose a VIO pin (allowing ~1.2–3.3V I/O); others only provide 3.3V and will require an external level shifter for 1.8V chips.
+- **Voltage**: Varies by module. Some CH347 modules expose a VIO pin (allowing ~1.2–3.3V I/O); others only provide 3.3V and will require an external level shifter for 1.8V chips. Some modules are commonly marketed as **CH347T** (3.3V-only) or **CH347F** (exposes VIO); always verify the specific module documentation rather than relying on the family name.
 - **Protocols**: SPI, I2C
 - **Safety**: Prefer modules that expose a VIO pin or explicit voltage selection; if your module lacks VIO, use an external level shifter for 1.8V chips or choose a programmer with built-in VIO support (e.g., Tigard or CH341A rev1.6+ with selector).
 - **Best for**: Budget option when a VIO/exposed voltage control is available; otherwise prefer CH341A rev1.6+ or Tigard.
