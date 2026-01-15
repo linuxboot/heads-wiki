@@ -14,9 +14,9 @@ This guide provides essential information for safely flashing SPI chips using ex
 ## ⚠️ Critical Safety Warning
 
 **ALWAYS disconnect all power sources before flashing:**
-- Remove batteries
+- Remove all batteries (internal and external), including CMOS
 - Disconnect AC adapter
-- Disconnect CMOS battery (recommended for extra safety)
+- Wait 30 seconds for capacitors to discharge
 
 **Never connect or disconnect the clip while the programmer is powered on.** This can damage your motherboard or SPI chip.
 
@@ -44,7 +44,7 @@ Based on extensive community testing and feedback, here are the recommended SPI 
 
 ### 2. **CH341A Rev 1.6+ (Budget option with voltage selector)**
 - **Cost**: $5-15 USD
-- **Typical read time**: ~120 seconds for 8MB chip (community measurement — see issue #120 for write/verify timings)
+- **Typical read time**: ~120 seconds for 8MB chip (~240s for 16MB) (community measurement — see issue #120 for write/verify timings)
 - **Voltage**: 1.8V, 2.5V, 3.3V, 5V (selectable via switch)
 - **Protocols**: SPI, I2C
 - **Reliability**: Good when used correctly
@@ -67,15 +67,24 @@ Based on extensive community testing and feedback, here are the recommended SPI 
 - **Reliability**: High
 - **Best for**: DIY enthusiasts, custom setups
 
+![Raspberry Pi Pico wiring example](https://private-user-images.githubusercontent.com/197665737/409598181-f5df8c82-f9fb-4302-b823-4951781e4e9b.jpg)
+*Raspberry Pi Pico wiring example for SPI programming. Ensure correct wiring and 3.3V operation before powering the target board.*
+
+**Wiring tips**:
+- Connect VCC (3.3V) from the Pico to the target's VCC/VIO, and GND to GND.
+- Match MOSI/MISO/SCLK to the corresponding flash chip pins; use the Pomona clip orientation or board silks for pin-1.
+- Use short jumper wires and confirm orientation with magnification; always verify voltage with a multimeter before writing.
+- For boards needing 1.8V operation, use a programmer with proper VIO support (Tigard or CH347F) rather than a Pico (3.3V only).
+
 ### 4. **CH347 (Newer alternative to CH341A)**
 - **Cost**: $5-15 USD
 - **Typical read time**: ~60 seconds for 16MB chip (community measurement; see issue #120 for write/verify timings)
-- **Voltage**: 3.3V only (5V tolerant inputs)
+- **Voltage**: Varies by module. Some CH347 modules expose a VIO pin (allowing ~1.2–3.3V I/O); others only provide 3.3V and will require an external level shifter for 1.8V chips.
 - **Protocols**: SPI, I2C
-- **Safety**: Safer than old CH341A (no dangerous 5V output)
-- **Best for**: Budget option with better performance than older CH341A variants
+- **Safety**: Prefer modules that expose a VIO pin or explicit voltage selection; if your module lacks VIO, use an external level shifter for 1.8V chips or choose a programmer with built-in VIO support (e.g., Tigard or CH341A rev1.6+ with selector).
+- **Best for**: Budget option when a VIO/exposed voltage control is available; otherwise prefer CH341A rev1.6+ or Tigard.
 
-**Note**: The CH347 is a newer alternative to CH341A with proper 3.3V operation and faster speeds. However, it lacks voltage selection for 1.8V chips.
+WCH module documentation: https://www.wch-ic.com/download/file?id=348
 
 ## Programmer Comparison Table
 
@@ -83,15 +92,13 @@ Based on extensive community testing and feedback, here are the recommended SPI 
 |------------|------|-----------------------|-------------------|-----------|-------------------|-------------|
 | **Tigard** | $67-89 | ~42 seconds (16MB read); ~2m37s (32MB observed read) | 1.8V, 3.3V, 5V, external | SPI, I2C, JTAG, SWD, UART | Logic analyzer, USB debugging | Excellent |
 | **Raspberry Pi Pico** | $4-10 | ~30 seconds (16MB read) | 3.3V (configurable) | SPI | None | High |
-| **CH347** | $5-15 | ~60 seconds (16MB read) | 3.3V only | SPI, I2C | None | Good |
+| **CH347 (prefer CH347F)** | $5-15 | ~60 seconds (16MB read) | VIO or 3.3V (CH347F has VIO; CH347T may only be 3.3V) | SPI, I2C | None | Good |
 
 *Note: numbers above reflect typical read times; see https://github.com/linuxboot/heads-wiki/issues/120 for a detailed read/write/verify benchmark and test methodology.*
 
 ### CH341 visual identification — do not buy generic black modules
 
-CH341-family devices vary a lot in quality and safety. Before buying a CH341 module, inspect it carefully. The safe CH341A rev 1.6+ models have a voltage selector or a dedicated regulator circuit; older generic black CH341 modules often drive 5V and can destroy 3.3V flash chips.
-
-**Unsafe example — do not buy:**
+CH341-family devices vary a lot in quality and safety. Before buying a CH341 module, inspect it carefully. The safe CH341A rev 1.6+ models have a voltage selector or a dedicated regulator circuit; older generic black CH341 modules often drive 5V and can destroy 3.3V flash chips. Prefer **Pomona 5250** style SOIC clips for SOIC packages; do not rely on cheap generic clips that may slip or have poor contacts.
 
 ![Generic black CH341 (unsafe)](https://private-user-images.githubusercontent.com/827570/291431796-1749cef0-3446-4c85-b5c8-0d902fb1915c.jpeg)
 
@@ -112,13 +119,14 @@ CH341-family devices vary a lot in quality and safety. Before buying a CH341 mod
 
 For additional photos and community timing measurements, see issue #120: https://github.com/linuxboot/heads-wiki/issues/120
 
+For a simple clip-orientation SVG used by Skulls, see: https://gist.github.com/Thrilleratplay/60dff7cf849de5bdb84d91cabbd4fcfd
+
 ## Essential Safety Procedures
 
 ### Before Starting
 1. **Power disconnection checklist**:
-   - [ ] Remove laptop batteries
+   - [ ] Remove all batteries (internal and external), including CMOS
    - [ ] Disconnect AC adapter
-   - [ ] Disconnect CMOS battery (recommended)
    - [ ] Wait 30 seconds for capacitors to discharge
 
 2. **Workspace preparation**:
@@ -126,6 +134,15 @@ For additional photos and community timing measurements, see issue #120: https:/
    - Work on anti-static mat
    - Ensure good lighting
    - Have magnifying glass available
+
+### Beginner equipment checklist
+- Programmer (recommended: **Tigard**; budget: **CH341A rev1.6+** or **CH347F** with VIO support)
+- SOIC clip (recommended: **Pomona 5250**) for SOIC chips
+- WSON8 probe or spring-loaded adapter for WSON packages
+- Jumper leads and short USB cable
+- Second computer with `flashrom` installed
+- `hexdump`, `diff`, and basic Unix tools for sanity checks
+- Magnifier/microscope, isopropyl alcohol, flux, and basic hand tools (screwdrivers, spudger)
 
 ### Voltage Selection Guidelines (beginner-friendly)
 - **Stop if unsure**: If you cannot identify the chip or measure its VCC, do **not** perform in‑place programming — ask for help or remove the chip for external programming. ⚠️
@@ -206,6 +223,8 @@ sudo flashrom --programmer ch341a_spi --chip "MX25L6405D"
 **Tool notation:** This section uses `flash_tool` as a generic placeholder for flashing utilities (for example, `flashrom` or `flashprog`). Use the syntax: `flash_tool [read|write|verify] romname-for-platform`. Examples in this guide use `flashrom` — most commands are interchangeable with `flashprog`.
 
 **Protecting board-specific regions (GBE/IFD):** Many boards include small, board-specific regions (IFD / FMAP regions) that contain MAC addresses or other manufacturing data. **Always back up the full chip before the first flash** and inspect the dump (for example, `hexdump -C backup.bin | head -20`).
+
+**Extremely important — keep multiple copies of your backups in a safe place.** If anything goes wrong or you need to restore stock firmware, these backups are required; if a backup is lost or corrupted, recovery may be impossible and we cannot help you.
 
 If your goal is to preserve a board's GBE/MAC value, the reliable and recommended approach is to create a custom GBE during the Heads build (see the board's `boards/<boardname>` configuration and the linuxboot/heads build documentation for details). Using `--include`/`--ifd` to selectively write regions is an advanced, internal-only workflow and **should not** be presented as a general recommendation for external or first-time flashing. Those flags are applicable for internal upgrade workflows (for example, when using an internal programmer such as `flashprog --programmer internal`) where the operator has precise knowledge of the region layout and the risks involved.
 
