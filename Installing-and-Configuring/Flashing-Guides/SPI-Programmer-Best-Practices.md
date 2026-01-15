@@ -82,7 +82,7 @@ Based on extensive community testing and feedback, here are the recommended SPI 
 - **Voltage**: Varies by module. Some CH347 modules expose a VIO pin (allowing ~1.2–3.3V I/O); others only provide 3.3V and will require an external level shifter for 1.8V chips. Some modules are commonly marketed as **CH347T** (3.3V-only) or **CH347F** (exposes VIO); always verify the specific module documentation rather than relying on the family name.
 - **Protocols**: SPI, I2C
 - **Safety**: Prefer modules that expose a VIO pin or explicit voltage selection; if your module lacks VIO, use an external level shifter for 1.8V chips or choose a programmer with built-in VIO support (e.g., Tigard or CH341A rev1.6+ with selector).
-- **Best for**: Budget option when a VIO/exposed voltage control is available; otherwise prefer CH341A rev1.6+ or Tigard.
+- **Best for**: Budget option for chips that run at **3.3V** (verify module voltage or VIO availability); for 1.8V chips prefer **Tigard** or **CH341A rev1.6+**, or use a level shifter.
 
 WCH module documentation: https://www.wch-ic.com/download/file?id=348
 
@@ -92,7 +92,7 @@ WCH module documentation: https://www.wch-ic.com/download/file?id=348
 |------------|------|-----------------------|-------------------|-----------|-------------------|-------------|
 | **Tigard** | $67-89 | ~42 seconds (16MB read); ~2m37s (32MB observed read) | 1.8V, 3.3V, 5V, external | SPI, I2C, JTAG, SWD, UART | Logic analyzer, USB debugging | Excellent |
 | **Raspberry Pi Pico** | $4-10 | ~30 seconds (16MB read) | 3.3V (configurable) | SPI | None | High |
-| **CH347 (prefer CH347F)** | $5-15 | ~60 seconds (16MB read) | VIO or 3.3V (CH347F has VIO; CH347T may only be 3.3V) | SPI, I2C | None | Good |
+| **CH347** | $5-15 | ~60 seconds (16MB read) | VIO or 3.3V (verify module) | SPI, I2C | None | Budget for 3.3V |
 
 *Note: numbers above reflect typical read times; see https://github.com/linuxboot/heads-wiki/issues/120 for a detailed read/write/verify benchmark and test methodology.*
 
@@ -146,7 +146,7 @@ For a simple clip-orientation SVG used by Skulls, see: https://gist.github.com/T
 
 ### Voltage Selection Guidelines (beginner-friendly)
 - **Stop if unsure**: If you cannot identify the chip or measure its VCC, do **not** perform in‑place programming — ask for help or remove the chip for external programming. ⚠️
-- **Use a safe programmer**: Prefer a programmer with reliable voltage control that explicitly supports 3.3V and does not drive 5V by default (examples: **Tigard**, **CH341A rev1.6+**, **CH347**). 🔧
+- **Use a safe programmer**: Prefer a programmer with reliable voltage control. Examples: **Tigard** (recommended), **CH341A rev1.6+** (budget with 1.8V selector), **CH347** (budget option for 3.3V targets — verify module voltage). 🔧
 - **Power checklist (always)**: Remove batteries, disconnect AC adapter, and (if comfortable) disconnect the CMOS battery before attaching the clip. 🔌
 - **If you can identify the chip**: Follow the chip datasheet for the correct VCC. If you can safely measure the chip’s VCC with a multimeter, use that voltage.
 
