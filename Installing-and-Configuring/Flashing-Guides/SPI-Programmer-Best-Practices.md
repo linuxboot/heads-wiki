@@ -82,12 +82,35 @@ Based on extensive community testing and feedback, here are the recommended SPI 
 | Programmer | Cost | Typical read time (16MB) | Voltage Selection | Protocols | Debugging Features | Reliability |
 |------------|------|-----------------------|-------------------|-----------|-------------------|-------------|
 | **Tigard** | $67-89 | ~42 seconds (16MB read); ~2m37s (32MB observed read) | 1.8V, 3.3V, 5V, external | SPI, I2C, JTAG, SWD, UART | Logic analyzer, USB debugging | Excellent |
-| **CH341A rev 1.6+** | $5-15 | ~120 seconds (8MB read) | 1.8V, 2.5V, 3.3V, 5V | SPI, I2C | None | Good |
 | **Raspberry Pi Pico** | $4-10 | ~30 seconds (16MB read) | 3.3V (configurable) | SPI | None | High |
 | **CH347** | $5-15 | ~60 seconds (16MB read) | 3.3V only | SPI, I2C | None | Good |
-| **CH341A old** | $2-10 | ~480 seconds | 5V (dangerous) | SPI, I2C | None | **Not recommended** |
 
 *Note: numbers above reflect typical read times; see https://github.com/linuxboot/heads-wiki/issues/120 for a detailed read/write/verify benchmark and test methodology.*
+
+### CH341 visual identification — do not buy generic black modules
+
+CH341-family devices vary a lot in quality and safety. Before buying a CH341 module, inspect it carefully. The safe CH341A rev 1.6+ models have a voltage selector or a dedicated regulator circuit; older generic black CH341 modules often drive 5V and can destroy 3.3V flash chips.
+
+**Unsafe example — do not buy:**
+
+![Generic black CH341 (unsafe)](https://private-user-images.githubusercontent.com/827570/291431796-1749cef0-3446-4c85-b5c8-0d902fb1915c.jpeg)
+
+*Caption: Generic black CH341 modules; often output 5V and can damage chips. Do not buy or use.*
+
+**Side-by-side: black CH341 vs CH341A 1.7 (with regulator):**
+
+![CH341 black vs CH341A 1.7](https://private-user-images.githubusercontent.com/827570/296805149-f29c0092-add9-4a78-9e6c-40d1407e0e19.jpeg)
+
+**CH341A 1.6+ differentiators (what to look for):**
+
+![CH341A 1.6+ differentiators](https://private-user-images.githubusercontent.com/827570/296798854-1b2621f6-978e-4b75-9c32-30647f741b09.jpeg)
+
+**Quick checklist**
+- Look for a physical voltage selector (1.8V/3.3V/5V) or a regulator circuit near power pins.
+- If it looks like the generic black unit above (no selector/regulator), **do not buy it**.
+- Prefer Tigard or CH341A rev 1.6+ with selector for safety.
+
+For additional photos and community timing measurements, see issue #120: https://github.com/linuxboot/heads-wiki/issues/120
 
 ## Essential Safety Procedures
 
