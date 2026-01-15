@@ -256,11 +256,15 @@ sudo flashrom --programmer [programmer] --verify backup.bin --chip "[chip_model]
 
 ### WSON8 Package Tips
 For WSON8 packages (surface mount without leads):
-- Use specialized WSON8 probe with alignment guide
-- Apply gentle downward pressure during operation
-- Consider using flux for better electrical contact
+- Prefer a dedicated spring-loaded WSON8 probe or a purpose-built adapter jig with an alignment guide. These ensure correct pad alignment and consistent contact pressure for reliable reads/writes.
+- Avoid using a standard SOIC/Pomona clip directly on WSON pads — clips can slip or fail to make reliable contact. If you must use a clip, use a PCB adapter or a probe designed for WSON packages.
+- Use an assisted guider (spring or fixture) or 3D-printed jig to hold the probe steady during long operations to prevent intermittent connections.
+- Verify electrical contact before committing to a write: take a `flashrom --programmer [programmer] --read backup.bin`, inspect the start (`hexdump -C backup.bin | head -20`) and verify with `--verify` if possible.
+- Ensure you have good magnification and lighting when positioning the probe, and consider using flux or contact cleaners if multiple attempts fail.
 
 ![WSON8 Probe](https://github.com/user-attachments/assets/ebcd780b-c7db-466a-91ea-a0d9d546b3ec)
+
+For community photos and examples of spring-guided probes and jigs, see issue #120: https://github.com/linuxboot/heads-wiki/issues/120
 
 ## Performance Optimization
 
