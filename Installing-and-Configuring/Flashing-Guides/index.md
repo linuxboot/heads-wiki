@@ -16,7 +16,7 @@ has_children: yes
 
 ## Video Guides
 
-- [Video showing how to properly connect a SOIC "Pamona" clip once motherboard SPI chips accessible](https://user-images.githubusercontent.com/827570/203147231-4791a1f1-bb9b-4373-9b4c-309bb3611c8b.mp4)
+- [Video showing how to properly connect a SOIC "Pomona" clip once motherboard SPI chips accessible](https://user-images.githubusercontent.com/827570/203147231-4791a1f1-bb9b-4373-9b4c-309bb3611c8b.mp4)
 
 - [WSON probe & guidance (SOIC vs WSON)]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#wson8-package-tips)
 - TODO: Add guides for total disassembly as community effort
