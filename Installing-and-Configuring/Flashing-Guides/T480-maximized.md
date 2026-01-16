@@ -116,7 +116,7 @@ sudo flashrom --programmer [programmer] --chip YYY --write ~/heads/build/x86/T48
 
 **Note about GBE:** The T480 includes a GBE region (board MACs) inside the Intel Firmware Descriptor (IFD). **Always back up the full chip before the initial flash** and inspect the dump (for example, `hexdump -C ~/bios-backup.bin | head -20`).
 
-If you want to preserve a board's MAC/GBE value, the recommended, reliable approach is to create a custom GBE during the Heads build (see the `boards/<boardname>` configuration in linuxboot/heads). Reliance on `--include`/`--ifd` for selective writes is an advanced workflow intended for internal upgrades using an internal programmer (for example `flashprog --programmer internal`) and is **not** recommended for general external or first-time flashing. See the SPI Programmer Best Practices guide and the board's build docs for details about creating and preserving GBE.
+If you want to preserve a board's MAC/GBE value, the recommended, reliable approach is to create a custom GBE during the Heads build (see the `boards/<boardname>` configuration in linuxboot/heads). For details on preserving board-specific regions, consult the SPI Programmer Best Practices guide and the board's build documentation, and refer to issue #120 for community discussion.
 
 Here is a successful attempt. Be patient, it may take a while.
 ![erase/write done]({{ site.baseurl }}/images/T480/9_flash.jpg)

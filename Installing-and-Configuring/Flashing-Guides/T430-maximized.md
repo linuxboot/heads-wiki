@@ -70,7 +70,7 @@ Try to read the name on the top SPI flash chip. I was unable to do that. The dot
 
  Then, connect the clip and SPI programmer to the "top" (4096 kb) SPI flash chip. In my set up, the red wire should be where the dot is.
 
-**Note**: For safety and reliability, we recommend using [Tigard or CH341A rev 1.6+]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) instead of older CH341A programmers. The commands below use `[programmer]` as a placeholder; see the SPI Programmer Best Practices guide for example commands for specific programmers.
+**Note**: See the CH341A guidance in the [SPI Programmer Best Practices]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#2-ch341a-rev-16-budget-option-with-voltage-selector) for vendor-safe programmer recommendations. The commands below use `[programmer]` as a placeholder; see the SPI Programmer Best Practices guide for example commands for specific programmers.
 
 ![Flashing 4 mb chip]({{ site.baseurl }}/images/t430/12_flash_4mb_spi_chip.jpg)
 
@@ -145,7 +145,7 @@ sudo flashrom --programmer [programmer] --chip ZZZ --write ~/heads/build/x86/t43
 
 **Note about GBE:** The T430 contains a GBE region (board MACs) inside the Intel Firmware Descriptor (IFD). **Always back up the full chip before the initial flash** and inspect the dump (for example, `hexdump -C ~/bottom-backup.bin | head -20`).
 
-If you need to preserve a board's MAC/GBE, the reliable approach is to create a custom GBE during the Heads build (see the `boards/<boardname>` configuration in linuxboot/heads). Using `--include`/`--ifd` to selectively write regions is an advanced, internal-only workflow intended for internal upgrades (for example using `flashprog --programmer internal`) and **should not** be the general recommendation for external or first-time flashing. Consult the SPI Programmer Best Practices guide and the board's build documentation for how to create and preserve a GBE.
+If you need to preserve a board's MAC/GBE, the reliable approach is to create a custom GBE during the Heads build (see the `boards/<boardname>` configuration in linuxboot/heads). For details on preserving board-specific regions, consult the SPI Programmer Best Practices guide and the board's build documentation, and refer to issue #120 for community discussion.
 If all goes well, you should see the keyboard LED flash, and within a second Heads will boot in its GUI. 
 
 Two reboots are sometimes needed after flash. Force power off by holding the power button for 10 seconds. Since the memory training data was wiped by the content of the full flashed ROM, this is normal.

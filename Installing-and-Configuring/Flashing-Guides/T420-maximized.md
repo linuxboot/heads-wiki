@@ -24,6 +24,6 @@ The thinkpad T420 has only one SPI flash chip that holds the BIOS, ME, etc. It i
 
 ![T420 SPI flash chip]({{ site.baseurl }}/images/T420_SPI_chip.jpg)
 
-**Note**: For safety and reliability, we recommend using [Tigard or CH341A rev 1.6+]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) instead of older CH341A programmers.
+**Note**: See the CH341A guidance in the [SPI Programmer Best Practices]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#2-ch341a-rev-16-budget-option-with-voltage-selector) for vendor-safe programmer recommendations.
 
 You should then follow through with [configuring keys]({{ site.baseurl }}/Configuring-Keys/).
