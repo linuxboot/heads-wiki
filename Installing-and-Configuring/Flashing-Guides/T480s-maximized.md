@@ -18,7 +18,7 @@ The ThinkPad T480s has two SPI flash chips important for the port. The first chi
 
 For whole procedure you will need: 
 - A Phillips screwdriver +1 (PH1), which is standard for most laptop screws.
-- An assembled Raspberry Pi or CH341A SPI programmer. You should use a CH341A revision 1.6 or later (e.g., 1.6, 1.7, etc.) because these versions have a properly implemented and enforced voltage regulator, ensuring stable 3.3V operation (3.3V is important!) (e.g. [Modified CH341A SPI programmer](https://novacustom.com/product/modded-ch341a-bios-firmware-programmer-3v/) by Novacustom) or [open-source Tigard tool](https://github.com/tigard-tools/tigard). Using Raspberry Pi pico is  described in the [Libreboot flash guide](https://libreboot.org/docs/install/spi.html).
+- An assembled Raspberry Pi or CH341A SPI programmer. For CH341A-specific safety and verification steps, see the CH341A subsection in the [SPI Programmer Best Practices]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#2-ch341a-rev-16-budget-option-with-voltage-selector). Using Raspberry Pi pico is described in the [Libreboot flash guide](https://libreboot.org/docs/install/spi.html).
 - Other laptop/PC with a Linux-based OS installed.  
 - Optional: A plastic guitar pick or an old credit card to help detach the bottom case from the clips holding it in place. Otherwise, it can be difficult to remove, increasing the risk of breaking the tabs or the top part of the bottom case above the battery connector.
 
