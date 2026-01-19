@@ -34,7 +34,7 @@ If your device requires external flashing ([see below](#supported-devices)), mak
 Supported devices
 ---
 
-**Please see the current [heads source](https://github.com/osresearch/heads/tree/master/boards) for up-to-date supported board configurations.**
+**Please see the current [heads source](https://github.com/linuxboot/heads/tree/master/boards) for up-to-date supported board configurations.**
 
 *Note* repeatedly untested boards from willing to test board owners were moved to [unmaintained_boards directory and aren't built by CircleCI anymore](https://github.com/linuxboot/heads/tree/master/unmaintained_boards)
 

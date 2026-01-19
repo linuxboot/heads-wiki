@@ -25,7 +25,7 @@ Current Heads x230 boards produce totally valid ROM images, including a valid In
 x230 maximized boards need blobs to be downloaded and extracted from Lenovo prior 
  of building the board configuration but those are managed by the board build, so see general builds instructions.
 
-Please refer to the [xx30 blobs documentation](https://github.com/osresearch/heads/blob/master/blobs/xx30/README),
+Please refer to the [xx30 blobs documentation](https://github.com/linuxboot/heads/blob/master/blobs/xx30/README),
 
 You can also [download the ROMs directly from CircleCI]({{ site.baseurl }}/Downloading)
 

@@ -192,7 +192,7 @@ encryption key
 ### Some history
 Heads relied on coreboot patches until coreboot 4.8.1 for measured boot
 implementation, since coreboot had none. Heads measured boot scheme
-[changed](https://github.com/osresearch/heads/pull/793) to match coreboot
+[changed](https://github.com/linuxboot/heads/pull/793) to match coreboot
 4.12's, which for the first time included separated measured boot
 implementation from vboot implementation.
 

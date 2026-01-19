@@ -21,7 +21,7 @@ Generic OS Installation
 ===
 
 Insert OS installation media into one of the USB3 ports (blue on Thinkpads).
-[For certain OSes](https://github.com/osresearch/heads/tree/master/initrd/etc/distro/keys),
+[For certain OSes](https://github.com/linuxboot/heads/tree/master/initrd/etc/distro/keys),
 Heads boot process supports standard OS ISO bootable media (where the USB drive
 contains the ISO installation media alongside of its detached signature). For
 other OS, you will need to create USB installation media with using `dd` or

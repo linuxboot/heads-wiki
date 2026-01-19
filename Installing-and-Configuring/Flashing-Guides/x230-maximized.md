@@ -48,7 +48,7 @@ The top chip is 4MB and contains the BIOS and reset vector. The bottom chip is
  8MB and has the [Intel Management Engine (ME)](https://www.flashrom.org/ME)
   firmware, plus the flash descriptor.
 
-Based on [the work done here](https://github.com/osresearch/heads/issues/716),
+Based on [the work done here](https://github.com/linuxboot/heads/issues/716),
  the chips should be one 4M and one 8M of the following:
 
 |Vendor|Device| size|
