@@ -2,7 +2,7 @@
 layout: default
 title: Step 2 - Flashing Guides
 permalink: /Flashing-guides
-nav_order: 1
+nav_order: 2
 parent: Installing and configuring
 has_children: yes
 ---

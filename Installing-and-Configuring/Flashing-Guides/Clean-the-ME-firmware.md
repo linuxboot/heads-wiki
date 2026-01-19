@@ -37,7 +37,7 @@ Flashrom can be downloaded on most linux distribution on the external laptop
  that will be used to flash the cleaned rom. (`sudo dnf install flashrom` or
  `sudo apt-get install flashrom`.
 
-With a ch341a programmer, the command would look like the following:
+With a SPI programmer, the commands look like the following (see the [SPI Programmer Best Practices]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for programmer-specific notes):
 
 ```shell
 sudo flashrom --programmer [programmer] --read ~/down.rom

@@ -7,15 +7,15 @@ parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
 
-# SPI Programmer Best Practices
-
 <!-- markdownlint-disable MD033 -->
 <details open markdown="block">
-  <summary>Table of contents</summary>
+  <summary>
+    Table of contents
+  </summary>
   {: .text-delta }
 1. TOC
 {:toc}
-</details>
+</details> 
 <!-- markdownlint-enable MD033 -->
 
 This guide provides essential information for safely flashing SPI chips using external programmers, with recommendations based on extensive community testing and feedback.
@@ -28,6 +28,7 @@ A short comparison of recommended programmers for quick decision-making.
 | Programmer | Best for | Voltage | Cost |
 |------------|----------|---------:|------:|
 | Tigard | Frequent flashing, debugging | 1.8V/3.3V/5V | $67-89 |
+| CH347F | Budget but fast; adjustable VIO | 1.8V–3.3V (VIO) | $5-15 |
 | CH341A rev1.6+ | Occasional flashing, budget | 1.8V/3.3V (selector) | $5-15 |
 | Raspberry Pi Pico | DIY / low-cost | 3.3V only | $4-10 |
 
@@ -73,16 +74,16 @@ A short comparative read-time summary (observed community read times):
 | Programmer | Typical read time (8MB / 16MB) |
 |------------|-------------------------------:|
 | Tigard | ~21s / ~42s |
+| CH347F | ~30s / ~60s |
 | CH341A rev1.6+ | ~120s / ~240s |
 | Raspberry Pi Pico | ~15s / ~30s |
-| CH347 | ~30s / ~60s |
 
 Benchmarks and detailed per-programmer timing data are available in issue #120 for those who want to dig deeper.
 
-### 1. **Tigard (Recommended)**
+### Tigard (Recommended)
 - **Cost**: $67-89 USD
-- **Typical read time**: ~21 seconds for 8MB chip, ~42 seconds for 16MB chip
-- **Typical read time (32MB observed)**: ~2m37s (community measurement)
+- **Typical read time**: ~21 seconds for 8MB chip, ~42 seconds for 16MB chip (observed at Tigard's recommended SPI settings)
+- **SPI clock notes**: Tigard supports VIO and user-selectable SPI clocks; speed and stability depend on chosen SPI clock.
 - **Voltage**: 1.8V, 3.3V, 5V, external target voltage
 - **Protocols**: SPI, I2C, JTAG, SWD, UART
 - **Additional features**: Logic analyzer, USB debugging support
@@ -91,7 +92,22 @@ Benchmarks and detailed per-programmer timing data are available in issue #120 f
 
 **Where to buy**: [Crowd Supply](https://www.crowdsupply.com/securinghw/tigard)
 
-### 2. **CH341A Rev 1.6+ (Budget option with voltage selector)**
+### CH347F (Preferred CH347 variant)
+- **Cost**: $5-15 USD
+- **Typical read time**: *depends on SPI clock* — e.g., ~30s for 16MB at modest clocks; **example:** CH347F reading a GD25LQ128E (16 MiB) at **60 MHz** observed **~4 s** read time (community measurement).
+- **Voltage / VIO (I/O voltage reference / selector)**: **CH347F** modules commonly provide adjustable I/O voltage (via a physical selector switch or exposed VIO pin), supporting ≈1.8–3.3 V and typically exposing 5V-tolerant inputs. **CH347T** variants are commonly 3.3V-only. Always verify the specific module’s documentation or seller listing and look for an explicit VIO pin or voltage selector switch before using it with 1.8V chips.
+- **Protocols**: SPI, I2C, JTAG (depending on module)
+- **SPI clock**: Default with `flashrom` is commonly **15 MHz** (CH347); the clock can be increased (e.g., `--spispeed` in `flashrom`) up to **60 MHz** on capable modules. Higher stable SPI clocks yield near-linear speed improvements; unstable clocks require reducing the clock for reliability.
+- **Best for**: Budget-conscious users who need higher speed and **adjustable VIO**; verify the seller/module exposes the CH347**F** variant or VIO setting and read the module documentation before purchasing.
+
+Notes & sources:
+- [CH347 datasheet / download](https://www.wch-ic.com/downloads/CH347DS1_PDF.html) 🔗
+- [Review & schematic analysis: OneTransistor CH347 review](https://www.onetransistor.eu/2024/09/ch347t-programmer-schematic.html) 🔗
+- [Community measurements and discussion: issue #120](https://github.com/linuxboot/heads-wiki/issues/120) 🔗
+
+**Safety:** Always confirm the module's VIO (I/O voltage reference / selector) capability for 1.8V chips. **CH347F** modules that provide an adjustable I/O voltage via a selector switch or exposed VIO pin can be configured for 1.8V or 3.3V operation and—when the module documentation indicates 5V-tolerant inputs—do **not** require an external level shifter. If a module lacks an explicit selector/VIO pin or the documentation is unclear, use an external level shifter or prefer a programmer with explicit voltage control (for example, **Tigard** or **CH341A rev1.6+** with a physical selector).
+
+### CH341A Rev 1.6+ (Budget option with voltage selector)
 - **Cost**: $5-15 USD
 - **Typical read time**: ~120 seconds for 8MB chip (~240s for 16MB) (community measurement — see issue #120 for write/verify timings)
 - **Voltage**: 1.8V, 2.5V, 3.3V, 5V (selectable via switch)
@@ -108,21 +124,23 @@ Benchmarks and detailed per-programmer timing data are available in issue #120 f
 - [3mdeb Kit](https://shop.3mdeb.com/shop/modules/ch341a-flash-bios-usb-programmer-kit-soic8-sop8/)
 - [Novacustom Kit](https://novacustom.com/product/modded-ch341a-bios-firmware-programmer-3v/)
 
-### CH341A visual identification — do not buy generic black modules
+#### CH341A visual identification — do not buy generic black modules
 
 CH341-family devices vary a lot in quality and safety. Before buying a CH341 module, inspect it carefully. The safe CH341A rev 1.6+ models have a voltage selector or a dedicated regulator circuit; older generic black CH341 modules often drive 5V and can destroy 3.3V flash chips. Prefer **Pomona 5250** style SOIC clips for SOIC packages; do not rely on cheap generic clips that may slip or have poor contacts.
+
+> Quick reference: See the CH341A section above for recommended CH341A models (rev 1.6+).
 
 **Quick checklist**
 - Look for a physical voltage selector (1.8V/3.3V/5V) or a regulator circuit near power pins.
 - If it looks like the generic black unit above (no selector/regulator), **do not buy it**.
-- Prefer Tigard or CH341A rev 1.6+ with selector for safety.
+- Prefer Tigard or CH347F for safety; CH341A rev 1.6+ with selector is acceptable if you verify the VIO.
 
 **Optimization tips (CH341A)**
 - Ensure a clean power supply and a short, good-quality USB cable.
 - Keep the programmer cool during long operations to prevent voltage drift or instability.
 - If verification fails, try a different USB cable or power source before retrying.
 
-### 3. **Raspberry Pi Pico (DIY option)**
+### Raspberry Pi Pico (DIY option)
 - **Cost**: $4-10 USD
 - **Typical read time**: ~30 seconds for 16MB chip (see issue #120 for write/verify timings)
 - **Voltage**: 3.3V (configurable via firmware)
@@ -140,15 +158,7 @@ CH341-family devices vary a lot in quality and safety. Before buying a CH341 mod
 - Use short jumper wires and confirm orientation with magnification; always verify voltage with a multimeter before writing.
 - For boards needing 1.8V operation, use a programmer with proper VIO support (Tigard or CH347F) rather than a Pico (3.3V only).
 
-### 4. **CH347 (Newer alternative to CH341A)**
-- **Cost**: $5-15 USD
-- **Typical read time**: ~60 seconds for 16MB chip (community measurement; see issue #120 for write/verify timings)
-- **Voltage**: Varies by module. Some CH347 modules expose a VIO pin (allowing ~1.2–3.3V I/O); others only provide 3.3V and will require an external level shifter for 1.8V chips. Some modules are commonly marketed as **CH347T** (3.3V-only) or **CH347F** (exposes VIO); always verify the specific module documentation rather than relying on the family name.
-- **Protocols**: SPI, I2C
-- **Safety**: Prefer modules that expose a VIO pin or explicit voltage selection; if your module lacks VIO, use an external level shifter for 1.8V chips or choose a programmer with built-in VIO support (e.g., Tigard or CH341A rev1.6+ with selector).
-- **Best for**: Budget option for chips that run at **3.3V** (verify module voltage or VIO availability); for 1.8V chips prefer **Tigard** or **CH341A rev1.6+**, or use a level shifter.
 
-WCH module documentation: https://www.wch-ic.com/download/file?id=348
 
 ## Essential Safety Procedures
 
@@ -165,7 +175,7 @@ WCH module documentation: https://www.wch-ic.com/download/file?id=348
    - Have magnifying glass available
 
 ### Equipment checklist (for flashing)
-- **Programmer**: Tigard (recommended). Budget: CH341A rev1.6+ (with voltage selector) or CH347 for 3.3V targets (always verify module voltage).
+- **Programmer**: Tigard (recommended). Budget: **CH347F** (preferred budget option with adjustable VIO) or **CH341A rev1.6+** (with physical selector) for basic flashing — always verify the module's VIO/voltage capability.
 - **Clip**: Pomona 5250 (recommended) for SOIC chips — high quality, better contact.
 - **WSON probe / spring-loaded adapter** for WSON packages (use with an alignment guider or jig).
 - **Jumper leads** and a short USB cable (use short, good-quality wires).
@@ -174,29 +184,19 @@ WCH module documentation: https://www.wch-ic.com/download/file?id=348
 - **Sanity tools**: `hexdump`, `diff`, and basic Unix tools to inspect and compare dumps.
 
 **Extremely important — backups:**
-**These backups should keep a copy in a safe place.** If anything goes wrong or you want to return the stock BIOS, this backup will be required. If it is lost or corrupted, we cannot help you.
+Make and verify multiple full‑chip backups, and store copies in a secure, separate location. If anything goes wrong or you need to restore stock firmware, these backups are required; if they are lost or corrupted recovery may be impossible and maintainers cannot help you.
 
 ### Voltage Selection Guidelines (beginner-friendly)
 - **Stop if unsure**: If you cannot identify the chip or measure its VCC, do **not** perform in‑place programming — ask for help or remove the chip for external programming. ⚠️
-- **Use a safe programmer**: Prefer a programmer with reliable voltage control. Examples: **Tigard** (recommended), **CH341A rev1.6+** (budget with 1.8V selector), **CH347** (budget option for 3.3V targets — verify module voltage). 🔧
+- **Use a safe programmer**: Prefer a programmer with reliable voltage control. Examples: **Tigard** (recommended), **CH347F** (preferred budget option with a physical voltage selector or exposed VIO pin), **CH341A rev1.6+** (budget with 1.8V selector). 🔧
 - **Power checklist (always)**: Remove batteries, disconnect AC adapter, and (if comfortable) disconnect the CMOS battery before attaching the clip. 🔌
 - **If you can identify the chip**: Follow the chip datasheet for the correct VCC. If you can safely measure the chip’s VCC with a multimeter, use that voltage.
 
 > Tip: Guessing voltages (e.g., "try 1.8V then 3.3V") can damage some chips. If you are not comfortable identifying/measuring VCC, stop and ask for help.
 
-<details>
-<summary>Advanced (for experienced users)</summary>
 
-If you are experienced and must proceed, follow these steps:
 
-1. **Identify the chip by marking or part number** and consult the datasheet for VCC.
-2. **Measure board VCC (VCC = chip voltage)** at the chip's VCC pin with a multimeter if possible to confirm the operating voltage. If you're not comfortable measuring, follow the chip datasheet or ask for help — do not guess.
-3. **Use the datasheet-specified VCC** when setting your programmer.
-4. **If in doubt, do not perform in‑place programming** — remove the chip or use a powered socket/adapter that isolates the chip from the motherboard.
-
-</details>
-
-### 1. Chip Detection and Backup
+### Chip detection (overview)
 ## SPI Chip Pin Mapping (SOIC8)
 
 ```
@@ -247,6 +247,26 @@ sudo flashrom --programmer ft2232_spi:type=2232H,port=B,divisor=4
 sudo flashrom --programmer ft2232_spi:type=2232H,port=B,divisor=4 --chip "MX25L6405D"
 ```
 
+### Using CH347F
+```bash
+# Basic connection test
+sudo flashrom --programmer ch347_spi
+
+# With chip specification and higher clock (example)
+sudo flashrom --programmer ch347_spi --spispeed 60000 --chip "MX25L6405D"
+```
+
+### Using Raspberry Pi Pico (serprog)
+```bash
+# Basic connection test
+sudo flashrom --programmer serprog:/dev/ttyACM0
+
+# With chip specification and example clock
+sudo flashrom --programmer serprog:/dev/ttyACM0 --spispeed 60000 --chip "MX25L6405D" --read backup.bin
+```
+
+- **Note:** Raspberry Pi Pico operates at **3.3V only**; do **not** use it for 1.8V chips. Ensure you have a Pico running a serprog-capable firmware and confirm its device node (e.g., `/dev/ttyACM0`). For 1.8V targets prefer Tigard or a CH347F module with VIO or use an external level shifter.
+
 ### Using CH341A rev 1.6+
 ```bash
 # Basic connection test
@@ -269,7 +289,7 @@ If your goal is to preserve a board's GBE/MAC value, consult the board's `boards
 For most users: back up the full chip and follow the per-board flashing instructions; advanced selective-region updates are an internal workflow—consult the `boards/<boardname>` docs for details.
 
 
-### 1. Chip Detection and Backup
+### Chip Detection and Backup
 ```bash
 # Test connection and detect chip
 sudo flashrom --programmer [programmer]
@@ -281,7 +301,7 @@ hexdump -C backup.bin | head -20
 sudo flashrom --programmer [programmer] --verify backup.bin --chip "[chip_model]"
 ```
 
-### 3. Flash New Firmware
+### Flash New Firmware
 
 **Before writing:** ensure you have a verified full-chip backup, confirmed chip VCC with a multimeter, and validated clip/contact stability.
 
@@ -336,9 +356,27 @@ For WSON8 packages (surface mount without leads):
 
 ![WSON8 Probe](https://github.com/user-attachments/assets/ebcd780b-c7db-466a-91ea-a0d9d546b3ec)
 
-For community photos and examples of spring-guided probes and jigs, see issue #120: https://github.com/linuxboot/heads-wiki/issues/120
+> **Note:** For additional community photos and examples of spring-guided probes and jigs, see [issue #120](https://github.com/linuxboot/heads-wiki/issues/120).
 
 ## Performance Optimization
+
+### SPI clock & performance (stability note)
+- The observed read/write speeds are tied to the SPI clock used during the operation. If you increase the SPI clock (and your hardware remains stable), throughput increases roughly linearly; if you see instability or verification failures, reduce the SPI clock.
+- Common parameters to change clock with `flashrom`:
+  - **CH347 / Pico (serprog)**: use `--spispeed <kHz>` (e.g. `--spispeed 60000` for 60 MHz). Default CH347 clock with `flashrom` is commonly **15 MHz** but can go up to **60 MHz** on capable hardware.
+  - **FT2232H** (used by Tigard-like FT2232 programmers): control clock via `divisor=<n>` (smaller divisor = higher clock); default behavior corresponds to ~30 MHz on many setups.
+  - **CH341A**: many CH341A modules do **not** support changing SPI clock via a `flashrom` parameter; treat CH341A as limited in clock control unless your specific module exposes a setting.
+- If you experience verification failures: try **reducing** the clock (e.g., `--spispeed` or larger divisor) until reads/verifies become consistent.
+
+**Example (community measurements):**
+- **CH347F reading GD25LQ128E (16 MiB) at 60 MHz**: read ≈ **4 s**. Example write costs: erase ≈ **12 s** + write ≈ **110 s** + verify ≈ **4 s** = **126 s** total (community measurement — see issue #120).
+
+**Links & sources:**
+- [CH347 datasheet](https://www.wch-ic.com/downloads/CH347DS1_PDF.html) 🔗
+- [CH347 review & schematic (OneTransistor)](https://www.onetransistor.eu/2024/09/ch347t-programmer-schematic.html) 🔗
+- [FT2232H datasheet](https://ftdichip.com/wp-content/uploads/2020/08/DS_FT2232H.pdf) 🔗
+- [Flashrom documentation](https://www.flashrom.org/Flashrom) 🔗
+- [Community timings/discussion: issue #120](https://github.com/linuxboot/heads-wiki/issues/120) 🔗
 
 ### Tigard Speed Optimization
 - Use `divisor=4` for reliable operation
@@ -362,13 +400,13 @@ For most users, **Tigard is the recommended choice** due to its:
 - Additional debugging capabilities
 - Excellent reliability record
 
-For budget-conscious users, **CH341A rev 1.6+ is acceptable** but:
-- Verify it has voltage selector switch
-- Expect longer flash times
+**Budget & fast option:** **CH347F** is a good budget choice when you need higher speed and adjustable VIO; verify the specific module exposes VIO and how to configure it.
+
+**Budget & basic option:** **CH341A rev 1.6+** is acceptable for occasional flashing but:
+- Verify it has a physical voltage selector or regulator
+- Expect longer read/write times
 - Limited to basic SPI operations
 
-**Never use old CH341A programmers** without voltage selection - they can damage your hardware.
+**DIY option:** **Raspberry Pi Pico** is a capable DIY option for 3.3V-only workflows (requires more setup).
 
----
-
-*This guide is based on extensive community testing and feedback. For specific platform flashing instructions, refer to the individual device guides.*
+**Never use old CH341A programmers** without voltage selection — they can damage your hardware.

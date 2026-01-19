@@ -72,7 +72,7 @@ First [download]({{ site.baseurl }}/Downloading) / [build]({{ site.baseurl }}/x2
 Try to read the name on the top SPI flash chip. Then, connect the clip and
  SPI programmer to the top SPI flash chip. 
 
-**Note**: See the CH341A guidance in the [SPI Programmer Best Practices]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#2-ch341a-rev-16-budget-option-with-voltage-selector) for vendor-safe programmer recommendations. The commands below use `[programmer]` as a placeholder; see the SPI Programmer Best Practices guide for example commands for specific programmers.
+**Note**: See the [SPI Programmer Best Practices]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for programmer recommendations (Tigard recommended; CH347F preferred budget option; CH341A rev1.6+ acceptable with a physical selector). The commands below use `[programmer]` as a placeholder; see the SPI Programmer Best Practices guide for example commands for specific programmers.
 
 Use flashrom to check the chip that you are connected to:
 

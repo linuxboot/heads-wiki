@@ -2,7 +2,7 @@
 layout: default
 title: Prerequisites for Heads
 permalink: /Prerequisites
-nav_order: 1
+nav_order: 0
 parent: Installing and configuring
 ---
 
@@ -61,17 +61,19 @@ USB Security Dongles (aka security token aka smartcard)
   - ThinkPads have USB A ports, not C. After that, it's users preferences for the form factor desired. 
 
 ### Supported USB Security dongles:
-|Manufacturer|Model|OpenPGP|HOTP verification|Compatible|
-|--|--|:--:|:--:|:--:|
-|Yubico|[YubiKey 5 Series](https://www.yubico.com/products/yubikey-5-overview/)|✅|❌|OpenPGP only|
-|Nitrokey|[Nitrokey Pro 2](https://www.nitrokey.com/products/nitrokeys#comparison)|✅|✅|Full support|
-|Nitrokey|[Nitrokey Storage 2](https://www.nitrokey.com/products/nitrokeys#comparison)|✅|✅|Full support|
-|Nitrokey|[Nitrokey 3](https://www.nitrokey.com/products/nitrokeys#comparison)|✅|✅|Full support|
-|Purism|[Librem Key](https://puri.sm/products/librem-key/)|✅|✅|Full support|
+
+| Manufacturer | Model | OpenPGP | HOTP verification | Compatible |
+|---|---|:--:|:--:|---|
+| Yubico | [YubiKey 5 Series](https://www.yubico.com/products/yubikey-5-overview/) | ✅ | ❌ | OpenPGP only |
+| Nitrokey | [Nitrokey Pro 2](https://www.nitrokey.com/products/nitrokeys#comparison) | ✅ | ✅ | Full support |
+| Nitrokey | [Nitrokey Storage 2](https://www.nitrokey.com/products/nitrokeys#comparison) | ✅ | ✅ | Full support |
+| Nitrokey | [Nitrokey 3](https://www.nitrokey.com/products/nitrokeys#comparison) | ✅ | ✅ | Full support |
+| Purism | [Librem Key](https://puri.sm/products/librem-key/) | ✅ | ✅ | Full support |
 
 **Notes**:
-- **OpenPGP only**: Can be used with non-HOTP board configurations (manual TPMTOTP verification)
-- **Full support**: Can be used with both HOTP and non-HOTP board configurations
+- **OpenPGP only**: Can be used with non-HOTP board configurations (manual TPMTOTP verification).
+- **Full support**: Can be used with both HOTP and non-HOTP board configurations.
+
 
 *NOTE* - If you prefer not to use USB security dongles or want simplified security procedures, see the [Purism Boot Modes](/PurismBootModes) documentation for information about Basic and Restricted boot modes that provide different security/usability trade-offs.
 
@@ -95,7 +97,7 @@ Important pre-update step — apply vendor BIOS/EC updates first:
 3. Always back up BIOS/EC images and SPI dumps before making firmware changes.
 
 References:
-- ThinkPad EC examples: https://github.com/hamishcoleman/thinkpad-ec
+- [ThinkPad EC examples](https://github.com/hamishcoleman/thinkpad-ec)
 
 **Note:** Heads/Coreboot will not modify an EC. If a board requires a custom EC blob, follow the board-specific build instructions and include the blob at build time.
 

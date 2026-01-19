@@ -18,7 +18,7 @@ The ThinkPad T480s has two SPI flash chips important for the port. The first chi
 
 For whole procedure you will need: 
 - A Phillips screwdriver +1 (PH1), which is standard for most laptop screws.
-- An assembled Raspberry Pi or CH341A SPI programmer. For CH341A-specific safety and verification steps, see the CH341A subsection in the [SPI Programmer Best Practices]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#2-ch341a-rev-16-budget-option-with-voltage-selector). Using Raspberry Pi pico is described in the [Libreboot flash guide](https://libreboot.org/docs/install/spi.html).
+- A SPI programmer (recommended: Tigard; budget: CH347F or CH341A rev1.6+). For programmer-specific safety and example commands, see the [SPI Programmer Best Practices]({{ site.baseurl }}/SPI-Programmer-Best-Practices/). Using Raspberry Pi Pico as an example is described in the [Libreboot flash guide](https://libreboot.org/docs/install/spi.html).
 - Other laptop/PC with a Linux-based OS installed.  
 - Optional: A plastic guitar pick or an old credit card to help detach the bottom case from the clips holding it in place. Otherwise, it can be difficult to remove, increasing the risk of breaking the tabs or the top part of the bottom case above the battery connector.
 
@@ -81,7 +81,7 @@ Try to read the name of the SPI flash chip. The dot on the chip helps to identif
 
 ![SPI BIOS flash chip closed view]({{ site.baseurl }}/images/T480s/4_bios_chip_orientation.jpg)
 
-First, connect the clip of the CH341A or similar (Raspberry Pi Pico was used in the sample commands) programmer to the chip. Next, connect the programmer to the USB port of your other Linux-based computer with flashrom installed. In my setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the flashing guide for the T430. 
+First, connect the clip of your chosen SPI programmer (Raspberry Pi Pico was used in the sample commands) to the chip. Next, connect the programmer to the USB port of your other Linux-based computer with flashrom installed. In my setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the flashing guide for the T430. 
 
 Use flashrom/flashprog to check the chip you are connected to:
 
@@ -210,15 +210,15 @@ No operations were specified.
 ```
 
 ```shell
-sudo flashrom -r ~/t480s_original_tb.bin --programmer ch341a_spi -c YYY
+sudo flashrom --programmer [programmer] --read ~/t480s_original_tb.bin --chip YYY
 ```
 
 ```shell
-sudo flashrom -r ~/t480s_original_tb_1.bin --programmer ch341a_spi -c YYY
+sudo flashrom --programmer [programmer] --read ~/t480s_original_tb_1.bin --chip YYY
 ```
 
 ```shell
-sudo flashrom -v ~/t480s_original_tb.bin --programmer ch341a_spi -c YYY
+sudo flashrom --programmer [programmer] --verify ~/t480s_original_tb.bin --chip YYY
 ```
 
 ```shell
@@ -233,6 +233,6 @@ diff <(hexdump -C t480_original_tb.bin) <(hexdump -C t480_original_tb_1.bin)
 Flash the padded Thunderbolt firmware. The firmware file tb.bin is located in the blobs folder after you build the Heads locally, or in the CircleCI artifacts.
 
 ```shell
-sudo flashrom -p ch341a_spi -c YYY -w ~/t480s_tb.bin
+sudo flashrom --programmer [programmer] --chip YYY --write ~/t480s_tb.bin
 ```
 Done.
