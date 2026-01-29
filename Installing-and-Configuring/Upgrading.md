@@ -164,7 +164,12 @@ First, verify the [supported platforms]({{ site.baseurl }}/Prerequisites#support
 Review whether the Intel Firmware Descriptor (IFD) and Intel Management Engine (ME) regions are unlocked from the [Recovery Shell]({{ site.baseurl }}/RecoveryShell):
 
 ```shell
+```shell
 flashprog -p internal
+```
+
+**Note**: On newer Heads firmware prefer `flashprog -p internal`; on older firmware use `flashrom --programmer internal`.
+
 ```
 
 **Note**: On older Heads firmware (pre-2025), use `flashrom -p internal` if `flashprog` is not available. Newer firmware versions use `flashprog` as the flash tool.
@@ -175,6 +180,13 @@ Unlocked IFD and ME (Modern Firmware)
 ----
 This is the expected output for modern Heads firmware with unlocked IFD and ME regions:
 ![CanBeFlashedToMaximizedRom](https://user-images.githubusercontent.com/827570/167728631-85a5ca9e-48f6-4d4f-8544-532fa75bf5d3.jpeg)
+- If unlocked, you can internally migrate to a Maximized ROM from the recovery shell. If you are already running a Maximized board ROM, you can upgrade through the Heads GUI while keeping existing settings.
+
+Example internal upgrade (Recovery Console):
+- mount-usb
+- flashrom --programmer internal --write /media/heads-hotp-maximized-version-gcommit.rom
+
+
 
 - **Current firmware**: You can safely upgrade through the Heads GUI using `.zip` files
 - **Very old firmware**: If upgrading from pre-2024 firmware, you may need to manually flash:

@@ -11,7 +11,7 @@ parent: Installing and configuring
 Heads Recovery Shell
 ====
 
-The recovery shell is a command line environment where heads and *nix utilities may be accessed (see [modules](https://github.com/osresearch/heads/tree/master/modules)) This document is a work in progress.
+The recovery shell is a command line environment where heads and *nix utilities may be accessed (see [modules](https://github.com/linuxboot/heads/tree/master/modules)) This document is a work in progress.
 
 Overview
 ---

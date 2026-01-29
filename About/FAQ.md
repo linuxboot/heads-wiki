@@ -130,7 +130,7 @@ Depends on your threat model.
 Should I validate the TPMTOTP on every boot
 ----
 
-Probably. I want to make it also do it at S3.  [See Heads issue #69](https://github.com/osresearch/heads/issues/69)
+Probably. I want to make it also do it at S3.  [See Heads issue #69](https://github.com/linuxboot/heads/issues/69)
 
 suspend vs shutdown
 ----

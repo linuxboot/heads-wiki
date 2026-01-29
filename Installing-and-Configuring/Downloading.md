@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Step 1 - Downloading Heads
-nav_order: 2
+nav_order: 1
 permalink: /Downloading
 parent: Installing and configuring
 ---

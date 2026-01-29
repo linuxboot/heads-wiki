@@ -2,7 +2,7 @@
 layout: default
 title: Lenovo T480 Maximized
 permalink: /T480-maximized-flashing/
-nav_order: 1
+nav_order: 5
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -10,15 +10,23 @@ grand_parent: Installing and configuring
 Lenovo T480 (Maximized)
 ===
 
+## ⚠️ Safety First
+
+**Before starting, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**
+
+**EC note:** If you need to update or customize the EC (keyboard remaps, battery policies, thermal/power behaviour, etc.), see the **EC firmware & customizations** section in the [Prerequisites]({{ site.baseurl }}/Prerequisites). EC updates and customizations must be applied through the vendor BIOS/update package prior to the initial Heads flash.
+
 [T480 Hardware Maintenance Manual](https://download.lenovo.com/pccbbs/mobiles_pdf/t480_hmm_en.pdf)  
 
 Accessing and flashing the BIOS chip on a T-series machine has never been easier. The process is straightforward and takes approximately 10 minutes.
 
 The ThinkPad T480 has two SPI flash chips important for the port. The first chip holds the BIOS, ME, etc., while the second holds the Thunderbolt firmware. To access these chips, you only need to remove the back panel, which is secured by six screws. 
 
+**Critical**: Remove all batteries (including CMOS) AND disconnect the AC adapter before starting.
+
 For whole procedure you will need: 
 - A Phillips screwdriver +1 (PH1), which is standard for most laptop screws.
-- An assembled Raspberry Pi or CH341A SPI programmer. You should use a CH341A revision 1.6 or later (e.g., 1.6, 1.7, etc.) because these versions have a properly implemented and enforced voltage regulator, ensuring stable 3.3V operation (3.3V is important!) (e.g. [Modified CH341A SPI programmer](https://novacustom.com/product/modded-ch341a-bios-firmware-programmer-3v/) by Novacustom) or [open-source Tigard tool](https://github.com/tigard-tools/tigard). Using Raspberry Pi pico is  described in the [Libreboot flash guide](https://libreboot.org/docs/install/spi.html).
+- A recommended SPI programmer (see our [Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/))
 - Other laptop/PC with a Linux-based OS installed.  
 - Optional: A plastic guitar pick or an old credit card to help detach the bottom case from the clips holding it in place. Otherwise, it can be difficult to remove, increasing the risk of breaking the tabs or the top part of the bottom case above the battery connector.
 
@@ -30,11 +38,11 @@ Please note that as of March 2025, Thunderbolt data transfer is not supported up
 
 ## Flashing Heads
 
-First, remove the battery and disconnect the power cable from your device. Removing the screws will allow you to remove the back panel. A guitar pick or an old credit card can be helpful for detaching the panel.
+First, remove the batteries and disconnect the power cable from your device. Removing the screws will allow you to remove the back panel. A guitar pick or an old credit card can be helpful for detaching the panel.
 
 ![Back view]({{ site.baseurl }}/images/T480/1_screws.jpg)
 
-The back panel and the battery are removed. Important, ensure that all batteries, including the CMOS battery, are disconnected. Arrows indicate the direction you should pull the connectors. Pull the plastic part, not the wires, as the wires are thin and can be damaged.
+The back panel and the batteries are removed. Important, ensure that all batteries, including the CMOS battery, are disconnected. Arrows indicate the direction you should pull the connectors. Pull the plastic part, not the wires, as the wires are thin and can be damaged.
 
 ![Battery]({{ site.baseurl }}/images/T480/2_battery.jpg)
 
@@ -50,29 +58,33 @@ Try to read the name of the SPI flash chip. The dot on the chip helps to identif
 
 ![SPI BIOS flash chip closed view]({{ site.baseurl }}/images/T480/4_bios_chip_orientation.jpg)
 
- First, connect the clip of the CH341A programmer to the chip. Next, connect the programmer to the USB port of your other Linux-based computer with flashrom installed. In my setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the flashing guide for the T430. 
+ First, connect the clip of your SPI programmer to the chip (see the [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for recommended hardware and example commands). Next, connect the programmer to the USB port of your other Linux-based computer with flashrom installed. In my setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the flashing guide for the T430. 
 
+**Note:** For initial reflashing steps that involve customizing the EC while still on proprietary firmware (for example to preserve or alter EC features), see the X230 reflashing notes and building guidance for detailed instructions and cautions.
  Use flashrom to check the chip you are connected to:
 
 ```shell
-sudo flashrom -p ch341a_spi
+sudo flashrom --programmer [programmer]
 ```
 
 Here is my output.
 
 ![output bios chip]({{ site.baseurl }}/images/T480/5_chip_name.jpg)
 
-Read from the chip twice (where the name of the flash chip is `YYY`):
+Create a backup and verify it (where the name of the flash chip is `YYY`):
 
 ```shell
-sudo flashrom -r ~/t480_original_bios.bin --programmer ch341a_spi -c YYY
+sudo flashrom --programmer [programmer] --read ~/t480_original_bios.bin --chip YYY
+# Quick sanity check: inspect the start of the dump for obvious garbage
+hexdump -C ~/t480_original_bios.bin | head -20
+sudo flashrom --programmer [programmer] --verify ~/t480_original_bios.bin --chip YYY
 ```
 
 First output can be seen here. 
 ![1-st read]({{ site.baseurl }}/images/T480/6_lenovo_bios.jpg)
 
 ```shell
-sudo flashrom -r ~/t480_original_bios_1.bin --programmer ch341a_spi -c YYY
+sudo flashrom --programmer [programmer] --read ~/t480_original_bios_1.bin --chip YYY
 ```
 Second output can be seen here. 
 ![2-nd read]({{ site.baseurl }}/images/T480/7_lenovo_bios_1.jpg)
@@ -80,17 +92,12 @@ Second output can be seen here.
 Make sure that the dump matches the chip content. If this is the case, the output of the following command will state `Verifying flash... VERIFIED`
 
 ```shell
-sudo flashrom -v ~/t480_original_bios.bin --programmer ch341a_spi -c YYY
+sudo flashrom --programmer [programmer] --verify ~/t480_original_bios.bin --chip YYY
 ```
 Make sure that files do not differ.
 
-```shell
-sha256sum t480_original_bios.bin
-sha256sum t480_original_bios_1.bin
-```
+# If the dumps look consistent, proceed (visual comparison shown above).
 
-My dumps were the same. 
-![Comparison]({{ site.baseurl }}/images/T480/8_sha256.jpg)
 
 Alternative comparison is bit-by-bit. If the files are the same, there should be no output of this command. Otherwise, you will see a bit-by-bit difference between the files.
 
@@ -104,13 +111,17 @@ If the files differ or the chip content does not match the dump, try reconnectin
 If they are the same, then write `T480-hotp-maximized.rom` to the SPI flash chip:
 
 ```shell
-sudo flashrom -p ch341a_spi -c YYY -w ~/heads/build/x86/T480-hotp-maximized/T480-hotp-maximized.rom
+sudo flashrom --programmer [programmer] --chip YYY --write ~/heads/build/x86/T480-hotp-maximized/T480-hotp-maximized.rom
 ```
+
+**Note about GBE:** The T480 includes a GBE region (board MACs) inside the Intel Firmware Descriptor (IFD). **Always back up the full chip before the initial flash** and inspect the dump (for example, `hexdump -C ~/bios-backup.bin | head -20`).
+
+If you want to preserve a board's MAC/GBE value, the recommended, reliable approach is to create a custom GBE during the Heads build (see the `boards/<boardname>` configuration in linuxboot/heads). For details on preserving board-specific regions, consult the SPI Programmer Best Practices guide and the board's build documentation, and refer to issue #120 for community discussion.
 
 Here is a successful attempt. Be patient, it may take a while.
 ![erase/write done]({{ site.baseurl }}/images/T480/9_flash.jpg)
 
-If all goes, well you can connect the battery, press the power button and you should see the keyboard LED flash. After that, Heads will boot into its GUI. 
+If all goes, well you can connect the batteries, press the power button and you should see the keyboard LED flash. After that, Heads will boot into its GUI. 
 
 Two reboots are sometimes needed after flashing. Force a power off by holding the power button for 10 seconds. Since the memory training data was wiped by the content of the fully flashed ROM, this is normal.
 
@@ -120,29 +131,22 @@ You should then follow through with [configuring keys]({{ site.baseurl }}/Config
 Important, ensure that power supply and all batteries, including the CMOS battery, are disconnected. After connecting the clip to the Thunderbolt chip as shown in the figure above read from the chip, making sure the connection is stable. The procedure is similar to the flashing Heads on the SPI chip. Therefore, comments are skipped.
 
 ```shell
-sudo flashrom -r ~/t480_original_tb.bin --programmer ch341a_spi -c YYY
-```
+sudo flashrom --programmer [programmer] --read ~/t480_original_tb.bin --chip YYY
+# Quick sanity check: inspect the start of the dump for obvious garbage
+hexdump -C ~/t480_original_tb.bin | head -20
 
-```shell
-sudo flashrom -r ~/t480_original_tb_1.bin --programmer ch341a_spi -c YYY
-```
+sudo flashrom --programmer [programmer] --read ~/t480_original_tb_1.bin --chip YYY
+# Quick sanity check: inspect the start of the dump for obvious garbage
+hexdump -C ~/t480_original_tb_1.bin | head -20
 
-```shell
-sudo flashrom -v ~/t480_original_tb.bin --programmer ch341a_spi -c YYY
-```
+sudo flashrom --programmer [programmer] --verify ~/t480_original_tb.bin --chip YYY
 
-```shell
-sha256sum t480_original_tb.bin
-sha256sum t480_original_tb_1.bin
-```
-
-```shell
+# Bit-by-bit comparison:
 diff <(hexdump -C t480_original_tb.bin) <(hexdump -C t480_original_tb_1.bin)
 ```
-
 Flash the padded Thunderbolt firmware. The firmware file tb.bin is located in the blobs folder after you build the Heads locally, or in the CircleCI artifacts.
 
 ```shell
-sudo flashrom -p ch341a_spi -c YYY -w ~/t480_tb.bin
+sudo flashrom --programmer [programmer] --chip YYY --write ~/tb.bin
 ```
 Done.

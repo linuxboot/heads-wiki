@@ -2,7 +2,7 @@
 layout: default
 title: Lenovo X230 Maximized
 permalink: /x230-maximized-flashing/
-nav_order: 1
+nav_order: 2
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -10,12 +10,16 @@ grand_parent: Installing and configuring
 Lenovo X230 (Maximized) (applies to all 4mb+8mb SPI chips maximized boards)
 ===
 
+## ⚠️ Safety First
+
+**Before starting, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**
+
 [X230 Hardware Maintenance Manual](https://web.archive.org/web/20201112030049/https://thinkpads.com/support/hmm/hmm_pdf/x230_x230i_hmm_en_0b48666_01.pdf)  
 [X230 Tablet Hardware Maintenance Manual](https://web.archive.org/web/20130908100917/http://download.lenovo.com/pccbbs/mobiles_pdf/0b48730.pdf)
 
 ![Underside of the x230]({{ site.baseurl }}/images/Underside_of_the_x230.jpg)
 
-First remove the battery or cable powering your device. The Thinkpad x230 has
+**Critical**: Remove the batteries AND disconnect the AC adapter before starting. The Thinkpad x230 has
  two SPI flash chips that hold the BIOS, ME, etc. and are located under the
  palm rest. To access these chips, first remove the indicated screws on the back
  of the laptop.
@@ -44,7 +48,7 @@ The top chip is 4MB and contains the BIOS and reset vector. The bottom chip is
  8MB and has the [Intel Management Engine (ME)](https://www.flashrom.org/ME)
   firmware, plus the flash descriptor.
 
-Based on [the work done here](https://github.com/osresearch/heads/issues/716),
+Based on [the work done here](https://github.com/linuxboot/heads/issues/716),
  the chips should be one 4M and one 8M of the following:
 
 |Vendor|Device| size|
@@ -60,20 +64,29 @@ Based on [the work done here](https://github.com/osresearch/heads/issues/716),
 
 First [download]({{ site.baseurl }}/Downloading) / [build]({{ site.baseurl }}/x230-maximized-building/) the maximized board roms (top and bottom) for this board and verify their hashes.
 
+**Initial BIOS step:** Before attempting ME cleaning or SPI flashing, upgrade the proprietary BIOS to the latest upgradeable vendor release for your platform. For the X230 the latest upgradeable BIOS is **version 2.76** (download: https://download.lenovo.com/pccbbs/mobiles/g2uj32us.iso) installed without EC signature verification; note that newer vendor firmwares may restrict hardware changes (for example, newer versions prevent swapping an X220 keyboard into an X230). If you need to customize the EC firmware while still running proprietary platform firmware, see the **EC firmware & customizations** section in the [Prerequisites]({{ site.baseurl }}/Prerequisites).
+
+**EC note:** For EC reflashing or custom EC behavior (keyboard remaps, battery policies, etc.) see the **EC firmware & customizations** section in the [Prerequisites]({{ site.baseurl }}/Prerequisites) — EC changes should be applied from vendor firmware prior to initial Heads flashing.
+
 
 Try to read the name on the top SPI flash chip. Then, connect the clip and
- ch341a programmer to the top SPI flash chip. Use flashrom to check the chip
-  that you are connected to:
+ SPI programmer to the top SPI flash chip. 
+
+**Note**: See the [SPI Programmer Best Practices]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for programmer recommendations (Tigard recommended; CH347F preferred budget option; CH341A rev1.6+ acceptable with a physical selector). The commands below use `[programmer]` as a placeholder; see the SPI Programmer Best Practices guide for example commands for specific programmers.
+
+Use flashrom to check the chip that you are connected to:
 
 ```shell
-sudo flashrom -p ch341a_spi
+sudo flashrom --programmer [programmer]
 ```
 
-Find the chip and read from it twice (For me the SPI flash chip is `YYY`):
+Find the chip and create a backup and verify it (For me the SPI flash chip is `YYY`):
 
 ```shell
-sudo flashrom -r ~/top.bin --programmer ch341a_spi -c YYY && \
-    sudo flashrom -v ~/top.bin --programmer ch341a_spi -c YYY
+sudo flashrom --programmer [programmer] --read ~/top.bin --chip YYY
+# Quick sanity check: inspect the start of the dump for obvious garbage
+hexdump -C ~/top.bin | head -20
+sudo flashrom --programmer [programmer] --verify ~/top.bin --chip YYY
 ```
 
 If the files differ then try reconnecting your programmer to the SPI flash chip
@@ -82,28 +95,30 @@ If the files differ then try reconnecting your programmer to the SPI flash chip
 If they are the same then write `x230-maximized-top.rom` to the SPI flash chip:
 
 ```shell
-sudo flashrom -p ch341a_spi -c “YYY” -w ~/heads/build/x86/x230-maximized/x230-maximized-top.rom
+sudo flashrom --programmer [programmer] --chip "YYY" --write ~/heads/build/x86/x230-maximized/x230-maximized-top.rom
 ```
 
 Try to read the name on the bottom SPI flash chip. Then, connect the clip and
- ch341a programmer to the bottom SPI flash chip. Use flashrom to check the chip
+ SPI programmer to the bottom SPI flash chip. Use flashrom to check the chip
   that you are connected to:
 
 ```shell
-sudo flashrom -p ch341a_spi
+sudo flashrom --programmer [programmer]
 ```
 
-Find the chip and read from the chip twice (For me the SPI flash chip is `ZZZ`):
+Find the chip and create a backup and verify it (For me the SPI flash chip is `ZZZ`):
 
 ```shell
-sudo flashrom -r ~/bottom.bin --programmer ch341a_spi -c ZZZ && \
-    sudo flashrom -v ~/bottom.bin --programmer ch341a_spi -c ZZZ
+sudo flashrom --programmer [programmer] --read ~/bottom.bin --chip ZZZ
+# Quick sanity check: inspect the start of the dump for obvious garbage
+hexdump -C ~/bottom.bin | head -20
+sudo flashrom --programmer [programmer] --verify ~/bottom.bin --chip ZZZ
 ```
 
 The 8M bottom chip contains the ME firmware.  It is neutralized in maximized version.
 You can flash it specifying the same chip you found under ZZZ:
 ```shell
-sudo flashrom -p ch341a_spi -c “ZZZ” -w ~/heads/build/x86/x230-maximized/x230-maximized-bottom.rom
+sudo flashrom --programmer [programmer] --chip "ZZZ" --write ~/heads/build/x86/x230-maximized/x230-maximized-bottom.rom
 ```
 
 

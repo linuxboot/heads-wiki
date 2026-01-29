@@ -30,7 +30,7 @@ For more information, you can also check out the [pull request #1661](https://gi
 Clone the tree:
 
 ```shell
-git clone https://github.com/osresearch/heads
+git clone https://github.com/linuxboot/heads
 cd heads
 ```
 
