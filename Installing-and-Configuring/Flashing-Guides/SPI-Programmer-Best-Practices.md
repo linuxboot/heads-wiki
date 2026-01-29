@@ -90,6 +90,8 @@ Benchmarks and detailed per-programmer timing data are available in issue #120 f
 - **Reliability**: Excellent (4/4 success rate in community testing)
 - **Best for**: Development, debugging, frequent flashing, new users
 
+**Note:** The Tigard's SPI header is laid out to match the pin orientation of a standard 8‑pin SPI flash chip, making it easy to attach a Pomona‑style SOIC clip reliably.
+
 **Where to buy**: [Crowd Supply](https://www.crowdsupply.com/securinghw/tigard)
 
 ### CH347F (Preferred CH347 variant)
@@ -363,8 +365,8 @@ For WSON8 packages (surface mount without leads):
 ### SPI clock & performance (stability note)
 - The observed read/write speeds are tied to the SPI clock used during the operation. If you increase the SPI clock (and your hardware remains stable), throughput increases roughly linearly; if you see instability or verification failures, reduce the SPI clock.
 - Common parameters to change clock with `flashrom`:
-  - **CH347 / Pico (serprog)**: use `--spispeed <kHz>` (e.g. `--spispeed 60000` for 60 MHz). Default CH347 clock with `flashrom` is commonly **15 MHz** but can go up to **60 MHz** on capable hardware.
-  - **FT2232H** (used by Tigard-like FT2232 programmers): control clock via `divisor=<n>` (smaller divisor = higher clock); default behavior corresponds to ~30 MHz on many setups.
+  - **CH347 / Pico (serprog)**: use `--spispeed <kHz>` (e.g. `--spispeed 60000` or `--spispeed 60M` for 60 MHz). The `spispeed` parameter accepts numeric kHz values or human‑readable strings (for example, `60M` or `937.5K`). CH347 modules normally provide discrete clock rates that scale by factors of two (for example **60M**, **30M**, **15M**, **7.5M**, **3.75M**, ...). Default CH347 clock in `flashrom` is commonly ~**15 MHz** but capable modules can run up to **60 MHz**; the Raspberry Pi Pico (serprog) accepts `--spispeed` similarly but is **3.3V only** and should only be used for 3.3V targets.
+  - **FT2232H** (used by Tigard-like FT2232 programmers): control clock via `divisor=<n>` and the relationship is **clock = 60 MHz / n**. **Important:** `divisor` must be a **multiple of 2** (for example 2,4,6...). The default `divisor=2` yields the common default clock of **30 MHz**. For older/non‑H variants (FT2232C/FT2232D, which are rare) the base frequency is **12 MHz** (so `clock = 12 MHz / n` — e.g., `divisor=2` ⇒ 6 MHz); avoid non‑H variants if possible. In practice you usually do not need to calculate exact values — prefer defaults and only change `divisor` in multiples of 2 when troubleshooting performance/stability.
   - **CH341A**: many CH341A modules do **not** support changing SPI clock via a `flashrom` parameter; treat CH341A as limited in clock control unless your specific module exposes a setting.
 - If you experience verification failures: try **reducing** the clock (e.g., `--spispeed` or larger divisor) until reads/verifies become consistent.
 
