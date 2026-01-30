@@ -160,7 +160,8 @@ The relevant config changes will be added under CBFS either `config` at build ti
 You can then either flash back a ROM without debugging, or turn off debugging (informational output or quiet mode, see GUI pictures below)
 
 Enabling DEBUG + TRACE in board config prior of build
-====
+---
+
 Debugging can either be enabled from the board config adding the following (see qemu board configs which have debugging) prior of building:
 ```
 #Enable DEBUG output
@@ -169,7 +170,8 @@ export CONFIG_ENABLE_FUNCTION_TRACING_OUTPUT=y
 ```
 
 Enabling DEBUG + TRACE from Heads GUI
-====
+---
+
 <img width="1162" height="960" alt="Screenshot_20260130_122935" src="https://github.com/user-attachments/assets/1ce6f156-036a-4d65-9fd1-a90002c13ab3" />
 <img width="1162" height="960" alt="Screenshot_20260130_123014" src="https://github.com/user-attachments/assets/e8bab3fb-88ad-4d16-b5b9-40e4c1963857" />
 <img width="1162" height="960" alt="Screenshot_20260130_123034" src="https://github.com/user-attachments/assets/7f15002e-0c2f-4205-8f90-f63e1d42578f" />
@@ -179,7 +181,8 @@ Enabling DEBUG + TRACE from Heads GUI
 The relevant config changes will be added under CBFS `config.user` and flash those changes to SPI flash to be useable on next reboot.
 
 Obtaining logs
-====
+---
+
 Once debugging is active, generate error or state prior of error and enter Recovery shell console. 
 Plug in a formatted USB thumb drive (fat32/exfat/ext3/ext4) and then type 
 ```shell
