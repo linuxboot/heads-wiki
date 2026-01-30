@@ -154,13 +154,43 @@ For thorough testing—especially for a new board—using the following template
 
 Debugging
 ===
-Future debugging from Heads: enter recovery console, with a formatted USB thumb drive (fat32/exfat/ext3/ext4) and then 
+Debugging needs to be activated first.
+The relevant config changes will be added under CBFS either `config` at build time or `config.user` override through Heads GUI and flashed to SPI flash to be useable on next reboot.
+
+You can then either flash back a ROM without debugging, or turn off debugging (informational output or quiet mode, see GUI pictures below)
+
+Enabling DEBUG + TRACE in board config prior of build
+====
+Debugging can either be enabled from the board config adding the following (see qemu board configs which have debugging) prior of building:
+```
+#Enable DEBUG output
+export CONFIG_DEBUG_OUTPUT=y
+export CONFIG_ENABLE_FUNCTION_TRACING_OUTPUT=y
+```
+
+Enabling DEBUG + TRACE from Heads GUI
+====
+<img width="1162" height="960" alt="Screenshot_20260130_122935" src="https://github.com/user-attachments/assets/1ce6f156-036a-4d65-9fd1-a90002c13ab3" />
+<img width="1162" height="960" alt="Screenshot_20260130_123014" src="https://github.com/user-attachments/assets/e8bab3fb-88ad-4d16-b5b9-40e4c1963857" />
+<img width="1162" height="960" alt="Screenshot_20260130_123034" src="https://github.com/user-attachments/assets/7f15002e-0c2f-4205-8f90-f63e1d42578f" />
+<img width="1162" height="960" alt="Screenshot_20260130_123047" src="https://github.com/user-attachments/assets/ce2c4be0-5c9a-48bf-bd1f-380e73551183" />
+<img width="1162" height="960" alt="Screenshot_20260130_123110" src="https://github.com/user-attachments/assets/0bd62a97-3115-4d6a-86cc-6709a0403de6" />
+
+The relevant config changes will be added under CBFS `config.user` and flash those changes to SPI flash to be useable on next reboot.
+
+Obtaining logs
+====
+Once debugging is active, generate error or state prior of error and enter Recovery shell console. 
+Plug in a formatted USB thumb drive (fat32/exfat/ext3/ext4) and then type 
 ```shell
 mount-usb --mode rw
 cp /tmp/debug.log /media
 cbmem -L > /media/coreboot_measured_boot.txt
 cbmem -1 > /media/coreboot_cbmem_console.txt
 cbmem -t > /media/coreboot_cbmem_stages_timestamps.txt
+lsusb > /media/lsusb.txt
+lspci -vv > /media/lspci.txt
+[... any other relevant information redirected to a file under /media where usb thub drive mounted...]
 umount /media
 ```
 And then provide log files in a subsequent comment. That would be really helpful if something is still wrong. Of course, this should be modified based on the problem faced.
