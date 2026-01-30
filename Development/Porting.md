@@ -162,15 +162,17 @@ You can then either flash back a ROM without debugging, or turn off debugging (i
 Enabling DEBUG + TRACE in board config prior of build
 ---
 
-Debugging can either be enabled from the board config adding the following (see qemu board configs which have debugging) prior of building:
+Debugging can be enabled from the board config directly, adding the following (see qemu board configs which have debugging) prior of building:
 ```
 #Enable DEBUG output
 export CONFIG_DEBUG_OUTPUT=y
 export CONFIG_ENABLE_FUNCTION_TRACING_OUTPUT=y
+#export CONFIG_QUIET_MODE=y
 ```
 
 Enabling DEBUG + TRACE from Heads GUI
 ---
+
 
 <img width="1162" height="960" alt="Screenshot_20260130_122935" src="https://github.com/user-attachments/assets/1ce6f156-036a-4d65-9fd1-a90002c13ab3" />
 <img width="1162" height="960" alt="Screenshot_20260130_123014" src="https://github.com/user-attachments/assets/e8bab3fb-88ad-4d16-b5b9-40e4c1963857" />
