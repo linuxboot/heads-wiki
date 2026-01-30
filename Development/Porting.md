@@ -206,7 +206,15 @@ Then lets collaborate in the PR. Create a heads fork in your own repository, fol
 
 Remove debugging mode:
 ===
-One of last commits should remove the debugging mode, functions tracing and use quiet mode instead. 
+One of last commits should remove the debugging mode, functions tracing and use quiet mode instead.
+
+Eg (DEBUG + TRACING commented out or `=n`)
+```
+#Enable DEBUG output
+#export CONFIG_DEBUG_OUTPUT=y
+#export CONFIG_ENABLE_FUNCTION_TRACING_OUTPUT=y
+export CONFIG_QUIET_MODE=y
+```
 
 Write a flashing/disassembling guide
 ===
