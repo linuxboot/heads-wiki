@@ -145,11 +145,13 @@ All current Heads boards use modern architecture, and new installations should u
 Re-Owning the States
 ===
 After upgrading or migrating, follow these steps to re-own the security components:
-- Inject your public key or perform a Factory Reset/Re-ownership if asked upon external upgrade. Internal upgrade will migrate trustdb and keyring automatically. 
-- Generate new TOTP/HOTP tokens when asked, and reset the TPM if necessary. 
-- Generate`/boot` hashes and sign content from Options menu and set a new boot default and optionally set a TPM Disk Unlock Key (DUK) passphrase. 
 
-For more details on re-owning, refer to the relevant sections above.
+- Inject your public key or perform a Factory Reset/Re-ownership if asked upon external flashing. Internal upgrade will migrate trustdb and keyring automatically. 
+- Generate new TOTP/HOTP tokens when asked, and reset the TPM if necessary.
+- Generate hashes and sign `/boot` from Options menu and set a new boot default from Options, show boot options.
+- Optionally set a TPM Disk Unlock Key (DUK) passphrase when asked upon booting default boot option.
+
+TODO: split between external flashing and internal upgrade UX paths: works flow changed and should guide user properly. 
 
 ---
 
