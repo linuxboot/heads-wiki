@@ -75,11 +75,16 @@ Heads requires unencrypted `/boot`. Graphical OSes generally have the best
 support. Debian live installers, Fedora Workstation (or spins), Qubes, and
 PureOS all work well.
 
+Last tested OS variants (tested with TPM DUK so no LUKS passphrase prompt from OS initramfs in the dark): 
+- ubuntu-25.10-desktop-amd64.iso
+- debian-13.2.0-amd64-DVD-1.iso
+- Fedora-Workstation-Live-43-1.6.x86_64.iso
+
 * *For Debian*:
 	1. Use a live desktop image. The network installer image does not work on all
 		 systems.
-	2. Ensure `/boot` is unencrypted. Debian 11 defaults to a single encrypted
-		 partition, so you must partition manually. This may not apply to all Debian
+	2. Ensure `/boot` is unencrypted. Debian 13 DVD defaults to a unencrypted /boot and encrypted rootfs
+		 partition, you might have partition manually for other OSes. This may not apply to all Debian
 		 derivatives.
 		* Create one 1G ext4 partition mounted at `/boot`
 		* Create a LUKS container with one ext4 partition mounted at `/`.
