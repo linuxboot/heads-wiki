@@ -99,7 +99,7 @@ Last tested OS variants (tested with TPM DUK so no LUKS passphrase prompt from O
 	keyboard, follow the [Qubes instructions for USB keyboards](https://www.qubes-os.org/doc/usb-qubes/#usb-keyboards).
 * *For PureOS*: The default installation works.
 
-Default Boot and Disk Unlock
+Default Boot and TPM Disk Unlock Key passphrase
 ===
 
 If you want to set a default option so that you don't have to choose at every
