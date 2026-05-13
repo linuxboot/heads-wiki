@@ -88,6 +88,9 @@ If Heads is already installed on your device, you can upgrade the firmware inter
    - Boot into the Heads GUI.
    - Navigate to `Options -> Flash/Update BIOS`.
    - Select the `.zip` file from the USB drive. The system will automatically verify the ROM integrity and flash the firmware.
+   - Reboot
+   - ***Wait patiently*** : EC firmware might be updated, memory training will be done; You might be in the dark for a good minute prior of seeing the bootsplash logo.
+   - Reseal secrets as guided, renew TPM disk Unlock Key passphrase when asked if one configured per setting a default boot option.
 
 **Note**: Internal upgrading via `.zip` files is supported for firmware versions built after [this November 2023 commit](https://github.com/linuxboot/heads/commit/6873df60c1c965ac812a49d9d245f338d8a3b128).
 
