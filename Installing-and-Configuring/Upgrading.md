@@ -68,12 +68,14 @@ If you are installing Heads for the first time, you will need to perform an exte
 
 ---
 
+Internal Upgrading Using ZIP Files
+---
+
 *NOTE*: If you are updating a NovaCustom laptop, versions from **v0.9.1 for V5x0TU**
 and **v0.9.3 for NV4xPZ** upwards, please remember that a **barrell jack power 
 supply** needs to be plugged in during the update, due to EC firmware sync.
 
-Internal Upgrading Using ZIP Files
----
+
 If Heads is already installed on your device, you can upgrade the firmware internally using a `.zip` file. This method is simpler and does not require an external programmer.
 
 1. **Prepare the ZIP File**:
