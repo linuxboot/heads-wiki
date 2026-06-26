@@ -6,3 +6,4 @@ This documentation is hosted at [https://osresearch.net](https://osresearch.net/
 Sources for heads are at [https://github.com/linuxboot/heads/](https://github.com/linuxboot/heads/)
 
 **Technical Reference**: For deep technical documentation on architecture, build systems, security mechanisms, and firmware internals, see the [Heads DeepWiki](https://deepwiki.com/linuxboot/heads).
+
