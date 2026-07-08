@@ -188,7 +188,7 @@ Obtaining logs
 Once debugging is active, generate error or state prior of error and enter Recovery shell console. 
 Plug in a formatted USB thumb drive (fat32/exfat/ext3/ext4) and then type 
 ```shell
-mount-usb --mode rw
+mount-usb.sh --mode rw
 cp /tmp/debug.log /media
 cbmem -L > /media/coreboot_measured_boot.txt
 cbmem -1 > /media/coreboot_cbmem_console.txt
