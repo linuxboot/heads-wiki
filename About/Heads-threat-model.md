@@ -69,7 +69,7 @@ As we consider building secure hardware, it is very important to keep in mind
 * TPM manufacturer
   * Infineon/STM/etc
   * Might have a bad RNG, undocumented commands to leak keys, etc
-  * Might have government manadated backdoor (country dependent)
+  * Might have government mandated backdoor (country dependent)
   * LPC or i2c bus can be snooped
 * Laptop manufacturer
   * Backdoors or malware in the BIOS [Computrace](https://www.kaspersky.com/about/press-releases/2014_good-software-can-go-bad)
