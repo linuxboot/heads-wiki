@@ -103,7 +103,7 @@ No operations were specified.
 Read from the chip twice to make sure our original BIOS file is consistent (where the name of the flash chip is `YYY`):
 
 ```shell
-sudo flashrom --programmer [progarmmer] --read ~/t480s_original_bios.bin --chip YYY
+sudo flashrom --programmer [programmer] --read ~/t480s_original_bios.bin --chip YYY
 ```
 
 It will then dump our original BIOS prior to flashing HEADS to:
