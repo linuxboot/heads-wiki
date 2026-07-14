@@ -22,9 +22,10 @@ For whole procedure you will need:
 - Other laptop/PC with a Linux-based OS installed.  
 - Optional: A plastic guitar pick or an old credit card to help detach the bottom case from the clips holding it in place. Otherwise, it can be difficult to remove, increasing the risk of breaking the tabs or the top part of the bottom case above the battery connector.
 
-There is still debate over which programmer and software should be used (flashprog vs. flashrom). Before following this guide, make sure you read [README.md](https://github.com/linuxboot/heads/tree/master/blobs/xx80/README.md) and the related information.
+There is still debate over which programmer and software should be used (flashprog vs. flashrom), however we will use flashrom to keep all the steps consistent. 
+Before following this guide, make sure you read [README.md](https://github.com/linuxboot/heads/tree/master/blobs/xx80/README.md) and the related information.
 
-Some ThinkPad T480s units on the used market, like the T480, are affected by an Intel bug in the Thunderbolt firmware. In short, the flash chip becomes full, causing Thunderbolt fast charging to stop working, though slow charging still functions. This issue can also affect the USB-C port. For convenience, Heads provides a fixed and padded Thunderbolt firmware that resolves the "charging problem" if your laptop is affected. Board testers did not encounter this issue, and it is unlikely to occur if your laptop was in use for more than 12 months before flashing. If you do experience the "charging bug," it is possible to fix it with external flashing. Also, the update is possible prior flashing heads using [fwupd from a Linux distribution](https://www.reddit.com/r/thinkpad/comments/12tf6xv/psa_t480_thunderbolt_controller_v23_is_now_on/)
+Some ThinkPad T480s units on the used market are affected by an Intel bug in the Thunderbolt firmware. In short, the flash chip becomes full, causing Thunderbolt fast charging to stop working, though slow charging still functions. This issue can also affect the USB-C port. For convenience, Heads provides a fixed and padded Thunderbolt firmware that resolves the "charging problem" if your laptop is affected. Board testers did not encounter this issue, and it is unlikely to occur if your laptop was in use for more than 12 months before flashing. If you do experience the "charging bug," it is possible to fix it with external flashing. Also, the update is possible prior to flashing Heads by using [fwupd from a Linux distribution](https://www.reddit.com/r/thinkpad/comments/12tf6xv/psa_t480_thunderbolt_controller_v23_is_now_on/)
 
 Please note that as of March 2025, Thunderbolt data transfer is not supported upstream by [coreboot](https://review.coreboot.org/c/coreboot/+/83274). However, video output through Thunderbolt and charging still work. This means only the USB-C charging port can be used for data transfer.
 
@@ -81,66 +82,46 @@ Try to read the name of the SPI flash chip. The dot on the chip helps to identif
 
 ![SPI BIOS flash chip closed view]({{ site.baseurl }}/images/T480s/4_bios_chip_orientation.jpg)
 
-First, connect the clip of your chosen SPI programmer (Raspberry Pi Pico was used in the sample commands) to the chip. Next, connect the programmer to the USB port of your other Linux-based computer with flashrom installed. In my setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the flashing guide for the T430. 
+First, connect the clip of your chosen SPI programmer (CH341a Programmer was used here) to the chip. Next, connect the programmer to the USB port of your other Linux-based computer with flashrom installed. In my setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the flashing guide for the T480. 
 
-Use flashrom/flashprog to check the chip you are connected to:
+Use flashrom to check the chip you are connected to:
 
 ```shell
-sudo flashprog -p serprog:dev=/dev/ttyACM0:spispeed=16M
+sudo flashrom --programmer [programmer]
 ```
 
 Here is my output.
 
 ```
-flashprog p1.3-2-geb2c041 on Linux 6.12.21-1.qubes.fc37.x86_64 (x86_64)
-flashprog is free software, get the source code at https://flashprog.org
+flashrom v1.6.0 on Linux 6.19.14+kali-amd64 (x86_64)
+flashrom is free software, get the source code at https://flashrom.org
 
-Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
-serprog: Programmer name is "pico-serprog"
-Found Winbond flash chip "W25Q128.V" (16384 kB, SPI) on serprog.
+Found Winbond flash chip "W25Q128.V" (16384 kB, SPI) on ch341a_spi.
 No operations were specified.
 ```
 
-Read from the chip twice (where the name of the flash chip is `YYY`):
+Read from the chip twice to make sure our original BIOS file is consistent (where the name of the flash chip is `YYY`):
 
 ```shell
-sudo flashprog -r ~/t480s_original_bios.bin --programmer serprog:dev=/dev/ttyACM0:spispeed=16M -c YYY
+sudo flashrom --programmer [programmer] --read ~/t480s_original_bios.bin --chip YYY
 ```
 
-First output can be seen here. 
-
+It will then dump our original BIOS prior to flashing HEADS to:
 ```
-flashprog p1.3-2-geb2c041 on Linux 6.12.21-1.qubes.fc37.x86_64 (x86_64)
-flashprog is free software, get the source code at https://flashprog.org
-
-Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
-serprog: Programmer name is "pico-serprog"
-Found Winbond flash chip "W25Q128.V" (16384 kB, SPI) on serprog.
-Reading flash... done.
+~/t480s_original_bios.bin
 ```
 
-
+And do it once again just to make sure (notice a different file name is used below):
 ```shell
-sudo flashprog -r ~/t480s_original_bios_1.bin --programmer serprog:dev=/dev/ttyACM0:spispeed=16M -c YYY
-```
-Second output can be seen here. 
-
-```
-flashprog p1.3-2-geb2c041 on Linux 6.12.21-1.qubes.fc37.x86_64 (x86_64)
-flashprog is free software, get the source code at https://flashprog.org
-
-Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
-serprog: Programmer name is "pico-serprog"
-Found Winbond flash chip "W25Q128.V" (16384 kB, SPI) on serprog.
-Reading flash... done.
+sudo flashrom --programmer [progarmmer] --read ~/t480s_original_bios_1.bin --chip YYY
 ```
 
-Make sure that the dump matches the chip content. If this is the case, the output of the following command will state `Verifying flash... VERIFIED`
-
-```shell
-sudo flashprog -v ~/t480_original_bios.bin --programmer serprog:dev=/dev/ttyACM0:spispeed=16M -c YYY
+It will then dump our original BIOS (second read attempt) prior to flashing HEADS to:
 ```
-Make sure that files do not differ.
+~/t480s_original_bios_1.bin
+```
+
+Make sure that files do not differ. We can verify them using `sha256sum` as follows:
 
 ```shell
 sha256sum t480s_original_bios.bin
@@ -150,9 +131,9 @@ sha256sum t480s_original_bios_1.bin
 My dumps were the same. 
 
 ```
-[user@flashing ~]$ sha256sum t480s_original_bios.bin 
+[user@h4ckb0x ~]$ sha256sum t480s_original_bios.bin 
 54d58fdf217f41d4385576bb74f45f20de233d1a9d9ea2d6f1543b86111e1062  t480s_original_bios.bin
-[user@flashing ~]$ sha256sum t480s_original_bios_1.bin 
+[user@h4ckb0x ~]$ sha256sum t480s_original_bios_1.bin 
 54d58fdf217f41d4385576bb74f45f20de233d1a9d9ea2d6f1543b86111e1062  t480s_original_bios_1.bin
 ```
 
@@ -162,30 +143,42 @@ Alternative comparison is bit-by-bit. If the files are the same, there should be
 diff <(hexdump -C t480s_original_bios.bin) <(hexdump -C t480s_original_bios_1.bin)
 ```
 
-If the files differ or the chip content does not match the dump, try reconnecting your programmer to the SPI flash chip and make sure your flashrom/flashprog software is up-to-date.
+Now make sure that the dump matches the chip content. If this is the case, the output of the following command will state `Verifying flash... VERIFIED`
+```shell
+sudo flashrom --programmer [programmer] --verify ~/t480s_original_bios.bin --chip YYY
+```
+
+In our case the command output is:
+```
+flashrom v1.6.0 on Linux 6.19.14+kali-amd64 (x86_64)
+flashrom is free software, get the source code at https://flashrom.org
+
+Found Winbond flash chip "W25Q128.V" (16384 kB, SPI) on ch341a_spi.
+Verifying flash... VERIFIED.
+```
+
+If the files differ or the chip content does not match the dump, try reconnecting your programmer to the SPI flash chip and make sure your flashrom software is up-to-date.
 
 
-If they are the same, then write `t480s-hotp-maximized.rom` to the SPI flash chip:
+If they are the same, then write `t480s-maximized.rom` to the SPI flash chip:
 
 ```shell
-sudo flashprog -p serprog:dev=/dev/ttyACM0:spispeed=16M -c YYY -w ~/heads/build/x86/t480s-hotp-maximized/heads-t480s-hotp-maximized.rom
+sudo flashrom --programmer [programmer] --chip W25Q128.V --write heads-EOL_t480s-maximized-202607091420-v0.2.1-3090-g8d0064f.rom 
 ```
 
 Here is a successful attempt. Be patient, it may take a while.
 
 ```
-flashprog p1.3-2-geb2c041 on Linux 6.12.21-1.qubes.fc37.x86_64 (x86_64)
-flashprog is free software, get the source code at https://flashprog.org
+flashrom v1.6.0 on Linux 6.19.14+kali-amd64 (x86_64)
+flashrom is free software, get the source code at https://flashrom.org
 
-Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
-serprog: Programmer name is "pico-serprog"
-Found Winbond flash chip "W25Q128.V" (16384 kB, SPI) on serprog.
+Found Winbond flash chip "W25Q128.V" (16384 kB, SPI) on ch341a_spi.
 Reading old flash chip contents... done.
-Erasing and writing flash chip... Erase/write done.
+Updating flash chip contents... Erase/write done from 0 to ffffff
 Verifying flash... VERIFIED.
 ```
 
-If all goes, well you can connect the CMOS and internal battery, press the power button and you should see the keyboard LED flash. After that, Heads will boot into its GUI. 
+If all goes well you can connect the CMOS and internal battery, press the power button and you should see the keyboard LED flash. After that, Heads will boot into its GUI. 
 
 Two reboots are sometimes needed after flashing. Force a power off by holding the power button for 10 seconds. Since the memory training data was wiped by the content of the fully flashed ROM, this is normal.
 
@@ -196,19 +189,29 @@ Important, ensure that power supply and all batteries, including the CMOS batter
 
 Check the chip you are connected to:
 ```shell
-sudo flashprog -p serprog:dev=/dev/ttyACM0:spispeed=16M
+sudo flashrom --programmer [programmer]
 ```
 Output:
 ```
-flashprog p1.3-2-geb2c041 on Linux 6.12.21-1.qubes.fc37.x86_64 (x86_64)
-flashprog is free software, get the source code at https://flashprog.org
+flashrom v1.6.0 on Linux 6.19.14+kali-amd64 (x86_64)
+flashrom is free software, get the source code at https://flashrom.org
 
-Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
-serprog: Programmer name is "pico-serprog"
-Found Winbond flash chip "W25Q80.V" (1024 kB, SPI) on serprog.
+Found Winbond flash chip "W25Q80.V" (1024 kB, SPI) on ch341a_spi.
+===
+This flash part has status UNTESTED for operations: WP
+The test status of this chip may have been updated in the latest development
+version of flashrom. If you are running the latest development version,
+please email a report to flashrom@flashrom.org if any of the above operations
+work correctly for you with this flash chip. Please include the flashrom log
+file for all operations you tested (see the man page for details), and mention
+which mainboard or programmer you tested in the subject line.
+You can also try to follow the instructions here:
+https://www.flashrom.org/contrib_howtos/how_to_mark_chip_tested.html
+Thanks for your help!
 No operations were specified.
 ```
 
+Dump the Thunderbolt firmware (again, twice, and compare):
 ```shell
 sudo flashrom --programmer [programmer] --read ~/t480s_original_tb.bin --chip YYY
 ```
@@ -217,17 +220,21 @@ sudo flashrom --programmer [programmer] --read ~/t480s_original_tb.bin --chip YY
 sudo flashrom --programmer [programmer] --read ~/t480s_original_tb_1.bin --chip YYY
 ```
 
-```shell
-sudo flashrom --programmer [programmer] --verify ~/t480s_original_tb.bin --chip YYY
-```
-
+Compare our Thunderbolt firmware dumps with `sha256sum`:
 ```shell
 sha256sum t480s_original_tb.bin
 sha256sum t480s_original_tb_1.bin
 ```
 
+Or, bit-by-bit with `diff`
 ```shell
 diff <(hexdump -C t480_original_tb.bin) <(hexdump -C t480_original_tb_1.bin)
+```
+
+And if they match, then proceed to the next step to Verify:
+
+```shell
+sudo flashrom --programmer [programmer] --verify ~/t480s_original_tb.bin --chip YYY
 ```
 
 Flash the padded Thunderbolt firmware. The firmware file tb.bin is located in the blobs folder after you build the Heads locally, or in the CircleCI artifacts.
