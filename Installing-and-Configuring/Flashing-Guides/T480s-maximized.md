@@ -116,7 +116,7 @@ And do it once again just to make sure (notice a different file name is used bel
 sudo flashrom --programmer [progarmmer] --read ~/t480s_original_bios_1.bin --chip YYY
 ```
 
-It will then dump our original BIOS (second read attempt) prior to flashing HEADS to:
+It will then dump our original BIOS (second read attempt) prior to flashing Heads to:
 ```
 ~/t480s_original_bios_1.bin
 ```
