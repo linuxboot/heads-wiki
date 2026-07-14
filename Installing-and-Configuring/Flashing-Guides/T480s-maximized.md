@@ -25,7 +25,7 @@ For whole procedure you will need:
 There is still debate over which programmer and software should be used (flashprog vs. flashrom); however, this guide uses flashrom to keep all the steps consistent. 
 Before following this guide, make sure you read [README.md](https://github.com/linuxboot/heads/tree/master/blobs/xx80/README.md) and the related information.
 
-Some ThinkPad T480s units on the used market are affected by an Intel bug in the Thunderbolt firmware. In short, the flash chip becomes full, causing Thunderbolt fast charging to stop working, though slow charging still functions. This issue can also affect the USB-C port. For convenience, Heads provides a fixed and padded Thunderbolt firmware that resolves the "charging problem" if your laptop is affected. Board testers did not encounter this issue, and it is unlikely to occur if your laptop was in use for more than 12 months before flashing. If you do experience the "charging bug," it is possible to fix it with external flashing. Also, the update is possible prior to flashing Heads by using [fwupd from a Linux distribution](https://www.reddit.com/r/thinkpad/comments/12tf6xv/psa_t480_thunderbolt_controller_v23_is_now_on/)
+Some ThinkPad T480s units on the used market are affected by an Intel bug in the Thunderbolt firmware. In short, the flash chip becomes full, causing Thunderbolt fast charging to stop working, though slow charging still functions. This issue can also affect the USB-C port. For convenience, Heads provides a fixed and padded Thunderbolt firmware that resolves the "charging problem" if your laptop is affected. Board testers did not encounter this issue, and it is unlikely to occur if your laptop was in use for more than 12 months before flashing. If you do experience the "charging bug," it is possible to fix it with external flashing. Also, the update is possible prior to flashing Heads by using [fwupd from a Linux distribution](https://www.reddit.com/r/thinkpad/comments/12tf6xv/psa_t480_thunderbolt_controller_v23_is_now_on/).
 
 Please note that as of March 2025, Thunderbolt data transfer is not supported upstream by [coreboot](https://review.coreboot.org/c/coreboot/+/83274). However, video output through Thunderbolt and charging still work. This means only the USB-C charging port can be used for data transfer.
 
@@ -82,7 +82,7 @@ Try to read the name of the SPI flash chip. The dot on the chip helps to identif
 
 ![SPI BIOS flash chip closed view]({{ site.baseurl }}/images/T480s/4_bios_chip_orientation.jpg)
 
-First, connect the clip of your chosen SPI programmer (CH341A Programmer was used here) to the chip. Next, connect the programmer to the USB port of your other Linux-based computer with flashrom installed. In my setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the flashing guide for the T480. 
+First, connect the clip of your chosen SPI programmer (CH341A Programmer was used here) to the chip. Next, connect the programmer to the USB port of your other Linux-based computer with flashrom installed. In my setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the [flashing guide for the T480]({{ site.baseurl }}/T480-maximized-flashing/). 
 
 Use flashrom to check the chip you are connected to:
 
@@ -124,8 +124,8 @@ It will then dump our original BIOS (second read attempt) prior to flashing Head
 Make sure that files do not differ. We can verify them using `sha256sum` as follows:
 
 ```shell
-sha256sum t480s_original_bios.bin
-sha256sum t480s_original_bios_1.bin
+sha256sum ~/t480s_original_bios.bin
+sha256sum ~/t480s_original_bios_1.bin
 ```
 
 My dumps were the same. 
@@ -140,7 +140,7 @@ My dumps were the same.
 Alternative comparison is bit-by-bit. If the files are the same, there should be no output of this command. Otherwise, you will see a bit-by-bit difference between the files.
 
 ```shell
-diff <(hexdump -C t480s_original_bios.bin) <(hexdump -C t480s_original_bios_1.bin)
+diff <(hexdump -C ~/t480s_original_bios.bin) <(hexdump -C ~/t480s_original_bios_1.bin)
 ```
 
 Now make sure that the dump matches the chip content. If this is the case, the output of the following command will state `Verifying flash... VERIFIED`
@@ -178,7 +178,7 @@ Updating flash chip contents... Erase/write done from 0 to ffffff
 Verifying flash... VERIFIED.
 ```
 
-If all goes well you can connect the CMOS and internal battery, press the power button and you should see the keyboard LED flash. After that, Heads will boot into its GUI. 
+If all goes well, you can connect the CMOS and internal battery, press the power button and you should see the keyboard LED flash. After that, Heads will boot into its GUI. 
 
 Two reboots are sometimes needed after flashing. Force a power off by holding the power button for 10 seconds. Since the memory training data was wiped by the content of the fully flashed ROM, this is normal.
 
@@ -222,16 +222,16 @@ sudo flashrom --programmer [programmer] --read ~/t480s_original_tb_1.bin --chip 
 
 Compare our Thunderbolt firmware dumps with `sha256sum`:
 ```shell
-sha256sum t480s_original_tb.bin
-sha256sum t480s_original_tb_1.bin
+sha256sum ~/t480s_original_tb.bin
+sha256sum ~/t480s_original_tb_1.bin
 ```
 
 Or, bit-by-bit with `diff`
 ```shell
-diff <(hexdump -C t480s_original_tb.bin) <(hexdump -C t480s_original_tb_1.bin)
+diff <(hexdump -C ~/t480s_original_tb.bin) <(hexdump -C ~/t480s_original_tb_1.bin)
 ```
 
-And if they match, then proceed to the next step to Verify:
+And if they match, proceed to verify the flash:
 
 ```shell
 sudo flashrom --programmer [programmer] --verify ~/t480s_original_tb.bin --chip YYY
