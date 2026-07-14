@@ -131,9 +131,9 @@ sha256sum t480s_original_bios_1.bin
 My dumps were the same. 
 
 ```
-[user@h4ckb0x ~]$ sha256sum t480s_original_bios.bin 
+[user@host ~]$ sha256sum t480s_original_bios.bin 
 54d58fdf217f41d4385576bb74f45f20de233d1a9d9ea2d6f1543b86111e1062  t480s_original_bios.bin
-[user@h4ckb0x ~]$ sha256sum t480s_original_bios_1.bin 
+[user@host ~]$ sha256sum t480s_original_bios_1.bin 
 54d58fdf217f41d4385576bb74f45f20de233d1a9d9ea2d6f1543b86111e1062  t480s_original_bios_1.bin
 ```
 
