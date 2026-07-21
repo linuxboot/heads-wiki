@@ -8,21 +8,15 @@ parent: About
 
 # Heads Vendors and Resellers
 
-For those who prefer not to manually flash Heads firmware on their devices,
-several vendors and resellers offer laptops, workstations, and servers with
-Heads preinstalled. These vendors provide a range of secure and privacy-focused
-devices, making it easier for potential users to get started with Heads without
-the hassle of searching for options online. By choosing one of these vendors or
-resellers, users who don't want to open their devices and flash manually can
-easily get a device with Heads preinstalled. This provides a straightforward
-solution for those who would benefit from Heads' secure firmware but need a more
-accessible option. Additionally, many of these vendors offer customization
-options, preinstallation of various operating systems, and anti-interdiction
-mechanisms to ensure the security and integrity of the devices.
+Several vendors and resellers offer Heads preinstalled. Other hardware vendors
+maintain coreboot platforms and contribute Heads ports without yet offering
+Heads as a factory option. The availability stated for each vendor is therefore
+important: an upstream port does not imply that Heads can be selected when
+ordering a machine.
 
 The vendors are listed alphabetically.
 
-## Vendors and Resellers
+## Heads preinstalled
 
 ### HardenedVault (VaultBoot)
 HardenedVault provides VaultBoot (a variant of Heads) preinstalled on their
@@ -60,6 +54,18 @@ The Librem Key is made in the USA.
 - **Website:** [Purism](https://puri.sm)
 - **Products:** Laptops, phones, tablets, mini PCs, servers, and USB security
   dongles
+
+## Vendor-maintained ports
+
+### Star Labs
+
+Star Labs develops Linux laptops, tablets and mini PCs with coreboot firmware.
+The StarLite Mk V Heads port is
+[under upstream review](https://github.com/linuxboot/heads/pull/2164). Heads is
+not currently offered preinstalled; users must build and flash it themselves.
+
+- **Website:** [Star Labs](https://starlabs.systems)
+- **Products:** Laptops, tablets and mini PCs
 
 ## General Information
 
