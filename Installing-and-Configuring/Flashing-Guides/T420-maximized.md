@@ -26,4 +26,11 @@ The thinkpad T420 has only one SPI flash chip that holds the BIOS, ME, etc. It i
 
 **Note**: See the [SPI Programmer Best Practices]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for programmer recommendations (Tigard recommended; CH347F preferred budget option; CH341A rev1.6+ acceptable with a physical selector).
 
+## TPM GPIO Reset Vulnerability — Not Affected
+
+This platform (Sandy Bridge / Intel 2nd Gen) is **not affected** by the
+[TPM GPIO reset vulnerability](https://mkukri.xyz/2024/06/01/tpm-gpio-fail.html).
+On pre-Skylake PCHs, the PLTRST# signal connected to the TPM reset line is a
+dedicated pin that cannot be reprogrammed to GPIO mode by software.
+
 You should then follow through with [configuring keys]({{ site.baseurl }}/Configuring-Keys/).

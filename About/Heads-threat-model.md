@@ -144,6 +144,20 @@ Additionally, since my ROM image is very size constrained, Heads didn't want to 
  from 5MB to 180KB.  The source is available from [github.com/osresearch/tpmtotp](https://github.com/osresearch/tpmtotp)
  and has since been merged into the Heads project.
 
+**Note on TPMTOTP attestation and GPIO reset attacks:** On Intel platforms where
+coreboot does not lock the PCH GPIO pad configuration (most platforms before
+Alder Lake), an attacker with OS-level code execution can reprogram the TPM's
+reset pin. A GPIO reset preserves TPM NVRAM but clears PCRs to zero. The
+attacker can then replay PCR extends from measurement logs (`cbmem -L`,
+`/tmp/measurements`), causing `tpm2_unseal` to succeed on the sealed TOTP/HOTP
+secret at NVRAM index 0x4d47 — no passphrase is required. The attacker obtains
+the 20-byte shared secret and can produce valid TOTP/HOTP codes indefinitely.
+This is more severe than mere code forgery: the secret itself is extractable.
+The TPM Disk Unlock Key with passphrase is not affected. This is a coreboot bug,
+not a Heads bug — the fix must come from coreboot upstream. See the
+[TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md)
+document for per-platform status, and per-board flashing guides for board-specific notes.
+
 The UEFI firmware itself is also of great concern: is a very large code base and
  most system firmwares are built from closed-source forks of the edk2 tree. This
  presents a problem for trusted systems since it is not possible to knows what

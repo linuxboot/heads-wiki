@@ -28,6 +28,31 @@ Some ThinkPad T480s units on the used market, like the T480, are affected by an 
 
 Please note that as of March 2025, Thunderbolt data transfer is not supported upstream by [coreboot](https://review.coreboot.org/c/coreboot/+/83274). However, video output through Thunderbolt and charging still work. This means only the USB-C charging port can be used for data transfer.
 
+## TPM GPIO Reset Vulnerability (upstream coreboot bug)
+
+Heads relies on [coreboot](https://coreboot.org/) for low-level platform initialization, including GPIO pad configuration. Many Intel platforms are affected by a coreboot bug where the PCH GPIO lock bits are not set before booting the OS. This allows an attacker with code execution (e.g., a malicious OS or dual-boot environment) to reprogram the TPM's reset pin and clear PCRs without a physical reboot — enabling forged measurements and TPM secret extraction. Details: [TPM GPIO fail (mkukri.xyz)](https://mkukri.xyz/2024/06/01/tpm-gpio-fail.html).
+
+The fix must come from coreboot. GPIO lock support varies by SoC generation in coreboot upstream:
+
+| Platform generation | Coreboot GPIO lock status |
+|---|---|
+| Sandy/Ivy/Haswell/Broadwell (2nd-5th Gen) | Not vulnerable: PLTRST# is a dedicated PCH pin, cannot be reprogrammed to GPIO |
+| Skylake through Tiger Lake (6th-11th Gen) — **this platform** | Not functional: common GPIO block exists but lock method is not selected in Kconfig, and pad lock register offsets are missing from GPIO community definitions (some added in 26.06 but still non-functional without Kconfig selection) |
+| Alder Lake / Raptor Lake (12th-13th Gen) | Functional: `SOC_INTEL_COMMON_BLOCK_GPIO_LOCK_USING_SBI` selected, pad lock offsets defined |
+| Meteor Lake and newer (Core Ultra Series 1+) | Functional: `SOC_INTEL_COMMON_BLOCK_GPIO_LOCK_USING_PCR` selected, pad lock offsets defined |
+
+Note: coreboot 26.06 added `pad_cfg_lock_offset` to Skylake GPIO communities ([merged patch](https://review.coreboot.org/c/coreboot/+/90884)), but the lock remains non-functional without the Kconfig selection ([open patch](https://review.coreboot.org/c/coreboot/+/90885) — tested and does not work on real hardware). The T480s boards use coreboot 25.09 which lacks even the offset definitions.
+
+Further progress on Skylake-era platforms likely requires Intel NDA documentation. Tracked at [coreboot ticket #576](https://ticket.coreboot.org/issues/576) and [coreboot patch series](https://review.coreboot.org/q/topic:%22intel_gpio_lock%22).
+
+**Impact on Heads:**
+
+- **TPM Disk Unlock Key (DUK) with passphrase**: Not affected. Heads requires a passphrase to unseal the disk key, which this attack cannot bypass.
+- **TPMTOTP remote attestation**: Affected. A GPIO reset preserves NVRAM; the sealed TOTP/HOTP secret at index 0x4d47 (no passphrase required) can be unsealed after replaying PCR extends. The attacker obtains the shared secret and can produce valid TOTP/HOTP codes indefinitely.
+- **HOTP sealed secrets without a passphrase**: Affected.
+
+See the [Heads threat model]({{ site.baseurl }}/Heads-threat-model/) for more context. The board configuration file (`boards/EOL_t480s-maximized/EOL_t480s-maximized.config`) contains additional notes.
+
 ## (Optional) Updating EC Firmware
 
 Before flashing heads, it is advisable to update the EC Firmware on the laptop. Some old EC firmware may be vulnerable to some serious CVEs. See [Heads-threat-model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-microcode-updates-and-transient-execution-vulnerabilities) for additional information.

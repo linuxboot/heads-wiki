@@ -2,7 +2,7 @@
 layout: default
 title: Lenovo T430 Maximized
 permalink: /T430-maximized-flashing/
-nav_order: 3
+nav_order: 1
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -10,15 +10,18 @@ grand_parent: Installing and configuring
 Lenovo T430 (Maximized)
 ===
 
-## ⚠️ Safety First
-
-**Before starting, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**
-
 [T430 Hardware Maintenance Manual](https://download.lenovo.com/ibmdl/pub/pc/pccbbs/mobiles_pdf/t430_t430i_hmm_en_0b48304_04.pdf)  
 
-Similarly to the x230, the thinkpad T430 has two SPI flash chips that hold the BIOS, ME, etc. They are located under the palm rest. To access these chips, complete disassembly is required. It is a straightforward process and takes approximately 30 minutes. For this you will need: some screwdrivers, thermal paste (since the CPU cooler needs to be removed too), a recommended SPI programmer (see our [Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/)), and another laptop/PC with Ubuntu installed. Other linux based OS should be fine too. 
+## TPM GPIO Reset Vulnerability — Not Affected
 
-**Critical**: Remove all batteries (including CMOS) AND disconnect the AC adapter before starting.
+This platform (Ivy Bridge / Intel 3rd Gen) is **not affected** by the
+[TPM GPIO reset vulnerability](https://mkukri.xyz/2024/06/01/tpm-gpio-fail.html).
+On pre-Skylake PCHs, the PLTRST# signal connected to the TPM reset line is a
+dedicated pin that cannot be reprogrammed to GPIO mode by software.
+
+Similarly to the x230, the thinkpad T430 has two SPI flash chips that hold the BIOS, ME, etc. They are located under the palm rest. To access these chips, complete disassembly is required. It is a straightforward process and takes approximately 30 minutes. For this you will need: some screwdrivers, thermal paste (since the CPU cooler needs to be removed too), an assembled ch341a SPI programmer (e.g. [Modified ch341a SPI programmer](https://novacustom.com/product/modded-ch341a-bios-firmware-programmer-3v/) by Novacustom) and a other laptop/PC with Ubuntu installed. Other linux based OS should be fine too. 
+
+First remove the battery and the cable powering your device.
 
 ![Keyboard tilted up]({{ site.baseurl }}/images/t430/1_1_back_view_removed_battery.jpg)
 
@@ -61,23 +64,19 @@ Left chip corresponds to the "bottom" flash chip (8192 kb) and right corresponds
 
 First [download]({{ site.baseurl }}/Downloading)  or build (please see [general building]({{ site.baseurl }}/{{ site.baseurl }}/x230-maximized-building/) / [building x230]({{ site.baseurl }}/x230-maximized-building/))  the maximized board roms (top and bottom) for this board and verify their hashes.
 
-**Note:** If you need to reflash or customize the EC firmware while still on proprietary platform firmware, refer to the **EC firmware & customizations** section in the [Prerequisites]({{ site.baseurl }}/Prerequisites) for guidance on performing EC updates and customizations from vendor firmware prior to the initial Heads flash.
-
 
 Try to read the name on the top SPI flash chip. I was unable to do that. The dots on the chip help to identify the correct clip orientation. 
 
 ![SPI flash chips closed view]({{ site.baseurl }}/images/t430/11_spi_chips_closed_view.jpg)
 
- Then, connect the clip and SPI programmer to the "top" (4096 kb) SPI flash chip. In my set up, the red wire should be where the dot is.
-
-**Note**: See the [SPI Programmer Best Practices]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for programmer recommendations (Tigard recommended; CH347F preferred budget option; CH341A rev1.6+ acceptable with a physical selector). The commands below use `[programmer]` as a placeholder; see the SPI Programmer Best Practices guide for example commands for specific programmers.
+ Then, connect the clip and ch341a programmer to the "top" (4096 kb) SPI flash chip. In my set up, the red wire should be where the dot is.
 
 ![Flashing 4 mb chip]({{ site.baseurl }}/images/t430/12_flash_4mb_spi_chip.jpg)
 
  Use flashrom to check the chip that you are connected to:
 
 ```shell
-sudo flashrom --programmer [programmer]
+sudo flashrom -p ch341a_spi
 ```
 
 
@@ -85,13 +84,11 @@ sudo flashrom --programmer [programmer]
 
 ![output top 4 mb chip]({{ site.baseurl }}/images/t430/13_ubuntu_output_4mb.jpg)
 
-Find the chip and create a backup and verify it (For me the SPI flash chip is `YYY`):
+Find the chip and read from it twice (For me the SPI flash chip is `YYY`):
 
 ```shell
-sudo flashrom --programmer [programmer] --read ~/top.bin --chip YYY
-# Quick sanity check: inspect the start of the dump for obvious garbage
-hexdump -C ~/top.bin | head -20
-sudo flashrom --programmer [programmer] --verify ~/top.bin --chip YYY
+sudo flashrom -r ~/top.bin --programmer ch341a_spi -c YYY && \
+    sudo flashrom -v ~/top.bin --programmer ch341a_spi -c YYY
 ```
 
 If the files differ then try reconnecting your programmer to the SPI flash chip
@@ -101,7 +98,7 @@ If the files differ then try reconnecting your programmer to the SPI flash chip
 If they are the same then write `t430-maximized-top.rom` to the SPI flash chip:
 
 ```shell
-sudo flashrom --programmer [programmer] --chip YYY --write ~/heads/build/x86/t430-maximized/t430-maximized-top.rom
+sudo flashrom -p ch341a_spi -c YYY -w ~/heads/build/x86/t430-maximized/t430-maximized-top.rom
 ```
 
  While everything goes well you should see the blue LED on the programmer.
@@ -115,37 +112,32 @@ sudo flashrom --programmer [programmer] --chip YYY --write ~/heads/build/x86/t43
 
 
 Try to read the name on the bottom SPI flash chip. Then, connect the clip and
- SPI programmer to the bottom SPI flash chip. 
+ ch341a programmer to the bottom SPI flash chip. 
  
 ![flashing bottom 8 mb chip]({{ site.baseurl }}/images/t430/16_flash_8mb_chip.jpg)
  
  Use flashrom to check the chip that you are connected to:
 
 ```shell
-sudo flashrom --programmer [programmer]
+sudo flashrom -p ch341a_spi
 ```
 
 Here is my output.
  
 ![output bottom 8 mb chip]({{ site.baseurl }}/images/t430/17_ubuntu_output_8mb.jpg)
 
-Find the chip and create a backup and verify it (For me the SPI flash chip is `ZZZ`):
+Find the chip and read from the chip twice (For me the SPI flash chip is `ZZZ`):
 
 ```shell
-sudo flashrom --programmer [programmer] --read ~/bottom.bin --chip ZZZ
-# Quick sanity check: inspect the start of the dump for obvious garbage
-hexdump -C ~/bottom.bin | head -20
-sudo flashrom --programmer [programmer] --verify ~/bottom.bin --chip ZZZ
+sudo flashrom -r ~/bottom.bin --programmer ch341a_spi -c ZZZ && \
+    sudo flashrom -v ~/bottom.bin --programmer ch341a_spi -c ZZZ
 ```
 
 The 8M bottom chip contains the ME firmware.  It is neutralized in maximized version. You can flash it specifying the same chip you found under ZZZ:
 ```shell
-sudo flashrom --programmer [programmer] --chip ZZZ --write ~/heads/build/x86/t430-maximized/t430-maximized-bottom.rom
+sudo flashrom -p ch341a_spi -c ZZZ -w ~/heads/build/x86/t430-maximized/t430-maximized-bottom.rom
 ```
 
-**Note about GBE:** The T430 contains a GBE region (board MACs) inside the Intel Firmware Descriptor (IFD). **Always back up the full chip before the initial flash** and inspect the dump (for example, `hexdump -C ~/bottom-backup.bin | head -20`).
-
-If you need to preserve a board's MAC/GBE, the reliable approach is to create a custom GBE during the Heads build (see the `boards/<boardname>` configuration in linuxboot/heads). For details on preserving board-specific regions, consult the SPI Programmer Best Practices guide and the board's build documentation, and refer to issue #120 for community discussion.
 If all goes well, you should see the keyboard LED flash, and within a second Heads will boot in its GUI. 
 
 Two reboots are sometimes needed after flash. Force power off by holding the power button for 10 seconds. Since the memory training data was wiped by the content of the full flashed ROM, this is normal.

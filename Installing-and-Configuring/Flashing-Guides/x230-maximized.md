@@ -17,6 +17,13 @@ Lenovo X230 (Maximized) (applies to all 4mb+8mb SPI chips maximized boards)
 [X230 Hardware Maintenance Manual](https://web.archive.org/web/20201112030049/https://thinkpads.com/support/hmm/hmm_pdf/x230_x230i_hmm_en_0b48666_01.pdf)  
 [X230 Tablet Hardware Maintenance Manual](https://web.archive.org/web/20130908100917/http://download.lenovo.com/pccbbs/mobiles_pdf/0b48730.pdf)
 
+## TPM GPIO Reset Vulnerability — Not Affected
+
+This platform (Ivy Bridge / Intel 3rd Gen) is **not affected** by the
+[TPM GPIO reset vulnerability](https://mkukri.xyz/2024/06/01/tpm-gpio-fail.html).
+On pre-Skylake PCHs, the PLTRST# signal connected to the TPM reset line is a
+dedicated pin that cannot be reprogrammed to GPIO mode by software.
+
 ![Underside of the x230]({{ site.baseurl }}/images/Underside_of_the_x230.jpg)
 
 **Critical**: Remove the batteries AND disconnect the AC adapter before starting. The Thinkpad x230 has
