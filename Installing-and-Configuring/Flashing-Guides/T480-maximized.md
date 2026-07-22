@@ -38,7 +38,7 @@ Please note that as of March 2025, Thunderbolt data transfer is not supported up
 
 ## TPM GPIO Reset Vulnerability (upstream coreboot bug)
 
-Heads relies on [coreboot](https://coreboot.org/) for low-level platform initialization, including GPIO pad configuration. Many Intel platforms are affected by a coreboot bug where the PCH GPIO lock bits are not set before booting the OS. This allows an attacker with code execution (e.g., a malicious OS or dual-boot environment) to reprogram the TPM's reset pin and clear PCRs without a physical reboot — enabling forged measurements and TPM secret extraction. Details: [TPM GPIO fail (mkukri.xyz)](https://mkukri.xyz/2024/06/01/tpm-gpio-fail.html).
+Heads relies on [coreboot](https://coreboot.org/) for low-level platform initialization, including GPIO pad configuration. Many Intel platforms are affected by a coreboot bug where the PCH GPIO lock bits are not set before booting the OS. This allows an attacker with code execution (e.g., a malicious OS or dual-boot environment) to assert the TPM's PLTRST# signal via PCH GPIO register access and clear PCRs without a physical reboot — enabling forged measurements and TPM secret extraction. Details: [TPM GPIO fail (mkukri.xyz)](https://mkukri.xyz/2024/06/01/tpm-gpio-fail.html).
 
 The fix must come from coreboot. GPIO lock support varies by SoC generation in coreboot upstream:
 

@@ -146,13 +146,15 @@ Additionally, since my ROM image is very size constrained, Heads didn't want to 
 
 **Note on TPMTOTP attestation and GPIO reset attacks:** On Intel platforms where
 coreboot does not lock the PCH GPIO pad configuration (most platforms before
-Alder Lake), an attacker with OS-level code execution can reprogram the TPM's
-reset pin. A GPIO reset preserves TPM NVRAM but clears PCRs to zero. The
-attacker can then replay PCR extends from measurement logs (`cbmem -L`,
-`/tmp/measurements`), causing `tpm2_unseal` to succeed on the sealed TOTP/HOTP
-secret at NVRAM index 0x4d47 — no passphrase is required. The attacker obtains
-the 20-byte shared secret and can produce valid TOTP/HOTP codes indefinitely.
-This is more severe than mere code forgery: the secret itself is extractable.
+Alder Lake), an attacker with OS-level code execution can assert the TPM's
+PLTRST# signal via PCH GPIO register access. This resets the TPM, preserving
+NVRAM but clearing PCRs to zero (per TCG Section 12.2.3.2: PCRs volatile on
+Reset; Section 37: NV indices persist). The attacker could then replay PCR
+extends from measurement logs (`cbmem -L`, `/tmp/measuring_trace.log`), causing
+`tpm2_unseal` to succeed on the sealed TOTP/HOTP secret at NVRAM index 0x4d47
+— no passphrase is required. The attacker could obtain the 20-byte shared secret
+and produce valid TOTP/HOTP codes indefinitely. This would be more severe than
+mere code forgery: the secret itself could be extracted.
 The TPM Disk Unlock Key with passphrase is not affected. This is a coreboot bug,
 not a Heads bug — the fix must come from coreboot upstream. See the
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md)
