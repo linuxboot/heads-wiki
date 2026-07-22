@@ -145,20 +145,13 @@ Additionally, since my ROM image is very size constrained, Heads didn't want to 
  and has since been merged into the Heads project.
 
 **Note on TPMTOTP attestation and GPIO reset attacks:** On Intel platforms where
-coreboot does not lock the PCH GPIO pad configuration (most platforms before
-Alder Lake), an attacker with OS-level code execution can assert the TPM's
-PLTRST# signal via PCH GPIO register access. This resets the TPM, preserving
-NVRAM but clearing PCRs to zero (per TCG Section 12.2.3.2: PCRs volatile on
-Reset; Section 37: NV indices persist). The attacker could then replay PCR
-extends from measurement logs (`cbmem -L`, `/tmp/measuring_trace.log`), causing
-`tpm2_unseal` to succeed on the sealed TOTP/HOTP secret at NVRAM index 0x4d47
-— no passphrase is required. The attacker could obtain the 20-byte shared secret
-and produce valid TOTP/HOTP codes indefinitely. This would be more severe than
-mere code forgery: the secret itself could be extracted.
-The TPM Disk Unlock Key with passphrase is not affected. This is a coreboot bug,
-not a Heads bug — the fix must come from coreboot upstream. See the
+coreboot does not lock the PCH GPIO pad configuration, an attacker with OS-level
+code execution can reset the TPM and forge PCR measurements, bypassing TPMTOTP
+and HOTP attestation. The TPM Disk Unlock Key with passphrase is not affected.
+See the [Per-Board Protection Status](#per-board-protection-status) section below
+for which boards are affected, and
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md)
-document for per-platform status, and per-board flashing guides for board-specific notes.
+for technical details.
 
 The UEFI firmware itself is also of great concern: is a very large code base and
  most system firmwares are built from closed-source forks of the edk2 tree. This
@@ -521,6 +514,57 @@ Heads is not designed for "Cover" or "Concealment"
  best tradeoff: Heads can help protect your system against a business
  competitor, but there is no "NSA proof toolkit" that can stop a nation state
  from making you have a very bad day.
+
+Per-Board Protection Status
+===
+
+The TPM GPIO reset vulnerability
+([upstream coreboot bug #576](https://ticket.coreboot.org/issues/576))
+affects TPMTOTP evil maid detection and HOTP USB security dongle authentication
+on platforms where coreboot does not lock the PCH GPIO pad configuration.
+The TPM Disk Unlock Key with passphrase is **not affected** on any platform.
+
+{: .note }
+Heads itself is **not** vulnerable — the fix must come from coreboot.
+See the [technical document](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md)
+for details.
+
+| Board | Evil Maid detection<br>(TPMTOTP attestation) | Disk encryption<br>(TPM DUK + passphrase) | USB Security Dongle<br>(HOTP authentication) |
+|---|---|---|---|
+| **Pre-Skylake laptops** (xx20/30/4x): T420, T430, T440p, W530, W541, X220, X230 | ✅ Protected | ✅ Protected | ✅ Protected |
+| **Desktop boards**: Optiplex 7010/9010, HP Z220 CMT | ✅ Protected | ✅ Protected | ✅ Protected |
+| **T480, T480s** (8th Gen Kaby Lake) | ❌ Not protected<br>[TPM GPIO reset bypass](https://mkukri.xyz/2024/06/01/tpm-gpio-fail.html) | ✅ Protected | ❌ Not protected |
+| **Librem 14, Librem 11** (Purism) | ❌ Not protected | ✅ Protected | ❌ Not protected |
+| **Librem 13v2/v4, 15v3/v4** (Purism) | ❌ Not protected | ✅ Protected | ❌ Not protected |
+| **Librem L1UM v2, Mini v1/v2** (Purism) | ❌ Not protected | ✅ Protected | ❌ Not protected |
+| **Librem L1UM v1** (Broadwell) | ✅ Protected | ✅ Protected | ✅ Protected |
+| **NovaCustom NV4x, NitroPad NS50** (12th Gen Alder Lake) | ❌ Not protected | ✅ Protected | ❌ Not protected |
+| **NovaCustom V54/V56, NitroPad V54/V56** (Meteor Lake) | ✅ Protected | ✅ Protected | ✅ Protected |
+| **MSI Z690-A, Z790-P** (12th-13th Gen) | ❌ Not protected | ✅ Protected | ❌ Not protected |
+| **KGPE-D16** (AMD) | ✅ Protected | ✅ Protected | ✅ Protected |
+| **Talos II** (Power9) | ✅ Protected | ✅ Protected | ✅ Protected |
+
+✅ Protected — Heads' protection against this attack is intact on this board.
+
+❌ Not protected — the TPM GPIO reset vulnerability bypasses Heads' TPMTOTP
+  and HOTP attestation on this board. An attacker with OS-level code execution
+  could reset the TPM and forge PCR measurements to extract the shared secret.
+
+{: .note }
+TPM Disk Unlock Key (DUK) with passphrase is **not affected** on any board.
+The DUK requires a user passphrase to unseal, which a GPIO reset cannot bypass.
+
+### What this means for your threat model
+
+- If you rely on Heads for **evil maid detection** (checking the TOTP code
+  before entering your disk password), choose a board marked ✅ in the
+  first column.
+- If you need **USB security dongle authentication** (HOTP), choose a board
+  marked ✅ in the last column.
+- **Disk encryption** (TPM DUK with passphrase) is protected on all boards.
+
+For the current per-board technical status and fork verification details, see the
+[Heads board testers list](https://github.com/linuxboot/heads/blob/master/doc/BOARDS_AND_TESTERS.md).
 
 Binary blobs, microcode updates and transient execution vulnerabilities
 ===
