@@ -99,7 +99,7 @@ Important pre-update step — apply vendor BIOS/EC updates first:
 References:
 - [ThinkPad EC examples](https://github.com/hamishcoleman/thinkpad-ec)
 
-**Note:** Heads/Coreboot will not modify an EC. If a board requires a custom EC blob, follow the board-specific build instructions and include the blob at build time.
+**Note:** Heads/coreboot will not modify an EC. If a board requires a custom EC blob, follow the board-specific build instructions and include the blob at build time.
 
 **Note**: All current Heads boards use a modern architecture where the Intel Management Engine (ME) is deactivated and the Intel Flash Descriptor (IFD) is unlocked. On older Intel platforms (up to Ivy Bridge/3rd gen), the ME can be neutered (most modules removed), while on newer platforms (Skylake and later), the ME is deactivated using HAP bits or other methods. The historical distinction between "Legacy" and "Maximized" boards is no longer relevant as of 2024, since all supported boards now use the approach that was previously called "maximized."
 

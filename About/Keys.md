@@ -8,6 +8,9 @@ parent: About
 
 ## Keys and passwords in Heads
 
+{: .note }
+See also: [doc/keys.md](https://github.com/linuxboot/heads/blob/master/doc/keys.md) for recommended passphrase lengths per secret.
+
 There are "too many secrets" involved in booting a Heads system. Luckily most
 of them are stored in hardware and only a few need to be memorized by the
 users. This page documents their usage and the risks if an attacker can
