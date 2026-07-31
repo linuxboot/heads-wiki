@@ -75,5 +75,5 @@ Some specifics:
 Other Matrix Rooms
 ===
 
-* [Coreboot Matrix Room](https://matrix.to/#/#coreboot:matrix.org)
+* [coreboot Matrix Room](https://matrix.to/#/#coreboot:matrix.org)
 * [Nitrokey Matrix Room](https://matrix.to/#/#nitrokey:nitro.chat)
