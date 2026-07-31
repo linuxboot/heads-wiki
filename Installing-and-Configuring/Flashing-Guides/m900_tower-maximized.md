@@ -1,20 +1,46 @@
 ---
 layout: default
-title: Lenovo M900 tower PC
-permalink: /M900-Tower-flashing/
-nav_order: 5
+title: Lenovo M900 Tower Maximized
+permalink: /M900_Tower-maximized-flashing/
+nav_order: 3
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
 
-Lenovo M900 Tower PC (Maximized)
+Lenovo M900 Tower (Maximized)
 ===
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details> 
 
-## ⚠️ Safety First
+## ⚠️ EOL: No microcode updates
+{: .warning }
+This board's CPU generation has reached End of Servicing Updates.
+See [per-board EOL/ESU status](https://github.com/linuxboot/heads/blob/master/doc/BOARDS_AND_TESTERS.md#per-board-eolesu-status)
+for ESU dates and [Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-microcode-updates-and-transient-execution-vulnerabilities)
+for security implications.
+
+## 🛡️ VULNERABLE: TPM GPIO Reset
+{: .critical }
+
+TPMTOTP/HOTP bypassable. Disk encryption with passphrase unaffected.
+See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
+[TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
+
+
+
+## ⚡ Safety First
 
 **Before starting, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**
 
 **Board Information/caveats:** Please read the board information file in the main heads repository before proceeding. 
+
+## Disassembly
 
 The M900 Tower is a desktop PC. Access to the board is much easier than on most laptops: remove the side cover and, if necessary, move or remove the drive cage or cables that block access to the SPI flash chip.
 
@@ -29,9 +55,6 @@ For whole procedure you will need:
 - Other laptop/PC with a Linux-based OS installed.  
 
 
-## Flashing Heads
-
-First, shut down the computer and disconnect the AC power cable. Remove all external cables from the machine. Press the power button for several seconds to discharge residual power.
 
 Remove the side cover according to the [M900 Tower Hardware Maintenance Manual](https://download.lenovo.com/pccbbs/thinkcentre_pdf/m800_m900_sff_hmm.pdf)  
 After removing the side cover, remove the CMOS battery. Next, identify the motherboard and the SPI flash chip. If cables or drive cages block access, move them carefully and document where each cable was connected.
@@ -45,40 +68,42 @@ You should [download]({{ site.baseurl }}/Downloading) or build (please see [gene
 Try to read the name of the SPI flash chip. The dot on the chip helps to identify the correct clip orientation. 
 
 
- Next, connect the clip of your SPI programmer to the chip (see the [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for recommended hardware and example commands). Next, connect the programmer to the USB port of your other Linux-based computer with flashrom installed. In this setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the flashing guide for the T430, T480.
+ Next, connect the clip of your SPI programmer to the chip (see the [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for recommended hardware and example commands). Next, connect the programmer to the USB port of your other Linux-based computer with flashrom/flashprog installed. In this setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the flashing guide for the T430, T480.
 
 ![Board overview]({{ site.baseurl }}/images/m900_tower/spi_connected.jpeg)
 
+ 
 
- Use flashrom to check the chip you are connected to:
- Alternatively, use flashprog as described in T480s guide.
+## Flashing
+
+Use `[flasher]` of your choice (flashrom or flashprog -- see [Tool Interchangeability]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#tool-interchangeability)) with the programmer you selected ([programmer] -- see [Programmer Selection]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#programmer-selection)):
 
 ```shell
-sudo flashrom --programmer
+sudo [flasher] --programmer [programmer]
 ```
 
 Create a backup and verify it (where the name of the flash chip is `YYY`):
 
 ```shell
-sudo flashrom --programmer [programmer] --read ~/m900_tower_original_bios.bin --chip YYY
+sudo [flasher] --programmer [programmer] --read ~/m900_tower_original_bios.bin --chip YYY
 
 # Quick sanity check: inspect the start of the dump for obvious garbage
 hexdump -C ~/m900_tower_original_bios.bin | head -20
-sudo flashrom --programmer [programmer] --verify ~/m900_tower_original_bios.bin --chip YYY
+sudo [flasher] --programmer [programmer] --verify ~/m900_tower_original_bios.bin --chip YYY
 ```
 
 ```shell
-sudo flashrom --programmer [programmer] --read ~/m900_tower_original_bios_1.bin --chip YYY
+sudo [flasher] --programmer [programmer] --read ~/m900_tower_original_bios_1.bin --chip YYY
 ```
 
 Make sure that the dump matches the chip content. If this is the case, the output of the following command will state `Verifying flash... VERIFIED`
 
 ```shell
-sudo flashrom --programmer [programmer] --verify ~/m900_tower_original_bios.bin --chip YYY
+sudo [flasher] --programmer [programmer] --verify ~/m900_tower_original_bios.bin --chip YYY
 ```
 Make sure that files do not differ.
 
-# If the dumps look consistent, proceed
+**If the dumps look consistent, proceed.**
 
 Alternative comparison is bit-by-bit. If the files are the same, there should be no output of this command. Otherwise, you will see a bit-by-bit difference between the files.
 
@@ -92,7 +117,7 @@ If the files differ or the chip content does not match the dump, try reconnectin
 If they are the same, then write `m900_tower-hotp-maximized.rom` to the SPI flash chip. The file name can be different based on the commit you use:
 
 ```shell
-sudo flashrom --programmer [programmer] --chip YYY --write ~/heads/build/x86/T480-hotp-maximized/T480-hotp-maximized.rom
+sudo [flasher] --programmer [programmer] --chip YYY --write ~/heads/build/x86/m900_tower-hotp-maximized/m900_tower-hotp-maximized.rom
 ```
 
 You should then follow through with [configuring keys]({{ site.baseurl }}/Configuring-Keys/).

@@ -2,7 +2,7 @@
 layout: default
 title: Lenovo T480 Maximized
 permalink: /T480-maximized-flashing/
-nav_order: 5
+nav_order: 7
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -10,7 +10,30 @@ grand_parent: Installing and configuring
 Lenovo T480 (Maximized)
 ===
 
-## ⚠️ Safety First
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details> 
+
+## ⚠️ EOL: No microcode updates
+{: .warning }
+This board's CPU generation has reached End of Servicing Updates.
+See [per-board EOL/ESU status](https://github.com/linuxboot/heads/blob/master/doc/BOARDS_AND_TESTERS.md#per-board-eolesu-status)
+for ESU dates and [Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-microcode-updates-and-transient-execution-vulnerabilities)
+for security implications.
+
+## 🛡️ VULNERABLE: TPM GPIO Reset
+{: .critical }
+
+TPMTOTP/HOTP bypassable. Disk encryption with passphrase unaffected.
+See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
+[TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
+
+## ⚡ Safety First
 
 **Before starting, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**
 
@@ -36,7 +59,7 @@ Some ThinkPad T480 units on the used market are affected by an Intel bug in the 
 
 Please note that as of March 2025, Thunderbolt data transfer is not supported upstream by [coreboot](https://review.coreboot.org/c/coreboot/+/83274). However, video output through Thunderbolt and charging still work. This means only the USB-C charging port can be used for data transfer.
 
-## Flashing Heads
+## Disassembly
 
 First, remove the batteries and disconnect the power cable from your device. Removing the screws will allow you to remove the back panel. A guitar pick or an old credit card can be helpful for detaching the panel.
 
@@ -58,13 +81,15 @@ Try to read the name of the SPI flash chip. The dot on the chip helps to identif
 
 ![SPI BIOS flash chip closed view]({{ site.baseurl }}/images/T480/4_bios_chip_orientation.jpg)
 
- First, connect the clip of your SPI programmer to the chip (see the [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for recommended hardware and example commands). Next, connect the programmer to the USB port of your other Linux-based computer with flashrom installed. In my setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the flashing guide for the T430. 
+## Flashing
+
+First, connect the clip of your SPI programmer to the chip (see the [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for recommended hardware and example commands). Next, connect the programmer to the USB port of your other Linux-based computer with flashrom/flashprog installed. In my setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the flashing guide for the T430. 
 
 **Note:** For initial reflashing steps that involve customizing the EC while still on proprietary firmware (for example to preserve or alter EC features), see the X230 reflashing notes and building guidance for detailed instructions and cautions.
- Use flashrom to check the chip you are connected to:
+Use `[flasher]` of your choice (flashrom or flashprog -- see [Tool Interchangeability]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#tool-interchangeability)) with the programmer you selected ([programmer] -- see [Programmer Selection]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#programmer-selection)):
 
 ```shell
-sudo flashrom --programmer [programmer]
+sudo [flasher] --programmer [programmer]
 ```
 
 Here is my output.
@@ -74,17 +99,17 @@ Here is my output.
 Create a backup and verify it (where the name of the flash chip is `YYY`):
 
 ```shell
-sudo flashrom --programmer [programmer] --read ~/t480_original_bios.bin --chip YYY
+sudo [flasher] --programmer [programmer] --read ~/t480_original_bios.bin --chip YYY
 # Quick sanity check: inspect the start of the dump for obvious garbage
 hexdump -C ~/t480_original_bios.bin | head -20
-sudo flashrom --programmer [programmer] --verify ~/t480_original_bios.bin --chip YYY
+sudo [flasher] --programmer [programmer] --verify ~/t480_original_bios.bin --chip YYY
 ```
 
 First output can be seen here. 
 ![1-st read]({{ site.baseurl }}/images/T480/6_lenovo_bios.jpg)
 
 ```shell
-sudo flashrom --programmer [programmer] --read ~/t480_original_bios_1.bin --chip YYY
+sudo [flasher] --programmer [programmer] --read ~/t480_original_bios_1.bin --chip YYY
 ```
 Second output can be seen here. 
 ![2-nd read]({{ site.baseurl }}/images/T480/7_lenovo_bios_1.jpg)
@@ -92,11 +117,11 @@ Second output can be seen here.
 Make sure that the dump matches the chip content. If this is the case, the output of the following command will state `Verifying flash... VERIFIED`
 
 ```shell
-sudo flashrom --programmer [programmer] --verify ~/t480_original_bios.bin --chip YYY
+sudo [flasher] --programmer [programmer] --verify ~/t480_original_bios.bin --chip YYY
 ```
 Make sure that files do not differ.
 
-# If the dumps look consistent, proceed (visual comparison shown above).
+**If the dumps look consistent, proceed (visual comparison shown above).**
 
 
 Alternative comparison is bit-by-bit. If the files are the same, there should be no output of this command. Otherwise, you will see a bit-by-bit difference between the files.
@@ -111,7 +136,7 @@ If the files differ or the chip content does not match the dump, try reconnectin
 If they are the same, then write `T480-hotp-maximized.rom` to the SPI flash chip:
 
 ```shell
-sudo flashrom --programmer [programmer] --chip YYY --write ~/heads/build/x86/T480-hotp-maximized/T480-hotp-maximized.rom
+sudo [flasher] --programmer [programmer] --chip YYY --write ~/heads/build/x86/T480-hotp-maximized/T480-hotp-maximized.rom
 ```
 
 **Note about GBE:** The T480 includes a GBE region (board MACs) inside the Intel Firmware Descriptor (IFD). **Always back up the full chip before the initial flash** and inspect the dump (for example, `hexdump -C ~/bios-backup.bin | head -20`).
@@ -131,15 +156,15 @@ You should then follow through with [configuring keys]({{ site.baseurl }}/Config
 Important, ensure that power supply and all batteries, including the CMOS battery, are disconnected. After connecting the clip to the Thunderbolt chip as shown in the figure above read from the chip, making sure the connection is stable. The procedure is similar to the flashing Heads on the SPI chip. Therefore, comments are skipped.
 
 ```shell
-sudo flashrom --programmer [programmer] --read ~/t480_original_tb.bin --chip YYY
+sudo [flasher] --programmer [programmer] --read ~/t480_original_tb.bin --chip YYY
 # Quick sanity check: inspect the start of the dump for obvious garbage
 hexdump -C ~/t480_original_tb.bin | head -20
 
-sudo flashrom --programmer [programmer] --read ~/t480_original_tb_1.bin --chip YYY
+sudo [flasher] --programmer [programmer] --read ~/t480_original_tb_1.bin --chip YYY
 # Quick sanity check: inspect the start of the dump for obvious garbage
 hexdump -C ~/t480_original_tb_1.bin | head -20
 
-sudo flashrom --programmer [programmer] --verify ~/t480_original_tb.bin --chip YYY
+sudo [flasher] --programmer [programmer] --verify ~/t480_original_tb.bin --chip YYY
 
 # Bit-by-bit comparison:
 diff <(hexdump -C t480_original_tb.bin) <(hexdump -C t480_original_tb_1.bin)
@@ -147,6 +172,6 @@ diff <(hexdump -C t480_original_tb.bin) <(hexdump -C t480_original_tb_1.bin)
 Flash the padded Thunderbolt firmware. The firmware file tb.bin is located in the blobs folder after you build the Heads locally, or in the CircleCI artifacts.
 
 ```shell
-sudo flashrom --programmer [programmer] --chip YYY --write ~/tb.bin
+sudo [flasher] --programmer [programmer] --chip YYY --write ~/tb.bin
 ```
 Done.

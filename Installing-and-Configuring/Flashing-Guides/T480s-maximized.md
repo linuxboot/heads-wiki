@@ -2,13 +2,41 @@
 layout: default
 title: Lenovo T480s Maximized
 permalink: /T480s-maximized-flashing/
-nav_order: 1
+nav_order: 8
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
 
 Lenovo T480s (Maximized)
 ===
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details> 
+
+## ⚠️ EOL: No microcode updates
+{: .warning }
+This board's CPU generation has reached End of Servicing Updates.
+See [per-board EOL/ESU status](https://github.com/linuxboot/heads/blob/master/doc/BOARDS_AND_TESTERS.md#per-board-eolesu-status)
+for ESU dates and [Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-microcode-updates-and-transient-execution-vulnerabilities)
+for security implications.
+
+## 🛡️ VULNERABLE: TPM GPIO Reset
+{: .critical }
+
+TPMTOTP/HOTP bypassable. Disk encryption with passphrase unaffected.
+See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
+[TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
+
+
+
+## ⚡ Safety First
+
+**Before starting, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**
 
 [T480s Hardware Maintenance Manual](https://download.lenovo.com/pccbbs/mobiles_pdf/t480s-hmm_en.pdf)  
 
@@ -26,9 +54,6 @@ There is still debate over which programmer and software should be used (flashpr
 
 Some ThinkPad T480s units on the used market, like the T480, are affected by an Intel bug in the Thunderbolt firmware. In short, the flash chip becomes full, causing Thunderbolt fast charging to stop working, though slow charging still functions. This issue can also affect the USB-C port. For convenience, Heads provides a fixed and padded Thunderbolt firmware that resolves the "charging problem" if your laptop is affected. Board testers did not encounter this issue, and it is unlikely to occur if your laptop was in use for more than 12 months before flashing. If you do experience the "charging bug," it is possible to fix it with external flashing. Also, the update is possible prior flashing heads using [fwupd from a Linux distribution](https://www.reddit.com/r/thinkpad/comments/12tf6xv/psa_t480_thunderbolt_controller_v23_is_now_on/)
 
-Please note that as of March 2025, Thunderbolt data transfer is not supported upstream by [coreboot](https://review.coreboot.org/c/coreboot/+/83274). However, video output through Thunderbolt and charging still work. This means only the USB-C charging port can be used for data transfer.
-
-## (Optional) Updating EC Firmware
 
 Before flashing heads, it is advisable to update the EC Firmware on the laptop. Some old EC firmware may be vulnerable to some serious CVEs. See [Heads-threat-model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-microcode-updates-and-transient-execution-vulnerabilities) for additional information.
 
@@ -59,7 +84,7 @@ sudo dd if=t480s_bootable_update_utility.img of=/dev/sdX status=progress
 
 Boot from the USB on the laptop and follow the update prompts.
 
-## Flashing Heads
+## Disassembly
 
 First, disconnect the power cable from your device then begin removing the back panel by removing the screws. A guitar pick or an old credit card can be helpful for detaching the panel.
 
@@ -81,12 +106,14 @@ Try to read the name of the SPI flash chip. The dot on the chip helps to identif
 
 ![SPI BIOS flash chip closed view]({{ site.baseurl }}/images/T480s/4_bios_chip_orientation.jpg)
 
-First, connect the clip of your chosen SPI programmer (Raspberry Pi Pico was used in the sample commands) to the chip. Next, connect the programmer to the USB port of your other Linux-based computer with flashrom installed. In my setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the flashing guide for the T430. 
+## Flashing
 
-Use flashrom/flashprog to check the chip you are connected to:
+First, connect the clip of your chosen SPI programmer (Raspberry Pi Pico was used in the sample commands) to the chip. Next, connect the programmer to the USB port of your other Linux-based computer with flashrom/flashprog installed. In my setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the flashing guide for the T430. 
+
+Use `[flasher]` of your choice (flashrom or flashprog -- see [Tool Interchangeability]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#tool-interchangeability)) with the programmer you selected ([programmer] -- see [Programmer Selection]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#programmer-selection)):
 
 ```shell
-sudo flashprog -p serprog:dev=/dev/ttyACM0:spispeed=16M
+sudo [flasher] --programmer [programmer]
 ```
 
 Here is my output.
@@ -101,10 +128,10 @@ Found Winbond flash chip "W25Q128.V" (16384 kB, SPI) on serprog.
 No operations were specified.
 ```
 
-Read from the chip twice (where the name of the flash chip is `YYY`):
+Create a backup and verify it (where the name of the flash chip is `YYY`):
 
 ```shell
-sudo flashprog -r ~/t480s_original_bios.bin --programmer serprog:dev=/dev/ttyACM0:spispeed=16M -c YYY
+sudo [flasher] --read ~/t480s_original_bios.bin --programmer [programmer] -c YYY
 ```
 
 First output can be seen here. 
@@ -121,7 +148,7 @@ Reading flash... done.
 
 
 ```shell
-sudo flashprog -r ~/t480s_original_bios_1.bin --programmer serprog:dev=/dev/ttyACM0:spispeed=16M -c YYY
+sudo [flasher] --read ~/t480s_original_bios_1.bin --programmer [programmer] -c YYY
 ```
 Second output can be seen here. 
 
@@ -138,7 +165,7 @@ Reading flash... done.
 Make sure that the dump matches the chip content. If this is the case, the output of the following command will state `Verifying flash... VERIFIED`
 
 ```shell
-sudo flashprog -v ~/t480_original_bios.bin --programmer serprog:dev=/dev/ttyACM0:spispeed=16M -c YYY
+sudo [flasher] --verify ~/t480_original_bios.bin --programmer [programmer] -c YYY
 ```
 Make sure that files do not differ.
 
@@ -168,7 +195,7 @@ If the files differ or the chip content does not match the dump, try reconnectin
 If they are the same, then write `t480s-hotp-maximized.rom` to the SPI flash chip:
 
 ```shell
-sudo flashprog -p serprog:dev=/dev/ttyACM0:spispeed=16M -c YYY -w ~/heads/build/x86/t480s-hotp-maximized/heads-t480s-hotp-maximized.rom
+sudo [flasher] --programmer [programmer] -c YYY -w ~/heads/build/x86/t480s-hotp-maximized/heads-t480s-hotp-maximized.rom
 ```
 
 Here is a successful attempt. Be patient, it may take a while.
@@ -193,10 +220,11 @@ You should then follow through with [configuring keys]({{ site.baseurl }}/Config
 
 ## Flash Thunderbolt firmware
 Important, ensure that power supply and all batteries, including the CMOS battery, are disconnected. After connecting the clip to the Thunderbolt chip as shown in the figure above read from the chip, making sure the connection is stable. The procedure is similar to the flashing Heads on the SPI chip. Therefore, comments are skipped.
+(flashprog can also be used — substitute as in the main section above)
 
 Check the chip you are connected to:
 ```shell
-sudo flashprog -p serprog:dev=/dev/ttyACM0:spispeed=16M
+sudo [flasher] --programmer [programmer]
 ```
 Output:
 ```
@@ -210,15 +238,15 @@ No operations were specified.
 ```
 
 ```shell
-sudo flashrom --programmer [programmer] --read ~/t480s_original_tb.bin --chip YYY
+sudo [flasher] --programmer [programmer] --read ~/t480s_original_tb.bin --chip YYY
 ```
 
 ```shell
-sudo flashrom --programmer [programmer] --read ~/t480s_original_tb_1.bin --chip YYY
+sudo [flasher] --programmer [programmer] --read ~/t480s_original_tb_1.bin --chip YYY
 ```
 
 ```shell
-sudo flashrom --programmer [programmer] --verify ~/t480s_original_tb.bin --chip YYY
+sudo [flasher] --programmer [programmer] --verify ~/t480s_original_tb.bin --chip YYY
 ```
 
 ```shell
@@ -233,6 +261,6 @@ diff <(hexdump -C t480_original_tb.bin) <(hexdump -C t480_original_tb_1.bin)
 Flash the padded Thunderbolt firmware. The firmware file tb.bin is located in the blobs folder after you build the Heads locally, or in the CircleCI artifacts.
 
 ```shell
-sudo flashrom --programmer [programmer] --chip YYY --write ~/t480s_tb.bin
+sudo [flasher] --programmer [programmer] --chip YYY --write ~/t480s_tb.bin
 ```
 Done.
