@@ -8,6 +8,10 @@ has_toc: false
 parent: Installing and configuring
 ---
 
+{: .note }
+The authoritative recovery shell reference is maintained in the source repository:
+[doc/recovery-shell.md](https://github.com/linuxboot/heads/blob/master/doc/recovery-shell.md).
+
 Heads Recovery Shell
 ====
 
@@ -38,6 +42,33 @@ Limitations
 The recovery shell wipes secrets--normally used for security checks--that were [computed](/Keys/#tpm-pcrs) from the BIOS, kernel modules loaded, etc.  This will limit sealing/unsealing functions (Disk Unlock Key creation, TOTP/HOTP sealing) from the recovery shell environment. To seal/unseal secrets, the same measurements needs to be calculated, which would be different depending of the kernel modules loaded and if going in/out of the recovery shell, which invalidates per design the TPM measurements to not release secrets.
 
 To seal/unseal secrets, use the GUI environment.
+
+
+TPM GPIO Reset Vulnerability Testing
+----
+
+Heads includes tools to test for the [TPM GPIO reset vulnerability](https://mkukri.xyz/2024/06/01/tpm-gpio-fail.html) (disclosed by Mate Kukri, 2024). On Intel Skylake+ platforms, the PLTRST# pin may be reprogammable to GPIO mode, allowing an attacker to reset the TPM from userspace.
+
+Two tools are available in the recovery shell (USB stick recommended for log capture):
+
+```bash
+# Mount USB stick read-write, audit GPIO lock status (safe, read-only)
+mount-usb.sh --mode rw && tpm-gpio-detect 2>&1 | tee /media/tpm-gpio-detect.log
+
+# Assert PLTRST# and check TPM reset (destructive -- platform may reset)
+tpm-gpio-assert 2>&1 | tee /media/tpm-gpio-assert.log
+```
+
+**detect** identifies your platform and checks whether GPIO pad configuration
+registers are locked by firmware. **assert** attempts to assert PLTRST# and
+verifies whether the write took effect.
+
+After testing, report results to the [Heads community](https://github.com/linuxboot/heads/issues)
+or the [tpm-gpio-fail fork](https://github.com/tlaurion/tpm-gpio-fail). Per-platform
+status is tracked in the [Threat Model](/Heads-threat-model/).
+
+See the [Threat Model](/Heads-threat-model/) for per-platform vulnerability
+status and mitigation guidance.
 
 
 Boot Process
@@ -73,13 +104,6 @@ This example may work for you by changing only the root= setting.  Normally, the
 
     kexec-boot -b /boot -e ‘foo|elf|kernel /vmlinuz|initrd /initrd.img|append root=/dev/whatever’
 
-
-### sign files
-
-Content in /boot is hashed and recorded in a file.  The hashes are signed using the security dongle paired with Heads.  These hashes are verified on boot using the public key corresponding to the security dongle.
-
-    mount /dev/sdaX /boot
-    kexec-sign-config -p /boot
 
 ### hotp and totp
 
