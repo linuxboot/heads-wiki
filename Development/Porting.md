@@ -48,23 +48,64 @@ coreboot fork that will be used should be added under `heads/modules/coreboot`. 
 
 binary blobs:
 ---
-Check the coreboot configuration for the ported board. This will indicate which binary blobs are required and where they are expected to be located. Heads expects architecture-/board-specific scripts under `blobs/*` which do the magic, called by the main makefile that handles everything in Heads. These scripts must create reproducible binary blobs when invoked. The blobs should be placed in the `blobs/NEW_BOARD/`. Make sure the coreboot config file references the correct path for each blob and the blobs are added to `.gitignore` so that they are not accidentally committed to git.
-Generally,  three binary blobs are required: Management Engine (ME), Intel Flash Descriptor Region (IFD), and Gigabit Ethernet (GBE). The IFD and GBE can be extracted from a donor board using coreboot’s ifdtool. For more details, refer to the [upstream documentation](https://doc.coreboot.org/util/ifdtool/layout.html). On some boards it may be necessary to provide more blobs to coreboot, for instance an MRC blob for RAM initialization if coreboot cannot distribute the blob itself for legal reasons.
+Check the coreboot configuration for the ported board. This will indicate which
+binary blobs are required and where they are expected to be located. Some
+coreboot repositories provide the common blobs needed by their supported
+boards. Other ports need architecture- or board-specific scripts under
+`blobs/*`, called by the main Heads makefile. These scripts must produce
+reproducible output, place it under `blobs/NEW_BOARD/`, verify its SHA256 hash,
+and keep generated blobs out of git.
 
-Please note, if the ME is neutered, the IFD, coreboot CBFS region, and ME neutering space should be adjusted accordingly. Rationale: the ME region defined under IFD must fit. With the IFD ME region reduced, the BIOS region can grow with the freed ME space. With the BIOS region augmented, the CBFS region of the coreboot configuration must be increased to fit the optimized space (all current Heads boards use this approach).
+Intel ports commonly need Management Engine (ME), Intel Flash Descriptor (IFD)
+and Gigabit Ethernet (GBE) data. The IFD and GBE regions can be extracted from a
+donor board using coreboot's ifdtool. For more details, refer to the
+[upstream documentation](https://doc.coreboot.org/util/ifdtool/layout.html).
+Some boards also require an MRC or FSP blob for memory initialization.
 
-Please note the GBE MAC address should be forged to: `00:DE:AD:C0:FF:EE MAC`. It can be done with [nvmutil](https://libreboot.org/docs/install/nvmutil.html). Due to licensing restrictions, the ME firmware cannot be uploaded to the GitHub. However, scripts can be used to build it locally and within CircleCI (a gray area legally, but still possible). GBE and IFD blobs can be uploaded directly to GitHub. Please explain how they were obtained in the commit message.
+If a port neuters ME and reallocates the freed space, update the IFD and
+coreboot CBFS layout together. The ME region in the IFD must still contain the
+prepared ME image and the expanded BIOS region must match coreboot's layout.
+Do not apply this layout change to a vendor-maintained image unless the platform
+explicitly supports it.
+
+Do not overwrite per-device data such as a working GBE MAC address, VPD,
+calibration data or device identity with shared build artifacts. A placeholder
+such as `00:DE:AD:C0:FF:EE` may be used in a reproducible CI image that will not
+be flashed whole, but installation and update instructions must preserve the
+device's original region. Vendor-maintained ports with a fixed FMAP should
+normally limit writes to the intended firmware region.
+
+Due to licensing restrictions, ME firmware cannot be uploaded to GitHub.
+Scripts may download or prepare it locally and in CI where licensing permits.
+GBE and IFD blobs can be uploaded directly when redistribution is allowed.
+Explain how each blob was obtained in the commit message.
 * Note: When calling scripts in Nix-based environments, Python must be invoked explicitly, as Nix does not allow executing Python scripts directly from files. One can use last clean example for t480: `python ./finalimage.py` will work and just `./finalimage.py` will not work. 
-The blobs folder should have a script.sh which handles downloading, deactivating ME etc. It should also contain a README.md file briefly explaining the process. Hashes of the blobs should be stored either in `README.md` or in `hashes.txt file`. Furthermore, the script must ensure the integrity of the blobs it produced by comparing a SHA256 hash.
+When a port needs a blobs folder, it should contain a `script.sh` which handles
+downloading or preparing the blobs and a `README.md` which explains the process.
+Store expected hashes in the README or a `hashes.txt` file and make the script
+reject unexpected output.
 
 NEW_BOARD.mk:
 ---
-Create a new `heads/targets/NEW_BOARD.mk` file which deals with calling blobs/script.sh*, download and extraction, and placing the blobs in correct location. This will be used by the main makefile and defines the board specific targets and dependencies, such as the binary blobs. For additional details, please see [Makefiles]({{ site.baseurl }}/Development/make-details.md).
+If the port needs board-specific build targets, create
+`heads/targets/NEW_BOARD.mk`. It should call the blob preparation script and
+place its output where coreboot expects it. A board whose selected coreboot
+repository already provides every required common blob does not need an empty
+target file. For additional details, please see
+[Makefiles]({{ site.baseurl }}/Development/make-details.md).
 
 board.config: 
 ---
-There should be a file `NEW_BOARD-hotp-maximized.config`, which inherits all the parameters from `NEW_BOARD-maximized.config` and adds  HOTP verification. Those files should be located in the folder `heads/boards/NEW_BOARD-hotp-maximized` and `heads/boards/NEW_BOARD-maximized`, respectively. This is Heads specific configuration and should be adapted from a similar platform. The top of the board config files is also a good place to put some technical board-specific documentation, known issues etc.
-You should point in `NEW_BOARD-hotp-maximized` and `NEW_BOARD-maximized` to the coreboot version e.g. `export CONFIG_COREBOOT_VERSION=X.Y.Z.`- that was modified under `modules/coreboot` (see corresponding section above). Additionally, the configurations should reference the appropriate coreboot and linux configs created below:
+A port needs at least one production board configuration. It may provide
+separate `NEW_BOARD-maximized` and `NEW_BOARD-hotp-maximized` targets when both
+profiles are useful, or one target with HOTP enabled when that is the supported
+configuration. Adapt the file from a maintained board on a similar platform.
+The top of the file is also a good place for technical notes, known issues and
+links to recovery instructions.
+
+Each board configuration must select the coreboot version added under
+`modules/coreboot`, for example `export CONFIG_COREBOOT_VERSION=X.Y.Z`, and
+reference the corresponding coreboot and Linux configurations:
 ```
 CONFIG_COREBOOT_CONFIG=config/coreboot-NEW_BOARD.config
 CONFIG_LINUX_CONFIG=config/linux-NEW_BOARD.config
@@ -85,7 +126,9 @@ export CONFIG_PRIMARY_KEY_TYPE=ecc
 #TPM1 requirements
 #export CONFIG_TPM=y
 ```
-In the configuration, the binary blobs must be specified as build targets, as coreboot depends on these blobs. It is the line at the bottom of the board config `BOARD_TARGETS := NEW_BOARD`. It ensures that the main Heads makefile builds the targets specified in the `NEW_BOARD.mk` file.
+When a board has binary preparation targets, list them in `BOARD_TARGETS` so
+Heads builds them before coreboot. Omit `BOARD_TARGETS` when the port has no
+board-specific target.
 
 coreboot.config:
 ---
@@ -220,7 +263,7 @@ export CONFIG_QUIET_MODE=y
 
 Write a flashing/disassembling guide
 ===
-Take pictures as you disassemble your board and flash the Heads ROM. You can use them later to write a guide. This will help less technical community members using the board. Your effort will improve the ecosystem. 
+Take pictures as you disassemble your board and flash the Heads ROM. You can use them later to write a guide. This will help less technical community members using the board. Your effort will improve the ecosystem. A maintained vendor guide is acceptable when it covers the same board revision, programmer connection and recovery procedure; link it from the Heads flashing-guide index and board configuration.
 If you cannot manage to finish writing the guide but talented enough to finish the port just create an issue on the GitHub and drop pictures. We will try to find time to help.
 The guide is essential part of the port.
 
