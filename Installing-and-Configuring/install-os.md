@@ -116,7 +116,7 @@ initramfs):
 - pureos-11-gnome-live-20260515_amd64.iso
 
 The complete, up-to-date list of tested ISOs is maintained in the
-[ISO boot test matrix](https://github.com/linuxboot/heads/blob/master/initrd/tests/iso-test/README.md).
+[ISO boot test matrix](https://github.com/linuxboot/heads/blob/master/tests/iso-test/README.md).
 
 Default Boot and TPM Disk Unlock Key passphrase
 ===
