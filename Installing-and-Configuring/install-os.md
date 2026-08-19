@@ -38,7 +38,7 @@ directory:
 ```
 
 - Some distros will require additional options to boot directly from ISO. See
-	[Boot config files](/BootOptions) for more information.
+	[Boot config files]({{ site.baseurl }}/BootOptions/) for more information.
 - Boot from USB by Boot menu options, or by calling `usb-scan` from the recovery
 	shell.
 	- Select the install boot option for your distro of choice and work through
@@ -71,33 +71,52 @@ options with label and main boot parameters from the options provided to you.
 Compatibility
 ===
 
-Heads requires unencrypted `/boot`. Graphical OSes generally have the best
-support. Debian live installers, Fedora Workstation (or spins), Qubes, and
-PureOS all work well.
+Heads requires a separate, unencrypted `/boot` partition. Heads runs from ROM
+and measures and verifies `/boot` before kexec'ing the kernel, so `/boot` must
+not be encrypted or merged into the encrypted root filesystem.
 
-Last tested OS variants (tested with TPM DUK so no LUKS passphrase prompt from OS initramfs in the dark): 
-- ubuntu-25.10-desktop-amd64.iso
+Manual partitioning
+---
+
+Many installers' automatic partitioning encrypts `/boot` or merges it into the
+encrypted root, which Heads cannot boot. Use manual partitioning and create:
+
+1. A separate, unencrypted ext4 partition mounted at `/boot` (1G or larger).
+   On BIOS/CSM systems, tick the BIOS boot flags the installer offers (e.g.
+   `legacybios` and `grub`) so GRUB can be embedded.
+2. An encrypted swap partition with a Disk Recovery Key passphrase (tick the
+   `swap` flag).
+3. A LUKS-encrypted partition mounted at `/` with the same passphrase (tick the
+   `root` flag).
+
+Dismiss any warnings about a missing EFI system partition or `/boot` layout
+when installing in legacy BIOS mode.
+
+Distro notes
+---
+
+- **Debian**: use the full DVD installer (e.g.
+  `debian-13.2.0-amd64-DVD-1.iso`). The live installer defaults to an encrypted
+  `/boot`; the netinst image does not work on all systems.
+- **Fedora**: use ext4 for `/`; the default btrfs is not readable from Heads'
+  recovery console.
+- **Qubes**: disconnect USB tokens during first-boot configuration, as they may
+  be detected as keyboards and prevent sys-usb creation.
+- **NixOS**: works when `/boot` is unencrypted. Tested manual layout: 2048M ext4
+  `/boot` with `legacybios` and `grub` flags ticked, plus encrypted swap and
+  root sharing a single passphrase.
+- **PureOS**: the default installation works.
+
+Last tested variants (with TPM DUK, so no LUKS passphrase prompt from the OS
+initramfs):
+- ubuntu-26.04-desktop-amd64.iso
 - debian-13.2.0-amd64-DVD-1.iso
 - Fedora-Workstation-Live-43-1.6.x86_64.iso
+- Qubes-R4.3.1-x86_64.iso
+- pureos-11-gnome-live-20260515_amd64.iso
 
-* *For Debian*:
-	1. Use a live desktop image. The network installer image does not work on all
-		 systems.
-	2. Ensure `/boot` is unencrypted. Debian 13 DVD defaults to a unencrypted /boot and encrypted rootfs
-		 partition, you might have partition manually for other OSes. This may not apply to all Debian
-		 derivatives.
-		* Create one 1G ext4 partition mounted at `/boot`
-		* Create a LUKS container with one ext4 partition mounted at `/`.
-		* For swap, you can create a swapfile later on the encrypted root, or create
-			a swap partition.
-* *For Fedora*: The default partitioning works, but `/` is btrfs by default,
-	which Heads' recovery console does not support. Use ext4 instead for recovery
-	console support.
-* *For Qubes*: Be sure to disconnect USB tokens during configuration on first
-	boot. Otherwise, the Qubes installer may prevent the creation of a sys-usb
-	qube if they are detected as keyboards (HID devices). If you are using a USB
-	keyboard, follow the [Qubes instructions for USB keyboards](https://www.qubes-os.org/doc/usb-qubes/#usb-keyboards).
-* *For PureOS*: The default installation works.
+The complete, up-to-date list of tested ISOs is maintained in the
+[ISO boot test matrix](https://github.com/linuxboot/heads/blob/master/tests/iso-test/README.md).
 
 Default Boot and TPM Disk Unlock Key passphrase
 ===

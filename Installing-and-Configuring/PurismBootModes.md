@@ -80,9 +80,9 @@ The choice between Basic and Restricted modes depends on your specific security 
 Both modes have been contributed to the upstream Heads project and represent important developments in making secure boot accessible to different user communities. The implementation demonstrates how the Heads framework can accommodate varying security requirements while maintaining its core principles.
 
 For general Heads configuration and setup information, see:
-- [Prerequisites](/Prerequisites)
-- [Configuring Keys](/Configuring-Keys)
-- [Boot Options](/BootOptions)
+- [Prerequisites]({{ site.baseurl }}/Prerequisites)
+- [Configuring Keys]({{ site.baseurl }}/Configuring-Keys/)
+- [Boot Options]({{ site.baseurl }}/BootOptions/)
 
 ## Community Discussion
 

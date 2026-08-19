@@ -20,7 +20,7 @@ parent: About
 Historical Legacy Migration
 ===
 
-**Note**: This page contains historical reference information and applies only to users upgrading from very old Heads firmware (pre-2024). All new installations should use current board configurations available from the [Prerequisites](/Prerequisites) page.
+**Note**: This page contains historical reference information and applies only to users upgrading from very old Heads firmware (pre-2024). All new installations should use current board configurations available from the [Prerequisites]({{ site.baseurl }}/Prerequisites) page.
 
 **Warning**: Migration from pre-2024 firmware requires careful attention. Legacy boards were [officially deprecated in October 2024](https://github.com/linuxboot/heads/pull/1803). Use maximum caution when upgrading from very old firmware, as improper steps may result in a bricked device.
 
@@ -48,8 +48,8 @@ If you are running very old Heads firmware:
 Migration Steps
 ---
 
-1. Refer to the [Downloading documentation](/Downloading) for current board configurations
-2. Follow the [upgrade verification steps](/Updating#verify-upgradeability-paths-of-the-firmware) in the Upgrading documentation
+1. Refer to the [Downloading documentation]({{ site.baseurl }}/Downloading) for current board configurations
+2. Follow the [upgrade verification steps]({{ site.baseurl }}/Updating#verify-upgradeability-paths-of-the-firmware) in the Upgrading documentation
 3. Ensure you have proper recovery equipment before proceeding
 
 **Important for Nitrokey Customers**:  

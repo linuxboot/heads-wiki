@@ -23,7 +23,7 @@ Lenovo X220 (Maximized)
 {: .warning }
 This board's CPU generation has reached End of Servicing Updates.
 See [per-board EOL/ESU status](https://github.com/linuxboot/heads/blob/master/doc/BOARDS_AND_TESTERS.md#per-board-eolesu-status)
-for ESU dates and [Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-microcode-updates-and-transient-execution-vulnerabilities)
+for ESU dates and [Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-me-and-peripheral-firmware)
 for security implications.
 
 ## ✅ PROTECTED: TPM GPIO Reset
@@ -49,7 +49,7 @@ The X220 has a single 8 MB SPI flash chip located under the palm rest. Disassemb
 
 ## Flashing
 
-The X220 uses a single 8 MB SPI flash chip -- no ROM splitting needed. Follow the X230 flashing guide for flashing commands, substituting the X220 board name. Use `[flasher]` of your choice (flashrom or flashprog -- see [Tool Interchangeability]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#tool-interchangeability)) with the programmer you selected ([programmer] -- see [Programmer Selection]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#programmer-selection)):
+The X220 uses a single 8 MB SPI flash chip -- no ROM splitting needed. Follow the X230 flashing guide for flashing commands, substituting the X220 board name. Use `[flasher]` of your choice (flashrom or flashprog -- see [Tool Interchangeability]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#tool-interchangeability)) with the programmer you selected ([programmer] -- see [Programmer Selection]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#recommended-programmers)):
 
 ```shell
 sudo [flasher] --programmer [programmer] --chip YYY --write ~/heads/build/x86/x220-maximized/x220-maximized.rom

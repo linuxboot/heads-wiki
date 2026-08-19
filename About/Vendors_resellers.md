@@ -78,7 +78,7 @@ Many of these vendors offer additional services and features, including:
   post on this topic: [Deep Dive into Intel ME Disablement](https://puri.sm/posts/deep-dive-into-intel-me-disablement/).
 - **Blob Status:** The newer the platform, the more it relies on proprietary
   blobs. Users should consider their threat model when choosing a device. For
-  more information, refer to the [threat modeling page](/Heads-threat-model/).
+  more information, refer to the [threat modeling page]({{ site.baseurl }}/Heads-threat-model/).
 - **HOTP Security Dongles:** Purism and Nitrokey are makers of HOTP-compatible
   security dongles. USB security dongles are used for both remote attestation
   and to authenticate and sign boot content. Heads relies on HOTP for tamper

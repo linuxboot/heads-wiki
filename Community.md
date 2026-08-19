@@ -70,7 +70,7 @@ Found a bug under Heads/How to Contribute
 Some specifics:
 * [Issues tagged with "Help Wanted"](https://github.com/linuxboot/heads/labels/help%20wanted)
 * [Issues tagged with "Bounty"](https://github.com/linuxboot/heads/labels/Bounty)
-* [Contributing to the Heads wiki](/Contributing-to-Heads-wiki/)
+* [Contributing to the Heads wiki]({{ site.baseurl }}/Contributing-to-Heads-wiki/)
 
 Other Matrix Rooms
 ===

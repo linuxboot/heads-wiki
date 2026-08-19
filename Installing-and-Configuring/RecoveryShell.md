@@ -39,7 +39,7 @@ These two different methods of access will result in some different settings.
 Limitations
 ----
 
-The recovery shell wipes secrets--normally used for security checks--that were [computed](/Keys/#tpm-pcrs) from the BIOS, kernel modules loaded, etc.  This will limit sealing/unsealing functions (Disk Unlock Key creation, TOTP/HOTP sealing) from the recovery shell environment. To seal/unseal secrets, the same measurements needs to be calculated, which would be different depending of the kernel modules loaded and if going in/out of the recovery shell, which invalidates per design the TPM measurements to not release secrets.
+The recovery shell wipes secrets--normally used for security checks--that were [computed]({{ site.baseurl }}/Keys/#tpm-pcrs) from the BIOS, kernel modules loaded, etc.  This will limit sealing/unsealing functions (Disk Unlock Key creation, TOTP/HOTP sealing) from the recovery shell environment. To seal/unseal secrets, the same measurements needs to be calculated, which would be different depending of the kernel modules loaded and if going in/out of the recovery shell, which invalidates per design the TPM measurements to not release secrets.
 
 To seal/unseal secrets, use the GUI environment.
 
@@ -65,9 +65,9 @@ verifies whether the write took effect.
 
 After testing, report results to the [Heads community](https://github.com/linuxboot/heads/issues)
 or the [tpm-gpio-fail fork](https://github.com/tlaurion/tpm-gpio-fail). Per-platform
-status is tracked in the [Threat Model](/Heads-threat-model/).
+status is tracked in the [Threat Model]({{ site.baseurl }}/Heads-threat-model/).
 
-See the [Threat Model](/Heads-threat-model/) for per-platform vulnerability
+See the [Threat Model]({{ site.baseurl }}/Heads-threat-model/) for per-platform vulnerability
 status and mitigation guidance.
 
 
@@ -113,4 +113,4 @@ Will not work in recovery shell due to missing secrets. See [Limitations](#limit
 Upgrading Heads
 ----
 
-The Heads [upgrade process](/Updating) may be performed from the recovery shell.
+The Heads [upgrade process]({{ site.baseurl }}/Updating) may be performed from the recovery shell.
