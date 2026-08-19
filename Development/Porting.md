@@ -59,7 +59,7 @@ The blobs folder should have a script.sh which handles downloading, deactivating
 
 NEW_BOARD.mk:
 ---
-Create a new `heads/targets/NEW_BOARD.mk` file which deals with calling blobs/script.sh*, download and extraction, and placing the blobs in correct location. This will be used by the main makefile and defines the board specific targets and dependencies, such as the binary blobs. For additional details, please see [Makefiles]({{ site.baseurl }}/Development/make-details.md).
+Create a new `heads/targets/NEW_BOARD.mk` file which deals with calling blobs/script.sh*, download and extraction, and placing the blobs in correct location. This will be used by the main makefile and defines the board specific targets and dependencies, such as the binary blobs. For additional details, please see [Makefiles]({{ site.baseurl }}/Makefile/).
 
 board.config: 
 ---

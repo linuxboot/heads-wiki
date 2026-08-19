@@ -15,43 +15,43 @@ Installing and configuring Heads
 Prerequisites
 ----
 
-Heads is supported on a limited set of hardware (laptop and security dongle).  First, check the [Prerequisites](/Prerequisites) page for details.
+Heads is supported on a limited set of hardware (laptop and security dongle).  First, check the [Prerequisites]({{ site.baseurl }}/Prerequisites) page for details.
 
 
 Downloading
 ----
-You can [download ROMs](/Downloading) directly from CircleCI for most of the boards configurations supported.
+You can [download ROMs]({{ site.baseurl }}/Downloading) directly from CircleCI for most of the boards configurations supported.
 
 Building
 ----
 
-If you are [building heads](/Building) check the build guides.  See below if you are using heads releases from this project.
+If you are [building heads]({{ site.baseurl }}/Building/) check the build guides.  See below if you are using heads releases from this project.
 
 
 Flashing Guides
 ----
 
-The steps for [Flashing-Guides](/Flashing-guides) on your system may vary based on the hardware in use.  
+The steps for [Flashing-Guides]({{ site.baseurl }}/Flashing-guides) on your system may vary based on the hardware in use.  
 
 
 Secrets and Security
 ----
 
-There are many secret pins, passphrases, and keys used in heads.  These are described in [Configuring Keys](/Configuring-Keys/).
+There are many secret pins, passphrases, and keys used in heads.  These are described in [Configuring Keys]({{ site.baseurl }}/Configuring-Keys/).
 
-For information about different security modes available (Basic vs Restricted), see [Purism Boot Modes](/PurismBootModes).
+For information about different security modes available (Basic vs Restricted), see [Purism Boot Modes]({{ site.baseurl }}/PurismBootModes/).
 
 
 Operating Systems
 ----
 
-We assume you want to run something other than heads on your system.  The installation procedure could vary greatly depending on which distro you choose, which version of that distro, and if you are encrypting various partitions.  See [Operating System](/InstallingOS/) for help.
+We assume you want to run something other than heads on your system.  The installation procedure could vary greatly depending on which distro you choose, which version of that distro, and if you are encrypting various partitions.  See [Operating System]({{ site.baseurl }}/InstallingOS/) for help.
 
 
 Recovery Shell
 ----
 
-There is a [Recovery Shell](/RecoveryShell/) built into the heads environment which may be used for troubleshooting.
+There is a [Recovery Shell]({{ site.baseurl }}/RecoveryShell/) built into the heads environment which may be used for troubleshooting.
 
 
 Technical References

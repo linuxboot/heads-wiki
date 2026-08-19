@@ -145,7 +145,7 @@ If you need to validate the current firmware integrity against the last flashed 
 Historical: Migrating from Very Old Firmware
 ---
 
-**Note**: If you are upgrading from very old Heads firmware that predates the 2024 standardization, please refer to the [Historical Legacy Migration](/Historical-Legacy-Migration) page for detailed information and migration steps.
+**Note**: If you are upgrading from very old Heads firmware that predates the 2024 standardization, please refer to the [Historical Legacy Migration]({{ site.baseurl }}/Historical-Legacy-Migration) page for detailed information and migration steps.
 
 All current Heads boards use modern architecture, and new installations should use current board configurations.
 

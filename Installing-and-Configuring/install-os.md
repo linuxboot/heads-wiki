@@ -38,7 +38,7 @@ directory:
 ```
 
 - Some distros will require additional options to boot directly from ISO. See
-	[Boot config files](/BootOptions) for more information.
+	[Boot config files]({{ site.baseurl }}/BootOptions/) for more information.
 - Boot from USB by Boot menu options, or by calling `usb-scan` from the recovery
 	shell.
 	- Select the install boot option for your distro of choice and work through

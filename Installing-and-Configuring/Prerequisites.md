@@ -38,14 +38,14 @@ Supported devices
 
 *Note* repeatedly untested boards from willing to test board owners were moved to [unmaintained_boards directory and aren't built by CircleCI anymore](https://github.com/linuxboot/heads/tree/master/unmaintained_boards)
 
-If *you have an external programmer* and *are techsavvy enough to bring their support back yourself*, read the [Community page](/community/) and reach out. I will gladly assist in your quest :)
+If *you have an external programmer* and *are techsavvy enough to bring their support back yourself*, read the [Community page]({{ site.baseurl }}/community/) and reach out. I will gladly assist in your quest :)
 
 USB Security Dongles (aka security token aka smartcard)
 ---
 
 **All USB Security dongles used with Heads must support OpenPGP** for storing your private key and signing `/boot` contents.
 
-**HOTP verification is optional** but provides automatic firmware verification at boot. Without HOTP, you'll use TPMTOTP (manual verification with your phone). Most [board configurations](/Prerequisites#supported-devices) are available in both HOTP and non-HOTP variants, though some vendors only support HOTP-enabled configurations.
+**HOTP verification is optional** but provides automatic firmware verification at boot. Without HOTP, you'll use TPMTOTP (manual verification with your phone). Most [board configurations]({{ site.baseurl }}/Prerequisites#supported-devices) are available in both HOTP and non-HOTP variants, though some vendors only support HOTP-enabled configurations.
 
 ### USB Security dongle compatibility:
 
@@ -55,7 +55,7 @@ USB Security Dongles (aka security token aka smartcard)
  purchasing to buy a compatible key.
 
  *NOTE* - HOTP remote attestation is supported from Librem/NovaCustom/Nitropad platforms by default, 
-  Otherwise HOTP is explicitely supported by board configurations having `hotp` in their [board names](/Prerequisites#supported-devices).
+  Otherwise HOTP is explicitely supported by board configurations having `hotp` in their [board names]({{ site.baseurl }}/Prerequisites#supported-devices).
   
 *NOTE* - The NitroKey 3 comes in three sizes: USB A, A-mini and C. Nk3a mini (USB A-mini) is the one most shipped with novacustom and nitropads.
   - ThinkPads have USB A ports, not C. After that, it's users preferences for the form factor desired. 
@@ -75,7 +75,7 @@ USB Security Dongles (aka security token aka smartcard)
 - **Full support**: Can be used with both HOTP and non-HOTP board configurations.
 
 
-*NOTE* - If you prefer not to use USB security dongles or want simplified security procedures, see the [Purism Boot Modes](/PurismBootModes) documentation for information about Basic and Restricted boot modes that provide different security/usability trade-offs.
+*NOTE* - If you prefer not to use USB security dongles or want simplified security procedures, see the [Purism Boot Modes]({{ site.baseurl }}/PurismBootModes/) documentation for information about Basic and Restricted boot modes that provide different security/usability trade-offs.
 
 ## EC firmware & customizations 🔧
 
@@ -106,4 +106,4 @@ References:
 Emulated devices
 ===
 
-For further information, see [Emulating Heads](/Emulating-Heads/)
+For further information, see [Emulating Heads]({{ site.baseurl }}/Emulating-Heads/)

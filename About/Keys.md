@@ -219,14 +219,14 @@ passphrase should give errors in case of tampering.
 
 The TPM Disk Unlock Key passphrase would fail with a different error then:
 `Error Authentication failed (Incorrect Password) from TPM_Unseal` when a user
-types a [TPM Disk Unlock key passphrase](/Keys/#disk-unlock-key-passphrase-prompt-output).
+types a [TPM Disk Unlock key passphrase]({{ site.baseurl }}/Keys/#disk-unlock-key-passphrase-prompt-output).
 
 Indeed, the PCRs measurements used to seal the Disk Unlock Key in TPM NV memory
 cannot unseal that secret, even with a good TPM Disk Unlock Key passphrase,
 while HOTP/TOTP should not be able to unseal either.
 
 ### TCPA Event log
-From the [Recovery Shell](/Recovery), it is possible to review PCR2 [TCPA event
+From the [Recovery Shell]({{ site.baseurl }}/RecoveryShell/), it is possible to review PCR2 [TCPA event
 log](https://doc.coreboot.org/security/vboot/measured_boot.html#tcpa-eventlog)
 by typing: `cbmem -L`
 
