@@ -23,7 +23,7 @@ Dell Optiplex 7010/9010 (Maximized)
 {: .warning }
 This board's CPU generation has reached End of Servicing Updates.
 See [per-board EOL/ESU status](https://github.com/linuxboot/heads/blob/master/doc/BOARDS_AND_TESTERS.md#per-board-eolesu-status)
-for ESU dates and [Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-microcode-updates-and-transient-execution-vulnerabilities)
+for ESU dates and [Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-me-and-peripheral-firmware)
 for security implications.
 
 ## ✅ PROTECTED: TPM GPIO Reset
@@ -44,7 +44,7 @@ SPI flash is a single **12 MB (Winbond W25Q128JV)** SOIC-8 chip located on the m
 
 The OptiPlex 7010/9010 uses a single 12 MB SPI flash chip (Winbond W25Q128JV), so there is no dual-chip /CS trick to worry about. Connect your SOIC-8 clip to the chip and verify the connection:
 
-Use `[flasher]` of your choice (flashrom or flashprog -- see [Tool Interchangeability]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#tool-interchangeability)) with the programmer you selected ([programmer] -- see [Programmer Selection]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#programmer-selection)):
+Use `[flasher]` of your choice (flashrom or flashprog -- see [Tool Interchangeability]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#tool-interchangeability)) with the programmer you selected ([programmer] -- see [Programmer Selection]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#recommended-programmers)):
 
 ```shell
 sudo [flasher] --programmer [programmer]

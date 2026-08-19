@@ -24,7 +24,7 @@ NitroPad NS50 (Maximized)
 
 Still receiving microcode updates.
 See [BOARDS_AND_TESTERS.md](https://github.com/linuxboot/heads/blob/master/doc/BOARDS_AND_TESTERS.md#per-board-eolesu-status),
-[Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-microcode-updates-and-transient-execution-vulnerabilities).
+[Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-me-and-peripheral-firmware).
 
 ## 🛡️ INCONCLUSIVE (unconfirmed): TPM GPIO Reset
 {: .warning }

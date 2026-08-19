@@ -23,7 +23,7 @@ Lenovo T480 (Maximized)
 {: .warning }
 This board's CPU generation has reached End of Servicing Updates.
 See [per-board EOL/ESU status](https://github.com/linuxboot/heads/blob/master/doc/BOARDS_AND_TESTERS.md#per-board-eolesu-status)
-for ESU dates and [Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-microcode-updates-and-transient-execution-vulnerabilities)
+for ESU dates and [Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-me-and-peripheral-firmware)
 for security implications.
 
 ## 🛡️ VULNERABLE: TPM GPIO Reset
@@ -86,7 +86,7 @@ Try to read the name of the SPI flash chip. The dot on the chip helps to identif
 First, connect the clip of your SPI programmer to the chip (see the [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for recommended hardware and example commands). Next, connect the programmer to the USB port of your other Linux-based computer with flashrom/flashprog installed. In my setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the flashing guide for the T430. 
 
 **Note:** For initial reflashing steps that involve customizing the EC while still on proprietary firmware (for example to preserve or alter EC features), see the X230 reflashing notes and building guidance for detailed instructions and cautions.
-Use `[flasher]` of your choice (flashrom or flashprog -- see [Tool Interchangeability]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#tool-interchangeability)) with the programmer you selected ([programmer] -- see [Programmer Selection]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#programmer-selection)):
+Use `[flasher]` of your choice (flashrom or flashprog -- see [Tool Interchangeability]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#tool-interchangeability)) with the programmer you selected ([programmer] -- see [Programmer Selection]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#recommended-programmers)):
 
 ```shell
 sudo [flasher] --programmer [programmer]

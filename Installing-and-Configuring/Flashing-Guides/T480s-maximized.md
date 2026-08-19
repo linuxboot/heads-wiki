@@ -22,7 +22,7 @@ Lenovo T480s (Maximized)
 {: .warning }
 This board's CPU generation has reached End of Servicing Updates.
 See [per-board EOL/ESU status](https://github.com/linuxboot/heads/blob/master/doc/BOARDS_AND_TESTERS.md#per-board-eolesu-status)
-for ESU dates and [Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-microcode-updates-and-transient-execution-vulnerabilities)
+for ESU dates and [Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-me-and-peripheral-firmware)
 for security implications.
 
 ## 🛡️ VULNERABLE: TPM GPIO Reset
@@ -55,7 +55,7 @@ There is still debate over which programmer and software should be used (flashpr
 Some ThinkPad T480s units on the used market, like the T480, are affected by an Intel bug in the Thunderbolt firmware. In short, the flash chip becomes full, causing Thunderbolt fast charging to stop working, though slow charging still functions. This issue can also affect the USB-C port. For convenience, Heads provides a fixed and padded Thunderbolt firmware that resolves the "charging problem" if your laptop is affected. Board testers did not encounter this issue, and it is unlikely to occur if your laptop was in use for more than 12 months before flashing. If you do experience the "charging bug," it is possible to fix it with external flashing. Also, the update is possible prior flashing heads using [fwupd from a Linux distribution](https://www.reddit.com/r/thinkpad/comments/12tf6xv/psa_t480_thunderbolt_controller_v23_is_now_on/)
 
 
-Before flashing heads, it is advisable to update the EC Firmware on the laptop. Some old EC firmware may be vulnerable to some serious CVEs. See [Heads-threat-model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-microcode-updates-and-transient-execution-vulnerabilities) for additional information.
+Before flashing heads, it is advisable to update the EC Firmware on the laptop. Some old EC firmware may be vulnerable to some serious CVEs. See [Heads-threat-model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-me-and-peripheral-firmware) for additional information.
 
 The only way to update the EC Firmware, called ECP (Embedded Controller Program) by Lenovo, is to use their proprietary BIOS Update utility which typically requires a Windows system. However, you can use the BIOS Update .iso file to create a bootable USB to boot directly into the BIOS Update Utility by using geteltorito.
 
@@ -110,7 +110,7 @@ Try to read the name of the SPI flash chip. The dot on the chip helps to identif
 
 First, connect the clip of your chosen SPI programmer (Raspberry Pi Pico was used in the sample commands) to the chip. Next, connect the programmer to the USB port of your other Linux-based computer with flashrom/flashprog installed. In my setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the flashing guide for the T430. 
 
-Use `[flasher]` of your choice (flashrom or flashprog -- see [Tool Interchangeability]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#tool-interchangeability)) with the programmer you selected ([programmer] -- see [Programmer Selection]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#programmer-selection)):
+Use `[flasher]` of your choice (flashrom or flashprog -- see [Tool Interchangeability]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#tool-interchangeability)) with the programmer you selected ([programmer] -- see [Programmer Selection]({{ site.baseurl }}/SPI-Programmer-Best-Practices/#recommended-programmers)):
 
 ```shell
 sudo [flasher] --programmer [programmer]

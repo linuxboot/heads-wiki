@@ -22,7 +22,7 @@ Raptor Talos II (Maximized)
 ## ✅ Active: CPU generation still receiving microcode updates (POWER9)
 {: .note }
 POWER9 platform — still receiving microcode/firmware. See [BOARDS_AND_TESTERS.md](https://github.com/linuxboot/heads/blob/master/doc/BOARDS_AND_TESTERS.md#per-board-eolesu-status),
-[Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-microcode-updates-and-transient-execution-vulnerabilities).
+[Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-me-and-peripheral-firmware).
 
 ## ✅ PROTECTED: TPM GPIO Reset
 {: .warning }

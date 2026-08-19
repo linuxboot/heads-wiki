@@ -65,9 +65,9 @@ verifies whether the write took effect.
 
 After testing, report results to the [Heads community](https://github.com/linuxboot/heads/issues)
 or the [tpm-gpio-fail fork](https://github.com/tlaurion/tpm-gpio-fail). Per-platform
-status is tracked in the [Threat Model](/Heads-threat-model/).
+status is tracked in the [Threat Model]({{ site.baseurl }}/Heads-threat-model/).
 
-See the [Threat Model](/Heads-threat-model/) for per-platform vulnerability
+See the [Threat Model]({{ site.baseurl }}/Heads-threat-model/) for per-platform vulnerability
 status and mitigation guidance.
 
 
