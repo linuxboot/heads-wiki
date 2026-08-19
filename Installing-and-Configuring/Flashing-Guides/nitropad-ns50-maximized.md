@@ -26,10 +26,10 @@ Still receiving microcode updates.
 See [BOARDS_AND_TESTERS.md](https://github.com/linuxboot/heads/blob/master/doc/BOARDS_AND_TESTERS.md#per-board-eolesu-status),
 [Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-me-and-peripheral-firmware).
 
-## 🛡️ INCONCLUSIVE (unconfirmed): TPM GPIO Reset
-{: .warning }
+## 🛡️ VULNERABLE: TPM GPIO Reset
+{: .critical }
 
-GPIO lock absent ([Dasharo](https://docs.dasharo.com/)), mode bits hardware-locked; PLTRST# assertion not confirmed on this PCH die per NV4x ADL-P testing.
+TPMTOTP/HOTP bypassable. Disk encryption with passphrase unaffected.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
 
