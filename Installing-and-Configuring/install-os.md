@@ -75,7 +75,8 @@ Heads requires a separate, unencrypted `/boot` partition. Heads runs from ROM
 and measures and verifies `/boot` before kexec'ing the kernel, so `/boot` must
 not be encrypted or merged into the encrypted root filesystem.
 
-## Manual partitioning
+Manual partitioning
+---
 
 Many installers' automatic partitioning encrypts `/boot` or merges it into the
 encrypted root, which Heads cannot boot. Use manual partitioning and create:
@@ -91,7 +92,8 @@ encrypted root, which Heads cannot boot. Use manual partitioning and create:
 Dismiss any warnings about a missing EFI system partition or `/boot` layout
 when installing in legacy BIOS mode.
 
-## Distro notes
+Distro notes
+---
 
 - **Debian**: use the full DVD installer (e.g.
   `debian-13.2.0-amd64-DVD-1.iso`). The live installer defaults to an encrypted
@@ -114,7 +116,7 @@ initramfs):
 - pureos-11-gnome-live-20260515_amd64.iso
 
 The complete, up-to-date list of tested ISOs is maintained in the
-[ISO boot test matrix](https://github.com/linuxboot/heads/blob/master/tests/iso-test/README.md).
+[ISO boot test matrix](https://github.com/linuxboot/heads/blob/master/initrd/tests/iso-test/README.md).
 
 Default Boot and TPM Disk Unlock Key passphrase
 ===
