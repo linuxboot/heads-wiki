@@ -47,6 +47,7 @@ This list is not intended for free support inquiries.
 | Expert Name     | Expertise                                                                                                           | Contact Information                |
 | --------------- | ------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
 | Thierry Laurion | Custom boot solutions, firmware optimization, secure firmware environment setups. Current main maintainer of Heads. | [email](mailto:insurgo@riseup.net) |
+| Nitrokey        | Anything related to the usage and configuration of Heads with a Nitrokey and QubesOS.                               | [Shop](https://shop.nitrokey.com/shop/product/qubes-os-beratung-service-training-336) - [Contact](https://www.nitrokey.com/contact) |
 
 For more information or to schedule a consultation, please contact the
 experts listed above. Let's work together to create secure, efficient, and
