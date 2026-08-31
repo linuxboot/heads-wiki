@@ -183,7 +183,7 @@ sudo flashrom --programmer ft2232_spi:type=2232H,port=B,divisor=4
 ```bash
 sudo flashrom --programmer ch347_spi
 # With higher clock (example):
-sudo flashrom --programmer ch347_spi --spispeed 60000
+sudo flashrom --programmer ch347_spi
 ```
 
 ### CH341A Rev 1.6+
