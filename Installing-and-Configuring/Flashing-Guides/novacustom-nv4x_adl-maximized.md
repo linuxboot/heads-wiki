@@ -42,9 +42,9 @@ See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-boa
 Full disassembly photos, SPI chip details (Macronix MX25L25673GZ4I-08G, 32MB WSON-8, 3.3V), programmer setup, and step-by-step flashing instructions are maintained by [Dasharo](https://docs.dasharo.com/):
 
 → **[Recovery & disassembly photos](https://docs.dasharo.com/unified/novacustom/recovery/#12th-gen)**
-→ **[Initial deployment (two-step flash)](https://docs.dasharo.com/unified/novacustom/initial-deployment/#bios-installation)**
+→ **[Initial deployment](https://docs.dasharo.com/unified/novacustom/initial-deployment/#bios-installation)**
 → **[Hardware matrix](https://docs.dasharo.com/variants/novacustom_nv4x_adl/hardware-matrix/)**
 
 ## Flashing
 
-Key notes: Intel Boot Guard enabled — external flashing mandatory. Two-step flash (IFD first, then ME+BIOS). Full binaries required. CH341a with WSON-8 probe.
+Key notes: This board ships pre-flashed with Dasharo and Heads from NovaCustom/Nitrokey — external flashing is not required for normal operation. The Dasharo external-flashing instructions cover both initial deployment and unbricking/recovery — see the [Dasharo NovaCustom initial deployment](https://docs.dasharo.com/unified/novacustom/initial-deployment/) and [Dasharo NovaCustom recovery](https://docs.dasharo.com/unified/novacustom/recovery/#bios-flashing) documentation.

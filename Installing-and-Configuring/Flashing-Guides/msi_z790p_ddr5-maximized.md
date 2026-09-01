@@ -46,4 +46,4 @@ Full disassembly instructions, SPI flash access via JTPM1 header (2mm pitch, req
 ## Flashing
 
 
-Key notes: Flash via JTPM1 header (pins 1=Vcc, 7=GND, 5=CS, 6=CLK, 3=MISO, 4=MOSI). SMBIOS UUID/serial must be extracted and re-injected with cbfstool + vboot resign. Disconnect dGPU before flashing. Memory training takes ~2 minutes on first boot.
+Key notes: This board does not ship pre-flashed. For initial deployment and unbricking/recovery, follow the [Dasharo MSI initial deployment](https://docs.dasharo.com/unified/msi/initial-deployment/) and [Dasharo MSI recovery — external flashing via CH341A](https://docs.dasharo.com/unified/msi/recovery/#ch341a) documentation.

@@ -47,4 +47,4 @@ Full disassembly photos, SPI chip details, programmer setup, and step-by-step fl
 
 ## Flashing
 
-Key notes: Socket-mounted WSON8 — physically extract chip. 1.8V CH341a voltage. Two-step flash. [Dasharo TrustRoot](https://docs.dasharo.com/glossary/#dasharo-trustroot) available — irreversible.
+Key notes: This board ships pre-flashed with Dasharo and Heads from NovaCustom/Nitrokey — external flashing is not required for normal operation. The Dasharo external-flashing instructions cover both initial deployment and unbricking/recovery — see the [Dasharo NovaCustom initial deployment](https://docs.dasharo.com/unified/novacustom/initial-deployment/) and [Dasharo NovaCustom recovery](https://docs.dasharo.com/unified/novacustom/recovery/#bios-flashing) documentation.

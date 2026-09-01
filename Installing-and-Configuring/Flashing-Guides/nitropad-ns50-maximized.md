@@ -47,4 +47,4 @@ Full disassembly photos, SPI chip details (GigaDevice 25B1256EYIG, 32MB WSON-8),
 
 ## Flashing
 
-Key notes: WSON-8 probe required (not SOIC clip). Full binaries required. EC flashed separately via [dasharo-ec](https://github.com/linuxboot/heads/blob/master/modules/dasharo-ec). Single-command external flash (`flashrom -p ch341a_spi -w`).
+Key notes: This board ships pre-flashed with Dasharo and Heads from NovaCustom/Nitrokey — external flashing is not required for normal operation. The Dasharo external-flashing instructions cover both initial deployment and unbricking/recovery — see the [Dasharo NovaCustom initial deployment](https://docs.dasharo.com/unified/novacustom/initial-deployment/) and [Dasharo NovaCustom recovery](https://docs.dasharo.com/unified/novacustom/recovery/#bios-flashing) documentation.

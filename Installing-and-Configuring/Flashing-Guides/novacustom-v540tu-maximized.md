@@ -39,7 +39,7 @@ See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-boa
 
 ## Disassembly
 
-Full disassembly instructions, SPI chip details (socket-mounted WSON8), programmer recommendations, and step-by-step flashing procedures are maintained by [Dasharo](https://docs.dasharo.com/):
+Full disassembly instructions, SPI chip details (WSON8), programmer recommendations, and step-by-step flashing procedures are maintained by [Dasharo](https://docs.dasharo.com/):
 
 → **[Dasharo V540TU documentation](https://docs.dasharo.com/unified/novacustom/recovery/#14th-gen)**
 → **[Dasharo V540TU initial deployment](https://docs.dasharo.com/unified/novacustom/initial-deployment/#bios-installation_1)**
@@ -47,4 +47,4 @@ Full disassembly instructions, SPI chip details (socket-mounted WSON8), programm
 
 ## Flashing
 
-Key notes: Socket-mounted WSON8 — chip must be physically extracted and re-flashed externally (in-circuit clips not applicable). Two-step flash (IFD first, then ME+BIOS). No full binaries available. EC flashed separately via [dasharo-ec](https://github.com/linuxboot/heads/blob/master/modules/dasharo-ec). [Dasharo TrustRoot](https://docs.dasharo.com/glossary/#dasharo-trustroot) (CPU fusing) available — irreversible once enabled.
+Key notes: This board ships pre-flashed with Dasharo and Heads from NovaCustom/Nitrokey — external flashing is not required for normal operation. The Dasharo external-flashing instructions cover both initial deployment and unbricking/recovery — see the [Dasharo NovaCustom initial deployment](https://docs.dasharo.com/unified/novacustom/initial-deployment/) and [Dasharo NovaCustom recovery](https://docs.dasharo.com/unified/novacustom/recovery/#bios-flashing) documentation.
