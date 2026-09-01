@@ -80,24 +80,37 @@ web browser at `http://localhost:4000/`
 * create a branch in git for your changes
 * Make the desired changes, commit them.  **BE SURE NOT TO ADD `_config.yml` or `local_config.yml`**
 to your changes.
-* Push the changes to your forked repo on github
+* Push the changes to your forked repo on GitHub
 
-### Testing Changes on Github
+### Testing Changes on GitHub
 
-You may use github to render the changes for review by others.  To do this, go to your fork of the heads-wiki on
- GitHub.com and click *Settings*.  This should default you to the *Options* tab,
-scroll down to the section "GitHub Pages" and change the source branch to the
+You may use GitHub to render the changes for review by others.  To do this, go to your fork's **Settings** tab (`https://github.com/YOUR_USERNAME_HERE/heads-wiki/settings`) and select **Pages** in the left sidebar, then change the source branch to the
 name of the branch your changes are on.  After a minute or so it should be
 available at `https://YOUR_USERNAME_HERE.github.io/heads-wiki/`
 replacing `YOUR_USERNAME_HERE` with your GitHub username.
 
-** NOTE:** the email account associated with your GitHub account may receive an
- error regarding the `CNAME`.  Please ignore this.
+**About the `CNAME` file:** The upstream repo contains a top-level `CNAME` file
+containing `osresearch.net`, which is the custom domain for the production
+site at `https://osresearch.net/`. When you enable GitHub Pages on a fork,
+GitHub picks up this `CNAME` and may try to apply the custom domain.
+Because the fork owner does not control the `osresearch.net` DNS, this
+commonly causes GitHub to associate your fork with the `osresearch.net`
+custom domain, which shows a custom-domain error because you don't control
+that DNS, meaning your fork may not be viewable at
+`https://YOUR_USERNAME_HERE.github.io/heads-wiki/`. To fix this, go to your fork's
+**Settings** tab (`https://github.com/YOUR_USERNAME_HERE/heads-wiki/settings`), select **Pages** in the left sidebar, and **clear the "Custom domain" field**, then save.
+This is a Pages configuration change only — it does **not** modify or
+delete the tracked `CNAME` file in your branch, so it will not change
+your pull request diff. **You do not need to delete or rename the
+`CNAME` file** in your branch.
 
-Please note that the URL is similar but NOT the same as the wiki pages feature in your fork in github.
+**NOTE:** GitHub may send you an email about the `CNAME` failing to resolve.
+This is expected and harmless — you can safely ignore it.
+
+Please note that the URL is similar but NOT the same as the wiki pages feature in your fork in GitHub.
 
 ### Verifying broken links
-Please verify `https://YOUR_USERNAME_HERE.github.io/heads-wiki/` with `https://validator.w3.org/checklink` prior of pushing your changes. 
+Please verify `https://YOUR_USERNAME_HERE.github.io/heads-wiki/` with `https://validator.w3.org/checklink` prior to pushing your changes.
 
 ### Pushing Changes Upstream
 
