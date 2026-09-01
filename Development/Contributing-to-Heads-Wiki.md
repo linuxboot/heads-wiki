@@ -97,8 +97,11 @@ Because the fork owner does not control the `osresearch.net` DNS, this
 commonly causes GitHub to associate your fork with the `osresearch.net`
 custom domain, which shows a custom-domain error because you don't control
 that DNS, meaning your fork may not be viewable at
-`https://YOUR_USERNAME_HERE.github.io/heads-wiki/`. To fix this, go to your fork's
-**Settings** tab (`https://github.com/YOUR_USERNAME_HERE/heads-wiki/settings`), select **Pages** in the left sidebar, and **clear the "Custom domain" field**, then save.
+`https://YOUR_USERNAME_HERE.github.io/heads-wiki/`. To fix this,
+go to your fork's **Settings** tab
+(`https://github.com/YOUR_USERNAME_HERE/heads-wiki/settings`),
+select **Pages** in the left sidebar, and **clear the "Custom
+domain" field**, then save.
 This is a Pages configuration change only — it does **not** modify or
 delete the tracked `CNAME` file in your branch, so it will not change
 your pull request diff. **You do not need to delete or rename the
@@ -107,7 +110,8 @@ your pull request diff. **You do not need to delete or rename the
 **NOTE:** GitHub may send you an email about the `CNAME` failing to resolve.
 This is expected and harmless — you can safely ignore it.
 
-Please note that the URL is similar but NOT the same as the wiki pages feature in your fork in GitHub.
+Please note that the URL is similar but not the same as the wiki
+pages feature in your fork on GitHub.
 
 ### Verifying broken links
 Please verify `https://YOUR_USERNAME_HERE.github.io/heads-wiki/` with `https://validator.w3.org/checklink` prior to pushing your changes.
