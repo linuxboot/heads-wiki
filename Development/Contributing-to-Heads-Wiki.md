@@ -78,26 +78,58 @@ This will start the Jekyll development web server and should be viewable in a
 web browser at `http://localhost:4000/`
 
 * create a branch in git for your changes
-* Make the desired changes, commit them.  **BE SURE NOT TO ADD `_config.yml` or `local_config.yml`**
+* make the desired changes, commit them.  **BE SURE NOT TO ADD `_config.yml` or `local_config.yml`**
 to your changes.
-* Push the changes to your forked repo on github
+* push the changes to your forked repo on GitHub
 
-### Testing Changes on Github
+### Testing Changes on GitHub
 
-You may use github to render the changes for review by others.  To do this, go to your fork of the heads-wiki on
- GitHub.com and click *Settings*.  This should default you to the *Options* tab,
-scroll down to the section "GitHub Pages" and change the source branch to the
-name of the branch your changes are on.  After a minute or so it should be
-available at `https://YOUR_USERNAME_HERE.github.io/heads-wiki/`
-replacing `YOUR_USERNAME_HERE` with your GitHub username.
+You may use GitHub to render the changes for review by others. To do this:
 
-** NOTE:** the email account associated with your GitHub account may receive an
- error regarding the `CNAME`.  Please ignore this.
+1. Go to your fork of the `heads-wiki` repo on github.com and click **Settings**.
+2. Under the **Pages** section (on the left sidebar), set the **Source** to
+   "Deploy from a branch", set the **Folder** to `/ (root)`,
+   select the branch your changes are on, and click **Save**.
+3. After a minute or so your fork will be published at
+   `https://YOUR_USERNAME_HERE.github.io/YOUR_FORK_REPO_NAME/` — replace
+   `YOUR_USERNAME_HERE` with your GitHub username and `YOUR_FORK_REPO_NAME`
+   with the repository name of your fork (for a fork named `heads-wiki` this
+   is `https://YOUR_USERNAME_HERE.github.io/heads-wiki/`).
 
-Please note that the URL is similar but NOT the same as the wiki pages feature in your fork in github.
+> **Note:** A green Pages build does not mean the change is live yet. GitHub
+> Pages can take a few minutes to update after a build completes, and there is
+> no manual refresh — if you just deployed, wait a couple of minutes and reload.
+> The path in the URL above uses your fork's repository name (e.g. a fork named
+> `heads-wiki-x280` publishes at `/heads-wiki-x280/`), not the upstream
+> `osresearch.net` custom domain.
+
+**About the `CNAME` file:** The upstream repo contains a top-level `CNAME` file
+containing `osresearch.net`, which is the custom domain for the production site
+at `https://osresearch.net/`. When you enable GitHub Pages on a fork, GitHub
+reads this tracked `CNAME` and sets it as the fork's Pages **Custom domain**.
+GitHub then tries to verify that you control `osresearch.net`'s DNS; because the
+fork owner does not, that verification fails. This can show a custom-domain
+error and stop the fork from appearing at
+`https://YOUR_USERNAME_HERE.github.io/YOUR_FORK_REPO_NAME/`. To fix this, go to
+your fork's **Settings** tab
+(`https://github.com/YOUR_USERNAME_HERE/YOUR_FORK_REPO_NAME/settings`), select
+**Pages** in the left sidebar, and **clear the "Custom domain" field**, then
+save. This is a fork **Pages setting**, not part of your pull request — you
+should **not** manually delete or rename the tracked `CNAME` file in your branch
+for the sake of a contribution; that would just add an unrelated change to your
+pull request diff. Note that GitHub may write or remove the `CNAME` file itself
+when you change the custom domain on the branch selected as the Pages source,
+so if your PR branch doubles as the Pages source, expect this to appear as a
+file change and avoid committing it. GitHub may still email you about the
+`CNAME` failing to resolve; this is expected and harmless — you can safely
+ignore it.
+
+> **Note:** The URL above is your fork's **GitHub Pages** site. It is not the
+> same as the built-in **Wiki** tab on your GitHub repo
+> (`https://github.com/YOUR_USERNAME_HERE/YOUR_FORK_REPO_NAME/wiki`).
 
 ### Verifying broken links
-Please verify `https://YOUR_USERNAME_HERE.github.io/heads-wiki/` with `https://validator.w3.org/checklink` prior of pushing your changes. 
+Please verify `https://YOUR_USERNAME_HERE.github.io/YOUR_FORK_REPO_NAME/` with `https://validator.w3.org/checklink` before opening your pull request.
 
 ### Pushing Changes Upstream
 
