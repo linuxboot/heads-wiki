@@ -12,7 +12,7 @@ Contributing to the Heads Wiki
 The Heads wiki is open source and encourages contributions both big and small.
  It is written in Markdown ([Markdown Cheat sheet](https://www.markdownguide.org/cheat-sheet/))
  , built using [Jekyll](https://jekyllrb.com/) and themed using
- [Just the Docs](https://pmarsceill.github.io/just-the-docs/).
+ [Just the Docs](https://github.com/just-the-docs/just-the-docs).
 
 
 
@@ -58,9 +58,9 @@ For larger changes, multiple changes and that may require adding new pages, it
  up on your system.  You will need to install ruby and gems.
 
 Additionally, the theme will also need to be installed as the remote theme does
- not seem to work with locally severed Jekyll instances.  Instructions for
+ not seem to work with locally served Jekyll instances.  Instructions for
  installing the *Just the Docs* theme can be
- [found here](https://pmarsceill.github.io/just-the-docs/).
+ [found here](https://just-the-docs.com/).
 
   ex.  gem install just-the-docs
 
