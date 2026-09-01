@@ -84,7 +84,11 @@ to your changes.
 
 ### Testing Changes on GitHub
 
-You may use GitHub to render the changes for review by others.  To do this, go to your fork's **Settings** tab (`https://github.com/YOUR_USERNAME_HERE/heads-wiki/settings`) and select **Pages** in the left sidebar, then change the source branch to the
+You may use GitHub to render the changes for review by others.  To do
+this, go to your fork's **Settings** tab
+(`https://github.com/YOUR_USERNAME_HERE/heads-wiki/settings`) and
+select **Pages** in the left sidebar, then change the source branch
+to the
 name of the branch your changes are on.  After a minute or so it should be
 available at `https://YOUR_USERNAME_HERE.github.io/heads-wiki/`
 replacing `YOUR_USERNAME_HERE` with your GitHub username.
@@ -114,7 +118,8 @@ Please note that the URL is similar but not the same as the wiki
 pages feature in your fork on GitHub.
 
 ### Verifying broken links
-Please verify `https://YOUR_USERNAME_HERE.github.io/heads-wiki/` with `https://validator.w3.org/checklink` prior to pushing your changes.
+Please verify `https://YOUR_USERNAME_HERE.github.io/heads-wiki/` with
+`https://validator.w3.org/checklink` prior to pushing your changes.
 
 ### Pushing Changes Upstream
 
