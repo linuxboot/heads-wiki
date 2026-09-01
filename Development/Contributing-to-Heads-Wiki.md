@@ -79,7 +79,7 @@ web browser at `http://localhost:4000/`
 
 * create a branch in git for your changes
 * Make the desired changes, commit them.  **BE SURE NOT TO ADD `_config.yml` or `local_config.yml`**
-to your changes.
+    to your changes.
 * Push the changes to your forked repo on GitHub
 
 ### Testing Changes on GitHub
