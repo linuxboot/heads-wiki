@@ -17,6 +17,16 @@ Left: laptop/workstation. Right: server (BMC/SSH/Console)
        style="width: 100%; max-width: 800px; height: auto; display: block; margin: 1em auto;">
 </a>
 
+Support the Project
+===
+
+Heads and this wiki are free and open source, but keeping them maintained is
+ongoing work that is not free. Support via [GitHub Sponsors
+(tlaurion)](https://github.com/sponsors/tlaurion) or [Open Collective
+(Insurgo)](https://opencollective.com/insurgo). See [Supporting the
+Project]({{ site.baseurl }}/community/#supporting-the-project) on the Community
+page for details.
+
 Overview
 ===
 

@@ -60,6 +60,47 @@ We appreciate your understanding and continued support as we work to improve our
 Thierry Laurion
 
 
+Supporting the Project
+===
+
+Heads and its source code are free and open source — you never need to donate to
+use Heads, or to read and contribute to this wiki. But keeping the Heads source
+code and this documentation (heads-wiki) accurate, current, and reviewed is
+ongoing work, and it is not free. No one can carry a project alone for too long
+without becoming overwhelmed.
+
+## What donations fund
+
+Donations — with Open Collective payments publicly tracked on the [Insurgo Initiative's Open Collective](https://opencollective.com/insurgo) — have covered
+real subcontracting work: past expenses show contributors were
+paid for agreed, reviewed work, exactly the gap that fixed-period grants never close. Grants
+(such as the NLnet-funded [AccessibleSecurity](https://nlnet.nl/project/AccessibleSecurity/),
+[AuthenticatedHeads](https://nlnet.nl/project/AuthenticatedHeads/), and
+[TPM 2.0 for Heads](https://nlnet.nl/project/HEADS-TPM2.0) projects) fund one-off,
+scoped efforts; they do not fund the ongoing upkeep, test hardware, and
+documentation maintenance that keeps Heads usable. Donations fund that day-to-day
+maintenance — maintainer time, and paying the experts who close the gaps.
+
+## Recurring support sustains the project
+
+Monthly donations are preferred: they let the project plan ahead and budget its
+expenses instead of relying on one-off gifts. It is not the number of donors
+alone but the predictable, recurring total that matters — a steady group of
+monthly supporters sustains Heads far more reliably than many small one-time
+gifts.
+
+* [GitHub Sponsors (tlaurion)](https://github.com/sponsors/tlaurion)
+* [Open Collective (Insurgo)](https://opencollective.com/insurgo)
+
+## Contributing is not only monetary
+
+Vendors who build on Heads — NovaCustom, Nitrokey, 3mdeb, Purism — give back not
+only with money but with code, co-maintainership, and time on tech debt,
+standardization, and documentation. Purism co-developed code with Heads (the
+factory/OEM reset, coreboot support); NovaCustom funded specific features. This
+is what open source means — and commercial users are encouraged to subscribe or
+contract back into the project they depend on.
+
 Found a bug under Heads/How to Contribute
 ===
 
