@@ -97,10 +97,9 @@ replacing `YOUR_USERNAME_HERE` with your GitHub username.
 containing `osresearch.net`, which is the custom domain for the production
 site at `https://osresearch.net/`. When you enable GitHub Pages on a fork,
 GitHub picks up this `CNAME` and may try to apply the custom domain.
-Because the fork owner does not control the `osresearch.net` DNS, this
-commonly causes GitHub to associate your fork with the `osresearch.net`
-custom domain, which shows a custom-domain error because you don't control
-that DNS, meaning your fork may not be viewable at
+Because the fork owner does not control `osresearch.net`, GitHub commonly
+associates the fork with that custom domain. GitHub then shows a
+custom-domain error and the fork may not be viewable at
 `https://YOUR_USERNAME_HERE.github.io/heads-wiki/`. To fix this,
 go to your fork's **Settings** tab
 (`https://github.com/YOUR_USERNAME_HERE/heads-wiki/settings`),
