@@ -1,13 +1,13 @@
 ---
 layout: default
-title: NovaCustom V540TU Maximized
-permalink: /V540TU-maximized-flashing/
-nav_order: 18
+title: NovaCustom V560TU
+permalink: /V560TU-flashing/
+nav_order: 19
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
 
-NovaCustom V540TU (Maximized)
+NovaCustom V560TU
 ===
 
 <details open markdown="block">
@@ -39,12 +39,12 @@ See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-boa
 
 ## Disassembly
 
-Full disassembly instructions, SPI chip details (socket-mounted WSON8), programmer recommendations, and step-by-step flashing procedures are maintained by [Dasharo](https://docs.dasharo.com/):
+Full disassembly photos, SPI chip details, programmer setup, and step-by-step flashing instructions are maintained by [Dasharo](https://docs.dasharo.com/):
 
-→ **[Dasharo V540TU documentation](https://docs.dasharo.com/unified/novacustom/recovery/#14th-gen)**
-→ **[Dasharo V540TU initial deployment](https://docs.dasharo.com/unified/novacustom/initial-deployment/#bios-installation_1)**
-→ **[Dasharo V540TU hardware matrix](https://docs.dasharo.com/variants/novacustom_v540tu/hardware-matrix/)**
+→ **[Recovery & disassembly photos](https://docs.dasharo.com/unified/novacustom/recovery/#14th-gen)**
+→ **[Initial deployment](https://docs.dasharo.com/unified/novacustom/initial-deployment/#bios-installation_1)**
+→ **[Hardware matrix](https://docs.dasharo.com/variants/novacustom_v560tu/hardware-matrix/)**
 
 ## Flashing
 
-Key notes: Socket-mounted WSON8 — chip must be physically extracted and re-flashed externally (in-circuit clips not applicable). Two-step flash (IFD first, then ME+BIOS). No full binaries available. EC flashed separately via [ite_ec](https://github.com/linuxboot/heads/tree/master/modules/ite_ec). [Dasharo TrustRoot](https://docs.dasharo.com/glossary/#dasharo-trustroot) (CPU fusing) available — irreversible once enabled.
+Key notes: This board ships pre-flashed with Dasharo and Heads from NovaCustom/Nitrokey — external flashing is not required for normal operation. The Dasharo external-flashing instructions cover both initial deployment and unbricking/recovery — see the [Dasharo NovaCustom initial deployment](https://docs.dasharo.com/unified/novacustom/initial-deployment/) and [Dasharo NovaCustom recovery](https://docs.dasharo.com/unified/novacustom/recovery/#bios-flashing) documentation.

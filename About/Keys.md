@@ -145,7 +145,7 @@ Ideally, the private key does not live on the machine, but instead is in a
 Yubikey or other USB Security dongle.
 
 The security dongle may be used in the disk decryption process. Some of the
-[Linux distros](https://docs.puri.sm/Librem_Key/Getting_Started/User_Manual.html#decrypt-luks-encrypted-drives-with-librem-key)
+[Linux distros](https://docs.puri.sm/Hardware/acc/lk/luks.html)
 have incorporated this using /etc/crypttab with a keyscript option.
 
 An attacker who controls this private key can replace executables in `/boot`

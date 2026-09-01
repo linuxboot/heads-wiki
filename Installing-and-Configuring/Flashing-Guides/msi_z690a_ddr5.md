@@ -1,13 +1,13 @@
 ---
 layout: default
-title: MSI PRO Z690-A Maximized
-permalink: /MSI_Z690A-maximized-flashing/
+title: MSI PRO Z690-A
+permalink: /MSI_Z690A-flashing/
 nav_order: 14
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
 
-MSI PRO Z690-A (Maximized)
+MSI PRO Z690-A
 ===
 
 <details open markdown="block">

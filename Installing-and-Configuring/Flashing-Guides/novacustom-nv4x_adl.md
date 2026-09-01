@@ -1,13 +1,13 @@
 ---
 layout: default
-title: NitroPad NS50 Maximized
-permalink: /NS50-maximized-flashing/
-nav_order: 16
+title: NovaCustom NV4x ADL
+permalink: /NV4x_ADL-flashing/
+nav_order: 17
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
 
-NitroPad NS50 (Maximized)
+NovaCustom NV4x ADL
 ===
 
 <details open markdown="block">
@@ -39,12 +39,12 @@ See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-boa
 
 ## Disassembly
 
-Full disassembly photos, SPI chip details (GigaDevice 25B1256EYIG, 32MB WSON-8), programmer setup, and step-by-step flashing instructions are maintained by [Dasharo](https://docs.dasharo.com/):
+Full disassembly photos, SPI chip details (Macronix MX25L25673GZ4I-08G, 32MB WSON-8, 3.3V), programmer setup, and step-by-step flashing instructions are maintained by [Dasharo](https://docs.dasharo.com/):
 
 → **[Recovery & disassembly photos](https://docs.dasharo.com/unified/novacustom/recovery/#12th-gen)**
 → **[Initial deployment](https://docs.dasharo.com/unified/novacustom/initial-deployment/#bios-installation)**
-→ **[Hardware matrix](https://docs.dasharo.com/variants/novacustom_ns5x_adl/hardware-matrix/)**
+→ **[Hardware matrix](https://docs.dasharo.com/variants/novacustom_nv4x_adl/hardware-matrix/)**
 
 ## Flashing
 
-Key notes: WSON-8 probe required (not SOIC clip). Full binaries required. EC flashed separately via [ite_ec](https://github.com/linuxboot/heads/tree/master/modules/ite_ec). Single-command external flash (`flashrom -p ch341a_spi -w`).
+Key notes: This board ships pre-flashed with Dasharo and Heads from NovaCustom/Nitrokey — external flashing is not required for normal operation. The Dasharo external-flashing instructions cover both initial deployment and unbricking/recovery — see the [Dasharo NovaCustom initial deployment](https://docs.dasharo.com/unified/novacustom/initial-deployment/) and [Dasharo NovaCustom recovery](https://docs.dasharo.com/unified/novacustom/recovery/#bios-flashing) documentation.
