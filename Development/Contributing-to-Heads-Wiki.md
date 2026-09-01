@@ -100,8 +100,8 @@ that DNS, meaning your fork may not be viewable at
 `https://YOUR_USERNAME_HERE.github.io/heads-wiki/`. To fix this,
 go to your fork's **Settings** tab
 (`https://github.com/YOUR_USERNAME_HERE/heads-wiki/settings`),
-select **Pages** in the left sidebar, and **clear the "Custom
-domain" field**, then save.
+select **Pages** in the left sidebar, and
+**clear the "Custom domain" field**, then save.
 This is a Pages configuration change only — it does **not** modify or
 delete the tracked `CNAME` file in your branch, so it will not change
 your pull request diff. **You do not need to delete or rename the
