@@ -12,7 +12,7 @@ has_children: yes
 
 ## Platform-Specific Guides
 
-- [The internal flashing commands for Purism devices can be found here](https://docs.puri.sm/PureBoot/Heads/User_Manual.html#flash-the-compiled-heads-rom-to-your-hardware)
+- [The internal flashing commands for Purism devices can be found here](https://docs.puri.sm/Software/PureBoot/Maintenance/Upgrade.html)
 
 ## Video Guides
 

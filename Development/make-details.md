@@ -48,13 +48,13 @@ All of the organization of the Heads build is handled in the top level
 Build configuration
 ---
 
-Platform configuration are stored in the `board/$BOARD.config`
+Platform configurations are stored in `boards/$BOARD/$BOARD.config`
  ([list of boards can be found here]({{ site.baseurl }}/Prerequisites#supported-devices))
 as well as the sub-modules necessary for the system.
 The main difference between these use cases is the init scripts that
-are installed in the inird, the Linux kernel configuration and the
+are installed in the initrd, the Linux kernel configuration and the
 coreboot or edk2 configuration.
-An example configuration is [`board/x230.config`](https://github.com/linuxboot/heads/blob/master/boards/x230/x230.config)
+An example configuration is [`boards/EOL_x230-maximized/EOL_x230-maximized.config`](https://github.com/linuxboot/heads/blob/master/boards/EOL_x230-maximized/EOL_x230-maximized.config)
 
 Sub-modules
 ---

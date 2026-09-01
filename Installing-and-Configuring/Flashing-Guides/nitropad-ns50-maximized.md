@@ -47,4 +47,4 @@ Full disassembly photos, SPI chip details (GigaDevice 25B1256EYIG, 32MB WSON-8),
 
 ## Flashing
 
-Key notes: WSON-8 probe required (not SOIC clip). Full binaries required. EC flashed separately via [ite_ec](https://github.com/linuxboot/heads/tree/master/modules/ite_ec). Single-command external flash (`flashrom -p ch341a_spi -w`).
+Key notes: WSON-8 probe required (not SOIC clip). Full binaries required. EC flashed separately via [dasharo-ec](https://github.com/linuxboot/heads/blob/master/modules/dasharo-ec). Single-command external flash (`flashrom -p ch341a_spi -w`).

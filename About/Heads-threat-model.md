@@ -250,7 +250,7 @@ TPM Disk Unlock Key (DUK) with passphrase is **not affected** on any board.
 The DUK requires a user passphrase to unseal, which a GPIO reset cannot bypass.
 
 {: .note }
-[KGPE-D16](https://doc.coreboot.org/mainboard/asus/kgpe-d16.html) is in `unmaintained_boards/`. Dropped from coreboot 4.12 (2019).
+[KGPE-D16](https://15h.org/index.php/ASUS_KGPE-D16) is in `unmaintained_boards/`. Dropped from coreboot 4.12 (2019).
 [Dasharo](https://docs.dasharo.com/) fork abandoned Aug 2025. AMD Family 15h microcode frozen since 2018.
 See [BOARDS_AND_TESTERS.md](https://github.com/linuxboot/heads/blob/master/doc/BOARDS_AND_TESTERS.md#per-board-eolesu-status)
 for details.
@@ -636,7 +636,7 @@ are directly relevant to Heads platforms:
 - **[BlackLotus](https://www.welivesecurity.com/2023/03/01/blacklotus-uefi-bootkit-myth-confirmed/) UEFI bootkit (2023, [CVE-2022-21894](https://nvd.nist.gov/vuln/detail/CVE-2022-21894)):** the first in-the-wild
   UEFI bootkit bypassing [Secure Boot](https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/oem-secure-boot) on fully patched Windows 11 systems,
   demonstrating that UEFI firmware trust models remain fragile.
-- **[LogoFAIL](https://binarly.io/posts/From_LogoFAIL_to_LOGOFAIL_How_Image_Parsing_Flaws_Expose_UEFI_Firmware/index.html) (2023):** exploitable image parsing flaws in [UEFI](https://uefi.org/) firmware
+- **[LogoFAIL](https://www.binarly.io/reports/logofail) (2023):** exploitable image parsing flaws in [UEFI](https://uefi.org/) firmware
   logo display code across all major IBVs (AMI, Insyde, Phoenix), allowing
   arbitrary code execution during boot -- hundreds of consumer and
   enterprise devices affected.

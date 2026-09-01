@@ -47,4 +47,4 @@ Full disassembly instructions, SPI chip details (socket-mounted WSON8), programm
 
 ## Flashing
 
-Key notes: Socket-mounted WSON8 — chip must be physically extracted and re-flashed externally (in-circuit clips not applicable). Two-step flash (IFD first, then ME+BIOS). No full binaries available. EC flashed separately via [ite_ec](https://github.com/linuxboot/heads/tree/master/modules/ite_ec). [Dasharo TrustRoot](https://docs.dasharo.com/glossary/#dasharo-trustroot) (CPU fusing) available — irreversible once enabled.
+Key notes: Socket-mounted WSON8 — chip must be physically extracted and re-flashed externally (in-circuit clips not applicable). Two-step flash (IFD first, then ME+BIOS). No full binaries available. EC flashed separately via [dasharo-ec](https://github.com/linuxboot/heads/blob/master/modules/dasharo-ec). [Dasharo TrustRoot](https://docs.dasharo.com/glossary/#dasharo-trustroot) (CPU fusing) available — irreversible once enabled.
