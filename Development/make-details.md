@@ -49,8 +49,8 @@ Build configuration
 ---
 
 Platform configurations are stored in `boards/$BOARD/$BOARD.config`
- ([list of boards can be found here]({{ site.baseurl }}/Prerequisites#supported-devices))
-as well as the sub-modules necessary for the system.
+([list of boards can be found here]({{ site.baseurl }}/Prerequisites#supported-devices)).
+Each board config also selects the sub-modules required for the system.
 The main difference between these use cases is the init scripts that
 are installed in the initrd, the Linux kernel configuration and the
 coreboot or edk2 configuration.

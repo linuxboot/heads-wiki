@@ -1,13 +1,13 @@
 ---
 layout: default
-title: MSI PRO Z790-P Maximized
-permalink: /MSI_Z790P-maximized-flashing/
+title: MSI PRO Z790-P
+permalink: /MSI_Z790P-flashing/
 nav_order: 15
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
 
-MSI PRO Z790-P (Maximized)
+MSI PRO Z790-P
 ===
 
 <details open markdown="block">

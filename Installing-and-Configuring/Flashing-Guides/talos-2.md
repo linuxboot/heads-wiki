@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Raptor Talos II Maximized
-permalink: /Talos_II-maximized-flashing/
+title: Raptor Talos II
+permalink: /Talos_II-flashing/
 nav_order: 20
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
 
-Raptor Talos II (Maximized)
+Raptor Talos II
 ===
 
 <details open markdown="block">

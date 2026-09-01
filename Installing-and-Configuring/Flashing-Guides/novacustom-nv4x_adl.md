@@ -1,13 +1,13 @@
 ---
 layout: default
-title: NovaCustom V560TU Maximized
-permalink: /V560TU-maximized-flashing/
-nav_order: 19
+title: NovaCustom NV4x ADL
+permalink: /NV4x_ADL-flashing/
+nav_order: 17
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
 
-NovaCustom V560TU (Maximized)
+NovaCustom NV4x ADL
 ===
 
 <details open markdown="block">
@@ -19,17 +19,17 @@ NovaCustom V560TU (Maximized)
 {:toc}
 </details> 
 
-## ✅ Active: CPU generation still receiving microcode updates (14th Gen Meteor Lake)
+## ✅ Active: CPU generation still receiving microcode updates (12th Gen Alder Lake-P)
 {: .note }
 
 Still receiving microcode updates.
 See [BOARDS_AND_TESTERS.md](https://github.com/linuxboot/heads/blob/master/doc/BOARDS_AND_TESTERS.md#per-board-eolesu-status),
 [Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-me-and-peripheral-firmware).
 
-## ✅ PROTECTED: TPM GPIO Reset
-{: .warning }
+## 🛡️ VULNERABLE: TPM GPIO Reset
+{: .critical }
 
-GPIO PLTRST# assertion does not apply to the TPM on this platform. Not vulnerable.
+TPMTOTP/HOTP bypassable. Disk encryption with passphrase unaffected.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
 
@@ -39,11 +39,11 @@ See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-boa
 
 ## Disassembly
 
-Full disassembly photos, SPI chip details, programmer setup, and step-by-step flashing instructions are maintained by [Dasharo](https://docs.dasharo.com/):
+Full disassembly photos, SPI chip details (Macronix MX25L25673GZ4I-08G, 32MB WSON-8, 3.3V), programmer setup, and step-by-step flashing instructions are maintained by [Dasharo](https://docs.dasharo.com/):
 
-→ **[Recovery & disassembly photos](https://docs.dasharo.com/unified/novacustom/recovery/#14th-gen)**
-→ **[Initial deployment](https://docs.dasharo.com/unified/novacustom/initial-deployment/#bios-installation_1)**
-→ **[Hardware matrix](https://docs.dasharo.com/variants/novacustom_v560tu/hardware-matrix/)**
+→ **[Recovery & disassembly photos](https://docs.dasharo.com/unified/novacustom/recovery/#12th-gen)**
+→ **[Initial deployment](https://docs.dasharo.com/unified/novacustom/initial-deployment/#bios-installation)**
+→ **[Hardware matrix](https://docs.dasharo.com/variants/novacustom_nv4x_adl/hardware-matrix/)**
 
 ## Flashing
 

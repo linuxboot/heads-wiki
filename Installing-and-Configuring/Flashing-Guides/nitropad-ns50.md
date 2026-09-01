@@ -1,13 +1,13 @@
 ---
 layout: default
-title: NovaCustom V540TU Maximized
-permalink: /V540TU-maximized-flashing/
-nav_order: 18
+title: NitroPad NS50
+permalink: /NS50-flashing/
+nav_order: 16
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
 
-NovaCustom V540TU (Maximized)
+NitroPad NS50
 ===
 
 <details open markdown="block">
@@ -19,17 +19,17 @@ NovaCustom V540TU (Maximized)
 {:toc}
 </details> 
 
-## ✅ Active: CPU generation still receiving microcode updates (14th Gen Meteor Lake)
+## ✅ Active: CPU generation still receiving microcode updates (12th Gen Alder Lake-P)
 {: .note }
 
 Still receiving microcode updates.
 See [BOARDS_AND_TESTERS.md](https://github.com/linuxboot/heads/blob/master/doc/BOARDS_AND_TESTERS.md#per-board-eolesu-status),
 [Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-me-and-peripheral-firmware).
 
-## ✅ PROTECTED: TPM GPIO Reset
-{: .warning }
+## 🛡️ VULNERABLE: TPM GPIO Reset
+{: .critical }
 
-GPIO PLTRST# assertion does not apply to the TPM on this platform. Not vulnerable.
+TPMTOTP/HOTP bypassable. Disk encryption with passphrase unaffected.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
 
@@ -39,11 +39,11 @@ See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-boa
 
 ## Disassembly
 
-Full disassembly instructions, SPI chip details (WSON8), programmer recommendations, and step-by-step flashing procedures are maintained by [Dasharo](https://docs.dasharo.com/):
+Full disassembly photos, SPI chip details (GigaDevice 25B1256EYIG, 32MB WSON-8), programmer setup, and step-by-step flashing instructions are maintained by [Dasharo](https://docs.dasharo.com/):
 
-→ **[Dasharo V540TU documentation](https://docs.dasharo.com/unified/novacustom/recovery/#14th-gen)**
-→ **[Dasharo V540TU initial deployment](https://docs.dasharo.com/unified/novacustom/initial-deployment/#bios-installation_1)**
-→ **[Dasharo V540TU hardware matrix](https://docs.dasharo.com/variants/novacustom_v540tu/hardware-matrix/)**
+→ **[Recovery & disassembly photos](https://docs.dasharo.com/unified/novacustom/recovery/#12th-gen)**
+→ **[Initial deployment](https://docs.dasharo.com/unified/novacustom/initial-deployment/#bios-installation)**
+→ **[Hardware matrix](https://docs.dasharo.com/variants/novacustom_ns5x_adl/hardware-matrix/)**
 
 ## Flashing
 
