@@ -222,7 +222,7 @@ for details.
 | **T420** | 2nd Gen Sandy Bridge | ⚠️ EOL (no official ESU date; last microcode 2019-05-14) | ✅ Protected | ✅ Protected | ✅ Protected |
 | **T430** | 3rd Gen Ivy Bridge | ⚠️ EOL (no official ESU date; last microcode 2019-05-14) | ✅ Protected | ✅ Protected | ✅ Protected |
 | **T440p** | 4th Gen Haswell | ⚠️ EOL Jun 30, 2021 | ✅ Protected | ✅ Protected | ✅ Protected |
-| **T480, T480s** | 8th Gen Kaby Lake-R | ⚠️ ESU Mar 31, 2026 ¹ | ❌ Not protected<br>[TPM GPIO reset bypass](https://mkukri.xyz/2024/06/01/tpm-gpio-fail.html) | ✅ Protected | ❌ Not protected |
+| **T480, T480s, X280** | 8th Gen Kaby Lake-R | ⚠️ ESU Mar 31, 2026 ¹ | ❌ Not protected<br>[TPM GPIO reset bypass](https://mkukri.xyz/2024/06/01/tpm-gpio-fail.html) | ✅ Protected | ❌ Not protected |
 | **T530** | 3rd Gen Ivy Bridge | ⚠️ EOL (no official ESU date; last microcode 2019-05-14) | ✅ Protected | ✅ Protected | ✅ Protected |
 | **Talos II** | POWER9 | Active | ✅ Protected | ✅ Protected | ✅ Protected |
 | **W530** | 3rd Gen Ivy Bridge | ⚠️ EOL (no official ESU date; last microcode 2019-05-14) | ✅ Protected | ✅ Protected | ✅ Protected |
