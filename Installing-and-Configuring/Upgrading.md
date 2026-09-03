@@ -131,6 +131,7 @@ If you need to validate the current firmware integrity against the last flashed 
 - The `CONFIG_FLASH_OPTIONS` variable specifies the board-specific flash options to ensure proper handling of SPI regions during flashing. These options are defined in the board's configuration file.
 - Boards may specify different SPI regions to flash. For example:
   - The `novacustom-v540tu` board preserves the `GBE` (Gigabit Ethernet) region, ensuring the manufacturing MAC address remains intact.
+  - The `kano` board (Acer Chromebook Spin 714) preserves the platform-specific regions its coreboot config enumerates, similar to `novacustom-v540tu`.
   - The `x230-hotp-maximized` board overwrites the entire SPI flash, including the `GBE` region, replacing it with a generic configuration.
 - To inspect the flash options for your board, use the `env` command in the recovery shell:
   ```shell
