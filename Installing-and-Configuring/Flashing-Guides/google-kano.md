@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Acer Chromebook Spin 714 (KANO)
-permalink: /heads-flashing/
-nav_order: 1
+permalink: /google-kano-flashing/
+nav_order: 12
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -10,7 +10,38 @@ grand_parent: Installing and configuring
 Acer Chromebook Spin 714 (KANO)
 ===
 
-## CCD with Suzyq cable
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
+
+## ✅ Active: CPU generation still receiving microcode updates (12th Gen Alder Lake)
+{: .note }
+
+Still receiving microcode updates.
+See [BOARDS_AND_TESTERS.md](https://github.com/linuxboot/heads/blob/master/doc/BOARDS_AND_TESTERS.md#per-board-eolesu-status),
+[Heads threat model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-me-and-peripheral-firmware).
+
+## ✅ PROTECTED: TPM GPIO Reset
+{: .warning }
+
+GPIO PLTRST# assertion does not apply to the TPM on this platform. Not vulnerable.
+See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
+[TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
+
+## ⚡ Safety First
+
+**Before starting, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**
+
+## Disassembly
+
+Full disassembly instructions, SPI chip details, programmer recommendations, and step-by-step flashing procedures for the Suzy-Q CCD cable:
+
+### CCD with Suzyq cable
 With Chromebooks there is an option called "Closed Case Debugging".  A special usb cable called a SuzyQ cable
 is required.  A good guide on using the SuzyQ cable is 
 [MrChromebox](https://docs.mrchromebox.tech/docs/firmware/wp/disabling.html).
@@ -126,7 +157,7 @@ flashrom --programmer raiden_debug_spi:target=AP,custom_rst=True \
 
 More info in the [SPI Programmer Best Practices](https://osresearch.net/SPI-Programmer-Best-Practices/#backup--verify)
 
-## Flash heads
+## Flashing
 
 ```
 flashrom --programmer raiden_debug_spi:target=AP,custom_rst=True \
