@@ -10,7 +10,6 @@ grand_parent: Installing and configuring
 Acer Chromebook Spin 714 (KANO)
 ===
 
-
 ## CCD with Suzyq cable
 With Chromebooks there is an option called "Closed Case Debugging".  A special usb cable called a SuzyQ cable
 is required.  A good guide on using the SuzyQ cable is 
@@ -20,8 +19,6 @@ Here are 2 places where you can find info on purchasing a SuzyQ board:
 
 1. [ChocalateLoverRaj Github](https://github.com/ChocolateLoverRaj/gsc-debug-board)
 2. [FyraLabs Github](https://github.com/fyraLabs/suzyqboard)
-
-
 
 ### Enable Enabling Closed Case Debugging (CCD)
 You will be using `gsctool` in the ChromeOS Developer mode console.
@@ -82,15 +79,15 @@ the SuzyQ cable plugged in correctly.
    `flashrom --programmer raiden_debug_spi:target=AP,custom_rst=True --chip "W25Q256JV_M" --wp-range 0,0`
    (`--wp-range 0 0` on older devices)
 
-## Extra step (What is this really doing?)
+## Extra step
 KANO requires an extra step before we flash with flashrom:
 
 ```
 # Get the baud rate
-$ sudo stty -F /dev/ttyUSB2
+sudo stty -F /dev/ttyUSB2
 speed 9600 baud; line = 0;
 
-sudo minicom -D /dev/ttyUSB2
+sudo minicom -D /dev/ttyUSB2 -b 9600
 
 run: apshutdown
 wait 5s
@@ -100,12 +97,39 @@ run: gpioset en_S5_rails 1
 [source](https://forum.chrultrabook.com/t/flashrom-error-when-trying-to-unbrick-with-suzyq/8789/2?u=stonework5729)
 
 ## Backup
-TODO: add section about backing up rom first.
+Before you flash Heads you should take a backup of the bootloader.
+
+```
+# 1. Read the full chip backup
+flashrom --programmer raiden_debug_spi:target=AP,custom_rst=True \
+  --chip "W25Q256JV_M" \
+  --read kano_backup.rom
+
+# 2. Inspect the dump (sanity check)
+hexdump -C backup1.bin | head -20
+
+# 3. Verify the backup reads back correctly
+flashrom --programmer raiden_debug_spi:target=AP,custom_rst=True \
+  --chip "W25Q256JV_M" \
+  --verify kano_backup.rom
+
+# 4. Read a second backup to a different file (paranoia is good)
+flashrom --programmer raiden_debug_spi:target=AP,custom_rst=True \
+  --chip "W25Q256JV_M" \
+  --read kano_backup2.rom
+
+flashrom --programmer raiden_debug_spi:target=AP,custom_rst=True \
+  --chip "W25Q256JV_M" \
+  --verify kano_backup2.rom
+
+```
+
+More info in the [SPI Programmer Best Practices](https://osresearch.net/SPI-Programmer-Best-Practices/#backup--verify)
 
 ## Flash heads
 
 ```
-sudo flashrom --programmer raiden_debug_spi:target=AP,custom_rst=True \
+flashrom --programmer raiden_debug_spi:target=AP,custom_rst=True \
   --chip "W25Q256JV_M" \
   --write heads-kano-202607081551-v0.2.1-3112-gb9dfd39.rom
 ```
