@@ -51,7 +51,7 @@ Here are 2 places where you can find info on purchasing a SuzyQ board:
 1. [ChocalateLoverRaj Github](https://github.com/ChocolateLoverRaj/gsc-debug-board)
 2. [FyraLabs Github](https://github.com/fyraLabs/suzyqboard)
 
-### Enable Enabling Closed Case Debugging (CCD)
+### Enabling Closed Case Debugging (CCD)
 You will be using `gsctool` in the ChromeOS Developer mode console.
 
 1. Power on the device to the login screen (booted into Developer Mode).
@@ -89,8 +89,8 @@ For this section we will be using a laptop running linux (host) and the Kano dev
 3. Power on the Kano device to the login screen (booted into Developer Mode).
 4. Open VT-2 terminal: press [CTRL+ALT+F2] (F2 is the right arrow).
 5. Login as `root`
-6. Run gsctool -a -I to verify the CCD is opened, and that the factory values are set. The current value for all CCD flags should be set to Y/Always.
-7. Run crossystem wpsw_cur and verify it returns 0.
+6. Run `gsctool -a -I` to verify the CCD is opened, and that the factory values are set. The current value for all CCD flags should be set to Y/Always.
+7. Run `crossystem wpsw_cur` and verify it returns 0.
 8. Reboot.
 
 [MrChromebox source](https://docs.mrchromebox.tech/docs/firmware/wp/disabling.html#step-2-disabling-write-protection)
@@ -103,11 +103,23 @@ If you don't already have that plugged in follow the steps above to get
 the SuzyQ cable plugged in correctly.
 
 1. Check if write protection is enabled:
-   `flashrom --programmer raiden_debug_spi:target=AP,custom_rst=True --chip "W25Q256JV_M" --wp-status`
+   ```
+   flashrom --programmer raiden_debug_spi:target=AP,custom_rst=True \
+     --chip "W25Q256JV_M" \
+     --wp-status
+   ```
 2. Disable software write protection:
-   `flashrom --programmer raiden_debug_spi:target=AP,custom_rst=True --chip "W25Q256JV_M" --wp-disable`
+   ```
+   flashrom --programmer raiden_debug_spi:target=AP,custom_rst=True \
+     --chip "W25Q256JV_M" \
+     --wp-disable
+   ```
 3. Changes software write protection addresses range:
-   `flashrom --programmer raiden_debug_spi:target=AP,custom_rst=True --chip "W25Q256JV_M" --wp-range 0,0`
+   ```
+   flashrom --programmer raiden_debug_spi:target=AP,custom_rst=True \
+     --chip "W25Q256JV_M" \
+     --wp-range 0,0
+   ```
    (`--wp-range 0 0` on older devices)
 
 ## Extra step
