@@ -205,6 +205,7 @@ for details.
 
 | Board | CPU generation | EOL/ESU status | Evil Maid detection<br>(TPMTOTP attestation) | Disk encryption<br>(TPM DUK + passphrase) | USB Security Dongle<br>(HOTP authentication) |
 |---|---|---|---|---|---|
+| **Acer Chromebook Spin 714 (KANO)** | 12th Gen Alder Lake | Active | ✅ Protected | ✅ Protected | ✅ Protected |
 | **HP Z220 CMT** | 3rd Gen Ivy Bridge | ⚠️ EOL (no official ESU date; last microcode 2019-05-14) | ✅ Protected | ✅ Protected | ✅ Protected |
 | **KGPE-D16** | AMD Family 15h | Unmaintained (reference only) | ✅ Protected | ✅ Protected | ✅ Protected |
 | **Librem 11** (Purism) | Jasper Lake | Active | N/A (no TPM hardware) | N/A (no TPM) | N/A (ROM-hash HOTP) |
