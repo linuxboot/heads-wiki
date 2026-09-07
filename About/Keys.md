@@ -193,8 +193,9 @@ cache and hwinfo.hex here (DIMM-swap detection), currently disabled.
 7: Heads CBFS files and UEFI binaries. Extended by `cbfs-init.sh`,
 `uefi-init.sh`.
 
-(16): Used for TPM futurecalc of LUKS header when setting up a TPM disk
-encryption key
+(16): Not measured or read by Heads. Historically used as scratch PCR by
+`calcfuturepcr` on TPM1 (TPM2 used PCR 23); now unused — `calcfuturepcr`
+was rewritten to replay from the `cbmem -L` event log instead.
 
 ### Some history
 Heads relied on coreboot patches until coreboot 4.8.1 for measured boot
