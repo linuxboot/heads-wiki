@@ -22,12 +22,12 @@ Generic OS Installation
 
 Insert OS installation media into one of the USB3 ports (blue on Thinkpads).
 [For certain OSes](https://github.com/linuxboot/heads/tree/master/initrd/etc/distro/keys),
-Heads boot process supports standard OS ISO bootable media (where the USB drive
-contains the ISO installation media alongside of its detached signature). For
-other OS, you will need to create USB installation media with using `dd` or
-`unetbootin` etc.).
+Heads boot process supports booting an OS ISO bootable media from normal EXT3/EXT4/ExFat 
+formatted partition on USB drive (where the USB drive
+contains the .iso installation media alongside of its detached signature (.asc, .sig)). For
+other OS, you will need to create USB installation media with using `dd`, `unetbootin`, etc.
 
-For supported OSes, on a EXT3/EXT4/ExFat formatted partition on USB drive, you
+[For certain OSes](https://github.com/linuxboot/heads/tree/master/initrd/etc/distro/keys), on a EXT3/EXT4/ExFat formatted partition on USB drive, you
 can put the ISO image along with a trusted detached signature in the root
 directory:
 ```shell
