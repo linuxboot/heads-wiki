@@ -170,7 +170,7 @@ Heads can verify firmware integrity using two methods:
 **Heads generates HOTP codes** and sends them to your USB Security dongle.
 The dongle verifies these codes automatically. 
 
-If verification succeeds,Heads boots normally. 
+If verification succeeds, Heads boots normally.
 
 If it fails, Heads alerts rather than locks the user out, and what happens next
 depends on the failure:

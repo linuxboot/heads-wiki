@@ -194,7 +194,7 @@ measurement would be here.
 
 4: Boot path. Extended with the path taken.
 - `"usb"` for USB boot
-- `"generic"`for normal boot
+- `"generic"` for normal boot
 - `"recovery"` for the recovery shell
 Extended by `usb-init.sh`, `kexec-insert-key.sh`, `kexec-select-boot.sh`, `initrd/etc/functions.sh`.
 
