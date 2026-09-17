@@ -42,10 +42,11 @@ security dongles. Additionally, Nitrokey resells some of NovaCustom's laptops.
 
 ### NovaCustom (Heads)
 NovaCustom offers devices with Heads preinstalled. They focus on providing
-customizable and secure devices for their customers. NovaCustom buys Clevo
-laptops in bulk, ensuring BootGuard keys are not fused at the last manufacturing
-steps. They also resell Nitrokey 3 USB security dongles bundled with their
-Heads-based firmware devices. They provide recent laptop models with ME deactivated.
+customizable and secure devices for their customers. NovaCustom units can
+ship unfused, while production TrustRoot units are provisioned and accept
+only firmware signed for that profile. They also resell Nitrokey 3 USB
+security dongles bundled with their Heads-based firmware devices. They
+provide recent laptop models with ME deactivated.
 
 - **Website:** [NovaCustom](https://novacustom.com)
 - **Products:** Laptops and USB security dongles

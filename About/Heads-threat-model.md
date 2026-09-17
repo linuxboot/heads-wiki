@@ -301,8 +301,7 @@ of "Enterprise Security" which prioritizes vendor control over user autonomy.
 **Measured Boot**, by contrast, merely records the firmware hash into TPM
 PCR0 so subsequent stages can check it; the user retains control. Heads
 works with either mode. The mode is set at the factory via field-programmable
-fuses and cannot be changed by the end user. Most supported platforms ship
-verified boot only, so PCR 0 stays zero and the coreboot SRTM chain in PCR 2
+fuses and cannot be changed by the end user. The coreboot SRTM chain in PCR 2
 remains the firmware root of trust.
 [Intel Boot Guard analysis, Ermolov](https://github.com/flothrone/bootguard)
 
