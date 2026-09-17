@@ -79,7 +79,7 @@ lengths):
   NOT FORGET_)
   - This passphrase is requested to do management tasks on the USB Security 
   dongle
-  - Under Heads, it is to seal measurements under HOTP
+  - Under Heads, it programs the shared HOTP secret onto the dongle
     - It will be needed in case the GPG User PIN was locked
 - GPG User PIN (2 words. _Locks user out after 3 bad attempts in a row. DO NOT 
   FORGET_)

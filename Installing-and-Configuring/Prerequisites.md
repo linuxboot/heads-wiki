@@ -45,7 +45,7 @@ USB Security Dongles (aka security token aka smartcard)
 
 **All USB Security dongles used with Heads must support OpenPGP** for storing your private key and signing `/boot` contents.
 
-**HOTP verification is optional** but provides automatic firmware verification at boot. Without HOTP, you'll use TPMTOTP (manual verification with your phone). Most [board configurations]({{ site.baseurl }}/Prerequisites#supported-devices) are available in both HOTP and non-HOTP variants, though some vendors only support HOTP-enabled configurations.
+**HOTP verification is optional** but provides automatic firmware verification at boot. Without HOTP, a board with a TPM uses TPMTOTP (manual verification with your phone). A board without a TPM has no TOTP and no Disk Unlock Key. Most [board configurations]({{ site.baseurl }}/Prerequisites#supported-devices) are available in both HOTP and non-HOTP variants, though some vendors only support HOTP-enabled configurations.
 
 ### USB Security dongle compatibility:
 

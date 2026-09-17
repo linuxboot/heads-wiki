@@ -41,11 +41,18 @@ The very first key used in the system is Intel's public key that signs the
 The [Bootguard fuses](https://trmm.net/Bootguard) fuses provide protection
  against most "evil maid" attacks against the firmware.  The hash of the ACM
  signing key is set in write-once fuses in the CPU chipset and during the CPU
- bringup phase the ME and the CPU microcode cooperate in some undocumented way
- to validate the "Startup ACM" in the SPI flash.  Since this key is fused into
- hardware, an evil maid attack would need to replace the CPU to install
- malicious firmware into the SPI flash.  The x230 Thinkpads do not support
- bootguard and only the Librem laptops ship with unfused keys.
+ bringup phase the ME and the CPU microcode cooperate to validate the firmware
+ ACM in the SPI flash.  PCR 0 holds an ACM measured Initial Boot Block only
+ when the platform is provisioned with a Boot Guard profile that includes
+ measurement; most client machines ship verified boot only, so PCR 0 stays
+ zero.  See [Heads threat model]({{ site.baseurl }}/Heads-threat-model/)
+ and [doc/tpm.md](https://github.com/linuxboot/heads/blob/master/doc/tpm.md).
+ Since this key is fused into hardware, an evil maid attack would need to
+ replace the CPU to install malicious firmware into the SPI flash.  The x230
+ Thinkpads do not support bootguard, and Purism ships unfused keys, so coreboot
+ and Heads can be installed. NovaCustom units can also ship unfused; a unit
+ provisioned with a Boot Guard profile accepts only firmware signed for that
+ profile.
 
 An attacker who controls this key can flash new firmware via hardware means
 (and possibly remotely via software, unless other steps are taken).
@@ -171,30 +178,39 @@ equivalent to the login password. Other operating systems might differ.
 
 ![TPM]({{ site.baseurl }}/images/TPM.jpg)
 
-0: Not used. Would be populated by Intel Boot Guard (IBB via ACM) if
-enabled.
+0: Read at seal time and included in the sealing policies; normally zero, and
+populated only when the platform is provisioned with a Boot Guard profile that
+includes measurement. See [Heads threat model]({{ site.baseurl }}/Heads-threat-model/#firmware-security-and-boot-integrity)
+and [doc/tpm.md](https://github.com/linuxboot/heads/blob/master/doc/tpm.md#pcr-assignments).
 
-1: Not used. Would be populated by coreboot with HWID digest and boot mode
-(`CONFIG_PCR_HWID`, `CONFIG_PCR_BOOT_MODE`) but runtime shows zero.
+1: Read at seal time and included in the sealing policies; remains zero. `CONFIG_PCR_HWID=1` and `CONFIG_PCR_BOOT_MODE=1` in
+`config/coreboot-*.config` are slot assignments for optional coreboot features
+that are not enabled, not evidence that PCR 1 is populated.
 
-2: [coreboot measured boot](https://doc.coreboot.org/security/vboot/measured_boot.html#platform-configuration-registers)
+2: Measured by coreboot, not Heads, and read at seal time. [coreboot measured boot](https://doc.coreboot.org/security/vboot/measured_boot.html#platform-configuration-registers)
 — bootblock, romstage, ramstage, payload, bootsplash.jpg, fallback/*.
 
-3: Runtime data slot — empty on all Heads builds. Coreboot can measure MRC
-cache and hwinfo.hex here (DIMM-swap detection), currently disabled.
+3: Runtime data slot. Read at seal time and normally zero. Coreboot's MRC cache
+measurement would be here.
 
-4: Boot mode. Extended by `usb-init.sh`, `kexec-insert-key.sh`,
-`kexec-select-boot.sh`.
+4: Boot path. Extended with the path taken.
+- `"usb"` for USB boot
+- `"generic"`for normal boot
+- `"recovery"` for the recovery shell
+Extended by `usb-init.sh`, `kexec-insert-key.sh`, `kexec-select-boot.sh`, `initrd/etc/functions.sh`.
 
-5: Kernel modules. Extended by `sbin/insmod.sh`.
+5: Extended by Heads. Kernel modules. Extended by `sbin/insmod.sh`.
 
-6: LUKS headers. Extended by `qubes-measure-luks.sh` during DUK seal.
+6: Extended by Heads. LUKS headers. Extended by `qubes-measure-luks.sh` when the DUK 
+is sealed and again on each boot before it is unsealed.
 
-7: Heads CBFS files and UEFI binaries. Extended by `cbfs-init.sh`,
-`uefi-init.sh`.
+7: Extended by Heads. Heads persistent CBFS files and UEFI binaries. 
+Extended by `cbfs-init.sh`, `uefi-init.sh`.
 
-(16): Used for TPM futurecalc of LUKS header when setting up a TPM disk
-encryption key
+Includes measurements of Heads files that persists internal firmware updates:
+- config.user: config-gui.sh configuration overrides of compiled /etc/config
+- pubring.kbx: gnupg public key keybox; unique at time of pubkey import
+- trustdb.gpg: trust level of all public keys of pubring above.
 
 ### Some history
 Heads relied on coreboot patches until coreboot 4.8.1 for measured boot
@@ -206,8 +222,14 @@ implementation from vboot implementation.
 Since coreboot 4.12, Heads stopped patching coreboot to implement measured
 boot. coreboot measured boot implementation is the one filling PCR2, above.
 
-Heads since then solely extends PCRs of its own (PCRs 4-5-6-7 above) which are
-used when sealing/unsealing.
+Heads since then solely extends PCRs of its own (PCRs 4, 5, 6 and 7 above).
+On builds with a TPM, the TOTP/HOTP shared secret is sealed against PCRs
+0,1,2,3,4,7 (HOTP reuses that one sealed secret) and the Disk Unlock Key
+against 0,1,2,3,4,5,6,7; PCRs 0, 1 and 3 are read at seal time
+and are normally zero, while PCR 2 carries coreboot's SRTM measurement where
+coreboot measured boot is enabled. On builds without a TPM nothing is sealed:
+the HOTP secret is derived from a hash of the ROM and written to the dongle,
+and there is neither TOTP nor a Disk Unlock Key.
 
 As you can see above, coreboot measures itself from bootblock then other boot
 phases up to its payload in PCR2, in conformity of their
@@ -216,10 +238,13 @@ measured boot policy. An example is given from [coreboot
 docs](https://doc.coreboot.org/security/vboot/measured_boot.html#platform-configuration-register).
 
 ### TPM_Unseal errors
-Consequently, if either coreboot phases, boot mode, kernel modules, LUKS
-headers or CBFS files are different then when those measurements were used to
-seal secrets, unseal operations will fail. HOTP/TOTP/TPM Disk Unlock Key
-passphrase should give errors in case of tampering.
+Consequently, a change to coreboot phases, boot path or CBFS files can cause
+unseal to fail. The Disk Unlock Key is additionally bound to kernel modules
+(PCR 5) and LUKS headers (PCR 6). The TOTP/HOTP shared secret deliberately
+excludes PCR 5 and PCR 6 (`seal-totp.sh`); `seal-hotpkey.sh` seals nothing,
+it unseals that shared secret and programs the dongle. So a kernel module
+loaded at runtime or LUKS header change does not by itself break TOTP/HOTP,
+though it does break the Disk Unlock Key.
 
 The TPM Disk Unlock Key passphrase would fail with a different error then:
 `Error Authentication failed (Incorrect Password) from TPM_Unseal` when a user
@@ -227,7 +252,9 @@ types a [TPM Disk Unlock key passphrase]({{ site.baseurl }}/Keys/#disk-unlock-ke
 
 Indeed, the PCRs measurements used to seal the Disk Unlock Key in TPM NV memory
 cannot unseal that secret, even with a good TPM Disk Unlock Key passphrase,
-while HOTP/TOTP should not be able to unseal either.
+while HOTP/TOTP should not be able to unseal either — but only when the PCRs
+in the shared seal policy (0,1,2,3,4,7) differ. A change confined to PCR 5 or
+PCR 6 breaks only the Disk Unlock Key, not HOTP/TOTP.
 
 Unseal can also fail due to TPM Dictionary Attack Lockout after too many failed
 authentication attempts. On TPM 2, Heads enforces a 10-try limit with 1-hour
@@ -260,5 +287,6 @@ If Disk Unlock Key passphrase throws a different error, it would be a good idea
 to meditate on your threat model and what happened to your computer since your
 last normal default boot.
 
-The Disk Unlock Key is sealed in TPM NV memory with PCRs-2-4-5-6-7, which
-includes external content from the firmware, like your LUKS header measurements.
+The Disk Unlock Key (DUK) is sealed in distinct TPM NV memory against PCRs 0-7
+and a passphrase. The LUKS headers are disk content measured into PCR 6 by
+`qubes-measure-luks.sh`, so the DUK releases only when those measurements match.
