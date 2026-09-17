@@ -167,7 +167,28 @@ USB Security dongles and firmware verification in Heads
 Heads can verify firmware integrity using two methods:
 
 ### HOTP verification (with USB Security dongle)
-**Heads generates HOTP codes** and sends them to your USB Security dongle. The dongle verifies these codes automatically. If verification succeeds, Heads boots normally. If it fails, the dongle's LED shows red and boot is halted.
+**Heads generates HOTP codes** and sends them to your USB Security dongle.
+The dongle verifies these codes automatically. 
+
+If verification succeeds,Heads boots normally. 
+
+If it fails, Heads alerts rather than locks the user out, and what happens next
+depends on the failure:
+- a wrong code makes the dongle's LED show red and Heads shows an error screen
+where the user may still choose to continue;
+- a missing dongle or a connection problem shows a warning and offers a retry;
+- a dongle slot that was never programmed shows a warning and asks the user to
+generate a new TOTP/HOTP secret or exit to the recovery shell.
+- On builds with a TPM and TOTP enabled, the error screens for a wrong code or
+repeated verification failures show the TOTP code to compare before continuing;
+
+The missing dongle warning only offers a retry or a skip.
+On builds without a TPM there is no TOTP code to compare, but the error screens
+offer their usual actions:
+- Generate a new TOTP/HOTP secret
+- Ignore and continue 
+- Retry
+- Exit to the recovery shell.
 
 **Requirements**: Compatible USB Security dongle (see [Prerequisites compatibility table]({{ site.baseurl }}/Prerequisites#usb-security-dongles-aka-security-token-aka-smartcard))
 

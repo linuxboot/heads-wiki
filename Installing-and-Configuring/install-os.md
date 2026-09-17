@@ -195,7 +195,27 @@ Taking ownership of the states
  
 Taking ownership of the TPM
 ====
-Heads keeps TPM and HOTP rollback counters under /boot. Since we just installed, those doesn't exist and we need to create them. 
+The TPM rollback counter lives in TPM NVRAM. Under /boot, `kexec_rollback.txt`
+holds the sha256sum output for the counter state file: the SHA-256 hash and the
+counter ID (the `counter-<ID>` name of `/tmp/counter-<ID>`) that Heads uses to
+read the TPM counter and recheck the hash at boot. The HOTP counter exists only
+on HOTP builds (plain file under /boot, `kexec_hotp_counter`).
+
+Two separate switches govern this record, and they control different things.
+`CONFIG_BOOT_REQ_ROLLBACK` controls boot enforcement: a missing rollback record
+blocks boot only when it is set to `y` (and `CONFIG_BASIC` is not `y`).
+`CONFIG_IGNORE_ROLLBACK` controls the counter work: the counter is still
+created, an existing record is still checked, and a record that does not match
+the current TPM counter state aborts boot, unless it is set to `y`.
+
+Heads creates these files for you. On TPM builds the TPM reset flow and OEM
+Factory Reset create the TPM counter and write the matching /boot record
+(`kexec_rollback.txt`). Signing a boot configuration, for example when setting
+a default boot, also updates that record because the signing step is invoked
+with `-r`. Creation and the signing side update are skipped only with
+`CONFIG_IGNORE_ROLLBACK=y`. HOTP builds also get `kexec_hotp_counter`. Do not
+create or edit these files by hand: the counter can only be created through the
+TPM, and the hash must match the current counter state.
 First things first, we need to acknowledge current firmware state for the newly installed OS.
 
 ![Heads-Options_After-Install](https://user-images.githubusercontent.com/827570/156663999-c0b30f06-10c6-4f84-aedc-cc979826a3d2.jpeg)

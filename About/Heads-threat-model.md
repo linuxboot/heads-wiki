@@ -146,8 +146,11 @@ the TPM to compute the 6-digit code, meaning it temporarily resides in RAM.
 If an attacker gains physical access to the TPM, they can manually extend
 PCR values to a known-good state and extract the secret. A stolen TOTP
 secret allows an attacker to build a replica device that generates valid
-OTP codes. [HOTP](https://datatracker.ietf.org/doc/html/rfc4226) with a hardware security token does not share this weakness
-since the secret never leaves the token.
+OTP codes. [HOTP](https://datatracker.ietf.org/doc/html/rfc4226) uses the
+same shared secret on TPM backed builds. Heads unseals it from the TPM and
+computes the code it sends to the dongle, so an extracted secret can forge
+that code too. Boards without a TPM derive the HOTP secret from the ROM hash
+instead.
 
 **Suspend (S3) attack:** Heads verifies integrity at cold boot but does
 *not* re-verify on resume from suspend. An attacker with brief physical
@@ -267,7 +270,9 @@ for upstream fix status (patches [#90884](https://review.coreboot.org/c/coreboot
   first column.
 - If you need **USB security dongle authentication** (HOTP), choose a board
   marked ✅ in the last column.
-- **Disk encryption** (TPM DUK with passphrase) is protected on all boards.
+- **Disk encryption** stays available on all boards. The TPM Disk Unlock Key
+  with passphrase is not affected by the GPIO reset, and boards without a TPM
+  unlock with the LUKS passphrase instead.
 
 For the current per-board technical status and fork verification details, see the
 [Heads board testers list](https://github.com/linuxboot/heads/blob/master/doc/BOARDS_AND_TESTERS.md).
@@ -280,10 +285,11 @@ The firmware in the system's motherboard contains the code that the CPU executes
  on startup. This is usually the BIOS or [UEFI](https://uefi.org/) firmware and the complexity of it
  means that there are many possible attacks.  [Thunderstrike](https://trmm.net/Thunderstrike)
  Too many UEFI vulnerablities to list... Intel has provided features like
- [Boot Guard](https://www.intel.com/content/www/us/en/content-details/834810/intel-7th-generation-core-6th-generation-core-and-xeon-e3-1200-v6-families.html) to try to verify signatures on the firmware; this can hash the
- firmware into the [TPM](https://trustedcomputinggroup.org/resource/tpm-library-specification/) PCR0 (Measured Boot) before the CPU starts or take more
- drastic measures like halting to boot process upon signature failure (Verified
- Boot). Silently failing to boot is not the best approach for most applications
+ [Boot Guard](https://www.intel.com/content/www/us/en/content-details/834810/intel-7th-generation-core-6th-generation-core-and-xeon-e3-1200-v6-families.html) to try to verify signatures on the firmware; its ACM runs on the CPU at reset. When
+ the platform is provisioned with a Boot Guard profile that includes measurement, the ACM measures
+ the Key Manifest, Boot Policy Manifest, Initial Boot Block and policy data into the
+ [TPM](https://trustedcomputinggroup.org/resource/tpm-library-specification/) PCR 0 at locality 3; the verified boot profile instead halts the boot process upon signature
+ failure (Verified Boot). Silently failing to boot is not the best approach for most applications
  since it is not clear why the system has not started; measured boot allows
  detection of the malfeasance more directly.
 
@@ -294,9 +300,17 @@ user from installing [coreboot](https://doc.coreboot.org/) or any alternative fi
 of "Enterprise Security" which prioritizes vendor control over user autonomy.
 **Measured Boot**, by contrast, merely records the firmware hash into TPM
 PCR0 so subsequent stages can check it; the user retains control. Heads
-requires Measured Boot mode. Unfortunately, the mode is set at the factory
-via field-programmable fuses and cannot be changed by the end user.
+works with either mode. The mode is set at the factory via field-programmable
+fuses and cannot be changed by the end user. Most supported platforms ship
+verified boot only, so PCR 0 stays zero and the coreboot SRTM chain in PCR 2
+remains the firmware root of trust.
 [Intel Boot Guard analysis, Ermolov](https://github.com/flothrone/bootguard)
+
+Note: Where coreboot measured boot is enabled, Heads' own coreboot SRTM chain
+measures into PCR 2 (`CONFIG_PCR_SRTM`), not PCR 0. PCRs 0 and 1 are not
+extended by Heads; both are read at seal time and are normally zero (PCR 0 is
+populated only when the platform is provisioned with a Boot Guard profile
+that includes measurement).
 
 ![CoreBoot + Linux + tpmtotp]({{ site.baseurl }}/images/TPMTOTP_in_use.jpg)
 
@@ -376,15 +390,17 @@ Finally, once coreboot has been flashed into the ROM, the write protect pins on
  be soldered in place of the vendor supplied one and covered in epoxy to prevent
  easy replacement by attackers.
 
-A critical architectural point: the security of the entire measured boot
-chain depends on the integrity of the *first* measurement -- the code
-that performs the initial `extend()` into PCR0. If an attacker can modify
-that initial measurement code (the bootblock), they can forge all
-subsequent PCR values to match expected measurements while booting
-malicious firmware. This is why Heads runs from SPI flash with hardware
-write protection and why Boot Guard Measured Boot (which measures the
-initial firmware descriptor into PCR0 before any mutable code runs) is
-a valuable complement on platforms that support it.
+A critical architectural point: on boards with coreboot measured boot, the
+security of the entire measured boot chain depends on the integrity of the
+*first* measurement, the code that performs the initial `extend()` into
+PCR 2; boards with TPM init but no coreboot SRTM, and boards without a TPM,
+have no such PCR 2 chain. If an attacker can modify that initial measurement
+code (the bootblock), they can forge all subsequent PCR values to match
+expected measurements while booting malicious firmware. This is why Heads
+runs from SPI flash with hardware write protection and why Boot Guard
+Measured Boot (which measures the Key Manifest, Boot Policy Manifest, IBB
+and policy data into PCR 0 at locality 3) is a valuable complement where
+the platform is provisioned with a profile that includes measurement.
 
 #### File systems
 
@@ -554,8 +570,9 @@ which [historically they have not been](https://arstechnica.com/information-tech
 Heads repurposes [TPM](https://trustedcomputinggroup.org/resource/tpm-library-specification/) technology -- which was originally designed for
 Enterprise DRM and remote attestation *against* the device owner -- and
 uses it to give the owner verifiable integrity guarantees. Since Heads
-controls the TPM from the very first instruction executed by the CPU
-(the bootblock in SPI flash), it can use the TPM's `seal`/`unseal` and
+controls the platform from the first instruction the CPU executes (the
+bootblock in SPI flash) and brings up the TPM early in the coreboot boot
+path, it can use the TPM's `seal`/`unseal` and
 [PCR extend](https://trustedcomputinggroup.org/resource/pc-client-specific-platform-firmware-profile-specification/) operations to protect *user* secrets, not corporate secrets.
 
 This distinction should inform every decision in your threat model:
@@ -585,7 +602,7 @@ it increase or decrease user autonomy?
 
 Lenovo X1 Carbon
 
-* Measured Boot into [TPM](https://trustedcomputinggroup.org/resource/tpm-library-specification/) PCR0
+* Measured Boot (only where the platform is provisioned with a profile that includes measurement): Boot Guard measures the Key Manifest, Boot Policy Manifest, IBB and policy data into [TPM](https://trustedcomputinggroup.org/resource/tpm-library-specification/) PCR 0; the coreboot SRTM chain measures into PCR 2.
 * [CoreBoot](https://doc.coreboot.org/) with reproducible builds
 * TPM sealed drive keys
 * TPMTOTP to attest firmware state to user

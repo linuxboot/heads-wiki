@@ -21,7 +21,7 @@ Prerequisites for porting Heads
 ===
 Prerequisites: 
 1. coreboot port:  since Heads is a coreboot payload, the board must have fully completed and actively maintained coreboot support. Any known issues should be acceptable to end users. Exceptions include the Purism and Dasharo coreboot forks, where coreboot is used from their respective forks.
-2. TPM module: Measured boot and the usable security features are at the core of what Heads is about. These features depend on the TPM. Therefore, the board must have a TPM module. If it uses fTPM and you plan to neuter the Intel Management Engine (ME), the fTPM must remain functional under coreboot even after neutering ME. Otherwise, a dTPM is required for this board.
+2. TPM module: Measured boot and the usable security features are at the core of what Heads is about. Measured boot and the sealing features depend on the TPM, so most boards include one. A board without a TPM falls back to ROM hash HOTP and has no TOTP or Disk Unlock Key. If it uses fTPM and you plan to neuter the Intel Management Engine (ME), the fTPM must remain functional under coreboot even after neutering ME. Otherwise, a dTPM is required for this board.
 3. The final flash layout must have enough space for the Heads payload. Concretely, the size of the flash chip(s) must be at least be 12MB and the size of the BIOS region must be large enough to take the Heads payload. Usually, this means shrinking another region, the ME, and reallocating the freed space to the BIOS region. However, changing the ME blob or flash layout is not always possible as Intel Bootguard prevents booting with such modifications in most modern boards unless the board vendor chose otherwise.
 4. Technical skills: the person porting the board must have basic knowledge of coreboot, Linux, Bash, Git, and Python to complete the port. While the community is committed to helping, an alternative option is a financial contribution for [consultancy services](https://osresearch.net/Consultation-Services/).
 5. External programmer: an external programmer is required to flash Heads and, if necessary, to recover from a brick.
@@ -96,7 +96,7 @@ cp config/coreboot-CLOSEST_PLATFORM.config config/coreboot-NEW_BOARD.config
 ```
 Note, the configuration needs to define the correct path references to all binary blobs, that are not provided by coreboot, on most architectures this includes at least `IFD`, `ME` and `GBE` (see above). The configuration file path should be: `heads/config/coreboot-NEW_BOARD.config`.
 * Note:
-TPM measured boot (```CONFIG_TPM_MEASURED_BOOT=y```) and verified boot (```CONFIG_VBOOT_LIB=y```) should be enabled. Ensure that you select CONFIG_TPM_MEASURED_BOOT and CONFIG_VBOOT_LIB in Kconfig. Furthermore, enable the TPM and pick the correct TPM version for the board. 
+TPM measured boot (`CONFIG_TPM_MEASURED_BOOT=y`) should be enabled. Most boards (about 45 of 55) also set `CONFIG_VBOOT_LIB=y`, though some do not, including t520, x280 and some librem boards; Heads does not enable vboot verified boot itself. Furthermore, enable the TPM and pick the correct TPM version for the board. 
 Other parameters depend on the board. It is up to you to determine the correct settings, as not all community members will have access to your board. `git diff` between `coreboot-CLOSEST_PLATFORM.config` and `coreboot-NEW_BOARD.config` may help.
 
 linux.config:

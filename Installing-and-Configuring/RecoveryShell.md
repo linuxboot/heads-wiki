@@ -39,9 +39,7 @@ These two different methods of access will result in some different settings.
 Limitations
 ----
 
-The recovery shell wipes secrets--normally used for security checks--that were [computed]({{ site.baseurl }}/Keys/#tpm-pcrs) from the BIOS, kernel modules loaded, etc.  This will limit sealing/unsealing functions (Disk Unlock Key creation, TOTP/HOTP sealing) from the recovery shell environment. To seal/unseal secrets, the same measurements needs to be calculated, which would be different depending of the kernel modules loaded and if going in/out of the recovery shell, which invalidates per design the TPM measurements to not release secrets.
-
-To seal/unseal secrets, use the GUI environment.
+The recovery shell wipes unsealed secrets and extends PCR 4 with the string `recovery`. Disk Unlock Key creation and TOTP/HOTP sealing are done from the GUI environment instead.
 
 
 TPM GPIO Reset Vulnerability Testing
