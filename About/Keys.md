@@ -42,10 +42,9 @@ The [Bootguard fuses](https://trmm.net/Bootguard) fuses provide protection
  against most "evil maid" attacks against the firmware.  The hash of the ACM
  signing key is set in write-once fuses in the CPU chipset and during the CPU
  bringup phase the ME and the CPU microcode cooperate to validate the firmware
- ACM in the SPI flash.  PCR 0 holds an ACM measured Initial Boot Block only
- when the platform is provisioned with a Boot Guard profile that includes
- measurement; most client machines ship verified boot only, so PCR 0 stays
- zero.  See [Heads threat model]({{ site.baseurl }}/Heads-threat-model/)
+ ACM in the SPI flash.  PCR 0 receives an ACM measurement only when the
+ platform is provisioned with a Boot Guard profile that includes measurement;
+ a platform without such a profile does not get one.  See [Heads threat model]({{ site.baseurl }}/Heads-threat-model/)
  and [doc/tpm.md](https://github.com/linuxboot/heads/blob/master/doc/tpm.md).
  Since this key is fused into hardware, an evil maid attack would need to
  replace the CPU to install malicious firmware into the SPI flash.  The x230
