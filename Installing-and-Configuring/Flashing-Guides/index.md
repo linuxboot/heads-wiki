@@ -6,13 +6,40 @@ nav_order: 2
 parent: Installing and configuring
 has_children: yes
 ---
+
+Flashing Guides
+===
+
 ## ⚠️ Important: Read This First
 
 **Before flashing any device, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**
 
 ## Platform-Specific Guides
 
-- [The internal flashing commands for Purism devices can be found here](https://docs.puri.sm/Software/PureBoot/Maintenance/Upgrade.html)
+- [Acer Chromebook Spin 714 (KANO)]({{ site.baseurl }}/google-kano-flashing/)
+- [Dell Optiplex 7010/9010 Maximized]({{ site.baseurl }}/Optiplex_7010_9010-maximized-flashing/)
+- [HP Z220 CMT Maximized]({{ site.baseurl }}/Z220_CMT-maximized-flashing/)
+- [Lenovo M900 Tower Maximized]({{ site.baseurl }}/M900_Tower-maximized-flashing/)
+- [Lenovo T420 Maximized]({{ site.baseurl }}/T420-maximized-flashing/)
+- [Lenovo T430 Maximized]({{ site.baseurl }}/T430-maximized-flashing/)
+- [Lenovo T440p Maximized]({{ site.baseurl }}/T440p-maximized-flashing/)
+- [Lenovo T480 Maximized]({{ site.baseurl }}/T480-maximized-flashing/)
+- [Lenovo T480s Maximized]({{ site.baseurl }}/T480s-maximized-flashing/)
+- [Lenovo T530 Maximized]({{ site.baseurl }}/T530-maximized-flashing/)
+- [Lenovo W530 Maximized]({{ site.baseurl }}/W530-maximized-flashing/)
+- [Lenovo W541 Maximized]({{ site.baseurl }}/W541-maximized-flashing/)
+- [Lenovo X220 Maximized]({{ site.baseurl }}/X220-maximized-flashing/)
+- [Lenovo X230 Maximized]({{ site.baseurl }}/x230-maximized-flashing/)
+- [Lenovo X280 Maximized]({{ site.baseurl }}/X280-maximized-flashing/)
+- [MSI PRO Z690-A]({{ site.baseurl }}/MSI_Z690A-flashing/)
+- [MSI PRO Z790-P]({{ site.baseurl }}/MSI_Z790P-flashing/)
+- [NitroPad NS50]({{ site.baseurl }}/NS50-flashing/)
+- [NovaCustom NV4x ADL]({{ site.baseurl }}/NV4x_ADL-flashing/)
+- [NovaCustom V540TU]({{ site.baseurl }}/V540TU-flashing/)
+- [NovaCustom V560TU]({{ site.baseurl }}/V560TU-flashing/)
+- [Raptor Talos II]({{ site.baseurl }}/Talos_II-flashing/)
+
+Purism Librem internal flashing commands are cited in the [Hardware Compatibility List Sources]({{ site.baseurl }}/Hardware-Compatibility/#sources).
 
 ## Video Guides
 

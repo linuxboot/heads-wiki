@@ -2,7 +2,7 @@
 layout: default
 title: MSI PRO Z690-A
 permalink: /MSI_Z690A-flashing/
-nav_order: 14
+nav_order: 16
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -32,6 +32,10 @@ See [BOARDS_AND_TESTERS.md](https://github.com/linuxboot/heads/blob/master/doc/B
 GPIO lock not enforced at runtime.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
+
+## Hardware Compatibility
+
+<a id="platform-msi_z690a_ddr4"></a><a id="platform-msi_z690a_ddr5"></a>**Hardware:** [msi_z690a_ddr4]({{ site.baseurl }}/Hardware-Compatibility/#platform-msi_z690a_ddr4), [msi_z690a_ddr5]({{ site.baseurl }}/Hardware-Compatibility/#platform-msi_z690a_ddr5) — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/).
 
 ## ⚡ Safety First
 

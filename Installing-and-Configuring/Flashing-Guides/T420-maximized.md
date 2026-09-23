@@ -2,7 +2,7 @@
 layout: default
 title: Lenovo T420 Maximized
 permalink: /T420-maximized-flashing/
-nav_order: 4
+nav_order: 5
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -32,18 +32,22 @@ Pre-Skylake platform — dedicated PLTRST# pin, not GPIO-shared.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
 
+**USB3:** no integrated xHCI — see [Install an OS → USB3]({{ site.baseurl }}/InstallingOS/#usb3).
 
+## Hardware Compatibility
+
+<a id="platform-t420"></a>**Hardware:** t420 — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/#platform-t420).
 
 ## ⚡ Safety First
 
 **Before starting, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**
 
-[T420 Hardware Maintenance Manual](https://download.lenovo.com/pccbbs/mobiles_pdf/t420_and_t420i_ug_en.pdf)  
+[T420 and T420i User Guide](https://download.lenovo.com/pccbbs/mobiles_pdf/t420_and_t420i_ug_en.pdf)  
 
 ## Disassembly
 
 → **[Libreboot T420 external flashing guide](https://libreboot.org/docs/install/t420_external.html)** (detailed disassembly photos)  
-→ **[Lenovo T420 Hardware Maintenance Manual](https://download.lenovo.com/pccbbs/mobiles_pdf/t420_and_t420i_ug_en.pdf)**
+→ **[Lenovo T420 and T420i User Guide](https://download.lenovo.com/pccbbs/mobiles_pdf/t420_and_t420i_ug_en.pdf)**
 
 The T420 has a **single 8 MB SPI flash chip** (Winbond W25Q64CV) that holds the BIOS, ME firmware, and flash descriptor. Unlike the T430 and X230 (which use two separate chips), no ROM splitting is required.
 

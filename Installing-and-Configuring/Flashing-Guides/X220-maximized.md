@@ -2,7 +2,7 @@
 layout: default
 title: Lenovo X220 Maximized
 permalink: /X220-maximized-flashing/
-nav_order: 12
+nav_order: 13
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -31,6 +31,12 @@ for security implications.
 Pre-Skylake — dedicated PLTRST# pin.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
+
+**USB3:** no integrated xHCI — see [Install an OS → USB3]({{ site.baseurl }}/InstallingOS/#usb3).
+
+## Hardware Compatibility
+
+<a id="platform-x220"></a>**Hardware:** x220 — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/#platform-x220).
 
 ## ⚡ Safety First
 **Before starting, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**

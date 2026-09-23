@@ -2,7 +2,7 @@
 layout: default
 title: Lenovo T480s Maximized
 permalink: /T480s-maximized-flashing/
-nav_order: 8
+nav_order: 9
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -32,7 +32,9 @@ TPMTOTP/HOTP bypassable. Disk encryption with passphrase unaffected.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
 
+## Hardware Compatibility
 
+<a id="platform-t480s"></a>**Hardware:** t480s — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/#platform-t480s).
 
 ## ⚡ Safety First
 
@@ -53,7 +55,6 @@ For whole procedure you will need:
 There is still debate over which programmer and software should be used (flashprog vs. flashrom). Before following this guide, make sure you read [README.md](https://github.com/linuxboot/heads/tree/master/blobs/xx80/README.md) and the related information.
 
 Some ThinkPad T480s units on the used market, like the T480, are affected by an Intel bug in the Thunderbolt firmware. In short, the flash chip becomes full, causing Thunderbolt fast charging to stop working, though slow charging still functions. This issue can also affect the USB-C port. For convenience, Heads provides a fixed and padded Thunderbolt firmware that resolves the "charging problem" if your laptop is affected. Board testers did not encounter this issue, and it is unlikely to occur if your laptop was in use for more than 12 months before flashing. If you do experience the "charging bug," it is possible to fix it with external flashing. Also, the update is possible prior flashing heads using [fwupd from a Linux distribution](https://www.reddit.com/r/thinkpad/comments/12tf6xv/psa_t480_thunderbolt_controller_v23_is_now_on/)
-
 
 Before flashing heads, it is advisable to update the EC Firmware on the laptop. Some old EC firmware may be vulnerable to some serious CVEs. See [Heads-threat-model]({{ site.baseurl }}/Heads-threat-model/#binary-blobs-me-and-peripheral-firmware) for additional information.
 
@@ -146,7 +147,6 @@ Found Winbond flash chip "W25Q128.V" (16384 kB, SPI) on serprog.
 Reading flash... done.
 ```
 
-
 ```shell
 sudo [flasher] --read ~/t480s_original_bios_1.bin --programmer [programmer] -c YYY
 ```
@@ -190,7 +190,6 @@ diff <(hexdump -C t480s_original_bios.bin) <(hexdump -C t480s_original_bios_1.bi
 ```
 
 If the files differ or the chip content does not match the dump, try reconnecting your programmer to the SPI flash chip and make sure your flashrom/flashprog software is up-to-date.
-
 
 If they are the same, then write `t480s-hotp-maximized.rom` to the SPI flash chip:
 

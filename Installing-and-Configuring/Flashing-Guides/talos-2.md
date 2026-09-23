@@ -2,7 +2,7 @@
 layout: default
 title: Raptor Talos II
 permalink: /Talos_II-flashing/
-nav_order: 20
+nav_order: 22
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -29,6 +29,10 @@ POWER9 platform — still receiving microcode/firmware. See [BOARDS_AND_TESTERS.
 Not an Intel platform — not affected by Intel PCH GPIO reset.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
+
+## Hardware Compatibility
+
+<a id="platform-talos-2"></a>**Hardware:** talos-2 — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/#platform-talos-2).
 
 ## ⚡ Safety First
 **Before starting, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**

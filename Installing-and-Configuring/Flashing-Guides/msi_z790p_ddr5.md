@@ -2,7 +2,7 @@
 layout: default
 title: MSI PRO Z790-P
 permalink: /MSI_Z790P-flashing/
-nav_order: 15
+nav_order: 17
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -33,6 +33,10 @@ GPIO lock not enforced at runtime.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
 
+## Hardware Compatibility
+
+<a id="platform-msi_z790p_ddr5"></a><a id="platform-msi_z790p_ddr4"></a>**Hardware:** [msi_z790p_ddr4]({{ site.baseurl }}/Hardware-Compatibility/#platform-msi_z790p_ddr4), [msi_z790p_ddr5]({{ site.baseurl }}/Hardware-Compatibility/#platform-msi_z790p_ddr5) — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/).
+
 ## ⚡ Safety First
 
 **Before starting, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**
@@ -44,6 +48,5 @@ Full disassembly instructions, SPI flash access via JTPM1 header (2mm pitch, req
 → **[Dasharo MSI Z790-P documentation](https://docs.dasharo.com/unified/msi/recovery/#ch341a)**
 
 ## Flashing
-
 
 Key notes: This board does not ship pre-flashed. For initial deployment and unbricking/recovery, follow the [Dasharo MSI initial deployment](https://docs.dasharo.com/unified/msi/initial-deployment/) and [Dasharo MSI recovery — external flashing via CH341A](https://docs.dasharo.com/unified/msi/recovery/#ch341a) documentation.
