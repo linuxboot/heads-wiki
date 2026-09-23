@@ -118,3 +118,4 @@ Other Matrix Rooms
 
 * [coreboot Matrix Room](https://matrix.to/#/#coreboot:matrix.org)
 * [Nitrokey Matrix Room](https://matrix.to/#/#nitrokey:nitro.chat)
+* [QubesOS Matrix Room](https://matrix.to/#/#qubes:invisiblethingslab.com)
