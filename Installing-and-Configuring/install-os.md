@@ -2,7 +2,7 @@
 layout: default
 title: Step 4 - Installing Qubes and other OSes
 permalink: /InstallingOS/
-nav_order: 8
+nav_order: 6
 parent: Installing and configuring
 ---
 

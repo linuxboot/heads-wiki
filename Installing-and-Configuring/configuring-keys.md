@@ -2,7 +2,7 @@
 layout: default
 title: Step 3 - Configuring-Keys
 permalink: /Configuring-Keys/
-nav_order: 7
+nav_order: 5
 parent: Installing and configuring
 ---
 

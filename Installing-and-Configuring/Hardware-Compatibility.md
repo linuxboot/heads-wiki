@@ -2,7 +2,7 @@
 layout: default
 title: Hardware Compatibility
 permalink: /Hardware-Compatibility/
-nav_order: -1
+nav_order: 0
 parent: Installing and configuring
 ---
 
