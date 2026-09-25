@@ -2,7 +2,7 @@
 layout: default
 title: Lenovo W541 Maximized
 permalink: /W541-maximized-flashing/
-nav_order: 11
+nav_order: 12
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -31,6 +31,10 @@ for security implications.
 Pre-Skylake — dedicated PLTRST# pin.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
+
+## Hardware Compatibility
+
+<a id="platform-w541"></a>**Hardware:** w541 — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/#platform-w541).
 
 ## ⚡ Safety First
 **Before starting, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**

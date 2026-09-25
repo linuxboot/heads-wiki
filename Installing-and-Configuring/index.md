@@ -12,6 +12,11 @@ Installing and configuring Heads
 ===
 
 
+Hardware Compatibility
+----
+
+The [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/) lists every supported platform with machine type, CPU, max RAM, max storage, display, and GPU; each platform name links to its Flashing Guide, or to its row for platforms without a guide.
+
 Prerequisites
 ----
 

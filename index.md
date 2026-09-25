@@ -155,4 +155,5 @@ Learn more about Heads
  detail about what classes of threats Heads attempts to counter.
 * [Frequently Asked Questions]({{ site.baseurl }}/FAQ/)
 * [Requirements for Heads]({{ site.baseurl }}/Install-and-Configure)
+* [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/) - the platforms Heads supports, with machine type, CPU, RAM, storage, display, and GPU details.
 * [Technical Deep Dive](https://deepwiki.com/linuxboot/heads) - comprehensive technical documentation on architecture, build systems, security mechanisms, and firmware internals

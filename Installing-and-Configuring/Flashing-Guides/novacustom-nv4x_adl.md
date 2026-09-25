@@ -2,7 +2,7 @@
 layout: default
 title: NovaCustom NV4x ADL
 permalink: /NV4x_ADL-flashing/
-nav_order: 17
+nav_order: 19
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -32,6 +32,10 @@ See [BOARDS_AND_TESTERS.md](https://github.com/linuxboot/heads/blob/master/doc/B
 TPMTOTP/HOTP bypassable. Disk encryption with passphrase unaffected.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
+
+## Hardware Compatibility
+
+<a id="platform-novacustom-nv4x_adl"></a>**Hardware:** novacustom-nv4x_adl — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/#platform-novacustom-nv4x_adl).
 
 ## ⚡ Safety First
 

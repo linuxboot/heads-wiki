@@ -2,7 +2,7 @@
 layout: default
 title: Lenovo X280 Maximized
 permalink: /X280-maximized-flashing/
-nav_order: 14
+nav_order: 15
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -44,6 +44,10 @@ There is still debate over which programmer and software should be used (flashpr
 
  **Thunderbolt issues**
 > Some ThinkPads of this series are affected by a bug in the Thunderbolt firmware. TL;DR: The flash chip fills with logs, breaking fast charging/data transfer. Slow charging still works. Heads provides a fixed, and padded Thunderbolt firmware that resolves the "charging problem". If you do experience the "charging bug," it is possible to fix it with external flashing. Also, the update is possible prior flashing heads using [fwupd from a Linux distribution](https://www.reddit.com/r/thinkpad/comments/12tf6xv/psa_t480_thunderbolt_controller_v23_is_now_on/)
+
+## Hardware Compatibility
+
+<a id="platform-x280"></a>**Hardware:** x280 — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/#platform-x280).
 
 ## ⚡ Safety First
 

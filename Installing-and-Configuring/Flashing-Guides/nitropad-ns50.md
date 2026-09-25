@@ -2,7 +2,7 @@
 layout: default
 title: NitroPad NS50
 permalink: /NS50-flashing/
-nav_order: 16
+nav_order: 18
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -32,6 +32,10 @@ See [BOARDS_AND_TESTERS.md](https://github.com/linuxboot/heads/blob/master/doc/B
 TPMTOTP/HOTP bypassable. Disk encryption with passphrase unaffected.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
+
+## Hardware Compatibility
+
+<a id="platform-nitropad-ns50"></a>**Hardware:** nitropad-ns50 — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/#platform-nitropad-ns50).
 
 ## ⚡ Safety First
 

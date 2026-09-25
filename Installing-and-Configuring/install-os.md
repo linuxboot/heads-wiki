@@ -2,7 +2,7 @@
 layout: default
 title: Step 4 - Installing Qubes and other OSes
 permalink: /InstallingOS/
-nav_order: 8
+nav_order: 6
 parent: Installing and configuring
 ---
 
@@ -21,6 +21,26 @@ Generic OS Installation
 ===
 
 Insert OS installation media into one of the USB3 ports (blue on Thinkpads).
+
+### USB3
+
+{: .note }
+Sandy Bridge boards (`X220`, `T420`) have no **integrated** USB 3.0 / xHCI
+controller: coreboot leaves PCI device `0:14.0` disabled. The **X220 i7** still
+has a real **onboard USB3 controller** (a discrete Renesas/NEC chip on
+coreboot's `pcie_rp7`). Heads ships a single X220 board covering both the i5
+and i7 SKUs, and because the i7 SKU needs that discrete controller, Heads keeps
+USB3/xHCI enabled for the X220. Other Sandy Bridge variants get USB3 only
+through an ExpressCard or a dock that contains a controller — a plain Series 3
+dock USB3 port is pass-through (USB2 on `T420` / i5-`X220`). Ivy Bridge and
+newer boards have integrated USB3.
+
+| CPU generation | Boards | Integrated USB3 / xHCI |
+|---|---|---|
+| Sandy Bridge (2nd gen) i7 | X220 i7 | ➖ — no integrated, but onboard USB3 controller |
+| Sandy Bridge (2nd gen) other | X220 i5, T420 | ❌ — ExpressCard or controller-bearing dock only; plain dock port is pass-through (USB2) |
+| Ivy Bridge (3rd gen) and newer | X230, T430, T440p, T480, X280, … | ✅ |
+
 [For certain OSes](https://github.com/linuxboot/heads/tree/master/initrd/etc/distro/keys),
 Heads boot process supports standard OS ISO bootable media (where the USB drive
 contains the ISO installation media alongside of its detached signature). For

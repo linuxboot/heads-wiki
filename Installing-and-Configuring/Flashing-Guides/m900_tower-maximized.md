@@ -2,7 +2,7 @@
 layout: default
 title: Lenovo M900 Tower Maximized
 permalink: /M900_Tower-maximized-flashing/
-nav_order: 3
+nav_order: 4
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -32,7 +32,9 @@ TPMTOTP/HOTP bypassable. Disk encryption with passphrase unaffected.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
 
+## Hardware Compatibility
 
+<a id="platform-m900_tower"></a>**Hardware:** m900_tower — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/#platform-m900_tower).
 
 ## ⚡ Safety First
 
@@ -54,9 +56,7 @@ For whole procedure you will need:
 - A recommended SPI programmer (see our [Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/))
 - Other laptop/PC with a Linux-based OS installed.  
 
-
-
-Remove the side cover according to the [M900 Tower Hardware Maintenance Manual](https://download.lenovo.com/pccbbs/thinkcentre_pdf/m800_m900_sff_hmm.pdf)  
+Remove the side cover according to the [M900 Tower Hardware Maintenance Manual](https://download.lenovo.com/pccbbs/thinkcentre_pdf/m800_m900_tower_hmm.pdf)  
 After removing the side cover, remove the CMOS battery. Next, identify the motherboard and the SPI flash chip. If cables or drive cages block access, move them carefully and document where each cable was connected.
 
 ![Board overview]({{ site.baseurl }}/images/m900_tower/board_overview.jpg)
@@ -66,7 +66,6 @@ Locate the main SPI flash chip. It should be a SOIC-8 chip. Use the dot to orien
 You should [download]({{ site.baseurl }}/Downloading) or build (please see [general building]({{ site.baseurl }}/general-building/) / [building x230]({{ site.baseurl }}/x230-maximized-building/)) the board rom for this board and verify its hash value.
 
 Try to read the name of the SPI flash chip. The dot on the chip helps to identify the correct clip orientation. 
-
 
  Next, connect the clip of your SPI programmer to the chip (see the [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for recommended hardware and example commands). Next, connect the programmer to the USB port of your other Linux-based computer with flashrom/flashprog installed. In this setup, the red wire should be where the dot is (the dot indicates pin 1). Here, please also see the flashing guide for the T430, T480.
 
@@ -112,7 +111,6 @@ diff <(hexdump -C m900_tower_original_bios.bin) <(hexdump -C m900_tower_original
 ```
 
 If the files differ or the chip content does not match the dump, try reconnecting your programmer to the SPI flash chip and make sure your flashrom/flashprog software is up-to-date.
-
 
 If they are the same, then write `m900_tower-hotp-maximized.rom` to the SPI flash chip. The file name can be different based on the commit you use:
 

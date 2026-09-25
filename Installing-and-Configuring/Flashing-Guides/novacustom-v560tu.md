@@ -2,7 +2,7 @@
 layout: default
 title: NovaCustom V560TU
 permalink: /V560TU-flashing/
-nav_order: 19
+nav_order: 21
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -32,6 +32,10 @@ See [BOARDS_AND_TESTERS.md](https://github.com/linuxboot/heads/blob/master/doc/B
 GPIO PLTRST# assertion does not apply to the TPM on this platform. Not vulnerable.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
+
+## Hardware Compatibility
+
+<a id="platform-novacustom-v560tu"></a>**Hardware:** novacustom-v560tu — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/#platform-novacustom-v560tu).
 
 ## ⚡ Safety First
 

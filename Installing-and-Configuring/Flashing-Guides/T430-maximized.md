@@ -2,7 +2,7 @@
 layout: default
 title: Lenovo T430 Maximized
 permalink: /T430-maximized-flashing/
-nav_order: 5
+nav_order: 6
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -32,7 +32,9 @@ Pre-Skylake platform — dedicated PLTRST# pin, not GPIO-shared.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
 
+## Hardware Compatibility
 
+<a id="platform-t430"></a>**Hardware:** t430 — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/#platform-t430).
 
 ## ⚡ Safety First
 
@@ -84,9 +86,7 @@ Left chip corresponds to the "bottom" flash chip (8192 kb) and right corresponds
 
 ![SPI flash chips]({{ site.baseurl }}/images/t430/10_spi_flash_chips.jpg)
 
-
 First [download]({{ site.baseurl }}/Downloading)  or build (please see [general building]({{ site.baseurl }}/x230-maximized-building/) / [building x230]({{ site.baseurl }}/x230-maximized-building/))  the maximized board roms (top and bottom) for this board and verify their hashes.
-
 
 Try to read the name on the top SPI flash chip. I was unable to do that. The dots on the chip help to identify the correct clip orientation. 
 
@@ -104,7 +104,6 @@ Use `[flasher]` of your choice (flashrom or flashprog -- see [Tool Interchangeab
 sudo [flasher] --programmer [programmer]
 ```
 
-
  Here is my output.
 
 ![output top 4 mb chip]({{ site.baseurl }}/images/t430/13_ubuntu_output_4mb.jpg)
@@ -119,7 +118,6 @@ sudo [flasher] --read ~/top.bin --programmer [programmer] --chip YYY && \
 If the files differ then try reconnecting your programmer to the SPI flash chip
  and make sure your flashrom/flashprog software is up to date.
 
-
 If they are the same then write `t430-maximized-top.rom` to the SPI flash chip:
 
 ```shell
@@ -130,11 +128,9 @@ sudo [flasher] --programmer [programmer] --chip YYY --write ~/heads/build/x86/t4
 
 ![erase/write done]({{ site.baseurl }}/images/t430/14_programmer_flashing.jpg)
 
-
  Here is a successful attempt. 
 
 ![erase/write done]({{ site.baseurl }}/images/t430/15_successful_output_top.jpg)
-
 
 Try to read the name on the bottom SPI flash chip. Then, connect the clip and
  ch341a programmer to the bottom SPI flash chip. 

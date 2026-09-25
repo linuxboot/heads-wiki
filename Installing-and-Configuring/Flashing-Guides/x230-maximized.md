@@ -2,7 +2,7 @@
 layout: default
 title: Lenovo X230 Maximized
 permalink: /x230-maximized-flashing/
-nav_order: 13
+nav_order: 14
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -32,7 +32,9 @@ Pre-Skylake platform — dedicated PLTRST# pin, not GPIO-shared.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
 
+## Hardware Compatibility
 
+<a id="platform-x230"></a><a id="platform-x230-fhd_edp"></a><a id="platform-x230-usb_kb"></a>**Hardware:** [x230]({{ site.baseurl }}/Hardware-Compatibility/#platform-x230), [x230-fhd_edp]({{ site.baseurl }}/Hardware-Compatibility/#platform-x230-fhd_edp), [x230-usb_kb]({{ site.baseurl }}/Hardware-Compatibility/#platform-x230-usb_kb) — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/).
 
 ## ⚡ Safety First
 
@@ -150,7 +152,6 @@ You can flash it specifying the same chip you found under ZZZ:
 ```shell
 sudo [flasher] --programmer [programmer] --chip "ZZZ" --write ~/heads/build/x86/x230-maximized/x230-maximized-bottom.rom
 ```
-
 
 If all goes well, you should see the keyboard LED flash, and within a second Heads will boot
  in its GUI. 

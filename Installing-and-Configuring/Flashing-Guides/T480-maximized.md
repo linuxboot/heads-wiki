@@ -2,7 +2,7 @@
 layout: default
 title: Lenovo T480 Maximized
 permalink: /T480-maximized-flashing/
-nav_order: 7
+nav_order: 8
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -32,6 +32,10 @@ for security implications.
 TPMTOTP/HOTP bypassable. Disk encryption with passphrase unaffected.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
+
+## Hardware Compatibility
+
+<a id="platform-t480"></a>**Hardware:** t480 — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/#platform-t480).
 
 ## ⚡ Safety First
 
@@ -123,7 +127,6 @@ Make sure that files do not differ.
 
 **If the dumps look consistent, proceed (visual comparison shown above).**
 
-
 Alternative comparison is bit-by-bit. If the files are the same, there should be no output of this command. Otherwise, you will see a bit-by-bit difference between the files.
 
 ```shell
@@ -131,7 +134,6 @@ diff <(hexdump -C t480_original_bios.bin) <(hexdump -C t480_original_bios_1.bin)
 ```
 
 If the files differ or the chip content does not match the dump, try reconnecting your programmer to the SPI flash chip and make sure your flashrom/flashprog software is up-to-date.
-
 
 If they are the same, then write `T480-hotp-maximized.rom` to the SPI flash chip:
 

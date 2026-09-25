@@ -2,7 +2,7 @@
 layout: default
 title: HP Z220 CMT Maximized
 permalink: /Z220_CMT-maximized-flashing/
-nav_order: 2
+nav_order: 3
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -31,6 +31,10 @@ for security implications.
 Pre-Skylake — dedicated PLTRST# pin.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
+
+## Hardware Compatibility
+
+<a id="platform-z220-cmt"></a>**Hardware:** z220-cmt — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/#platform-z220-cmt).
 
 ## ⚡ Safety First
 

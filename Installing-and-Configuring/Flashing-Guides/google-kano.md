@@ -2,7 +2,7 @@
 layout: default
 title: Acer Chromebook Spin 714 (KANO)
 permalink: /google-kano-flashing/
-nav_order: 12
+nav_order: 1
 parent: Step 2 - Flashing Guides
 grand_parent: Installing and configuring
 ---
@@ -32,6 +32,10 @@ See [BOARDS_AND_TESTERS.md](https://github.com/linuxboot/heads/blob/master/doc/B
 GPIO PLTRST# assertion does not apply to the TPM on this platform. Not vulnerable.
 See [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status),
 [TPM GPIO Reset Vulnerability](https://github.com/linuxboot/heads/blob/master/doc/TPM_GPIO_Reset_Vulnerability.md).
+
+## Hardware Compatibility
+
+<a id="platform-kano"></a>**Hardware:** kano — see the [Hardware Compatibility List]({{ site.baseurl }}/Hardware-Compatibility/#platform-kano).
 
 ## ⚡ Safety First
 
