@@ -105,7 +105,7 @@ This should be adapted from a similar board. The file path should be `heads/conf
 
 CircleCI: 
 ---
-Modify `heads/.circleci/config.yml` to add support for the `NEW_BOARD`. Initially, configure it to depend directly on musl-cross-make. At this stage, do not reuse caches—this simplifies debugging and ensures a clean build process. 
+Modify `heads/.circleci/config.yml` to add support for the `NEW_BOARD`. Initially, configure it to depend directly on [ARCH]_musl_cross_make. At this stage, do not reuse caches—this simplifies debugging and ensures a clean build process. 
 ```
 # NEW_BOARD is based on `X.Y.Z`. coreboot release, not sharing any buildstack from now, depend on muscl-cross cache
       - build:
@@ -113,7 +113,7 @@ Modify `heads/.circleci/config.yml` to add support for the `NEW_BOARD`. Initiall
           target: NEW_BOARD-hotp-maximized
           subcommand: ""
           requires:
-            - x86-musl-cross-make
+            - x86_musl_cross_make
 ```
 CircleCI creates reproducible builds, allowing users to verify that the "flashable" roms were indeed produced by the given source code. In the development/debugging phase, it helps to ensure that you talk about the same build. It optimizes the collaboration between peers-board owners. Moreover, CI builds are significantly faster than local builds, reducing overall development time. As circleCI always builds all boards it makes it easier to find regressions early.
 
