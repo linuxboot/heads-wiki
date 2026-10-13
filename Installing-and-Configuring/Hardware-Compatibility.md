@@ -12,6 +12,7 @@ Hardware Compatibility List
 The platforms Heads supports. `iGPU` = integrated GPU, `dGPU` = discrete GPU; in the GPU column `(no dGPU)` means the platform has no discrete GPU and `(dGPU not initialized)` means Heads does not initialize an installed discrete GPU. `O`/`U` = official/unofficial max RAM; TPM generation and TPM GPIO reset status are tabulated separately — see [Per-Board Protection Status]({{ site.baseurl }}/Heads-threat-model/#per-board-protection-status).
 
 <!-- board- anchor IDs are stable cross-link targets used by heads boards/*.config "Full details" links. They omit volatile support-status labels (UNTESTED/UNMAINTAINED, which change over time); EOL_ is kept because microcode end-of-life is permanent. -->
+
 | Platform | Machine type | CPU | RAM max | Storage max | Display max | GPU |
 |---|---|---|---|---|---|---|
 | <a id="platform-kano"></a><a id="board-kano"></a><a id="board-kano-hotp"></a>[kano]({{ site.baseurl }}/google-kano-flashing/#platform-kano) | CP714-1WN | Alder Lake i5-1235U / i7-1260P | LPDDR4X · soldered · 16 GB (8 GB base configs) | 256 / 512 GB NVMe | 14.0″ WUXGA 1920×1200 / WQXGA 2560×1600 touch | Iris Xe (no dGPU) |
