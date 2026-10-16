@@ -8,8 +8,8 @@ grand_parent: Installing and configuring
 has_children: yes
 ---
 
-Chrome Devices
-===
+# Chrome Devices
+
 There are a lot of Chrome devices (Chromebooks and ChromeBoxes) that have MrChromebox's Coreboot support.
 Most of these devices can support Heads as well.  This guide is a general guide with common steps that
 apply to all Chrome devices.
@@ -23,11 +23,11 @@ apply to all Chrome devices.
 {:toc}
 </details>
 
-## ⚡ Safety First
+# ⚡ Safety First
 
 **Before starting, please read our [SPI Programmer Best Practices guide]({{ site.baseurl }}/SPI-Programmer-Best-Practices/) for essential safety information and programmer recommendations.**
 
-## Summary
+# Summary
 At a high level we will be doing the following:
 
 1. Enable closed case debugging (CCD)
@@ -36,7 +36,7 @@ At a high level we will be doing the following:
 
 Then you can follow the individual device guides on how to backup, and then flash Heads.
 
-## Closed Case Debugging
+# Closed Case Debugging
 With Chrome devices there is an option called "Closed Case Debugging" or CCD.  With CCD
 You can flash the rom without having to open the device.  A special usb cable called a SuzyQ cable
 is required.  A good guide on using the SuzyQ cable is 
@@ -47,12 +47,12 @@ Here are 2 places where you can find info on purchasing a SuzyQ board:
 1. [ChocalateLoverRaj Github](https://github.com/ChocolateLoverRaj/gsc-debug-board)
 2. [FyraLabs Github](https://github.com/fyraLabs/suzyqboard)
 
-### Enabling Closed Case Debugging (CCD)
+## Enabling Closed Case Debugging (CCD)
 There are 2 ways to enable CCD.  One is by using the ChromeOS Developer mode console, this method
 requires the stock ChromeOS bootloader, but no SuzyQ board. The 2nd option is using a SuzyQ board
 to send commands to the GSC/CR50 console
 
-#### ChromeOS Developer Mode Method
+### ChromeOS Developer Mode Method
 
 You will be using `gsctool` in the ChromeOS Developer mode console.
 
@@ -66,7 +66,7 @@ You will be using `gsctool` in the ChromeOS Developer mode console.
 
 [MrChromebox source](https://docs.mrchromebox.tech/docs/firmware/wp/disabling.html#step-1-enabling-closed-case-debugging-ccd)
 
-#### SuzyQ and CR50 Console Method
+### SuzyQ and CR50 Console Method
 1. Connect the USB-C end of the Suzy-Q cable to the CCD port on your ChromeOS device
    (usually left USB-C port) and the USB-A end to your Linux device
    Verify the cable is properly connected:
@@ -81,57 +81,59 @@ You will be using `gsctool` in the ChromeOS Developer mode console.
    Adjust and repeat command until output is as expected.
 
 2. Check if CCD is already Unlocked.
-  ```
-  # Check the baud rate
-  sudo stty -F /dev/ttyUSB0
 
-  sudo minicom -D /dev/ttyUSB0 -b <baud_rate from above>
-  < Press Enter >
-  ccd
-  ```
+   ```
+   # Check the baud rate
+   sudo stty -F /dev/ttyUSB0
 
-  If CCD is locked it will show:
+   sudo minicom -D /dev/ttyUSB0 -b <baud_rate from above>
+   < Press Enter >
+   ccd
+   ```
 
-  ```
-  State: Locked
-  Password: none
-  Flags: 0x000000
-  Capabilities: 0000000000000000
-    UartGscRxAPTx   Y 0=Default (Always)
-    UartGscTxAPRx   Y 0=Default (Always)
-    UartGscRxECTx   Y 0=Default (Always)
-    UartGscTxECRx   - 0=Default (IfOpened)
-    FlashAP         - 0=Default (IfOpened)
-    FlashEC         - 0=Default (IfOpened)
-    OverrideWP      - 0=Default (IfOpened)
-    RebootECAP      - 0=Default (IfOpened)
-    GscFullConsole  - 0=Default (IfOpened)
-    UnlockNoReboot  Y 0=Default (Always)
-    UnlockNoShortPP Y 0=Default (Always)
-    OpenNoTPMWipe   - 0=Default (IfOpened)
-    OpenNoLongPP    - 0=Default (IfOpened)
-    BatteryBypassPP Y 0=Default (Always)
-    Unused          Y 0=Default (Always)
-    I2C             - 0=Default (IfOpened)
-    FlashRead       Y 0=Default (Always)
-    OpenNoDevMode   - 0=Default (IfOpened)
-    OpenFromUSB     - 0=Default (IfOpened)
-    OverrideBatt    - 0=Default (IfOpened)
-    APROCheckVC     - 0=Default (IfOpened)
-  read_tpm_nvmem: object at 0x100a not found
-  [906.873298 Console unlock allowed]
-  read_tpm_nvmem: object at 0x1007 not found
-  TPM:
-  Capabilities are default.
-  Use 'ccd help' to print subcommands
-  ```
+   If CCD is locked it will show:
+
+   ```
+   State: Locked
+   Password: none
+   Flags: 0x000000
+   Capabilities: 0000000000000000
+     UartGscRxAPTx   Y 0=Default (Always)
+     UartGscTxAPRx   Y 0=Default (Always)
+     UartGscRxECTx   Y 0=Default (Always)
+     UartGscTxECRx   - 0=Default (IfOpened)
+     FlashAP         - 0=Default (IfOpened)
+     FlashEC         - 0=Default (IfOpened)
+     OverrideWP      - 0=Default (IfOpened)
+     RebootECAP      - 0=Default (IfOpened)
+     GscFullConsole  - 0=Default (IfOpened)
+     UnlockNoReboot  Y 0=Default (Always)
+     UnlockNoShortPP Y 0=Default (Always)
+     OpenNoTPMWipe   - 0=Default (IfOpened)
+     OpenNoLongPP    - 0=Default (IfOpened)
+     BatteryBypassPP Y 0=Default (Always)
+     Unused          Y 0=Default (Always)
+     I2C             - 0=Default (IfOpened)
+     FlashRead       Y 0=Default (Always)
+     OpenNoDevMode   - 0=Default (IfOpened)
+     OpenFromUSB     - 0=Default (IfOpened)
+     OverrideBatt    - 0=Default (IfOpened)
+     APROCheckVC     - 0=Default (IfOpened)
+   read_tpm_nvmem: object at 0x100a not found
+   [906.873298 Console unlock allowed]
+   read_tpm_nvmem: object at 0x1007 not found
+   TPM:
+   Capabilities are default.
+   Use 'ccd help' to print subcommands
+   ```
 
 3. Unlock CCD
-  ```
-  ccd open
-  ```
 
-## Disable Hardware Write Protection
+   ```
+   ccd open
+   ```
+
+# Disable Hardware Write Protection
 We now need to disable hardware write protection so we can flash the rom.
 
 1. Connect the USB-C end of the Suzy-Q cable to the CCD port on your ChromeOS device
@@ -162,7 +164,7 @@ We now need to disable hardware write protection so we can flash the rom.
 
 [MrChromebox source](https://docs.mrchromebox.tech/docs/firmware/wp/disabling.html#step-2-disabling-write-protection)
 
-### Disable Software Write Protection
+# Disable Software Write Protection
 A good guide on how to do this is [here](https://docs.mrchromebox.tech/docs/firmware/wp/disabling.html#disabling-software-write-protection)
 
 We will be using the SuzyQ device to disable Software write protection. 
