@@ -1,13 +1,13 @@
 ---
 layout: default
-title: HP Chromebox G2 (KENCH)
-permalink: /google-kench-flashing/
+title: HP Chromebox G2 (FIZZ)
+permalink: /google-fizz-flashing/
 nav_order: 12
 parent: Chrome Devices
 grand_parent: Step 2 - Flashing Guides
 ---
 
-HP Chromebox G2 (KENCH)
+HP Chromebox G2 (Fizz)
 ===
 
 <details open markdown="block">
@@ -68,5 +68,5 @@ More info in the [SPI Programmer Best Practices](https://osresearch.net/SPI-Prog
 
 ```
 flashrom --programmer raiden_debug_spi:target=AP \
-  --write heads-kench-202607081551-v0.2.1-3112-gb9dfd39.rom
+  --write heads-fizz-202607081551-v0.2.1-3112-gb9dfd39.rom
 ```
